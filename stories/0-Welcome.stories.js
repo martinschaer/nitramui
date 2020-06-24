@@ -1,13 +1,31 @@
 import React from 'react';
-import { linkTo } from '@storybook/addon-links';
-import { Welcome } from '@storybook/react/demo';
+import styled, { createGlobalStyle } from "styled-components";
+
+import { reset, global } from '../src/components'
+
+const GlobalStyle = createGlobalStyle`
+  ${reset}
+  ${global}
+`;
+
+const Title = styled.h1`
+  font-family: 'Inconsolata', monospace;
+  // font-family: 'Inter', sans-serif;
+  // font-family: 'Open Sans', sans-serif;
+`
 
 export default {
   title: 'Welcome',
-  component: Welcome,
+  component: Title,
 };
 
-export const ToStorybook = () => <Welcome showApp={linkTo('Button')} />;
+export const ToStorybook = () => (
+  <>
+    <GlobalStyle />
+    <Title>Hello world</Title>
+    <p>Lorem ipsum</p>
+  </>
+);
 
 ToStorybook.story = {
   name: 'to Storybook',
