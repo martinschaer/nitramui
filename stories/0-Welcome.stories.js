@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 import { reset, global } from '../src/components'
 
@@ -8,22 +8,18 @@ const GlobalStyle = createGlobalStyle`
   ${global}
 `;
 
-const Title = styled.h1`
-  font-family: 'Inconsolata', monospace;
-  // font-family: 'Inter', sans-serif;
-  // font-family: 'Open Sans', sans-serif;
-`
-
 export default {
-  title: 'Welcome',
-  component: Title,
+  title: 'GlobalStyle',
+  component: GlobalStyle,
 };
 
 export const ToStorybook = () => (
   <>
     <GlobalStyle />
-    <Title>Hello world</Title>
+    <h1 className='pre-heading'>Nitram UI</h1>
+    <h1>Hello world</h1>
     <p>Lorem ipsum</p>
+    <p><code>Lorem ipsum</code></p>
   </>
 );
 
