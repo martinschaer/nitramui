@@ -6,6 +6,6 @@
 - [x] Test reset using createGlobalStyle
 - [x] Add Inter, Inconsolata
 - [x] Headings font
-- [ ] top and bottom fixed bars
+- [x] top and bottom fixed bars
 - [ ] Add eslint
 - [ ] Pack using Rollup

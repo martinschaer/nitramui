@@ -9,11 +9,11 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default {
-  title: 'GlobalStyle',
+  title: 'Typography',
   component: GlobalStyle,
 };
 
-export const ToStorybook = () => (
+export const Typography = () => (
   <>
     <GlobalStyle />
     <h1 className='pre-heading'>Nitram UI</h1>
@@ -23,6 +23,6 @@ export const ToStorybook = () => (
   </>
 );
 
-ToStorybook.story = {
-  name: 'to Storybook',
+Typography.story = {
+  name: 'Typography',
 };

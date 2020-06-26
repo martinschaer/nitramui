@@ -1,8 +1,14 @@
 export { default as themes } from './common/themes'
 export { default as reset } from './common/reset'
+export { default as Layout } from './Layout'
 
+// TODO: add styled template tag (to get sintax highlighting)
 export const global = `
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Inter:wght@200;400;600&display=swap');
+
+html, body {
+  height: 100%;
+}
 
 body {
   font-family: 'Inter', 'Helvetica Neue', Helvetiva, Arial, sans-serif;
@@ -24,6 +30,7 @@ h6 {
     letter-spacing: ${1 / 12}em;
     text-transform: uppercase;
     font-size: .8rem;
+    margin: 1em 0;
   }
 }
 
