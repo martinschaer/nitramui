@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "react-app",
+    "standard",
+    "standard-react"
+  ],
+  "rules": {
+    "max-len": [
+      "warn",
+      {
+        "code": 120
+      }
+    ]
+  }
+}
