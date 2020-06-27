@@ -1,0 +1,14 @@
+{
+  "editor.rulers": [
+    120
+  ],
+  "files.associations": {
+    "*.jsx": "javascriptreact"
+  },
+  "emmet.syntaxProfiles": {
+    "jsx": {
+      "attr_quotes": "single"
+    }
+  },
+  "eslint.alwaysShowStatus": true
+}
