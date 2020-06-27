@@ -12,7 +12,7 @@ const StyledLayout = styled.div`
 `
 
 const StyledHeader = styled.header`
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #535353;
 `
 
 const StyledMain = styled.main`
@@ -21,7 +21,7 @@ const StyledMain = styled.main`
 `
 
 const StyledFooter = styled.header`
-  border-top: 1px solid #000;
+  border-top: 1px solid #535353;
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
