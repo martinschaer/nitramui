@@ -2,7 +2,9 @@ import { createGlobalStyle } from 'styled-components'
 
 export { default as themes } from './common/themes'
 export { default as reset } from './common/reset'
+export { default as Card } from './Card'
 export { default as Layout } from './Layout'
+export { default as Pane } from './Pane'
 
 export const global = createGlobalStyle`
 html, body {
