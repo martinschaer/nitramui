@@ -1,17 +1,17 @@
-import React from 'react';
-import { createGlobalStyle } from "styled-components";
+import React from 'react'
+import { createGlobalStyle } from 'styled-components'
 
 import { reset, global } from '../src/components'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
   ${global}
-`;
+`
 
 export default {
   title: 'Typography',
-  component: GlobalStyle,
-};
+  component: GlobalStyle
+}
 
 export const Typography = () => (
   <>
@@ -21,8 +21,8 @@ export const Typography = () => (
     <p>Lorem ipsum</p>
     <p><code>Lorem ipsum</code></p>
   </>
-);
+)
 
 Typography.story = {
-  name: 'Typography',
-};
+  name: 'Typography'
+}

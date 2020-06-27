@@ -1,9 +1,10 @@
+import { createGlobalStyle } from 'styled-components'
+
 export { default as themes } from './common/themes'
 export { default as reset } from './common/reset'
 export { default as Layout } from './Layout'
 
-// TODO: add styled template tag (to get sintax highlighting)
-export const global = `
+export const global = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Inter:wght@200;400;600&display=swap');
 
 html, body {
@@ -11,7 +12,7 @@ html, body {
 }
 
 body {
-  font-family: 'Inter', 'Helvetica Neue', Helvetiva, Arial, sans-serif;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
 }
@@ -22,7 +23,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Inter', 'Helvetica Neue', Helvetiva, Arial, sans-serif;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 200;
 
   &.pre-heading {
