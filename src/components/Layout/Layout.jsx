@@ -12,16 +12,24 @@ const StyledLayout = styled.div`
 `
 
 const StyledHeader = styled.header`
-  border-bottom: 1px solid #535353;
+  border-bottom: 1px solid #E0E0E0;
+  box-sizing: border-box;
+  padding: 0 1rem;
 `
 
 const StyledMain = styled.main`
+  background-color: #F0F0F0;
+  display: flex;
+  flex-direction: row;
   flex-grow: 1;
-  overflow: scroll;
+  overflow-y: hidden;
+  overflow-x: scroll;
 `
 
 const StyledFooter = styled.header`
-  border-top: 1px solid #535353;
+  border-top: 1px solid #E0E0E0;
+  box-sizing: border-box;
+  padding: 0 1rem;
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
