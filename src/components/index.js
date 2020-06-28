@@ -1,6 +1,8 @@
 import { createGlobalStyle } from 'styled-components'
 
-export { default as themes } from './common/themes'
+import ds from './common/designSystem'
+
+export { modes, themes } from './common/designSystem'
 export { default as reset } from './common/reset'
 export { default as Card } from './Card'
 export { default as Layout } from './Layout'
@@ -12,7 +14,8 @@ html, body {
 }
 
 body {
-  color: #535353;
+  color: ${ds.colors.fg};
+  background-color: ${ds.colors.bg};
   font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
@@ -28,7 +31,7 @@ h6 {
   font-weight: 200;
 
   &.pre-heading {
-    color: #AEAEAE;
+    color: ${ds.colors.fgMuted};
     letter-spacing: ${1 / 12}em;
     text-transform: uppercase;
     font-size: .8rem;

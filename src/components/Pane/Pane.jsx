@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+import ds from '../common/designSystem'
+
 const GOLDEN_RATIO = 1.61803398875
 
 // TODO: if used by another component, move to common file
@@ -40,7 +42,7 @@ const StyledPane = styled.div`
   height: 100%;
   flex-shrink: 0;
   padding: 1rem;
-  outline: 1px dashed #E0E0E0;
+  outline: 1px dashed ${ds.colors.border};
   overflow: scroll;
   max-width: 100%;
   width: ${

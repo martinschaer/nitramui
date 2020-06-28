@@ -3,6 +3,11 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 // ---------------------------------------------------------------------------------------------------------------------
+// Local imports
+// ---------------------------------------------------------------------------------------------------------------------
+import ds from '../common/designSystem'
+
+// ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 const StyledLayout = styled.div`
@@ -12,13 +17,14 @@ const StyledLayout = styled.div`
 `
 
 const StyledHeader = styled.header`
-  border-bottom: 1px solid #E0E0E0;
+  background-color: ${ds.colors.card};
+  border-bottom: 1px solid ${ds.colors.border};
   box-sizing: border-box;
   padding: 0 1rem;
 `
 
 const StyledMain = styled.main`
-  background-color: #F0F0F0;
+  background-color: ${ds.colors.bg};
   display: flex;
   flex-direction: row;
   flex-grow: 1;
@@ -27,7 +33,8 @@ const StyledMain = styled.main`
 `
 
 const StyledFooter = styled.header`
-  border-top: 1px solid #E0E0E0;
+  background-color: ${ds.colors.card};
+  border-top: 1px solid ${ds.colors.border};
   box-sizing: border-box;
   padding: 0 1rem;
 `
