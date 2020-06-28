@@ -55,18 +55,19 @@ export const Main = () => (
         </Card>
       </Pane>
       <Pane size='full'>
-        <>
+        <Card height={32}>
           <h2 className='pre-heading'>Second pane</h2>
           <h1>Full size</h1>
           <h2>Full window width</h2>
-        </>
+          <p>…but the Card has a custom height of <code>32rems</code>.</p>
+        </Card>
       </Pane>
       <Pane size='square'>
-        <>
+        <Card height='full'>
           <h2 className='pre-heading'>Third pane</h2>
           <h1>Square size</h1>
           <h2>It’s hip to be square</h2>
-        </>
+        </Card>
       </Pane>
       <Pane size='golden-horizontal'>
         <>
