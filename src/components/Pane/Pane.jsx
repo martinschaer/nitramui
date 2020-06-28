@@ -18,15 +18,31 @@ const debounce = (func, wait, immediate) => {
   }
 }
 
+const convertRemToPixels = (rem) => {
+  return rem * parseFloat(window.getComputedStyle(document.documentElement).fontSize)
+}
+
+const styleValueToPX = (value) => {
+  if (value.indexOf('px') !== -1) {
+    return parseFloat(value)
+  } else if (value.indexOf('rem') !== -1) {
+    return convertRemToPixels(parseFloat(value))
+  } else {
+    return parseFloat(value)
+  }
+}
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 const StyledPane = styled.div`
-  outline: 1px dashed #E0E0E0;
-  padding: 1rem;
-  overflow: scroll;
-  height: 100%;
   box-sizing: border-box;
+  height: 100%;
+  flex-shrink: 0;
+  padding: 1rem;
+  outline: 1px dashed #E0E0E0;
+  overflow: scroll;
+  max-width: 100%;
   width: ${
     props => props.size === 'full'
     ? '100%'
@@ -42,7 +58,6 @@ const StyledPane = styled.div`
     ? '25%'
     : '50em'
   };
-  flex-shrink: 0;
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -62,13 +77,17 @@ const Pane = ({
       let debouncedHandleResize
       let handleResize
       if (
-        size === 'square' ||
-        size === 'golden-horizontal' ||
-        size === 'golden-vertical'
+        window && (
+          size === 'square' ||
+          size === 'golden-horizontal' ||
+          size === 'golden-vertical'
+        )
       ) {
         handleResize = () => {
           const el = document.querySelector(`#${uid.current}`)
+          const elStyle = window.getComputedStyle(el)
           const h = el.offsetHeight
+          const winW = window.innerWidth
           switch (size) {
             case 'golden-horizontal':
               el.style.width = `${parseInt(h * GOLDEN_RATIO, 10)}px`
@@ -76,15 +95,16 @@ const Pane = ({
             case 'golden-vertical':
               el.style.width = `${parseInt(h / GOLDEN_RATIO, 10)}px`
               break
-            case 'sqaure':
+            case 'square':
             default:
-              el.style.width = `${h}px`
+              el.style.width = `${Math.min(h, winW)}px`
+              el.style.paddingBottom = `${h - Math.min(h, winW) + styleValueToPX(elStyle.paddingTop)}px`
           }
         }
         debouncedHandleResize = debounce(handleResize, 250)
         window.addEventListener('resize', debouncedHandleResize)
+        handleResize()
       }
-      if (handleResize) handleResize()
       return () => {
         if (debouncedHandleResize) window.removeEventListener('resize', debouncedHandleResize)
       }
