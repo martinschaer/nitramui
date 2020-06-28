@@ -1,5 +1,10 @@
 # NitramUI
 
+## Design principles
+
+- Convention over customization.
+- Complete abstraction from HTML/CSS, which means you can’t set custom classes or style attributes to the elements. Instead, components have their own size–variant properties. For example, Panes have a size property with options like: default, small, full, square, …
+
 ## Install
 
 Import custom fonts in your `index.html`:
@@ -18,5 +23,6 @@ This is due to an issue with @import and createGlobalStyle. Read more: [Note reg
 - [x] Headings font
 - [x] top and bottom fixed bars
 - [x] Add eslint
+- [x] Add themes (smooth, dark, high-contrast, …)
 - [ ] Pack using Rollup
 - [ ] Create custom font with Glyphsapp Mini
