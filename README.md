@@ -34,9 +34,9 @@ TODO: add instructions for ThemeProvider
 - [x] top and bottom fixed bars
 - [x] Add eslint
 - [x] Add themes (smooth, dark, high-contrast, …)
+- [x] Add box shadow to design system
 - [ ] Add instructions for ThemeProvider
 - [ ] Add a screenshot
 - [ ] Make smooth default theme when there is no ThemeProvider (test in Layout/Full story)
-- [ ] Add box shadow to design system
 - [ ] Pack using Rollup
 - [ ] Create custom font with Glyphsapp Mini
