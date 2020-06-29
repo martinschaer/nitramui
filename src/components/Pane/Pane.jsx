@@ -42,7 +42,7 @@ const StyledPane = styled.div`
   height: 100%;
   flex-shrink: 0;
   padding: 1rem;
-  outline: 1px dashed ${ds.colors.border};
+  outline: 1px dashed ${ds.colors.borderLight};
   overflow: scroll;
   max-width: 100%;
   width: ${
@@ -50,6 +50,8 @@ const StyledPane = styled.div`
     ? '100%'
     : props.size === 'small'
     ? '16rem'
+    : props.size === 'full-minus-small'
+    ? 'calc(100vw - 16rem)'
     : props.size === 'golden-width'
     ? `${100 / GOLDEN_RATIO}%`
     : props.size === 'golden-width-rest'
@@ -58,7 +60,8 @@ const StyledPane = styled.div`
     ? '33.3%'
     : props.size === 'fourth'
     ? '25%'
-    : '50em'
+    // default:
+    : '50rem'
   };
 `
 
@@ -134,6 +137,7 @@ Pane.propTypes = {
     'default',
     'small',
     'full',
+    'full-minus-small',
     'square',
     'golden-horizontal',
     'golden-vertical',
