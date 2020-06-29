@@ -48,8 +48,26 @@ strong {
   font-weight: 600;
 }
 
+button,
+input,
+select,
+textarea,
 code,
 pre {
   font-family: 'Inconsolata', monospace;
+}
+
+a {
+  text-decoration: none;
+  color: ${ds.colors.link};
+
+  &:visited {
+    color: ${ds.colors.linkVisited};
+  }
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
 }
 `
