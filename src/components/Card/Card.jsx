@@ -11,7 +11,7 @@ import ds from '../common/designSystem'
 const StyledCard = styled.div`
   background-color: ${ds.colors.card};
   box-sizing: border-box;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 1rem ${ds.colors.shadow};
   border: 1px solid ${ds.colors.cardBorder};
   border-radius: 0.5rem;
   padding: 2rem;
