@@ -4,6 +4,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/martinschaer/nitramui)](https://github.com/martinschaer/nitramui)
 [![npm](https://img.shields.io/npm/dm/nitramui)](https://www.npmjs.com/package/nitramui)
 ![GitHub](https://img.shields.io/github/license/martinschaer/nitramui)
+[![Join the chat at https://gitter.im/nitramui/community](https://badges.gitter.im/nitramui/community.svg)](https://gitter.im/nitramui/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ---
 
