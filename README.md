@@ -1,5 +1,7 @@
 # NitramUI
 
+[![Join the chat at https://gitter.im/nitramui/community](https://badges.gitter.im/nitramui/community.svg)](https://gitter.im/nitramui/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Don’t worry about design, HTML, and CSS. Just use NitramUI’s components, play around with options, select a built–in theme (or let the user select it), and focus on the rest.
 
 If you want to customize your project’s look and feel, this is not for you. This is for you if you want a design system which is lightweight, easy to use, and user–oriented.
