@@ -1,7 +1,7 @@
 {
   "name": "nitramui",
   "version": "0.1.0",
-  "description": "NitramUI framework",
+  "description": "UI framework for React projects.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
