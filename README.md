@@ -33,7 +33,7 @@ This is due to an issue with @import and createGlobalStyle. Read more: [Note reg
 
 TODO: add instructions for ThemeProvider
 
-## To-Do:
+## Roadmap
 
 - [x] Use Storybook
 - [x] Test reset using createGlobalStyle
@@ -43,10 +43,14 @@ TODO: add instructions for ThemeProvider
 - [x] Add eslint
 - [x] Add themes (smooth, dark, high-contrast, …)
 - [x] Add box shadow to design system
-- [ ] Add instructions for ThemeProvider
 - [ ] Add a screenshot
+- [ ] Add license
+- [ ] Add instructions for ThemeProvider
 - [ ] Make smooth default theme when there is no ThemeProvider (test in Layout/Full story)
-- [ ] Pack using Rollup
 - [ ] Add hook for dark mode
-- [ ] Create custom font with Glyphsapp Mini
+- [ ] Add guidelines for contributors
+- [ ] Is having funding/sponsors/buy-me-a-beer/bitcoin-wallet a good idea?
 - [ ] Add build badge
+- [ ] Add tests
+- [ ] Add tests coverage badge
+- [ ] Create custom font with Glyphsapp Mini
