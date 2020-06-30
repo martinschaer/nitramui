@@ -43,6 +43,7 @@ TODO: add instructions for ThemeProvider
 - [x] Add eslint
 - [x] Add themes (smooth, dark, high-contrast, …)
 - [x] Add box shadow to design system
+- [ ] Export GlobalStyle and ThemeProvider (do not export reset)
 - [ ] Add a screenshot
 - [ ] Add license
 - [ ] Add instructions for ThemeProvider
