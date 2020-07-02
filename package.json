@@ -1,6 +1,6 @@
 {
   "name": "nitramui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "UI framework for React projects.",
   "main": "index.js",
   "scripts": {
