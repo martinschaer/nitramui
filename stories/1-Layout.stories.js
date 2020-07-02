@@ -1,39 +1,26 @@
 import React from 'react'
-import {
-  createGlobalStyle,
-  ThemeProvider
-} from 'styled-components'
 import { withKnobs, optionsKnob } from '@storybook/addon-knobs'
 
 import {
-  reset,
   themes,
   modes,
-  global,
   Card,
+  Pane,
   Layout,
-  Pane
-} from '../src/components'
-
-const GlobalStyle = createGlobalStyle`
-  ${reset}
-  ${global}
-`
+  NitramUI
+} from '..'
 
 export default {
   title: 'Layout',
-  component: GlobalStyle,
+  component: Layout,
   decorators: [withKnobs]
 }
 
 export const Main = () => (
-  <ThemeProvider
-    theme={{
-      theme: optionsKnob('Theme', themes, 'smooth', { display: 'inline-radio' }, 'theme'),
-      mode: optionsKnob('Theme mode', modes, 'light', { display: 'inline-radio' }, 'theme')
-    }}
+  <NitramUI
+    theme={optionsKnob('Theme', themes, 'smooth', { display: 'inline-radio' }, 'theme')}
+    mode={optionsKnob('Theme mode', modes, 'light', { display: 'inline-radio' }, 'theme')}
   >
-    <GlobalStyle />
     <Layout>
       <Pane size='small'>
         <>
@@ -124,12 +111,14 @@ export const Main = () => (
         </>
       </Pane>
     </Layout>
-  </ThemeProvider>
+  </NitramUI>
 )
 
 export const Full = () => (
-  <>
-    <GlobalStyle />
+  <NitramUI
+    theme={optionsKnob('Theme', themes, 'smooth', { display: 'inline-radio' }, 'theme')}
+    mode={optionsKnob('Theme mode', modes, 'light', { display: 'inline-radio' }, 'theme')}
+  >
     <Layout>
       <Pane size='full'>
         <>
@@ -140,5 +129,5 @@ export const Full = () => (
         </>
       </Pane>
     </Layout>
-  </>
+  </NitramUI>
 )
