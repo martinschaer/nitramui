@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "acb6148d383c805011ce1e5529636789",
+    "revision": "8dc89bf8b68f32c04a8c0115824f5c20",
     "url": "/nitramui/index.html"
   },
   {

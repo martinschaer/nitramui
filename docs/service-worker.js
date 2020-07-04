@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/nitramui/precache-manifest.2636393186f2022c03e7f158788e93c6.js"
+  "/nitramui/precache-manifest.01febe6b6a5684333c09e6b343daef0c.js"
 );
 
 self.addEventListener('message', (event) => {
