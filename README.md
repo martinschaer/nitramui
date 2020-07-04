@@ -44,14 +44,17 @@ TODO: add instructions for ThemeProvider
 - [x] Add themes (smooth, dark, high-contrast, …)
 - [x] Add box shadow to design system
 - [x] Export GlobalStyle and ThemeProvider (do not export reset)
+- [x] Make smooth default theme when there is no ThemeProvider (test in Layout/Full story)
+- [x] Build NitramUI into a library
+- [ ] Add terser (https://www.npmjs.com/package/rollup-plugin-terser)
+- [ ] Move some dependencies to devDependencies/peerDependencies (does this prevent them to be installed when installed this package, for example popper.js which I think comes from storybook)
 - [ ] Add a screenshot
 - [ ] Add license
 - [ ] Add instructions for ThemeProvider
-- [ ] Make smooth default theme when there is no ThemeProvider (test in Layout/Full story)
 - [ ] Add hook for dark mode
 - [ ] Add guidelines for contributors
-- [ ] Is having funding/sponsors/buy-me-a-beer/bitcoin-wallet a good idea?
 - [ ] Add build badge
 - [ ] Add tests
 - [ ] Add tests coverage badge
+- [ ] Is having funding/sponsors/buy-me-a-beer/bitcoin-wallet a good idea?
 - [ ] Create custom font with Glyphsapp Mini

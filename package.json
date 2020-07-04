@@ -1,13 +1,18 @@
 {
   "name": "nitramui",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "UI framework for React projects.",
-  "main": "index.js",
+  "main": "build/nitramui.js",
+  "module": "build/nitramui.es.js",
+  "files": [
+    "build"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "lint": "eslint --ext .jsx,.js src/"
+    "lint": "eslint --ext .jsx,.js src/",
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -38,11 +43,18 @@
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
+    "@babel/preset-react": "^7.10.4",
+    "@rollup/plugin-babel": "^5.0.4",
+    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-node-resolve": "^8.1.0",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-links": "^5.3.19",
     "@storybook/addons": "^5.3.19",
     "@storybook/react": "^5.3.19",
     "babel-loader": "^8.1.0",
-    "babel-plugin-styled-components": "^1.10.7"
+    "babel-plugin-styled-components": "^1.10.7",
+    "rollup": "^2.18.2",
+    "rollup-plugin-peer-deps-external": "^2.2.3",
+    "rollup-plugin-postcss": "^3.1.2"
   }
 }

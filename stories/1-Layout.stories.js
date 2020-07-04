@@ -8,7 +8,7 @@ import {
   Pane,
   Layout,
   NitramUI
-} from '..'
+} from '../src'
 
 export default {
   title: 'Layout',

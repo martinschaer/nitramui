@@ -1,4 +1,5 @@
 {
+  "ignorePatterns": ["build/*.js"],
   "extends": [
     "react-app",
     "standard",
