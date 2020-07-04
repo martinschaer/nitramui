@@ -4038,6 +4038,21 @@ pre {
   font-family: 'Inconsolata', monospace;
 }
 
+pre {
+  overflow-x: scroll;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: ${designSystem.colors.bg};
+    border-radius: 0.25rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${designSystem.colors.fgMuted};
+    border-radius: 0.25rem;
+  }
+}
+
 a {
   text-decoration: none;
   color: ${designSystem.colors.link};
