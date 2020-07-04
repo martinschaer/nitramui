@@ -4086,7 +4086,7 @@ NitramUI.propTypes = {
 };
 NitramUI.defaultProps = {
   mode: 'light',
-  theme: 'default'
+  theme: 'smooth'
 };
 
 exports.Card = Card;

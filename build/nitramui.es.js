@@ -4079,7 +4079,7 @@ NitramUI.propTypes = {
 };
 NitramUI.defaultProps = {
   mode: 'light',
-  theme: 'default'
+  theme: 'smooth'
 };
 
 export { Card, Layout, NitramUI, Pane, modes, themes };
