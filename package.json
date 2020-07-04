@@ -12,7 +12,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run storybook",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook && rm -rf docs && mv storybook-static docs",
+    "build-storybook": "build-storybook -o docs",
     "lint": "eslint --ext .jsx,.js src/",
     "build": "rollup -c"
   },
