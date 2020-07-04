@@ -116,7 +116,7 @@ NitramUI.propTypes = {
 
 NitramUI.defaultProps = {
   mode: 'light',
-  theme: 'default'
+  theme: 'smooth'
 }
 
 export default NitramUI
