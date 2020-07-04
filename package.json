@@ -2,6 +2,7 @@
   "name": "nitramui",
   "version": "0.1.4",
   "description": "UI framework for React projects.",
+  "homepage": "https://martinschaer.github.io/nitramui/",
   "main": "build/nitramui.js",
   "module": "build/nitramui.es.js",
   "files": [
