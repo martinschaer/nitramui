@@ -1,6 +1,6 @@
 {
   "name": "nitramui",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "UI framework for React projects.",
   "main": "build/nitramui.js",
   "module": "build/nitramui.es.js",
