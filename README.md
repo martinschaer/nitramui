@@ -19,12 +19,13 @@ If you want to customize your project’s look and feel, this is not for you. Th
 
 ## Getting started
 
-### Fonts
+### Add fonts and root style
 
-Import custom fonts in your `index.html`:
+Add these lines in the head of your `index.html`:
 
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
+<style>#root { height: 100%; }</style>
 ```
 
 This is due to an issue with @import and createGlobalStyle. Read more: [Note regarding css @import and createGlobalStyle](https://styled-components.com/docs/faqs#note-regarding-css-import-and-createglobalstyle).
@@ -58,3 +59,8 @@ TODO: add instructions for ThemeProvider
 - [ ] Add tests coverage badge
 - [ ] Is having funding/sponsors/buy-me-a-beer/bitcoin-wallet a good idea?
 - [ ] Create custom font with Glyphsapp Mini
+
+## Useful articles:
+- [Guide to building a React components library with Rollup and styled-jsx](https://medium.com/@tomaszmularczyk89/guide-to-building-a-react-components-library-with-rollup-and-styled-jsx-694ec66bd2)
+- [Creating a React Component Library using Rollup, Typescript, Sass and Storybook](https://blog.harveydelaney.com/creating-your-own-react-component-library/)
+- [How to make a beautiful, tiny npm package and publish it](https://www.freecodecamp.org/news/how-to-make-a-beautiful-tiny-npm-package-and-publish-it-2881d4307f78/)
