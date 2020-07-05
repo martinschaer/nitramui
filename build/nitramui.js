@@ -3928,6 +3928,9 @@ const StyledMain = styled.main`
   flex-grow: 1;
   overflow-y: hidden;
   overflow-x: scroll;
+  /* Fixes nested overflow scroll: */
+  /* https://stackoverflow.com/questions/43539284/overflow-hidden-with-nested-overflow-scroll-not-working */
+  height: 100%;
 `;
 const StyledFooter = styled.header`
   background-color: ${designSystem.colors.card};
