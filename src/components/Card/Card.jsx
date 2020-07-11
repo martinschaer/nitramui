@@ -56,6 +56,14 @@ const StyledCard = styled.div`
   .pre-heading {
     margin-top: 0;
   }
+
+  & *:first-child {
+    margin-top: 0;
+  }
+
+  & *:last-child {
+    margin-bottom: 0;
+  }
 `
 
 const StyledCardHeader = styled.header`
