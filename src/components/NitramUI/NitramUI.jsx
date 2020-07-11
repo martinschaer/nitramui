@@ -63,6 +63,8 @@ pre {
 pre {
   overflow-x: scroll;
   overflow-y: auto;
+  padding: 0.5em;
+  background-color: ${ds.colors.tableStripe};
   &::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.5rem;
