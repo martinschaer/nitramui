@@ -26,6 +26,10 @@ export const App = () => {
       <Layout brand='Hi, Jonathan'>
         <Pane size='small'>
           <h2 className='pre-heading'>Menu</h2>
+          <p><button type='button'>Dashboard</button></p>
+          <p><button type='button'>Agenda</button></p>
+          <p><button type='button'>Clients</button></p>
+          <p><button type='button'>Settings</button></p>
         </Pane>
         <Pane size='full-minus-small'>
           {/* TODO: make it dynamic depending on the time of the day */}
@@ -130,6 +134,8 @@ export const App = () => {
               {/* -------------------------------------------------------------------------------------------------- */}
               <Card
                 size='small'
+                header='Header'
+                footer='Footer'
               >
                 <p>Lorem ipsum</p>
               </Card>
