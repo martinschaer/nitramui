@@ -14,8 +14,8 @@ If you want to customize your project’s look and feel, this is not for you. Th
 
 ## Light and Dark Modes
 
-![Screenshot](nitramui.png)
-![Screenshot](nitramui-dark.png)
+![Screenshot](https://raw.githubusercontent.com/martinschaer/nitramui/master/nitramui.png)
+![Screenshot](https://raw.githubusercontent.com/martinschaer/nitramui/master/nitramui-dark.png)
 
 ## Design principles
 
