@@ -45,7 +45,7 @@ const designSystem = {
       [themes.smooth]:
         theme('mode', {
           [modes.light]: BLACK_30,
-          [modes.dark]: GALLERY
+          [modes.dark]: EMPEROR
         }),
       [themes.hiContrast]:
         theme('mode', {
@@ -81,7 +81,7 @@ const designSystem = {
       [themes.smooth]:
         theme('mode', {
           [modes.light]: BLACK_10,
-          [modes.dark]: BLACK_10
+          [modes.dark]: MINE_SHAFT
         }),
       [themes.hiContrast]:
         theme('mode', {

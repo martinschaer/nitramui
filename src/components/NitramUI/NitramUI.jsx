@@ -114,11 +114,12 @@ button {
 
   &:disabled {
     color: ${ds.colors.fgMuted};
+    border-color: ${ds.colors.borderLight};
     cursor: default;
 
     &:hover,
     &:focus {
-      border-color: ${ds.colors.border};
+      border-color: ${ds.colors.borderLight};
     }
   }
 }
