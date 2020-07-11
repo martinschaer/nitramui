@@ -11,6 +11,9 @@ import {
 // ---------------------------------------------------------------------------------------------------------------------
 import reset from '../common/reset'
 import ds from '../common/designSystem'
+import {
+  preHeadingStyles
+} from '../common/typography'
 
 // TODO: Put in another file
 const global = createGlobalStyle`
@@ -36,11 +39,7 @@ h6 {
   font-weight: 200;
 
   &.pre-heading {
-    color: ${ds.colors.fgMuted};
-    letter-spacing: ${1 / 12}em;
-    text-transform: uppercase;
-    font-size: .8rem;
-    font-weight: 600;
+    ${preHeadingStyles}
     margin: 1em 0;
   }
 }
