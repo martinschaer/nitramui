@@ -125,18 +125,6 @@ const designSystem = {
           [modes.dark]: 'none'
         })
     }),
-    nestedShadow: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: BLACK_10,
-          [modes.dark]: BLACK_30
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: 'none',
-          [modes.dark]: 'none'
-        })
-    }),
     link: theme('theme', {
       [themes.smooth]:
         theme('mode', {

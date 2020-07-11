@@ -50,7 +50,7 @@ const StyledCard = styled.div`
   & & {
     background-color: ${ds.colors.card};
     border: 1px solid ${ds.colors.border};
-    box-shadow: 0 0 0.5rem ${ds.colors.nestedShadow};
+    box-shadow: none;
   }
 
   .pre-heading {
