@@ -2,7 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+// ---------------------------------------------------------------------------------------------------------------------
+// Local imports
+// ---------------------------------------------------------------------------------------------------------------------
 import ds from '../common/designSystem'
+import Container from '../Container'
+import {
+  preHeadingStyles
+} from '../common/typography'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
@@ -14,7 +21,10 @@ const StyledCard = styled.div`
   box-shadow: 0 0 1rem ${ds.colors.shadow};
   border: 1px solid ${ds.colors.cardBorder};
   border-radius: 0.5rem;
-  padding: 2rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
   height: ${props =>
     props.h === 'full'
     ? '100%'
@@ -22,23 +32,79 @@ const StyledCard = styled.div`
     ? `${props.h}rem`
     : 'auto'
   };
+  min-width: ${props =>
+    props.size === 'small'
+    ? '32rem'
+    : 'auto'
+  };
+  width: ${props =>
+    props.size === 'small'
+    ? '33%'
+    : 'auto'
+  };
+
+  ${Container} > & {
+    margin: 1rem;
+  }
+
+  & & {
+    background-color: ${ds.colors.nestedCard};
+    border: 1px solid ${ds.colors.nestedBorder};
+    box-shadow: 0 0 0.5rem ${ds.colors.nestedShadow};
+  }
+
+  .pre-heading {
+    margin-top: 0;
+  }
+`
+
+const StyledCardHeader = styled.header`
+  background-color: ${ds.colors.cardHeader};
+  border-bottom: 1px solid ${ds.colors.cardBorder};
+  padding: 0.5rem 1rem;
+  ${preHeadingStyles}
+`
+
+const StyledCardBody = styled.main`
+  padding: 2rem;
+`
+
+const StyledCardFooter = styled.footer`
+  background-color: ${ds.colors.cardHeader};
+  border-top: 1px solid ${ds.colors.cardBorder};
+  padding: 0.5rem 1rem;
+  text-align: right;
+  margin-top: auto;
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 const Card = ({
+  size,
+  header,
+  footer,
   height,
-  children
+  children,
+  noPadding
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
   return (
     <StyledCard
+      size={size}
       h={height}
     >
-      {children}
+      {header && (<StyledCardHeader>{header}</StyledCardHeader>)}
+      {noPadding ? (
+        children
+      ) : (
+        <StyledCardBody>
+          {children}
+        </StyledCardBody>
+      )}
+      {footer && (<StyledCardFooter>{footer}</StyledCardFooter>)}
     </StyledCard>
   )
 }
@@ -48,7 +114,14 @@ const Card = ({
 // ---------------------------------------------------------------------------------------------------------------------
 Card.propTypes = {
   children: PropTypes.node,
-  height: PropTypes.oneOfType([PropTypes.oneOf(['default', 'full']), PropTypes.number])
+  header: PropTypes.node,
+  footer: PropTypes.node,
+  size: PropTypes.oneOf([
+    'auto',
+    'small'
+  ]),
+  height: PropTypes.oneOfType([PropTypes.oneOf(['default', 'full']), PropTypes.number]),
+  noPadding: PropTypes.bool
 }
 Card.defaultProps = {
   height: 'default'

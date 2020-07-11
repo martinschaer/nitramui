@@ -84,11 +84,47 @@ const designSystem = {
           [modes.dark]: '#000'
         })
     }),
-    cardBorder: theme('theme', {
+    cardHeader: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: '#f8f8f8',
+          [modes.dark]: '#181818'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: '#fff',
+          [modes.dark]: '#000'
+        })
+    }),
+    nestedCard: theme('theme', {
       [themes.smooth]:
         theme('mode', {
           [modes.light]: '#fff',
+          [modes.dark]: '#282828'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: '#fff',
+          [modes.dark]: '#000'
+        })
+    }),
+    cardBorder: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: '#f0f0f0',
           [modes.dark]: '#1f1f1f'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: '#101010',
+          [modes.dark]: '#fff'
+        })
+    }),
+    nestedBorder: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: '#f0f0f0',
+          [modes.dark]: '#141414'
         }),
       [themes.hiContrast]:
         theme('mode', {
@@ -101,6 +137,18 @@ const designSystem = {
         theme('mode', {
           [modes.light]: 'rgba(0, 0, 0, 0.1)',
           [modes.dark]: 'rgba(0, 0, 0, 1)'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: 'none',
+          [modes.dark]: 'none'
+        })
+    }),
+    nestedShadow: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: 'rgba(0, 0, 0, 0.05)',
+          [modes.dark]: 'rgba(0, 0, 0, 0.3)'
         }),
       [themes.hiContrast]:
         theme('mode', {
