@@ -111,6 +111,16 @@ button {
   &:active {
     background-color: ${ds.colors.card};
   }
+
+  &:disabled {
+    color: ${ds.colors.fgMuted};
+    cursor: default;
+
+    &:hover,
+    &:focus {
+      border-color: ${ds.colors.border};
+    }
+  }
 }
 `
 
