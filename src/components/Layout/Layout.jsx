@@ -44,10 +44,12 @@ const Layout = ({ brand, children }) => {
   // -------------------------------------------------------------------------------------------------------------------
   return (
     <StyledLayout>
-      <StyledHeader>
-        {/* TODO: Move to prop */}
-        <h1 className='pre-heading'>{brand}</h1>
-      </StyledHeader>
+      {brand && (
+        <StyledHeader>
+          {/* TODO: Move to prop */}
+          <h1 className='pre-heading'>{brand}</h1>
+        </StyledHeader>
+      )}
       <StyledMain>
         {children}
       </StyledMain>
