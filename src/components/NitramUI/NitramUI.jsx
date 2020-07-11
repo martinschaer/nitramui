@@ -52,7 +52,6 @@ strong {
   font-weight: 600;
 }
 
-button,
 input,
 select,
 textarea,
@@ -76,6 +75,10 @@ pre {
   }
 }
 
+p img {
+  max-width: 100%;
+}
+
 a {
   text-decoration: none;
   color: ${ds.colors.link};
@@ -90,8 +93,24 @@ a {
   }
 }
 
-p img {
-  max-width: 100%;
+button {
+  line-height: 2em;
+  padding: 0 1em;
+  border: 1px solid ${ds.colors.border};
+  background-color: transparent;
+  color: ${ds.colors.fg};
+  border-radius: 0.25rem;
+  cursor: pointer;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: ${ds.colors.fg};
+  }
+
+  &:active {
+    background-color: ${ds.colors.card};
+  }
 }
 `
 
