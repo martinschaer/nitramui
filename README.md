@@ -12,6 +12,11 @@ Don’t worry about design, HTML, and CSS. Just use NitramUI’s components, pla
 
 If you want to customize your project’s look and feel, this is not for you. This is for you if you want a design system which is lightweight, easy to use, and user–oriented.
 
+## Light and Dark Modes
+
+![Screenshot](nitramui.png)
+![Screenshot](nitramui-dark.png)
+
 ## Design principles
 
 - Convention over customization.
@@ -32,7 +37,9 @@ This is due to an issue with @import and createGlobalStyle. Read more: [Note reg
 
 ### Themes
 
-TODO: add instructions for ThemeProvider
+TO-DO: add instructions for ThemeProvider
+
+TO-DO: add screenshots
 
 ## Roadmap
 
@@ -47,9 +54,12 @@ TODO: add instructions for ThemeProvider
 - [x] Export GlobalStyle and ThemeProvider (do not export reset)
 - [x] Make smooth default theme when there is no ThemeProvider (test in Layout/Full story)
 - [x] Build NitramUI into a library
+- [x] Add a screenshot
+- [ ] Have the outter pane have the scroll. E.g: default pane inside full-width pane
+- [ ] Center panes horizontally
+- [ ] Responsive layout (what to do with the sidebar pane?)
 - [ ] Add terser (https://www.npmjs.com/package/rollup-plugin-terser)
 - [ ] Move some dependencies to devDependencies/peerDependencies (does this prevent them to be installed when installed this package, for example popper.js which I think comes from storybook)
-- [ ] Add a screenshot
 - [ ] Add license
 - [ ] Add instructions for ThemeProvider
 - [ ] Add hook for dark mode
