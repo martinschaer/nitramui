@@ -12,6 +12,8 @@ Don’t worry about design, HTML, and CSS. Just use NitramUI’s components, pla
 
 If you want to customize your project’s look and feel, this is not for you. This is for you if you want a design system which is lightweight, easy to use, and user–oriented.
 
+Head over to the [Demo](https://martinschaer.github.io/nitramui).
+
 ## Light and Dark Modes
 
 ![Screenshot](https://raw.githubusercontent.com/martinschaer/nitramui/master/nitramui.png)
