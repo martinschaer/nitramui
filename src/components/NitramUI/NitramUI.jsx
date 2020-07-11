@@ -89,6 +89,10 @@ a {
     text-decoration: underline;
   }
 }
+
+p img {
+  max-width: 100%;
+}
 `
 
 const GlobalStyle = createGlobalStyle`
