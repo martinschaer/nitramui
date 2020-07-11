@@ -113,10 +113,40 @@ const designSystem = {
         [modes.dark]: '#000'
       })
     }),
-    cardBorder: styledTheming('theme', {
+    cardHeader: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: '#f8f8f8',
+        [modes.dark]: '#181818'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: '#fff',
+        [modes.dark]: '#000'
+      })
+    }),
+    nestedCard: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: '#fff',
+        [modes.dark]: '#282828'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: '#fff',
+        [modes.dark]: '#000'
+      })
+    }),
+    cardBorder: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: '#f0f0f0',
         [modes.dark]: '#1f1f1f'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: '#101010',
+        [modes.dark]: '#fff'
+      })
+    }),
+    nestedBorder: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: '#f0f0f0',
+        [modes.dark]: '#141414'
       }),
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: '#000',
@@ -127,6 +157,16 @@ const designSystem = {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: 'rgba(0, 0, 0, 0.1)',
         [modes.dark]: 'rgba(0, 0, 0, 1)'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'none',
+        [modes.dark]: 'none'
+      })
+    }),
+    nestedShadow: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'rgba(0, 0, 0, 0.05)',
+        [modes.dark]: 'rgba(0, 0, 0, 0.3)'
       }),
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: 'none',
@@ -3757,6 +3797,46 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test' && 
   window['__styled-components-init__'] += 1;
 }
 
+// Local imports
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
+// Styled Components
+// ---------------------------------------------------------------------------------------------------------------------
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: flex-start;
+  margin: ${props => props.pushMargin ? '-1rem' : '0'};
+  ${props => props.scroll === 'vertical' ? `
+      overflow-y: scroll;
+      overflow-x: hidden;
+      flex-wrap: wrap;
+    ` : `
+      overflow-y: hidden;
+      overflow-x: scroll;
+      /* Fixes nested overflow scroll: */
+      /* https://stackoverflow.com/questions/43539284/overflow-hidden-with-nested-overflow-scroll-not-working */
+      height: 100%;
+    `}
+  min-width: 100%;
+`; // ---------------------------------------------------------------------------------------------------------------------
+// PropTypes, defaults & export
+// ---------------------------------------------------------------------------------------------------------------------
+
+Container.propTypes = {
+  children: propTypes.node,
+  pushMargin: propTypes.bool,
+  scroll: propTypes.oneOf(['horizontal', 'vertical'])
+};
+Container.defaultProps = {
+  pushMargin: false,
+  scroll: 'horizontal'
+};
+
+const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:600;"], designSystem.colors.fgMuted, 1 / 12);
+
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 // StyledCard height property is called h so that it doesn’t appear in the resulting DOM node.
@@ -3767,22 +3847,62 @@ const StyledCard = styled.div`
   box-shadow: 0 0 1rem ${designSystem.colors.shadow};
   border: 1px solid ${designSystem.colors.cardBorder};
   border-radius: 0.5rem;
-  padding: 2rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
   height: ${props => props.h === 'full' ? '100%' : typeof props.h === 'number' ? `${props.h}rem` : 'auto'};
+  min-width: ${props => props.size === 'small' ? '32rem' : 'auto'};
+  width: ${props => props.size === 'small' ? '33%' : 'auto'};
+
+  ${Container} > & {
+    margin: 1rem;
+  }
+
+  & & {
+    background-color: ${designSystem.colors.nestedCard};
+    border: 1px solid ${designSystem.colors.nestedBorder};
+    box-shadow: 0 0 0.5rem ${designSystem.colors.nestedShadow};
+  }
+
+  .pre-heading {
+    margin-top: 0;
+  }
+`;
+const StyledCardHeader = styled.header`
+  background-color: ${designSystem.colors.cardHeader};
+  border-bottom: 1px solid ${designSystem.colors.cardBorder};
+  padding: 0.5rem 1rem;
+  ${preHeadingStyles}
+`;
+const StyledCardBody = styled.main`
+  padding: 2rem;
+`;
+const StyledCardFooter = styled.footer`
+  background-color: ${designSystem.colors.cardHeader};
+  border-top: 1px solid ${designSystem.colors.cardBorder};
+  padding: 0.5rem 1rem;
+  text-align: right;
+  margin-top: auto;
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
 const Card = ({
+  size,
+  header,
+  footer,
   height,
-  children
+  children,
+  noPadding
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
   return /*#__PURE__*/React__default.createElement(StyledCard, {
+    size: size,
     h: height
-  }, children);
+  }, header && /*#__PURE__*/React__default.createElement(StyledCardHeader, null, header), noPadding ? children : /*#__PURE__*/React__default.createElement(StyledCardBody, null, children), footer && /*#__PURE__*/React__default.createElement(StyledCardFooter, null, footer));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
@@ -3790,7 +3910,11 @@ const Card = ({
 
 Card.propTypes = {
   children: propTypes.node,
-  height: propTypes.oneOfType([propTypes.oneOf(['default', 'full']), propTypes.number])
+  header: propTypes.node,
+  footer: propTypes.node,
+  size: propTypes.oneOf(['auto', 'small']),
+  height: propTypes.oneOfType([propTypes.oneOf(['default', 'full']), propTypes.number]),
+  noPadding: propTypes.bool
 };
 Card.defaultProps = {
   height: 'default'
@@ -3910,6 +4034,54 @@ Pane.defaultProps = {
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
+const StyledTable = styled.table`
+  display: table;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: -1px;
+  width: calc(100% + 2px);
+
+  thead, tfoot {
+    background-color: ${designSystem.colors.cardHeader};
+  }
+
+  th, td {
+    border: 1px solid ${designSystem.colors.nestedBorder};
+    padding: 0.5rem 1rem;
+  }
+
+  th {
+    ${preHeadingStyles}
+    text-align: left;
+  }
+
+  tr:nth-child(2n) {
+    background-color: ${designSystem.colors.borderLight};
+  }
+`; // ---------------------------------------------------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------------------------------------------------
+
+const Table = ({
+  children
+}) => {
+  // -------------------------------------------------------------------------------------------------------------------
+  // Render
+  // -------------------------------------------------------------------------------------------------------------------
+  return /*#__PURE__*/React__default.createElement(StyledTable, null, children);
+}; // ---------------------------------------------------------------------------------------------------------------------
+// PropTypes, defaults & export
+// ---------------------------------------------------------------------------------------------------------------------
+
+
+Table.propTypes = {
+  children: propTypes.node
+};
+Table.defaultProps = {};
+
+// Styled Components
+// ---------------------------------------------------------------------------------------------------------------------
+
 const StyledLayout = styled.div`
   display: flex;
   flex-direction: column;
@@ -3921,16 +4093,8 @@ const StyledHeader = styled.header`
   box-sizing: border-box;
   padding: 0 1rem;
 `;
-const StyledMain = styled.main`
+const StyledMain = styled(Container)`
   background-color: ${designSystem.colors.bg};
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  overflow-y: hidden;
-  overflow-x: scroll;
-  /* Fixes nested overflow scroll: */
-  /* https://stackoverflow.com/questions/43539284/overflow-hidden-with-nested-overflow-scroll-not-working */
-  height: 100%;
 `;
 const StyledFooter = styled.header`
   background-color: ${designSystem.colors.card};
@@ -3942,6 +4106,7 @@ const StyledFooter = styled.header`
 // ---------------------------------------------------------------------------------------------------------------------
 
 const Layout = ({
+  brand,
   children
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
@@ -3949,15 +4114,16 @@ const Layout = ({
   // -------------------------------------------------------------------------------------------------------------------
   return /*#__PURE__*/React__default.createElement(StyledLayout, null, /*#__PURE__*/React__default.createElement(StyledHeader, null, /*#__PURE__*/React__default.createElement("h1", {
     className: "pre-heading"
-  }, "Nitram UI")), /*#__PURE__*/React__default.createElement(StyledMain, null, children), /*#__PURE__*/React__default.createElement(StyledFooter, null, /*#__PURE__*/React__default.createElement("h5", {
+  }, brand)), /*#__PURE__*/React__default.createElement(StyledMain, null, children), /*#__PURE__*/React__default.createElement(StyledFooter, null, /*#__PURE__*/React__default.createElement("h5", {
     className: "pre-heading"
-  }, "Footer")));
+  }, "Copyright \xA9 2020")));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
 
 
 Layout.propTypes = {
+  brand: propTypes.node,
   children: propTypes.node
 };
 Layout.defaultProps = {};
@@ -4015,11 +4181,7 @@ h6 {
   font-weight: 200;
 
   &.pre-heading {
-    color: ${designSystem.colors.fgMuted};
-    letter-spacing: ${1 / 12}em;
-    text-transform: uppercase;
-    font-size: .8rem;
-    font-weight: 600;
+    ${preHeadingStyles}
     margin: 1em 0;
   }
 }
@@ -4069,6 +4231,10 @@ a {
     text-decoration: underline;
   }
 }
+
+p img {
+  max-width: 100%;
+}
 `;
 const GlobalStyle$1 = createGlobalStyle`
   ${css_248z}
@@ -4108,9 +4274,11 @@ NitramUI.defaultProps = {
 };
 
 exports.Card = Card;
+exports.Container = Container;
 exports.Layout = Layout;
 exports.NitramUI = NitramUI;
 exports.Pane = Pane;
+exports.Table = Table;
 exports.modes = modes;
 exports.themes = themes;
 //# sourceMappingURL=nitramui.js.map
