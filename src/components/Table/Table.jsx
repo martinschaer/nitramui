@@ -21,11 +21,12 @@ const StyledTable = styled.table`
   width: calc(100% + 2px);
 
   thead, tfoot {
-    background-color: ${ds.colors.cardHeader};
+    background-color: ${ds.colors.bg};
+    color: ${ds.colors.fg};
   }
 
   th, td {
-    border: 1px solid ${ds.colors.nestedBorder};
+    border: 1px solid ${ds.colors.border};
     padding: 0.5rem 1rem;
   }
 
@@ -35,7 +36,7 @@ const StyledTable = styled.table`
   }
 
   tr:nth-child(2n) {
-    background-color: ${ds.colors.borderLight};
+    background-color: ${ds.colors.tableStripe};
   }
 `
 

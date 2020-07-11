@@ -48,8 +48,8 @@ const StyledCard = styled.div`
   }
 
   & & {
-    background-color: ${ds.colors.nestedCard};
-    border: 1px solid ${ds.colors.nestedBorder};
+    background-color: ${ds.colors.card};
+    border: 1px solid ${ds.colors.border};
     box-shadow: 0 0 0.5rem ${ds.colors.nestedShadow};
   }
 
@@ -59,9 +59,8 @@ const StyledCard = styled.div`
 `
 
 const StyledCardHeader = styled.header`
-  background-color: ${ds.colors.cardHeader};
   border-bottom: 1px solid ${ds.colors.cardBorder};
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   ${preHeadingStyles}
 `
 
@@ -70,9 +69,8 @@ const StyledCardBody = styled.main`
 `
 
 const StyledCardFooter = styled.footer`
-  background-color: ${ds.colors.cardHeader};
   border-top: 1px solid ${ds.colors.cardBorder};
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   text-align: right;
   margin-top: auto;
 `
