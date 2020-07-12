@@ -56,6 +56,10 @@ export const App = () => {
                     <Label heading>Plans ending soon</Label>
                     <button type='button'>See all</button>
                     <button type='button'>See all</button>
+                    <button type='button'>See all</button>
+                    <button type='button'>See all</button>
+                    <button type='button'>See all</button>
+                    <button type='button'>See all</button>
                   </>
                 }
                 footer={(
@@ -76,25 +80,25 @@ export const App = () => {
                     <tr>
                       <td>Martin</td>
                       <td>4 days</td>
-                      <td>On track</td>
+                      <td><span role='img' aria-label='calenar emoji' className='mrs fw'>🟢</span> On track</td>
                       <td>Chisco</td>
                     </tr>
                     <tr>
                       <td>María Fernanda</td>
                       <td>7 days</td>
-                      <td>Needs attention</td>
+                      <td><span role='img' aria-label='calenar emoji' className='mrs fw'>🔴</span> Needs attention</td>
                       <td>Chisco</td>
                     </tr>
                     <tr>
                       <td>2 weeks+ (17/JUL)</td>
                       <td>Johan</td>
-                      <td>Take a look</td>
+                      <td><span role='img' aria-label='calenar emoji' className='mrs fw'>🟡</span> Take a look</td>
                       <td>Chisco</td>
                     </tr>
                     <tr>
                       <td>Chisco</td>
                       <td>4 weeks+ (31/JUL)</td>
-                      <td>On track</td>
+                      <td><span role='img' aria-label='calenar emoji' className='mrs fw'>🟢</span> On track</td>
                       <td>Chisco</td>
                     </tr>
                   </tbody>
@@ -155,11 +159,15 @@ export const App = () => {
                     <Label heading>Footer</Label>
                     <Label>Footer</Label>
                     <button type='button'>Ok</button>
+                    <Label>Footer</Label>
                   </>
                 }
               >
                 <p>Lorem ipsum, <a href='/'>dolor sit amed</a></p>
-                <p><button type='button'>More</button></p>
+                <p>
+                  <button type='button'>More</button>
+                  <button type='button'>More</button>
+                </p>
               </Card>
             </Container>
           </Card>
