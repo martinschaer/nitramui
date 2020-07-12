@@ -53,30 +53,34 @@ const StyledCard = styled.div`
   .pre-heading {
     margin-top: 0;
   }
-
-  & *:first-child {
-    margin-top: 0;
-  }
-
-  & *:last-child {
-    margin-bottom: 0;
-  }
 `
 
 const StyledCardHeader = styled.header`
   border-bottom: 1px solid ${ds.colors.cardBorder};
-  padding: 0.5rem;
+  padding: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
 `
 
 const StyledCardBody = styled.main`
   padding: 2rem;
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+
+  & > *:last-child {
+    margin-bottom: 0;
+  }
 `
 
 const StyledCardFooter = styled.footer`
   border-top: 1px solid ${ds.colors.cardBorder};
-  padding: 0.5rem;
-  text-align: right;
+  padding: 0.25rem;
+  justify-content: flex-end;
   margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
 `
 
 // ---------------------------------------------------------------------------------------------------------------------

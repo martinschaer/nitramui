@@ -77,8 +77,18 @@ pre {
   }
 }
 
-p img {
-  max-width: 100%;
+p {
+  img {
+    max-width: 100%;
+  }
+
+  & > button:first-child {
+    margin-left: 0;
+  }
+
+  & > button:last-child {
+    margin-right: 0;
+  }
 }
 
 a {
@@ -101,6 +111,7 @@ button {
   background-color: transparent;
   color: ${ds.colors.fg};
   border-radius: 0.25rem;
+  box-sizing: border-box;
   cursor: pointer;
 
   &:hover,
@@ -128,9 +139,15 @@ button {
 .mr {
   margin-right: 1em !important;
 }
+.mrs {
+  margin-right: .5em !important;
+}
 
 .ml {
   margin-left: 1em !important;
+}
+.mls {
+  margin-left: .5em !important;
 }
 
 .fw {

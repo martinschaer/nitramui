@@ -17,9 +17,11 @@ export const preHeadingStyles = css`
 export const labelStyles = css`
   line-height: 2em;
   padding: 0 1em;
-  margin-right: 0.5rem;
+  display: inline-block;
+  margin: 0.25rem;
+  /* margin-right: 0.5rem; */
 
-  &:last-child {
+  /* &:last-child {
     margin-right: 0;
-  }
+  } */
 `

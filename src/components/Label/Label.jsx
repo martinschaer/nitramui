@@ -17,6 +17,9 @@ const Label = styled.span`
   ${labelStyles}
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
+  ${props => props.heading && 'line-height: 2.2em;'}
+  padding-top: 1px;
+  padding-bottom: 1px ;
   /* &:first-child {
     padding-left: 0;
   }
