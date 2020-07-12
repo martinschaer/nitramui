@@ -2,6 +2,7 @@ import theme from 'styled-theming'
 
 const WHITE = '#fff'
 const GALLERY = '#f0f0f0'
+const MERCURY = '#E5E5E5'
 const EMPEROR = '#535353'
 const MINE_SHAFT = '#282828'
 const COD_GRAY_LIGHT = '#181818'
@@ -68,7 +69,7 @@ const designSystem = {
     border: theme('theme', {
       [themes.smooth]:
         theme('mode', {
-          [modes.light]: BLACK_10,
+          [modes.light]: MERCURY,
           [modes.dark]: MINE_SHAFT
         }),
       [themes.hiContrast]:
