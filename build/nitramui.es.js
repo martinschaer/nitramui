@@ -36,6 +36,22 @@ theme.variants = function(name, prop, values) {
 
 var styledTheming = theme;
 
+const WHITE = '#fff';
+const GALLERY = '#f0f0f0';
+const MERCURY = '#E5E5E5';
+const EMPEROR = '#535353';
+const MINE_SHAFT = '#282828';
+const COD_GRAY_LIGHT = '#181818';
+const COD_GRAY = '#101010';
+const BLACK = '#000';
+const BLACK_3 = 'rgba(0, 0, 0, 0.03)';
+const BLACK_10 = 'rgba(0, 0, 0, 0.1)';
+const BLACK_30 = 'rgba(0, 0, 0, 0.3)';
+const YELLOW = '#ff0';
+const BLUE = '#00f';
+const LIMA = '#75d41d';
+const BLUEVIOLET = 'blueviolet'; // #8A2BE2
+
 const themes = {
   smooth: 'smooth',
   hiContrast: 'hiContrast'
@@ -48,118 +64,78 @@ const designSystem = {
   colors: {
     fg: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
-        [modes.light]: '#535353',
-        [modes.dark]: '#f0f0f0'
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
       }),
       [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: '#000',
-        [modes.dark]: '#fff'
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
       })
     }),
     fgMuted: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
-        [modes.light]: '#aeaeae',
-        [modes.dark]: '#e0e0e0'
+        [modes.light]: BLACK_30,
+        [modes.dark]: EMPEROR
       }),
       [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: '#666',
-        [modes.dark]: '#666'
+        [modes.light]: EMPEROR,
+        [modes.dark]: EMPEROR
       })
     }),
     bg: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
-        [modes.light]: '#f0f0f0',
-        [modes.dark]: '#101010'
+        [modes.light]: GALLERY,
+        [modes.dark]: COD_GRAY
       }),
       [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: '#fff',
-        [modes.dark]: '#000'
+        [modes.light]: WHITE,
+        [modes.dark]: BLACK
       })
     }),
     border: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
-        [modes.light]: '#E0E0E0',
-        [modes.dark]: '#0f0f0f'
+        [modes.light]: MERCURY,
+        [modes.dark]: MINE_SHAFT
       }),
       [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: '#000',
-        [modes.dark]: '#fff'
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
       })
     }),
     borderLight: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'rgba(0,0,0,.05)',
-        [modes.dark]: 'rgba(0,0,0,.1)'
+        [modes.light]: BLACK_10,
+        [modes.dark]: MINE_SHAFT
       }),
       [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'rgba(0,0,0,.05)',
-        [modes.dark]: 'rgba(255,255,255,.1)'
+        [modes.light]: BLACK_10,
+        [modes.dark]: MINE_SHAFT
       })
     }),
     card: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
-        [modes.light]: '#fff',
-        [modes.dark]: '#1f1f1f'
+        [modes.light]: WHITE,
+        [modes.dark]: COD_GRAY_LIGHT
       }),
       [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: '#fff',
-        [modes.dark]: '#000'
-      })
-    }),
-    cardHeader: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: '#f8f8f8',
-        [modes.dark]: '#181818'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: '#fff',
-        [modes.dark]: '#000'
-      })
-    }),
-    nestedCard: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: '#fff',
-        [modes.dark]: '#282828'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: '#fff',
-        [modes.dark]: '#000'
+        [modes.light]: WHITE,
+        [modes.dark]: BLACK
       })
     }),
     cardBorder: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
-        [modes.light]: '#f0f0f0',
-        [modes.dark]: '#1f1f1f'
+        [modes.light]: GALLERY,
+        [modes.dark]: MINE_SHAFT
       }),
       [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: '#101010',
-        [modes.dark]: '#fff'
-      })
-    }),
-    nestedBorder: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: '#f0f0f0',
-        [modes.dark]: '#141414'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: '#000',
-        [modes.dark]: '#fff'
+        [modes.light]: COD_GRAY,
+        [modes.dark]: WHITE
       })
     }),
     shadow: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'rgba(0, 0, 0, 0.1)',
-        [modes.dark]: 'rgba(0, 0, 0, 1)'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'none',
-        [modes.dark]: 'none'
-      })
-    }),
-    nestedShadow: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'rgba(0, 0, 0, 0.05)',
-        [modes.dark]: 'rgba(0, 0, 0, 0.3)'
+        [modes.light]: BLACK_10,
+        [modes.dark]: BLACK_10
       }),
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: 'none',
@@ -168,22 +144,32 @@ const designSystem = {
     }),
     link: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'blue',
-        [modes.dark]: '#ff0'
+        [modes.light]: BLUE,
+        [modes.dark]: YELLOW
       }),
       [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'blue',
-        [modes.dark]: '#ff0'
+        [modes.light]: BLUE,
+        [modes.dark]: YELLOW
       })
     }),
     linkVisited: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'blueviolet',
-        [modes.dark]: '#75d41d'
+        [modes.light]: BLUEVIOLET,
+        [modes.dark]: LIMA
       }),
       [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'blueviolet',
-        [modes.dark]: '#75d41d'
+        [modes.light]: BLUEVIOLET,
+        [modes.dark]: LIMA
+      })
+    }),
+    tableStripe: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: BLACK_30
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: GALLERY,
+        [modes.dark]: COD_GRAY
       })
     })
   }
@@ -3828,8 +3814,6 @@ Container.defaultProps = {
   scroll: 'horizontal'
 };
 
-const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:600;"], designSystem.colors.fgMuted, 1 / 12);
-
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 // StyledCard height property is called h so that it doesn’t appear in the resulting DOM node.
@@ -3853,9 +3837,9 @@ const StyledCard = styled.div`
   }
 
   & & {
-    background-color: ${designSystem.colors.nestedCard};
-    border: 1px solid ${designSystem.colors.nestedBorder};
-    box-shadow: 0 0 0.5rem ${designSystem.colors.nestedShadow};
+    background-color: ${designSystem.colors.card};
+    border: 1px solid ${designSystem.colors.border};
+    box-shadow: none;
   }
 
   .pre-heading {
@@ -3863,20 +3847,29 @@ const StyledCard = styled.div`
   }
 `;
 const StyledCardHeader = styled.header`
-  background-color: ${designSystem.colors.cardHeader};
   border-bottom: 1px solid ${designSystem.colors.cardBorder};
-  padding: 0.5rem 1rem;
-  ${preHeadingStyles}
+  padding: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
 `;
 const StyledCardBody = styled.main`
   padding: 2rem;
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+
+  & > *:last-child {
+    margin-bottom: 0;
+  }
 `;
 const StyledCardFooter = styled.footer`
-  background-color: ${designSystem.colors.cardHeader};
   border-top: 1px solid ${designSystem.colors.cardBorder};
-  padding: 0.5rem 1rem;
-  text-align: right;
+  padding: 0.25rem;
+  justify-content: flex-end;
   margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
@@ -3913,7 +3906,19 @@ Card.defaultProps = {
   height: 'default'
 };
 
-const GOLDEN_RATIO = 1.61803398875; // TODO: if used by another component, move to common file
+const GOLDEN_RATIO = 1.61803398875;
+const convertRemToPixels = rem => {
+  return rem * parseFloat(window.getComputedStyle(document.documentElement).fontSize);
+};
+const styleValueToPX = value => {
+  if (value.indexOf('px') !== -1) {
+    return parseFloat(value);
+  } else if (value.indexOf('rem') !== -1) {
+    return convertRemToPixels(parseFloat(value));
+  } else {
+    return parseFloat(value);
+  }
+};
 
 const debounce = (func, wait, immediate) => {
   var timeout;
@@ -3929,22 +3934,8 @@ const debounce = (func, wait, immediate) => {
   };
 };
 
-const convertRemToPixels = rem => {
-  return rem * parseFloat(window.getComputedStyle(document.documentElement).fontSize);
-};
-
-const styleValueToPX = value => {
-  if (value.indexOf('px') !== -1) {
-    return parseFloat(value);
-  } else if (value.indexOf('rem') !== -1) {
-    return convertRemToPixels(parseFloat(value));
-  } else {
-    return parseFloat(value);
-  }
-}; // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
-
 
 const StyledPane = styled.div`
   box-sizing: border-box;
@@ -4024,6 +4015,36 @@ Pane.defaultProps = {
   size: 'default'
 };
 
+const headingStyles = css(["font-family:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:200;"]);
+const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:600;"], designSystem.colors.fgMuted, 1 / 12);
+const labelStyles = css(["line-height:2em;padding:0 1em;display:inline-block;margin:0.25rem;"]);
+
+// Styled Components
+// ---------------------------------------------------------------------------------------------------------------------
+
+const Label = styled.span`
+  ${labelStyles}
+  ${props => props.heading && headingStyles}
+  ${props => props.heading && preHeadingStyles}
+  ${props => props.heading && 'line-height: 2.2em;'}
+  padding-top: 1px;
+  padding-bottom: 1px ;
+  /* &:first-child {
+    padding-left: 0;
+  }
+  &:last-child {
+    padding-right: 0;
+  } */
+`; // ---------------------------------------------------------------------------------------------------------------------
+// PropTypes, defaults & export
+// ---------------------------------------------------------------------------------------------------------------------
+
+Label.propTypes = {
+  heading: propTypes.bool,
+  children: propTypes.node
+};
+Label.defaultProps = {};
+
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -4035,12 +4056,13 @@ const StyledTable = styled.table`
   width: calc(100% + 2px);
 
   thead, tfoot {
-    background-color: ${designSystem.colors.cardHeader};
+    background-color: ${designSystem.colors.bg};
+    color: ${designSystem.colors.fg};
   }
 
   th, td {
-    border: 1px solid ${designSystem.colors.nestedBorder};
-    padding: 0.5rem 1rem;
+    border: 1px solid ${designSystem.colors.border};
+    padding: 0.5em;
   }
 
   th {
@@ -4049,7 +4071,7 @@ const StyledTable = styled.table`
   }
 
   tr:nth-child(2n) {
-    background-color: ${designSystem.colors.borderLight};
+    background-color: ${designSystem.colors.tableStripe};
   }
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Component
@@ -4105,7 +4127,7 @@ const Layout = ({
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
-  return /*#__PURE__*/React.createElement(StyledLayout, null, /*#__PURE__*/React.createElement(StyledHeader, null, /*#__PURE__*/React.createElement("h1", {
+  return /*#__PURE__*/React.createElement(StyledLayout, null, brand && /*#__PURE__*/React.createElement(StyledHeader, null, /*#__PURE__*/React.createElement("h1", {
     className: "pre-heading"
   }, brand)), /*#__PURE__*/React.createElement(StyledMain, null, children), /*#__PURE__*/React.createElement(StyledFooter, null, /*#__PURE__*/React.createElement("h5", {
     className: "pre-heading"
@@ -4170,9 +4192,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 200;
-
+  ${headingStyles}
   &.pre-heading {
     ${preHeadingStyles}
     margin: 1em 0;
@@ -4187,7 +4207,6 @@ strong {
   font-weight: 600;
 }
 
-button,
 input,
 select,
 textarea,
@@ -4199,6 +4218,8 @@ pre {
 pre {
   overflow-x: scroll;
   overflow-y: auto;
+  padding: 0.5em;
+  background-color: ${designSystem.colors.tableStripe};
   &::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.5rem;
@@ -4208,6 +4229,20 @@ pre {
   &::-webkit-scrollbar-thumb {
     background-color: ${designSystem.colors.fgMuted};
     border-radius: 0.25rem;
+  }
+}
+
+p {
+  img {
+    max-width: 100%;
+  }
+
+  & > button:first-child {
+    margin-left: 0;
+  }
+
+  & > button:last-child {
+    margin-right: 0;
   }
 }
 
@@ -4225,8 +4260,54 @@ a {
   }
 }
 
-p img {
-  max-width: 100%;
+button {
+  ${labelStyles}
+  border: 1px solid ${designSystem.colors.border};
+  background-color: transparent;
+  color: ${designSystem.colors.fg};
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: ${designSystem.colors.fg};
+  }
+
+  &:active {
+    background-color: ${designSystem.colors.card};
+  }
+
+  &:disabled {
+    color: ${designSystem.colors.fgMuted};
+    border-color: ${designSystem.colors.borderLight};
+    cursor: default;
+
+    &:hover,
+    &:focus {
+      border-color: ${designSystem.colors.borderLight};
+    }
+  }
+}
+
+.mr {
+  margin-right: 1em !important;
+}
+.mrs {
+  margin-right: .5em !important;
+}
+
+.ml {
+  margin-left: 1em !important;
+}
+.mls {
+  margin-left: .5em !important;
+}
+
+.fw {
+  display: inline-block;
+  width: 1em;
 }
 `;
 const GlobalStyle$1 = createGlobalStyle`
@@ -4266,5 +4347,5 @@ NitramUI.defaultProps = {
   theme: 'smooth'
 };
 
-export { Card, Container, Layout, NitramUI, Pane, Table, modes, themes };
+export { Card, Container, Label, Layout, NitramUI, Pane, Table, modes, themes };
 //# sourceMappingURL=nitramui.es.js.map
