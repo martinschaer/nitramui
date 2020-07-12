@@ -124,6 +124,19 @@ button {
     }
   }
 }
+
+.mr {
+  margin-right: 1em !important;
+}
+
+.ml {
+  margin-left: 1em !important;
+}
+
+.fw {
+  display: inline-block;
+  width: 1em;
+}
 `
 
 const GlobalStyle = createGlobalStyle`
