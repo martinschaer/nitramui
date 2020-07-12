@@ -27,10 +27,18 @@ export const App = () => {
       <Layout brand='Hi, Jonathan'>
         <Pane size='small'>
           <h2 className='pre-heading'>Menu</h2>
-          <p><button type='button'>Dashboard</button></p>
-          <p><button type='button'>Agenda</button></p>
-          <p><button type='button'>Clients</button></p>
-          <p><button type='button'>Settings</button></p>
+          <p>
+            <button type='button'><span role='img' aria-label='bell emoji' className='mr fw'>🔔</span>Dashboard</button>
+          </p>
+          <p>
+            <button type='button'><span role='img' aria-label='calenar emoji' className='mr fw'>🗓</span>Agenda</button>
+          </p>
+          <p>
+            <button type='button'><span role='img' aria-label='people emoji' className='mr fw'>👥</span>Clients</button>
+          </p>
+          <p>
+            <button type='button'><span role='img' aria-label='gear emoji' className='mr fw'>⚙️</span>Settings</button>
+          </p>
         </Pane>
         <Pane size='full-minus-small'>
           {/* TODO: make it dynamic depending on the time of the day */}
