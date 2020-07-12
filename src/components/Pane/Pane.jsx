@@ -2,37 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+// ---------------------------------------------------------------------------------------------------------------------
+// Local imports
+// ---------------------------------------------------------------------------------------------------------------------
 import ds from '../common/designSystem'
 
-const GOLDEN_RATIO = 1.61803398875
-
-// TODO: if used by another component, move to common file
-const debounce = (func, wait, immediate) => {
-  var timeout
-  return function () {
-    var context = this; var args = arguments
-    clearTimeout(timeout)
-    timeout = setTimeout(function () {
-      timeout = null
-      if (!immediate) func.apply(context, args)
-    }, wait)
-    if (immediate && !timeout) func.apply(context, args)
-  }
-}
-
-const convertRemToPixels = (rem) => {
-  return rem * parseFloat(window.getComputedStyle(document.documentElement).fontSize)
-}
-
-const styleValueToPX = (value) => {
-  if (value.indexOf('px') !== -1) {
-    return parseFloat(value)
-  } else if (value.indexOf('rem') !== -1) {
-    return convertRemToPixels(parseFloat(value))
-  } else {
-    return parseFloat(value)
-  }
-}
+import {
+  GOLDEN_RATIO,
+  styleValueToPX
+} from '../../utils/measures'
+import { debounce } from '../../utils/functions'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
