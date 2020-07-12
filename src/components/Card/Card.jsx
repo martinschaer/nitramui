@@ -7,9 +7,6 @@ import styled from 'styled-components'
 // ---------------------------------------------------------------------------------------------------------------------
 import ds from '../common/designSystem'
 import Container from '../Container'
-import {
-  preHeadingStyles
-} from '../common/typography'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
@@ -69,7 +66,6 @@ const StyledCard = styled.div`
 const StyledCardHeader = styled.header`
   border-bottom: 1px solid ${ds.colors.cardBorder};
   padding: 0.5rem;
-  ${preHeadingStyles}
 `
 
 const StyledCardBody = styled.main`

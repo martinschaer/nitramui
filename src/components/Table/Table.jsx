@@ -27,7 +27,7 @@ const StyledTable = styled.table`
 
   th, td {
     border: 1px solid ${ds.colors.border};
-    padding: 0.5rem 1rem;
+    padding: 0.5em;
   }
 
   th {

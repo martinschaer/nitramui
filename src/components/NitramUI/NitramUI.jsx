@@ -12,7 +12,9 @@ import {
 import reset from '../common/reset'
 import ds from '../common/designSystem'
 import {
-  preHeadingStyles
+  headingStyles,
+  preHeadingStyles,
+  labelStyles
 } from '../common/typography'
 
 // TODO: Put in another file
@@ -35,9 +37,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 200;
-
+  ${headingStyles}
   &.pre-heading {
     ${preHeadingStyles}
     margin: 1em 0;
@@ -96,8 +96,7 @@ a {
 }
 
 button {
-  line-height: 2em;
-  padding: 0 1em;
+  ${labelStyles}
   border: 1px solid ${ds.colors.border};
   background-color: transparent;
   color: ${ds.colors.fg};
