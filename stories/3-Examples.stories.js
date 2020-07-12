@@ -6,6 +6,7 @@ import {
   modes,
   Card,
   Pane,
+  Label,
   Table,
   Layout,
   Container,
@@ -42,7 +43,13 @@ export const App = () => {
               {/* -------------------------------------------------------------------------------------------------- */}
               <Card
                 size='small'
-                header='Plans ending soon'
+                header={
+                  <>
+                    <Label heading>Plans ending soon</Label>
+                    <button type='button'>See all</button>
+                    <button type='button'>See all</button>
+                  </>
+                }
                 footer={(
                   <button type='button'>See all</button>
                 )}
@@ -91,10 +98,10 @@ export const App = () => {
               {/* -------------------------------------------------------------------------------------------------- */}
               <Card
                 size='small'
-                header='Onboardings'
-                footer={(
+                header={<Label heading>Onboardings</Label>}
+                footer={
                   <button type='button'>See all</button>
-                )}
+                }
                 noPadding
               >
                 <Table>
@@ -134,10 +141,17 @@ export const App = () => {
               {/* -------------------------------------------------------------------------------------------------- */}
               <Card
                 size='small'
-                header='Header'
-                footer='Footer'
+                header={<Label heading>Header</Label>}
+                footer={
+                  <>
+                    <Label heading>Footer</Label>
+                    <Label>Footer</Label>
+                    <button type='button'>Ok</button>
+                  </>
+                }
               >
-                <p>Lorem ipsum</p>
+                <p>Lorem ipsum, <a href='/'>dolor sit amed</a></p>
+                <p><button type='button'>More</button></p>
               </Card>
             </Container>
           </Card>
