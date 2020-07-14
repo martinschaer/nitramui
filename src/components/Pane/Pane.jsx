@@ -42,6 +42,11 @@ const StyledPane = styled.div`
     // default:
     : '50rem'
   };
+
+  @media (max-width: 768px) {
+    ${props => props.size === 'small' ? '' : 'min-width: 100vw;'}
+    max-width: 100vw;
+  }
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
