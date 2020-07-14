@@ -3852,6 +3852,10 @@ const StyledCard = styled.div`
   .pre-heading {
     margin-top: 0;
   }
+
+  @media (max-width: 768px) {
+    min-width: -webkit-fill-available;
+  }
 `;
 const StyledCardHeader = styled.header`
   border-bottom: 1px solid ${designSystem.colors.cardBorder};
@@ -3868,6 +3872,10 @@ const StyledCardBody = styled.main`
 
   & > *:last-child {
     margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
   }
 `;
 const StyledCardFooter = styled.footer`
@@ -3954,6 +3962,11 @@ const StyledPane = styled.div`
   max-width: 100%;
   width: ${props => props.size === 'full' ? '100%' : props.size === 'small' ? '16rem' : props.size === 'full-minus-small' ? 'calc(100vw - 16rem)' : props.size === 'golden-width' ? `${100 / GOLDEN_RATIO}%` : props.size === 'golden-width-rest' ? `${100 - 100 / GOLDEN_RATIO}%` : props.size === 'third' ? '33.3%' : props.size === 'fourth' ? '25%' // default:
 : '50rem'};
+
+  @media (max-width: 768px) {
+    ${props => props.size === 'small' ? '' : 'min-width: 100vw;'}
+    max-width: 100vw;
+  }
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4055,6 +4068,11 @@ Label.defaultProps = {};
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
+const StyledTableContainer = styled.div`
+  @media (max-width: 768px) {
+    overflow-x: scroll;
+  }
+`;
 const StyledTable = styled.table`
   display: table;
   border-collapse: collapse;
@@ -4080,6 +4098,10 @@ const StyledTable = styled.table`
   tr:nth-child(2n) {
     background-color: ${designSystem.colors.tableStripe};
   }
+
+  @media (max-width: 768px) {
+    width: max-content;
+  }
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4090,7 +4112,7 @@ const Table = ({
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
-  return /*#__PURE__*/React__default.createElement(StyledTable, null, children);
+  return /*#__PURE__*/React__default.createElement(StyledTableContainer, null, /*#__PURE__*/React__default.createElement(StyledTable, null, children));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
