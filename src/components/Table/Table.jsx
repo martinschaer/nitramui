@@ -13,6 +13,12 @@ import {
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
+const StyledTableContainer = styled.div`
+  @media (max-width: 768px) {
+    overflow-x: scroll;
+  }
+`
+
 const StyledTable = styled.table`
   display: table;
   border-collapse: collapse;
@@ -38,6 +44,10 @@ const StyledTable = styled.table`
   tr:nth-child(2n) {
     background-color: ${ds.colors.tableStripe};
   }
+
+  @media (max-width: 768px) {
+    width: max-content;
+  }
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -50,9 +60,11 @@ const Table = ({
   // Render
   // -------------------------------------------------------------------------------------------------------------------
   return (
-    <StyledTable>
-      {children}
-    </StyledTable>
+    <StyledTableContainer>
+      <StyledTable>
+        {children}
+      </StyledTable>
+    </StyledTableContainer>
   )
 }
 
