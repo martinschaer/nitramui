@@ -53,6 +53,10 @@ const StyledCard = styled.div`
   .pre-heading {
     margin-top: 0;
   }
+
+  @media (max-width: 768px) {
+    min-width: -webkit-fill-available;
+  }
 `
 
 const StyledCardHeader = styled.header`
@@ -71,6 +75,10 @@ const StyledCardBody = styled.main`
 
   & > *:last-child {
     margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    padding: 1rem;
   }
 `
 
