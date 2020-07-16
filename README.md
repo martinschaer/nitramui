@@ -57,12 +57,12 @@ TO-DO: add screenshots
 - [x] Make smooth default theme when there is no ThemeProvider (test in Layout/Full story)
 - [x] Build NitramUI into a library
 - [x] Add a screenshot
+- [x] Add license
 - [ ] Have the outter pane have the scroll. E.g: default pane inside full-width pane
 - [ ] Center panes horizontally
 - [ ] Responsive layout (what to do with the sidebar pane?)
 - [ ] Add terser (https://www.npmjs.com/package/rollup-plugin-terser)
 - [ ] Move some dependencies to devDependencies/peerDependencies (does this prevent them to be installed when installed this package, for example popper.js which I think comes from storybook)
-- [ ] Add license
 - [ ] Add instructions for ThemeProvider
 - [ ] Add hook for dark mode
 - [ ] Add guidelines for contributors
