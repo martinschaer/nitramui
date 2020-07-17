@@ -1,5 +1,5 @@
 import React from 'react'
-import { withKnobs, optionsKnob } from '@storybook/addon-knobs'
+// import { withKnobs } from '@storybook/addon-knobs'
 
 import {
   themes,
@@ -10,36 +10,60 @@ import {
   Table,
   Layout,
   Container,
-  NitramUI
+  NitramUI,
+  NitramUIContext
 } from '../src'
 
 export default {
-  title: 'Examples',
-  decorators: [withKnobs]
+  title: 'Examples'
+  // decorators: [withKnobs]
 }
 
 export const App = () => {
   return (
-    <NitramUI
-      theme={optionsKnob('Theme', themes, 'smooth', { display: 'inline-radio' }, 'theme')}
-      mode={optionsKnob('Theme mode', modes, 'light', { display: 'inline-radio' }, 'theme')}
-    >
+    <NitramUI>
       <Layout brand='Example' headerSlot='Hi, Jonathan'>
-        <Pane size='small'>
-          <h2 className='pre-heading'>Menu</h2>
-          <p>
-            <button type='button'><span role='img' aria-label='bell emoji' className='mr fw'>🔔</span>Dashboard</button>
-          </p>
-          <p>
-            <button type='button'><span role='img' aria-label='calenar emoji' className='mr fw'>🗓</span>Agenda</button>
-          </p>
-          <p>
-            <button type='button'><span role='img' aria-label='people emoji' className='mr fw'>👥</span>Clients</button>
-          </p>
-          <p>
-            <button type='button'><span role='img' aria-label='gear emoji' className='mr fw'>⚙️</span>Settings</button>
-          </p>
-        </Pane>
+        <NitramUIContext.Consumer>
+          {({ mode, setMode, theme, setTheme }) => (
+            <Pane size='small'>
+              <h2 className='pre-heading'>Menu</h2>
+              <p>
+                <button type='button'>
+                  <span role='img' aria-label='bell emoji' className='mr fw'>🔔</span>Dashboard
+                </button>
+              </p>
+              <p>
+                <button type='button'>
+                  <span role='img' aria-label='calenar emoji' className='mr fw'>🗓</span>Agenda
+                </button>
+              </p>
+              <p>
+                <button type='button'>
+                  <span role='img' aria-label='people emoji' className='mr fw'>👥</span>Clients
+                </button>
+              </p>
+              <p>
+                <button type='button'>
+                  <span role='img' aria-label='gear emoji' className='mr fw'>⚙️</span>Settings
+                </button>
+              </p>
+              <p>
+                <select value={mode} onChange={evt => setMode(evt.target.value)}>
+                  {Object.entries(modes).map(([key, value]) => (
+                    <option key={key} value={value}>{value}</option>
+                  ))}
+                </select>
+              </p>
+              <p>
+                <select value={theme} onChange={evt => setTheme(evt.target.value)}>
+                  {Object.entries(themes).map(([key, value]) => (
+                    <option key={key} value={value}>{value}</option>
+                  ))}
+                </select>
+              </p>
+            </Pane>
+          )}
+        </NitramUIContext.Consumer>
         <Pane size='full-minus-small'>
           {/* TODO: make it dynamic depending on the time of the day */}
           <h2 className='pre-heading'>Good morning!</h2>

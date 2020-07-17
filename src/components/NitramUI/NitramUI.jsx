@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import {
@@ -10,7 +10,8 @@ import {
 // Local imports
 // ---------------------------------------------------------------------------------------------------------------------
 import reset from '../common/reset'
-import ds from '../common/designSystem'
+import ds, { modes, themes } from '../common/designSystem'
+import { NitramUIContext } from './NitramUIContext'
 import {
   headingStyles,
   preHeadingStyles,
@@ -165,22 +166,31 @@ const GlobalStyle = createGlobalStyle`
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 const NitramUI = ({
-  mode,
-  theme,
   children
 }) => {
   // TODO: use hooks for system/time–aware –saved– dark mode
+  const [mode, setMode] = useState(modes.light)
+  const [theme, setTheme] = useState(themes.smooth)
 
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
   return (
-    <ThemeProvider
-      theme={{ theme, mode }}
+    <NitramUIContext.Provider
+      value={{
+        mode,
+        setMode,
+        theme,
+        setTheme
+      }}
     >
-      <GlobalStyle />
-      {children}
-    </ThemeProvider>
+      <ThemeProvider
+        theme={{ theme, mode }}
+      >
+        <GlobalStyle />
+        {children}
+      </ThemeProvider>
+    </NitramUIContext.Provider>
   )
 }
 
@@ -188,14 +198,9 @@ const NitramUI = ({
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
 NitramUI.propTypes = {
-  mode: PropTypes.string,
-  theme: PropTypes.string,
   children: PropTypes.node
 }
 
-NitramUI.defaultProps = {
-  mode: 'light',
-  theme: 'smooth'
-}
+NitramUI.defaultProps = {}
 
 export default NitramUI

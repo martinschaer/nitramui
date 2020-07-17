@@ -1,9 +1,6 @@
 import React from 'react'
-import { withKnobs, optionsKnob } from '@storybook/addon-knobs'
 
 import {
-  themes,
-  modes,
   Card,
   Pane,
   Table,
@@ -13,16 +10,12 @@ import {
 
 export default {
   title: 'Typography',
-  component: Layout,
-  decorators: [withKnobs]
+  component: Layout
 }
 
 export const Typography = () => {
   return (
-    <NitramUI
-      theme={optionsKnob('Theme', themes, 'smooth', { display: 'inline-radio' }, 'theme')}
-      mode={optionsKnob('Theme mode', modes, 'light', { display: 'inline-radio' }, 'theme')}
-    >
+    <NitramUI>
       <Layout>
         <Pane size='small'>
           <h2 className='pre-heading'>Menu</h2>
