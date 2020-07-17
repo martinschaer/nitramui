@@ -38,25 +38,25 @@ const StyledFooter = styled.header`
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
-const Layout = ({ brand, children }) => {
+const Layout = ({ brand, children, headerSlot, footerSlot }) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
   return (
     <StyledLayout>
-      {brand && (
+      {(headerSlot || brand) && (
         <StyledHeader>
-          {/* TODO: Move to prop */}
-          <h1 className='pre-heading'>{brand}</h1>
+          <h1 className='pre-heading'>{headerSlot || brand}</h1>
         </StyledHeader>
       )}
       <StyledMain>
         {children}
       </StyledMain>
-      <StyledFooter>
-        {/* TODO: Move to prop */}
-        <h5 className='pre-heading'>Copyright © 2020</h5>
-      </StyledFooter>
+      {(footerSlot || brand) && (
+        <StyledFooter>
+          <h5 className='pre-heading'>{footerSlot || `Copyright © 2020 ${brand}`}</h5>
+        </StyledFooter>
+      )}
     </StyledLayout>
   )
 }
@@ -65,8 +65,10 @@ const Layout = ({ brand, children }) => {
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
 Layout.propTypes = {
-  brand: PropTypes.node,
-  children: PropTypes.node
+  brand: PropTypes.string,
+  children: PropTypes.node,
+  headerSlot: PropTypes.node,
+  footerSlot: PropTypes.node
 }
 Layout.defaultProps = {}
 

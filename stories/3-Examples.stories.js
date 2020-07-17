@@ -24,7 +24,7 @@ export const App = () => {
       theme={optionsKnob('Theme', themes, 'smooth', { display: 'inline-radio' }, 'theme')}
       mode={optionsKnob('Theme mode', modes, 'light', { display: 'inline-radio' }, 'theme')}
     >
-      <Layout brand='Hi, Jonathan'>
+      <Layout brand='Example' headerSlot='Hi, Jonathan'>
         <Pane size='small'>
           <h2 className='pre-heading'>Menu</h2>
           <p>
