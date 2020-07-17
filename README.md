@@ -58,13 +58,16 @@ TO-DO: add screenshots
 - [x] Build NitramUI into a library
 - [x] Add a screenshot
 - [x] Add license
+- [ ] Fix labelStyles (or just vertical padding) for inputs and selects
+- [ ] Create form control component (for inputs and selects with or without labels)
+- [ ] Add instructions for NitramUIContext.Consumer, and controlling modes and themes
+- [ ] Add hook for dark mode
+- [ ] Create React App template
 - [ ] Have the outter pane have the scroll. E.g: default pane inside full-width pane
 - [ ] Center panes horizontally
 - [ ] Responsive layout (what to do with the sidebar pane?)
 - [ ] Add terser (https://www.npmjs.com/package/rollup-plugin-terser)
 - [ ] Move some dependencies to devDependencies/peerDependencies (does this prevent them to be installed when installed this package, for example popper.js which I think comes from storybook)
-- [ ] Add instructions for ThemeProvider
-- [ ] Add hook for dark mode
 - [ ] Add guidelines for contributors
 - [ ] Add build badge
 - [ ] Add tests
