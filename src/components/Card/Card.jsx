@@ -60,10 +60,11 @@ const StyledCard = styled.div`
 `
 
 const StyledCardHeader = styled.header`
+  align-items: center;
   border-bottom: 1px solid ${ds.colors.cardBorder};
-  padding: 0.25rem;
   display: flex;
   flex-wrap: wrap;
+  padding: 0.25rem;
 `
 
 const StyledCardBody = styled.main`
@@ -83,12 +84,13 @@ const StyledCardBody = styled.main`
 `
 
 const StyledCardFooter = styled.footer`
+  align-items: center;
   border-top: 1px solid ${ds.colors.cardBorder};
-  padding: 0.25rem;
-  justify-content: flex-end;
-  margin-top: auto;
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: auto;
+  padding: 0.25rem;
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
