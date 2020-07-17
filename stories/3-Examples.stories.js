@@ -173,26 +173,46 @@ export const App = () => {
                 </Table>
               </Card>
               {/* -------------------------------------------------------------------------------------------------- */}
-              {/* Plans ending soon                                                                                  */}
+              {/* Card                                                                                               */}
               {/* -------------------------------------------------------------------------------------------------- */}
-              <Card
-                size='small'
-                header={<Label heading>Header</Label>}
-                footer={
-                  <>
-                    <Label heading>Footer</Label>
-                    <Label>Footer</Label>
-                    <button type='button'>Ok</button>
-                    <Label>Footer</Label>
-                  </>
-                }
-              >
-                <p>Lorem ipsum, <a href='/'>dolor sit amed</a></p>
-                <p>
-                  <button type='button'>More</button>
-                  <button type='button'>More</button>
-                </p>
-              </Card>
+              <NitramUIContext.Consumer>
+                {({ mode, setMode, theme, setTheme }) => (
+                  <Card
+                    size='small'
+                    header={
+                      <>
+                        <Label heading>Header</Label>
+                        <select value={mode} onChange={evt => setMode(evt.target.value)}>
+                          {Object.entries(modes).map(([key, value]) => (
+                            <option key={key} value={value}>{value}</option>
+                          ))}
+                        </select>
+                        <select value={theme} onChange={evt => setTheme(evt.target.value)}>
+                          {Object.entries(themes).map(([key, value]) => (
+                            <option key={key} value={value}>{value}</option>
+                          ))}
+                        </select>
+                        <button type='button'>See all</button>
+                      </>
+                    }
+                    footer={
+                      <>
+                        <Label heading>Footer</Label>
+                        <Label>Footer</Label>
+                        <input type='text' />
+                        <button type='button'>Ok</button>
+                        <Label>Footer</Label>
+                      </>
+                    }
+                  >
+                    <p>Lorem ipsum, <a href='/'>dolor sit amed</a></p>
+                    <p>
+                      <button type='button'>More</button>
+                      <button type='button'>More</button>
+                    </p>
+                  </Card>
+                )}
+              </NitramUIContext.Consumer>
             </Container>
           </Card>
         </Pane>

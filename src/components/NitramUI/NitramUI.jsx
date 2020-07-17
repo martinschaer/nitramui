@@ -106,7 +106,9 @@ a {
   }
 }
 
-button {
+button,
+input,
+select {
   ${labelStyles}
   border: 1px solid ${ds.colors.border};
   background-color: transparent;
