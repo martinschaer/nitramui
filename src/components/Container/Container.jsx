@@ -1,3 +1,4 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -8,7 +9,7 @@ import styled from 'styled-components'
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
-const Container = styled.div`
+export const StyledContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-grow: 1;
@@ -28,8 +29,21 @@ const Container = styled.div`
       height: 100%;
     `
   }
+  ${props => props.h === 'half' && 'height: 50%;'}
   min-width: 100%;
 `
+
+const Container = ({ children, pushMargin, height, scroll }) => {
+  return (
+    <StyledContainer
+      pushMargin={pushMargin}
+      h={height}
+      scroll={scroll}
+    >
+      {children}
+    </StyledContainer>
+  )
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
@@ -37,6 +51,7 @@ const Container = styled.div`
 Container.propTypes = {
   children: PropTypes.node,
   pushMargin: PropTypes.bool,
+  height: PropTypes.oneOf(['auto', 'half']),
   scroll: PropTypes.oneOf(['horizontal', 'vertical'])
 }
 Container.defaultProps = {

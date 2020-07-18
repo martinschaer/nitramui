@@ -6,7 +6,7 @@ import styled from 'styled-components'
 // Local imports
 // ---------------------------------------------------------------------------------------------------------------------
 import ds from '../common/designSystem'
-import Container from '../Container'
+import { StyledContainer } from '../Container'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
@@ -40,7 +40,7 @@ const StyledCard = styled.div`
     : 'auto'
   };
 
-  ${Container} > & {
+  ${StyledContainer} > & {
     margin: 1rem;
   }
 
