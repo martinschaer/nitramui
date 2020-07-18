@@ -3789,7 +3789,7 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test' && 
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Container = styled.div`
+const StyledContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-grow: 1;
@@ -3806,14 +3806,30 @@ const Container = styled.div`
       /* https://stackoverflow.com/questions/43539284/overflow-hidden-with-nested-overflow-scroll-not-working */
       height: 100%;
     `}
+  ${props => props.h === 'half' && 'height: 50%;'}
   min-width: 100%;
-`; // ---------------------------------------------------------------------------------------------------------------------
+`;
+
+const Container = ({
+  children,
+  pushMargin,
+  height,
+  scroll
+}) => {
+  return /*#__PURE__*/React__default.createElement(StyledContainer, {
+    pushMargin: pushMargin,
+    h: height,
+    scroll: scroll
+  }, children);
+}; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
+
 
 Container.propTypes = {
   children: propTypes.node,
   pushMargin: propTypes.bool,
+  height: propTypes.oneOf(['auto', 'half']),
   scroll: propTypes.oneOf(['horizontal', 'vertical'])
 };
 Container.defaultProps = {
@@ -3839,7 +3855,7 @@ const StyledCard = styled.div`
   min-width: ${props => props.size === 'small' ? '32rem' : 'auto'};
   width: ${props => props.size === 'small' ? '33%' : 'auto'};
 
-  ${Container} > & {
+  ${StyledContainer} > & {
     margin: 1rem;
   }
 
@@ -3962,7 +3978,7 @@ const StyledPane = styled.div`
   outline: 1px dashed ${designSystem.colors.borderLight};
   overflow: scroll;
   max-width: 100%;
-  width: ${props => props.size === 'full' ? '100%' : props.size === 'small' ? '16rem' : props.size === 'full-minus-small' ? 'calc(100vw - 16rem)' : props.size === 'golden-width' ? `${100 / GOLDEN_RATIO}%` : props.size === 'golden-width-rest' ? `${100 - 100 / GOLDEN_RATIO}%` : props.size === 'third' ? '33.3%' : props.size === 'fourth' ? '25%' // default:
+  width: ${props => props.size === 'full' ? '100%' : props.size === 'small' ? '16rem' : props.size === 'full-minus-small' ? 'calc(100vw - 16rem)' : props.size === 'golden-width' ? `${100 / GOLDEN_RATIO}%` : props.size === 'golden-width-rest' ? `${100 - 100 / GOLDEN_RATIO}%` : props.size === 'half' ? '50%' : props.size === 'third' ? '33.3%' : props.size === 'fourth' ? '25%' // default:
 : '50rem'};
 
   @media (max-width: 768px) {
@@ -4030,7 +4046,7 @@ const Pane = ({
 
 
 Pane.propTypes = {
-  size: propTypes.oneOf(['default', 'small', 'full', 'full-minus-small', 'square', 'golden-horizontal', 'golden-vertical', 'golden-width', 'golden-width-rest', 'third', 'fourth']),
+  size: propTypes.oneOf(['default', 'small', 'full', 'full-minus-small', 'square', 'golden-horizontal', 'golden-vertical', 'golden-width', 'golden-width-rest', 'half', 'third', 'fourth']),
   children: propTypes.node
 };
 Pane.defaultProps = {

@@ -58,10 +58,12 @@ TO-DO: add screenshots
 - [x] Build NitramUI into a library
 - [x] Add a screenshot
 - [x] Add license
+- [x] Add Pane size: half
 - [ ] Fix labelStyles (or just vertical padding) for inputs and selects
 - [ ] Create form control component (for inputs and selects with or without labels)
 - [ ] Add instructions for NitramUIContext.Consumer, and controlling modes and themes
 - [ ] Add hook for dark mode
+- [ ] Add packagequality.com badge
 - [ ] Create React App template
 - [ ] Have the outter pane have the scroll. E.g: default pane inside full-width pane
 - [ ] Center panes horizontally
