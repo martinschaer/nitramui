@@ -221,6 +221,41 @@ export const App = () => {
   )
 }
 
+export const Grid = () => {
+  return (
+    <NitramUI>
+      <Layout brand='Grid'>
+        <Pane size='full'>
+          <Container height='half' scroll='vertical'>
+            <Pane size='golden-width-rest'>
+              <Card height='full'>
+                <h2>Hello world</h2>
+              </Card>
+            </Pane>
+            <Pane size='golden-width'>
+              <Card height='full'>
+                <h2>Hello world</h2>
+              </Card>
+            </Pane>
+          </Container>
+          <Container height='half'>
+            <Pane size='half'>
+              <Card height='full'>
+                <h2>Hello world</h2>
+              </Card>
+            </Pane>
+            <Pane size='half'>
+              <Card height='full'>
+                <h2>Hello world</h2>
+              </Card>
+            </Pane>
+          </Container>
+        </Pane>
+      </Layout>
+    </NitramUI>
+  )
+}
+
 App.story = {
   name: 'App'
 }
