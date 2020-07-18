@@ -18,9 +18,15 @@ import { debounce } from '../../utils/functions'
 // ---------------------------------------------------------------------------------------------------------------------
 const StyledPane = styled.div`
   box-sizing: border-box;
-  height: 100%;
+  height: ${props =>
+    props.h === 'half'
+    ? '50%'
+    : typeof props.h === 'number'
+    ? `${props.h}rem`
+    : '100%'
+  };
   flex-shrink: 0;
-  padding: 1rem;
+  padding: ${props => props.noPadding ? '0' : '1rem'};
   outline: 1px dashed ${ds.colors.borderLight};
   overflow: scroll;
   max-width: 100%;
@@ -56,6 +62,8 @@ const StyledPane = styled.div`
 // ---------------------------------------------------------------------------------------------------------------------
 const Pane = ({
   size,
+  height,
+  noPadding,
   children
 }) => {
   const uid = React.useRef(`pane-${Math.random().toString(36).substr(2, 9)}`)
@@ -109,6 +117,8 @@ const Pane = ({
     <StyledPane
       id={uid.current}
       size={size}
+      h={height}
+      noPadding={noPadding}
     >
       {children}
     </StyledPane>
@@ -133,10 +143,13 @@ Pane.propTypes = {
     'third',
     'fourth'
   ]),
+  height: PropTypes.oneOfType([PropTypes.oneOf(['half', 'full']), PropTypes.number]),
+  noPadding: PropTypes.bool,
   children: PropTypes.node
 }
 Pane.defaultProps = {
-  size: 'default'
+  size: 'default',
+  height: 'full'
 }
 
 export default Pane

@@ -29,7 +29,7 @@ export const StyledContainer = styled.div`
       height: 100%;
     `
   }
-  ${props => props.h === 'half' && 'height: 50%;'}
+  ${props => props.h === 'half' ? 'height: 50%;' : 'height: 100%;'}
   min-width: 100%;
 `
 
