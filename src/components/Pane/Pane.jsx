@@ -35,6 +35,8 @@ const StyledPane = styled.div`
     ? `${100 / GOLDEN_RATIO}%`
     : props.size === 'golden-width-rest'
     ? `${100 - (100 / GOLDEN_RATIO)}%`
+    : props.size === 'half'
+    ? '50%'
     : props.size === 'third'
     ? '33.3%'
     : props.size === 'fourth'
@@ -127,6 +129,7 @@ Pane.propTypes = {
     'golden-vertical',
     'golden-width',
     'golden-width-rest',
+    'half',
     'third',
     'fourth'
   ]),
