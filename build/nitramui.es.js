@@ -3799,7 +3799,7 @@ const StyledContainer = styled.div`
       /* https://stackoverflow.com/questions/43539284/overflow-hidden-with-nested-overflow-scroll-not-working */
       height: 100%;
     `}
-  ${props => props.h === 'half' && 'height: 50%;'}
+  ${props => props.h === 'half' ? 'height: 50%;' : 'height: 100%;'}
   min-width: 100%;
 `;
 
@@ -3965,9 +3965,9 @@ const debounce = (func, wait, immediate) => {
 
 const StyledPane = styled.div`
   box-sizing: border-box;
-  height: 100%;
+  height: ${props => props.h === 'half' ? '50%' : typeof props.h === 'number' ? `${props.h}rem` : '100%'};
   flex-shrink: 0;
-  padding: 1rem;
+  padding: ${props => props.noPadding ? '0' : '1rem'};
   outline: 1px dashed ${designSystem.colors.borderLight};
   overflow: scroll;
   max-width: 100%;
@@ -3984,6 +3984,8 @@ const StyledPane = styled.div`
 
 const Pane = ({
   size,
+  height,
+  noPadding,
   children
 }) => {
   const uid = React.useRef(`pane-${Math.random().toString(36).substr(2, 9)}`); // -------------------------------------------------------------------------------------------------------------------
@@ -4031,7 +4033,9 @@ const Pane = ({
 
   return /*#__PURE__*/React.createElement(StyledPane, {
     id: uid.current,
-    size: size
+    size: size,
+    h: height,
+    noPadding: noPadding
   }, children);
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
@@ -4040,15 +4044,18 @@ const Pane = ({
 
 Pane.propTypes = {
   size: propTypes.oneOf(['default', 'small', 'full', 'full-minus-small', 'square', 'golden-horizontal', 'golden-vertical', 'golden-width', 'golden-width-rest', 'half', 'third', 'fourth']),
+  height: propTypes.oneOfType([propTypes.oneOf(['half', 'full']), propTypes.number]),
+  noPadding: propTypes.bool,
   children: propTypes.node
 };
 Pane.defaultProps = {
-  size: 'default'
+  size: 'default',
+  height: 'full'
 };
 
 const headingStyles = css(["font-family:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:200;"]);
 const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:600;"], designSystem.colors.fgMuted, 1 / 12);
-const labelStyles = css(["line-height:2em;padding:0 1em;display:inline-block;margin:0.25rem;"]);
+const labelStyles = css(["line-height:2rem;height:2rem;padding:0 1rem;display:inline-block;margin:0.25rem;"]);
 
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4057,15 +4064,12 @@ const Label = styled.span`
   ${labelStyles}
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
-  ${props => props.heading && 'line-height: 2.2em;'}
-  padding-top: 1px;
-  padding-bottom: 1px ;
-  /* &:first-child {
-    padding-left: 0;
+  &:first-child {
+    padding-left: 0.25rem;
   }
   &:last-child {
-    padding-right: 0;
-  } */
+    padding-right: 0.25rem;
+  }
 `; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4146,7 +4150,10 @@ const StyledHeader = styled.header`
   background-color: ${designSystem.colors.card};
   border-bottom: 1px solid ${designSystem.colors.border};
   box-sizing: border-box;
-  padding: 0 1rem;
+  align-items: center;
+  padding: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
 `;
 const StyledMain = styled(Container)`
   background-color: ${designSystem.colors.bg};
@@ -4155,7 +4162,10 @@ const StyledFooter = styled.header`
   background-color: ${designSystem.colors.card};
   border-top: 1px solid ${designSystem.colors.border};
   box-sizing: border-box;
-  padding: 0 1rem;
+  align-items: center;
+  padding: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4169,10 +4179,10 @@ const Layout = ({
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
-  return /*#__PURE__*/React.createElement(StyledLayout, null, (headerSlot || brand) && /*#__PURE__*/React.createElement(StyledHeader, null, /*#__PURE__*/React.createElement("h1", {
-    className: "pre-heading"
-  }, headerSlot || brand)), /*#__PURE__*/React.createElement(StyledMain, null, children), (footerSlot || brand) && /*#__PURE__*/React.createElement(StyledFooter, null, /*#__PURE__*/React.createElement("h5", {
-    className: "pre-heading"
+  return /*#__PURE__*/React.createElement(StyledLayout, null, (headerSlot || brand) && /*#__PURE__*/React.createElement(StyledHeader, null, /*#__PURE__*/React.createElement(Label, {
+    heading: true
+  }, headerSlot || brand)), /*#__PURE__*/React.createElement(StyledMain, null, children), (footerSlot || brand) && /*#__PURE__*/React.createElement(StyledFooter, null, /*#__PURE__*/React.createElement(Label, {
+    heading: true
   }, footerSlot || `Copyright © 2020 ${brand}`)));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
@@ -4186,6 +4196,76 @@ Layout.propTypes = {
   footerSlot: propTypes.node
 };
 Layout.defaultProps = {};
+
+// Styled Components
+// ---------------------------------------------------------------------------------------------------------------------
+
+const StyledControl = styled.div`
+  background-color: ${designSystem.colors.tableStripe};
+  border-radius: 0.5rem;
+  display: flex;
+  margin: 0 .25rem;
+
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+
+  & > ${Label} {
+    padding-left: 0.5rem;
+    padding-right: 0.25rem;
+  }
+
+  & > input,
+  & > select {
+    flex-grow: 1;
+  }
+`; // ---------------------------------------------------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------------------------------------------------
+
+const Control = ({
+  type,
+  label,
+  value,
+  onChange,
+  options
+}) => {
+  const uid = useRef(Math.random().toString(36).substr(2, 9));
+  return /*#__PURE__*/React.createElement(StyledControl, null, label && /*#__PURE__*/React.createElement(Label, {
+    as: "label",
+    htmlFor: uid.current
+  }, label), type === 'select' ? /*#__PURE__*/React.createElement("select", {
+    id: uid.current,
+    value: value,
+    onChange: evt => onChange(evt.target.value)
+  }, options.map(x => /*#__PURE__*/React.createElement("option", {
+    key: x.value,
+    value: x.value
+  }, x.label))) : /*#__PURE__*/React.createElement("input", {
+    id: uid.current,
+    type: "text",
+    value: value,
+    onChange: evt => onChange(evt.target.value)
+  }));
+}; // ---------------------------------------------------------------------------------------------------------------------
+// PropTypes, defaults & export
+// ---------------------------------------------------------------------------------------------------------------------
+
+
+Control.propTypes = {
+  type: propTypes.string,
+  label: propTypes.string,
+  value: propTypes.string,
+  onChange: propTypes.func,
+  options: propTypes.arrayOf(propTypes.shape({
+    label: propTypes.string,
+    value: propTypes.string
+  }))
+};
+Control.defaultProps = {};
 
 function styleInject(css, ref) {
   if ( ref === void 0 ) ref = {};
@@ -4288,11 +4368,15 @@ p {
     max-width: 100%;
   }
 
-  & > button:first-child {
+  & > button:first-child ,
+  & > input:first-child ,
+  & > select:first-child {
     margin-left: 0;
   }
 
-  & > button:last-child {
+  & > button:last-child ,
+  & > input:last-child ,
+  & > select:last-child {
     margin-right: 0;
   }
 }
@@ -4402,5 +4486,5 @@ NitramUI.propTypes = {
 };
 NitramUI.defaultProps = {};
 
-export { Card, Container, Label, Layout, NitramUI, NitramUIContext, Pane, Table, modes, themes };
+export { Card, Container, Control, Label, Layout, NitramUI, NitramUIContext, Pane, Table, modes, themes };
 //# sourceMappingURL=nitramui.es.js.map
