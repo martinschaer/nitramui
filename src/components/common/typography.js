@@ -15,13 +15,9 @@ export const preHeadingStyles = css`
   font-weight: 600;
 `
 export const labelStyles = css`
-  line-height: 2em;
-  padding: 0 1em;
+  line-height: 2rem;
+  height: 2rem;
+  padding: 0 1rem;
   display: inline-block;
   margin: 0.25rem;
-  /* margin-right: 0.5rem; */
-
-  /* &:last-child {
-    margin-right: 0;
-  } */
 `

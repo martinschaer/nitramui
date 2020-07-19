@@ -83,11 +83,15 @@ p {
     max-width: 100%;
   }
 
-  & > button:first-child {
+  & > button:first-child ,
+  & > input:first-child ,
+  & > select:first-child {
     margin-left: 0;
   }
 
-  & > button:last-child {
+  & > button:last-child ,
+  & > input:last-child ,
+  & > select:last-child {
     margin-right: 0;
   }
 }
