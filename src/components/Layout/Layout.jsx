@@ -7,6 +7,7 @@ import styled from 'styled-components'
 // ---------------------------------------------------------------------------------------------------------------------
 import ds from '../common/designSystem'
 import Container from '../Container'
+import Label from '../Label'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
@@ -21,7 +22,10 @@ const StyledHeader = styled.header`
   background-color: ${ds.colors.card};
   border-bottom: 1px solid ${ds.colors.border};
   box-sizing: border-box;
-  padding: 0 1rem;
+  align-items: center;
+  padding: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
 `
 
 const StyledMain = styled(Container)`
@@ -32,7 +36,10 @@ const StyledFooter = styled.header`
   background-color: ${ds.colors.card};
   border-top: 1px solid ${ds.colors.border};
   box-sizing: border-box;
-  padding: 0 1rem;
+  align-items: center;
+  padding: 0.25rem;
+  display: flex;
+  flex-wrap: wrap;
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -46,7 +53,7 @@ const Layout = ({ brand, children, headerSlot, footerSlot }) => {
     <StyledLayout>
       {(headerSlot || brand) && (
         <StyledHeader>
-          <h1 className='pre-heading'>{headerSlot || brand}</h1>
+          <Label heading>{headerSlot || brand}</Label>
         </StyledHeader>
       )}
       <StyledMain>
@@ -54,7 +61,7 @@ const Layout = ({ brand, children, headerSlot, footerSlot }) => {
       </StyledMain>
       {(footerSlot || brand) && (
         <StyledFooter>
-          <h5 className='pre-heading'>{footerSlot || `Copyright © 2020 ${brand}`}</h5>
+          <Label heading>{footerSlot || `Copyright © 2020 ${brand}`}</Label>
         </StyledFooter>
       )}
     </StyledLayout>
