@@ -60,7 +60,7 @@ TO-DO: add screenshots
 - [x] Add license
 - [x] Add Pane size: half
 - [x] Fix labelStyles (or just vertical padding) for inputs and selects
-- [ ] Create form control component (for inputs and selects with or without labels)
+- [x] Create form control component (for inputs and selects with or without labels)
 - [ ] Add instructions for NitramUIContext.Consumer, and controlling modes and themes
 - [ ] Add hook for dark mode
 - [ ] Add packagequality.com badge

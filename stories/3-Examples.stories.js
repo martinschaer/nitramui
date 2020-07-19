@@ -9,6 +9,7 @@ import {
   Label,
   Table,
   Layout,
+  Control,
   Container,
   NitramUI,
   NitramUIContext
@@ -20,6 +21,7 @@ export default {
 }
 
 export const App = () => {
+  const [text, setText] = React.useState('Lorem ipsum')
   return (
     <NitramUI>
       <Layout brand='Example' headerSlot='Hi, Jonathan'>
@@ -48,18 +50,22 @@ export const App = () => {
                 </button>
               </p>
               <p>
-                <select value={mode} onChange={evt => setMode(evt.target.value)}>
-                  {Object.entries(modes).map(([key, value]) => (
-                    <option key={key} value={value}>{value}</option>
-                  ))}
-                </select>
+                <Control
+                  type='select'
+                  label='Mode'
+                  value={mode}
+                  onChange={setMode}
+                  options={Object.entries(modes).map(([_key, value]) => ({ label: value, value }))}
+                />
               </p>
               <p>
-                <select value={theme} onChange={evt => setTheme(evt.target.value)}>
-                  {Object.entries(themes).map(([key, value]) => (
-                    <option key={key} value={value}>{value}</option>
-                  ))}
-                </select>
+                <Control
+                  type='select'
+                  label='Theme'
+                  value={theme}
+                  onChange={setTheme}
+                  options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
+                />
               </p>
             </Pane>
           )}
@@ -182,16 +188,18 @@ export const App = () => {
                     header={
                       <>
                         <Label heading>Header</Label>
-                        <select value={mode} onChange={evt => setMode(evt.target.value)}>
-                          {Object.entries(modes).map(([key, value]) => (
-                            <option key={key} value={value}>{value}</option>
-                          ))}
-                        </select>
-                        <select value={theme} onChange={evt => setTheme(evt.target.value)}>
-                          {Object.entries(themes).map(([key, value]) => (
-                            <option key={key} value={value}>{value}</option>
-                          ))}
-                        </select>
+                        <Control
+                          type='select'
+                          value={mode}
+                          onChange={setMode}
+                          options={Object.entries(modes).map(([_key, value]) => ({ label: value, value }))}
+                        />
+                        <Control
+                          type='select'
+                          value={theme}
+                          onChange={setTheme}
+                          options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
+                        />
                         <button type='button'>See all</button>
                       </>
                     }
@@ -199,13 +207,18 @@ export const App = () => {
                       <>
                         <Label heading>Footer</Label>
                         <Label>Footer</Label>
-                        <input type='text' />
+                        <Control
+                          type='input'
+                          label='Name'
+                          value={text}
+                          onChange={setText}
+                        />
                         <button type='button'>Ok</button>
                         <Label>Footer</Label>
                       </>
                     }
                   >
-                    <p>Lorem ipsum, <a href='/'>dolor sit amed</a></p>
+                    <p>{text}, <a href='/'>dolor sit amed</a></p>
                     <p>
                       <button type='button'>More</button>
                       <button type='button'>More</button>
