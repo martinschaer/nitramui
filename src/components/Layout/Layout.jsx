@@ -45,7 +45,7 @@ const StyledFooter = styled.header`
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
-const Layout = ({ brand, children, headerSlot, footerSlot }) => {
+const Layout = ({ brand, children, headerSlot, footerSlot, menu, menuB }) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
@@ -54,6 +54,12 @@ const Layout = ({ brand, children, headerSlot, footerSlot }) => {
       {(headerSlot || brand) && (
         <StyledHeader>
           <Label heading>{headerSlot || brand}</Label>
+          {menu}
+          {menuB && (
+            <div style={{ display: 'flex', marginLeft: 'auto' }}>
+              {menuB}
+            </div>
+          )}
         </StyledHeader>
       )}
       <StyledMain>
@@ -73,6 +79,8 @@ const Layout = ({ brand, children, headerSlot, footerSlot }) => {
 // ---------------------------------------------------------------------------------------------------------------------
 Layout.propTypes = {
   brand: PropTypes.string,
+  menu: PropTypes.node,
+  menuB: PropTypes.node,
   children: PropTypes.node,
   headerSlot: PropTypes.node,
   footerSlot: PropTypes.node
