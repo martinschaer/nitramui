@@ -4174,14 +4174,21 @@ const Layout = ({
   brand,
   children,
   headerSlot,
-  footerSlot
+  footerSlot,
+  menu,
+  menuB
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
   return /*#__PURE__*/React.createElement(StyledLayout, null, (headerSlot || brand) && /*#__PURE__*/React.createElement(StyledHeader, null, /*#__PURE__*/React.createElement(Label, {
     heading: true
-  }, headerSlot || brand)), /*#__PURE__*/React.createElement(StyledMain, null, children), (footerSlot || brand) && /*#__PURE__*/React.createElement(StyledFooter, null, /*#__PURE__*/React.createElement(Label, {
+  }, headerSlot || brand), menu, menuB && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      marginLeft: 'auto'
+    }
+  }, menuB)), /*#__PURE__*/React.createElement(StyledMain, null, children), (footerSlot || brand) && /*#__PURE__*/React.createElement(StyledFooter, null, /*#__PURE__*/React.createElement(Label, {
     heading: true
   }, footerSlot || `Copyright © 2020 ${brand}`)));
 }; // ---------------------------------------------------------------------------------------------------------------------
@@ -4191,6 +4198,8 @@ const Layout = ({
 
 Layout.propTypes = {
   brand: propTypes.string,
+  menu: propTypes.node,
+  menuB: propTypes.node,
   children: propTypes.node,
   headerSlot: propTypes.node,
   footerSlot: propTypes.node
@@ -4201,10 +4210,10 @@ Layout.defaultProps = {};
 // ---------------------------------------------------------------------------------------------------------------------
 
 const StyledControl = styled.div`
-  background-color: ${designSystem.colors.tableStripe};
   border-radius: 0.5rem;
   display: flex;
   margin: 0 .25rem;
+  background-color: ${props => props.withLabel ? designSystem.colors.tableStripe : 'transparent'};
 
   &:first-child {
     margin-left: 0;
@@ -4234,7 +4243,9 @@ const Control = ({
   options
 }) => {
   const uid = useRef(Math.random().toString(36).substr(2, 9));
-  return /*#__PURE__*/React.createElement(StyledControl, null, label && /*#__PURE__*/React.createElement(Label, {
+  return /*#__PURE__*/React.createElement(StyledControl, {
+    withLabel: label
+  }, label && /*#__PURE__*/React.createElement(Label, {
     as: "label",
     htmlFor: uid.current
   }, label), type === 'select' ? /*#__PURE__*/React.createElement("select", {
@@ -4405,15 +4416,14 @@ select {
   border-radius: 0.25rem;
   box-sizing: border-box;
   cursor: pointer;
+  transform: perspective(100rem);
 
   &:hover,
   &:focus,
-  &:active {
+  &:active,
+  &.active {
     border-color: ${designSystem.colors.fg};
-  }
-
-  &:active {
-    background-color: ${designSystem.colors.card};
+    outline: none;
   }
 
   &:disabled {
@@ -4425,6 +4435,20 @@ select {
     &:focus {
       border-color: ${designSystem.colors.borderLight};
     }
+  }
+}
+
+button {
+  &.selected {
+    background-color: ${designSystem.colors.tableStripe};
+    transform: perspective(100rem) translateZ(-2rem);
+    box-shadow: inset 0 0 .25rem 0 ${designSystem.colors.shadow};
+  }
+
+  &:active,
+  &.active {
+    transform: perspective(100rem) translateZ(-2rem);
+    box-shadow: inset 0 0 .25rem 2px ${designSystem.colors.shadow};
   }
 }
 
