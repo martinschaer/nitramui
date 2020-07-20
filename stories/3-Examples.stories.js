@@ -1,4 +1,5 @@
 import React from 'react'
+import { linkTo } from '@storybook/addon-links'
 // import { withKnobs } from '@storybook/addon-knobs'
 
 import {
@@ -20,17 +21,38 @@ export default {
   // decorators: [withKnobs]
 }
 
+const mode2Emoji = mode => mode === 'light' ? '🌞' : '🌙'
+
 export const App = () => {
   const [text, setText] = React.useState('Lorem ipsum')
   return (
     <NitramUI>
-      <Layout brand='Example' headerSlot='Hi, Jonathan'>
-        <NitramUIContext.Consumer>
-          {({ mode, setMode, theme, setTheme }) => (
+      <NitramUIContext.Consumer>
+        {({ mode, setMode, theme, setTheme }) => (
+          <Layout
+            brand='Example'
+            headerSlot='Hi, Jonathan'
+            menu={(
+              <>
+                <button type='button' className='selected' onClick={linkTo('Examples', 'App')}>App</button>
+                <button type='button' onClick={linkTo('Examples', 'Grid')}>Grid</button>
+              </>
+            )}
+            menuB={(
+              <>
+                <Control
+                  type='select'
+                  value={mode}
+                  onChange={setMode}
+                  options={Object.entries(modes).map(([_key, value]) => ({ label: mode2Emoji(value), value }))}
+                />
+              </>
+            )}
+          >
             <Pane size='small'>
               <h2 className='pre-heading'>Menu</h2>
               <p>
-                <button type='button'>
+                <button type='button' className='selected'>
                   <span role='img' aria-label='bell emoji' className='mr fw'>🔔</span>Dashboard
                 </button>
               </p>
@@ -68,168 +90,170 @@ export const App = () => {
                 />
               </p>
             </Pane>
-          )}
-        </NitramUIContext.Consumer>
-        <Pane size='full-minus-small'>
-          {/* TODO: make it dynamic depending on the time of the day */}
-          <h2 className='pre-heading'>Good morning!</h2>
-          <Card>
-            <h1>Today</h1>
-            <Container scroll='vertical' pushMargin>
-              {/* -------------------------------------------------------------------------------------------------- */}
-              {/* Plans ending soon                                                                                  */}
-              {/* -------------------------------------------------------------------------------------------------- */}
-              <Card
-                size='small'
-                header={
-                  <>
-                    <Label heading>Plans ending soon</Label>
-                    <button type='button'>See all</button>
-                    <button type='button'>See all</button>
-                    <button type='button'>See all</button>
-                    <button type='button'>See all</button>
-                    <button type='button'>See all</button>
-                    <button type='button'>See all</button>
-                  </>
-                }
-                footer={(
-                  <button type='button'>See all</button>
-                )}
-                noPadding
-              >
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Client</th>
-                      <th>Left</th>
-                      <th>Attention level</th>
-                      <th>Plan</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Martin</td>
-                      <td>4 days</td>
-                      <td><span role='img' aria-label='calenar emoji' className='mrs fw'>🟢</span> On track</td>
-                      <td>Chisco</td>
-                    </tr>
-                    <tr>
-                      <td>María Fernanda</td>
-                      <td>7 days</td>
-                      <td><span role='img' aria-label='calenar emoji' className='mrs fw'>🔴</span> Needs attention</td>
-                      <td>Chisco</td>
-                    </tr>
-                    <tr>
-                      <td>2 weeks+ (17/JUL)</td>
-                      <td>Johan</td>
-                      <td><span role='img' aria-label='calenar emoji' className='mrs fw'>🟡</span> Take a look</td>
-                      <td>Chisco</td>
-                    </tr>
-                    <tr>
-                      <td>Chisco</td>
-                      <td>4 weeks+ (31/JUL)</td>
-                      <td><span role='img' aria-label='calenar emoji' className='mrs fw'>🟢</span> On track</td>
-                      <td>Chisco</td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Card>
-
-              {/* -------------------------------------------------------------------------------------------------- */}
-              {/* Onboardings                                                                                        */}
-              {/* -------------------------------------------------------------------------------------------------- */}
-              <Card
-                size='small'
-                header={<Label heading>Onboardings</Label>}
-                footer={
-                  <button type='button'>See all</button>
-                }
-                noPadding
-              >
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Client</th>
-                      <th>Next session</th>
-                      <th>Checklist</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Luis</td>
-                      <td>Tomorrow, 9:00 a.m.</td>
-                      <td>8/10</td>
-                    </tr>
-                    <tr>
-                      <td>Kristen</td>
-                      <td>Thursday, 10:00 a.m.</td>
-                      <td>4/10</td>
-                    </tr>
-                    <tr>
-                      <td>Amanda</td>
-                      <td>Next week</td>
-                      <td>1/10</td>
-                    </tr>
-                    <tr>
-                      <td>Dan</td>
-                      <td>Next week</td>
-                      <td>Not started</td>
-                    </tr>
-                  </tbody>
-                </Table>
-              </Card>
-              {/* -------------------------------------------------------------------------------------------------- */}
-              {/* Card                                                                                               */}
-              {/* -------------------------------------------------------------------------------------------------- */}
-              <NitramUIContext.Consumer>
-                {({ mode, setMode, theme, setTheme }) => (
+            <Pane size='full-minus-small'>
+              {/* TODO: make it dynamic depending on the time of the day */}
+              <h2 className='pre-heading'>Good morning!</h2>
+              <Card>
+                <h1>Today</h1>
+                <Container scroll='vertical' pushMargin>
+                  {/* ---------------------------------------------------------------------------------------------- */}
+                  {/* Plans ending soon                                                                              */}
+                  {/* ---------------------------------------------------------------------------------------------- */}
                   <Card
                     size='small'
                     header={
                       <>
-                        <Label heading>Header</Label>
-                        <Control
-                          type='select'
-                          value={mode}
-                          onChange={setMode}
-                          options={Object.entries(modes).map(([_key, value]) => ({ label: value, value }))}
-                        />
-                        <Control
-                          type='select'
-                          value={theme}
-                          onChange={setTheme}
-                          options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
-                        />
+                        <Label heading>Plans ending soon</Label>
+                        <button type='button'>See all</button>
+                        <button type='button'>See all</button>
+                        <button type='button'>See all</button>
+                        <button type='button'>See all</button>
+                        <button type='button'>See all</button>
                         <button type='button'>See all</button>
                       </>
                     }
-                    footer={
-                      <>
-                        <Label heading>Footer</Label>
-                        <Label>Footer</Label>
-                        <Control
-                          type='input'
-                          label='Name'
-                          value={text}
-                          onChange={setText}
-                        />
-                        <button type='button'>Ok</button>
-                        <Label>Footer</Label>
-                      </>
-                    }
+                    footer={(
+                      <button type='button'>See all</button>
+                    )}
+                    noPadding
                   >
-                    <p>{text}, <a href='/'>dolor sit amed</a></p>
-                    <p>
-                      <button type='button'>More</button>
-                      <button type='button'>More</button>
-                    </p>
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>Client</th>
+                          <th>Left</th>
+                          <th>Attention level</th>
+                          <th>Plan</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Martin</td>
+                          <td>4 days</td>
+                          <td><span role='img' aria-label='calenar emoji' className='mrs fw'>🟢</span> On track</td>
+                          <td>Chisco</td>
+                        </tr>
+                        <tr>
+                          <td>María Fernanda</td>
+                          <td>7 days</td>
+                          <td>
+                            <span role='img' aria-label='calenar emoji' className='mrs fw'>🔴</span> Needs attention
+                          </td>
+                          <td>Chisco</td>
+                        </tr>
+                        <tr>
+                          <td>2 weeks+ (17/JUL)</td>
+                          <td>Johan</td>
+                          <td><span role='img' aria-label='calenar emoji' className='mrs fw'>🟡</span> Take a look</td>
+                          <td>Chisco</td>
+                        </tr>
+                        <tr>
+                          <td>Chisco</td>
+                          <td>4 weeks+ (31/JUL)</td>
+                          <td><span role='img' aria-label='calenar emoji' className='mrs fw'>🟢</span> On track</td>
+                          <td>Chisco</td>
+                        </tr>
+                      </tbody>
+                    </Table>
                   </Card>
-                )}
-              </NitramUIContext.Consumer>
-            </Container>
-          </Card>
-        </Pane>
-      </Layout>
+
+                  {/* ---------------------------------------------------------------------------------------------- */}
+                  {/* Onboardings                                                                                    */}
+                  {/* ---------------------------------------------------------------------------------------------- */}
+                  <Card
+                    size='small'
+                    header={<Label heading>Onboardings</Label>}
+                    footer={
+                      <button type='button'>See all</button>
+                    }
+                    noPadding
+                  >
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>Client</th>
+                          <th>Next session</th>
+                          <th>Checklist</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Luis</td>
+                          <td>Tomorrow, 9:00 a.m.</td>
+                          <td>8/10</td>
+                        </tr>
+                        <tr>
+                          <td>Kristen</td>
+                          <td>Thursday, 10:00 a.m.</td>
+                          <td>4/10</td>
+                        </tr>
+                        <tr>
+                          <td>Amanda</td>
+                          <td>Next week</td>
+                          <td>1/10</td>
+                        </tr>
+                        <tr>
+                          <td>Dan</td>
+                          <td>Next week</td>
+                          <td>Not started</td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  </Card>
+                  {/* ---------------------------------------------------------------------------------------------- */}
+                  {/* Card                                                                                           */}
+                  {/* ---------------------------------------------------------------------------------------------- */}
+                  <NitramUIContext.Consumer>
+                    {({ mode, setMode, theme, setTheme }) => (
+                      <Card
+                        size='small'
+                        header={
+                          <>
+                            <Label heading>Header</Label>
+                            <Control
+                              type='select'
+                              value={mode}
+                              onChange={setMode}
+                              options={Object.entries(modes).map(([_key, value]) => ({ label: value, value }))}
+                            />
+                            <Control
+                              type='select'
+                              value={theme}
+                              onChange={setTheme}
+                              options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
+                            />
+                            <button type='button'>See all</button>
+                          </>
+                        }
+                        footer={
+                          <>
+                            <Label heading>Footer</Label>
+                            <Label>Footer</Label>
+                            <Control
+                              type='input'
+                              label='Name'
+                              value={text}
+                              onChange={setText}
+                            />
+                            <button type='button'>Ok</button>
+                            <Label>Footer</Label>
+                          </>
+                        }
+                      >
+                        <p>{text}, <a href='/'>dolor sit amed</a></p>
+                        <p>
+                          <button type='button'>More</button>
+                          <button type='button'>More</button>
+                        </p>
+                      </Card>
+                    )}
+                  </NitramUIContext.Consumer>
+                </Container>
+              </Card>
+            </Pane>
+          </Layout>
+        )}
+      </NitramUIContext.Consumer>
     </NitramUI>
   )
 }
@@ -237,32 +261,54 @@ export const App = () => {
 export const Grid = () => {
   return (
     <NitramUI>
-      <Layout brand='Grid'>
-        <Pane size='full' noPadding>
-          <Container scroll='vertical'>
-            <Pane size='golden-width-rest' height='half'>
-              <Card height='full'>
-                <h2>Hello world</h2>
-              </Card>
+      <NitramUIContext.Consumer>
+        {({ mode, setMode }) => (
+          <Layout
+            brand='Grid'
+            menu={(
+              <>
+                <button type='button' onClick={linkTo('Examples', 'App')}>App</button>
+                <button type='button' className='selected' onClick={linkTo('Examples', 'Grid')}>Grid</button>
+              </>
+            )}
+            menuB={(
+              <>
+                <Control
+                  type='select'
+                  value={mode}
+                  onChange={setMode}
+                  options={Object.entries(modes).map(([_key, value]) => ({ label: mode2Emoji(value), value }))}
+                />
+              </>
+            )}
+          >
+            <Pane size='full' noPadding>
+              <Container scroll='vertical'>
+                <Pane size='golden-width-rest' height='half'>
+                  <Card height='full'>
+                    <h2>Hello world</h2>
+                  </Card>
+                </Pane>
+                <Pane size='golden-width' height='half'>
+                  <Card height='full'>
+                    <h2>Hello world</h2>
+                  </Card>
+                </Pane>
+                <Pane size='half' height='half'>
+                  <Card height='full'>
+                    <h2>Hello world</h2>
+                  </Card>
+                </Pane>
+                <Pane size='half' height='half'>
+                  <Card height='full'>
+                    <h2>Hello world</h2>
+                  </Card>
+                </Pane>
+              </Container>
             </Pane>
-            <Pane size='golden-width' height='half'>
-              <Card height='full'>
-                <h2>Hello world</h2>
-              </Card>
-            </Pane>
-            <Pane size='half' height='half'>
-              <Card height='full'>
-                <h2>Hello world</h2>
-              </Card>
-            </Pane>
-            <Pane size='half' height='half'>
-              <Card height='full'>
-                <h2>Hello world</h2>
-              </Card>
-            </Pane>
-          </Container>
-        </Pane>
-      </Layout>
+          </Layout>
+        )}
+      </NitramUIContext.Consumer>
     </NitramUI>
   )
 }
