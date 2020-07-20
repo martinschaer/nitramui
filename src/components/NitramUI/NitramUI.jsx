@@ -120,15 +120,14 @@ select {
   border-radius: 0.25rem;
   box-sizing: border-box;
   cursor: pointer;
+  transform: perspective(100rem);
 
   &:hover,
   &:focus,
-  &:active {
+  &:active,
+  &.active {
     border-color: ${ds.colors.fg};
-  }
-
-  &:active {
-    background-color: ${ds.colors.card};
+    outline: none;
   }
 
   &:disabled {
@@ -140,6 +139,20 @@ select {
     &:focus {
       border-color: ${ds.colors.borderLight};
     }
+  }
+}
+
+button {
+  &.selected {
+    background-color: ${ds.colors.tableStripe};
+    transform: perspective(100rem) translateZ(-2rem);
+    box-shadow: inset 0 0 .25rem 0 ${ds.colors.shadow};
+  }
+
+  &:active,
+  &.active {
+    transform: perspective(100rem) translateZ(-2rem);
+    box-shadow: inset 0 0 .25rem 2px ${ds.colors.shadow};
   }
 }
 
