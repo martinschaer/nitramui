@@ -12,10 +12,10 @@ import ds from '../common/designSystem'
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 const StyledControl = styled.div`
-  background-color: ${ds.colors.tableStripe};
   border-radius: 0.5rem;
   display: flex;
   margin: 0 .25rem;
+  background-color: ${props => props.withLabel ? ds.colors.tableStripe : 'transparent'};
 
   &:first-child {
     margin-left: 0;
@@ -41,7 +41,7 @@ const StyledControl = styled.div`
 const Control = ({ type, label, value, onChange, options }) => {
   const uid = useRef(Math.random().toString(36).substr(2, 9))
   return (
-    <StyledControl>
+    <StyledControl withLabel={label}>
       {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
       {type === 'select'
         ? (
