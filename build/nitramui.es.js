@@ -40,9 +40,8 @@ const WHITE = '#fff';
 const GALLERY = '#f0f0f0';
 const MERCURY = '#E5E5E5';
 const EMPEROR = '#535353';
-const MINE_SHAFT = '#282828';
-const COD_GRAY_LIGHT = '#181818';
-const COD_GRAY = '#101010';
+const DUNE = '#252321';
+const COD_GRAY = '#1C1917';
 const BLACK = '#000';
 const BLACK_3 = 'rgba(0, 0, 0, 0.03)';
 const BLACK_10 = 'rgba(0, 0, 0, 0.1)';
@@ -95,7 +94,7 @@ const designSystem = {
     border: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: MERCURY,
-        [modes.dark]: MINE_SHAFT
+        [modes.dark]: EMPEROR
       }),
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: BLACK,
@@ -105,17 +104,17 @@ const designSystem = {
     borderLight: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: BLACK_10,
-        [modes.dark]: MINE_SHAFT
+        [modes.dark]: EMPEROR
       }),
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: BLACK_10,
-        [modes.dark]: MINE_SHAFT
+        [modes.dark]: EMPEROR
       })
     }),
     card: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: WHITE,
-        [modes.dark]: COD_GRAY_LIGHT
+        [modes.dark]: DUNE
       }),
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: WHITE,
@@ -125,7 +124,7 @@ const designSystem = {
     cardBorder: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: GALLERY,
-        [modes.dark]: MINE_SHAFT
+        [modes.dark]: EMPEROR
       }),
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: COD_GRAY,
@@ -3874,7 +3873,8 @@ const StyledCardHeader = styled.header`
   padding: 0.25rem;
 `;
 const StyledCardBody = styled.main`
-  padding: 2rem;
+  padding: ${props => props.noPadding ? '0' : '2rem'};
+  overflow: scroll;
 
   & > *:first-child {
     margin-top: 0;
@@ -3885,7 +3885,7 @@ const StyledCardBody = styled.main`
   }
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: ${props => props.noPadding ? '0' : '1rem'};
   }
 `;
 const StyledCardFooter = styled.footer`
@@ -3914,7 +3914,9 @@ const Card = ({
   return /*#__PURE__*/React.createElement(StyledCard, {
     size: size,
     h: height
-  }, header && /*#__PURE__*/React.createElement(StyledCardHeader, null, header), noPadding ? children : /*#__PURE__*/React.createElement(StyledCardBody, null, children), footer && /*#__PURE__*/React.createElement(StyledCardFooter, null, footer));
+  }, header && /*#__PURE__*/React.createElement(StyledCardHeader, null, header), children && /*#__PURE__*/React.createElement(StyledCardBody, {
+    noPadding: noPadding
+  }, children), footer && /*#__PURE__*/React.createElement(StyledCardFooter, null, footer));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4092,7 +4094,7 @@ const StyledTable = styled.table`
   display: table;
   border-collapse: collapse;
   border-spacing: 0;
-  margin: -1px;
+  /* margin: -1px; */
   width: calc(100% + 2px);
 
   thead, tfoot {
