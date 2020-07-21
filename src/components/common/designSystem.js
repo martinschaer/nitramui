@@ -4,9 +4,8 @@ const WHITE = '#fff'
 const GALLERY = '#f0f0f0'
 const MERCURY = '#E5E5E5'
 const EMPEROR = '#535353'
-const MINE_SHAFT = '#282828'
-const COD_GRAY_LIGHT = '#181818'
-const COD_GRAY = '#101010'
+const DUNE = '#252321'
+const COD_GRAY = '#1C1917'
 const BLACK = '#000'
 
 const BLACK_3 = 'rgba(0, 0, 0, 0.03)'
@@ -70,7 +69,7 @@ const designSystem = {
       [themes.smooth]:
         theme('mode', {
           [modes.light]: MERCURY,
-          [modes.dark]: MINE_SHAFT
+          [modes.dark]: EMPEROR
         }),
       [themes.hiContrast]:
         theme('mode', {
@@ -82,19 +81,19 @@ const designSystem = {
       [themes.smooth]:
         theme('mode', {
           [modes.light]: BLACK_10,
-          [modes.dark]: MINE_SHAFT
+          [modes.dark]: EMPEROR
         }),
       [themes.hiContrast]:
         theme('mode', {
           [modes.light]: BLACK_10,
-          [modes.dark]: MINE_SHAFT
+          [modes.dark]: EMPEROR
         })
     }),
     card: theme('theme', {
       [themes.smooth]:
         theme('mode', {
           [modes.light]: WHITE,
-          [modes.dark]: COD_GRAY_LIGHT
+          [modes.dark]: DUNE
         }),
       [themes.hiContrast]:
         theme('mode', {
@@ -106,7 +105,7 @@ const designSystem = {
       [themes.smooth]:
         theme('mode', {
           [modes.light]: GALLERY,
-          [modes.dark]: MINE_SHAFT
+          [modes.dark]: EMPEROR
         }),
       [themes.hiContrast]:
         theme('mode', {
