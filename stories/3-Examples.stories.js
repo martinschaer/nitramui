@@ -23,6 +23,92 @@ export default {
 
 const mode2Emoji = mode => mode === 'light' ? '🌞' : '🌙'
 
+const ExampleTable = () => {
+  return (
+    <Table>
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Next session</th>
+          <th>Checklist</th>
+          <th>Lorem ipsum</th>
+          <th>Lorem ipsum</th>
+          <th>Lorem ipsum</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Luis</td>
+          <td>Tomorrow, 9:00 a.m.</td>
+          <td>8/10</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+        </tr>
+        <tr>
+          <td>Kristen</td>
+          <td>Thursday, 10:00 a.m.</td>
+          <td>4/10</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+        </tr>
+        <tr>
+          <td>Amanda</td>
+          <td>Next week</td>
+          <td>1/10</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+        </tr>
+        <tr>
+          <td>Dan</td>
+          <td>Next week</td>
+          <td>Not started</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+        </tr>
+        <tr>
+          <td>Dan</td>
+          <td>Next week</td>
+          <td>Not started</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+        </tr>
+        <tr>
+          <td>Dan</td>
+          <td>Next week</td>
+          <td>Not started</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+        </tr>
+        <tr>
+          <td>Dan</td>
+          <td>Next week</td>
+          <td>Not started</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+        </tr>
+        <tr>
+          <td>Dan</td>
+          <td>Next week</td>
+          <td>Not started</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+          <td>Lorem ipsum dolor sit amed</td>
+        </tr>
+      </tbody>
+    </Table>
+  )
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// APP
+// ---------------------------------------------------------------------------------------------------------------------
 export const App = () => {
   const [text, setText] = React.useState('Lorem ipsum')
   return (
@@ -258,6 +344,9 @@ export const App = () => {
   )
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+// GRID
+// ---------------------------------------------------------------------------------------------------------------------
 export const Grid = () => {
   return (
     <NitramUI>
@@ -285,23 +374,35 @@ export const Grid = () => {
             <Pane size='full' noPadding>
               <Container scroll='vertical'>
                 <Pane size='golden-width-rest' height='half'>
-                  <Card height='full'>
-                    <h2>Hello world</h2>
+                  <Card
+                    height='full'
+                    header={
+                      <Label heading>Hello World</Label>
+                    }
+                    noPadding
+                  >
+                    <ExampleTable />
                   </Card>
                 </Pane>
                 <Pane size='golden-width' height='half'>
                   <Card height='full'>
                     <h2>Hello world</h2>
+                    <ExampleTable />
                   </Card>
                 </Pane>
                 <Pane size='half' height='half'>
-                  <Card height='full'>
+                  <Card height='full' noPadding>
                     <h2>Hello world</h2>
+                    <ExampleTable />
                   </Card>
                 </Pane>
                 <Pane size='half' height='half'>
-                  <Card height='full'>
-                    <h2>Hello world</h2>
+                  <Card
+                    height='full'
+                    footer={(<Label heading>Hello World</Label>)}
+                    noPadding
+                  >
+                    <ExampleTable />
                   </Card>
                 </Pane>
               </Container>

@@ -68,7 +68,8 @@ const StyledCardHeader = styled.header`
 `
 
 const StyledCardBody = styled.main`
-  padding: 2rem;
+  padding: ${props => props.noPadding ? '0' : '2rem'};
+  overflow: scroll;
 
   & > *:first-child {
     margin-top: 0;
@@ -79,7 +80,7 @@ const StyledCardBody = styled.main`
   }
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: ${props => props.noPadding ? '0' : '1rem'};
   }
 `
 
@@ -113,10 +114,8 @@ const Card = ({
       h={height}
     >
       {header && (<StyledCardHeader>{header}</StyledCardHeader>)}
-      {noPadding ? (
-        children
-      ) : (
-        <StyledCardBody>
+      {children && (
+        <StyledCardBody noPadding={noPadding}>
           {children}
         </StyledCardBody>
       )}

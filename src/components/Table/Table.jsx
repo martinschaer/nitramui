@@ -23,7 +23,7 @@ const StyledTable = styled.table`
   display: table;
   border-collapse: collapse;
   border-spacing: 0;
-  margin: -1px;
+  /* margin: -1px; */
   width: calc(100% + 2px);
 
   thead, tfoot {
