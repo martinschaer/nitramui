@@ -16,7 +16,7 @@ const StyledCard = styled.div`
   box-sizing: border-box;
   box-shadow: 0 0 1rem ${ds.colors.shadow};
   border: 1px solid ${ds.colors.cardBorder};
-  border-radius: 0.5rem;
+  border-radius: ${ds.measures.radius};
   overflow: hidden;
   display: flex;
   flex-direction: column;

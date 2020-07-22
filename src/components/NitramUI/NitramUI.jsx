@@ -24,12 +24,16 @@ html, body {
   height: 100%;
 }
 
+html {
+  font-size: ${ds.measures.unit};
+}
+
 body {
   color: ${ds.colors.fg};
   background-color: ${ds.colors.bg};
-  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 400;
+  font-family: ${ds.fonts.body};
+  font-size: ${ds.measures.font};
+  font-weight: ${ds.weights.normal};
 }
 
 h1,
@@ -50,7 +54,7 @@ p {
 }
 
 strong {
-  font-weight: 600;
+  font-weight: ${ds.weights.strong};
 }
 
 input,
@@ -70,11 +74,11 @@ pre {
     width: 0.5rem;
     height: 0.5rem;
     background-color: ${ds.colors.bg};
-    border-radius: 0.25rem;
+    border-radius: ${ds.measures.radius};
   }
   &::-webkit-scrollbar-thumb {
     background-color: ${ds.colors.fgMuted};
-    border-radius: 0.25rem;
+    border-radius: ${ds.measures.radius};
   }
 }
 
@@ -110,14 +114,14 @@ a {
   }
 }
 
-button,
-input,
-select {
+button {
   ${labelStyles}
-  border: 1px solid ${ds.colors.border};
-  background-color: transparent;
-  color: ${ds.colors.fg};
-  border-radius: 0.25rem;
+  padding: 0 ${ds.measures.buttonSpacerH}rem;
+  font-size: ${ds.measures.inputFont};
+  border: 1px solid ${ds.colors.buttonBorder};
+  background-color: ${ds.colors.buttonBg};
+  color: ${ds.colors.buttonFg};
+  border-radius: ${ds.measures.radius};
   box-sizing: border-box;
   cursor: pointer;
   transform: perspective(100rem);
@@ -126,33 +130,71 @@ select {
   &:focus,
   &:active,
   &.active {
-    border-color: ${ds.colors.fg};
+    border-color: ${ds.colors.buttonBorderHover};
+    background-color: ${ds.colors.buttonBgHover};
     outline: none;
-  }
-
-  &:disabled {
-    color: ${ds.colors.fgMuted};
-    border-color: ${ds.colors.borderLight};
-    cursor: default;
-
-    &:hover,
-    &:focus {
-      border-color: ${ds.colors.borderLight};
-    }
-  }
-}
-
-button {
-  &.selected {
-    background-color: ${ds.colors.tableStripe};
-    transform: perspective(100rem) translateZ(-2rem);
-    box-shadow: inset 0 0 .25rem 0 ${ds.colors.shadow};
   }
 
   &:active,
   &.active {
     transform: perspective(100rem) translateZ(-2rem);
     box-shadow: inset 0 0 .25rem 2px ${ds.colors.shadow};
+  }
+
+  &:disabled {
+    color: ${ds.colors.buttonFgDisabled};
+    border-color: ${ds.colors.buttonBorderDisabled};
+    background-color: ${ds.colors.buttonBgDisabled};
+    cursor: default;
+
+    &:hover,
+    &:focus {
+      border-color: ${ds.colors.buttonBorderDisabled};
+    }
+  }
+
+  &.selected {
+    background-color: ${ds.colors.buttonBgSelected};
+    transform: perspective(100rem) translateZ(-2rem);
+    box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
+  }
+}
+
+input,
+select {
+  ${'' /* TODO: fox horizontal padding */}
+  ${labelStyles}
+  padding: 0 ${ds.measures.inputSpacerH}rem;
+  font-size: ${ds.measures.inputFont};
+  border: 1px solid ${ds.colors.inputBorder};
+  background-color: ${ds.colors.inputBg};
+  color: ${ds.colors.inputFg};
+  border-radius: ${ds.measures.inputRadius};
+  box-sizing: border-box;
+
+  &:hover {
+    border-color: ${ds.colors.inputBorderActive};
+    background-color: ${ds.colors.inputBgHover};
+    outline: none;
+  }
+  &:focus,
+  &:active,
+  &.active {
+    border-color: ${ds.colors.inputBorderActive};
+    background-color: ${ds.colors.inputBgFocus};
+    outline: none;
+  }
+
+  &:disabled {
+    color: ${ds.colors.inputFgDisabled};
+    border-color: ${ds.colors.inputBorderDisabled};
+    background-color: ${ds.colors.inputBgDisabled};
+    cursor: default;
+
+    &:hover,
+    &:focus {
+      border-color: ${ds.colors.inputBorderDisabled};
+    }
   }
 }
 

@@ -12,9 +12,9 @@ import ds from '../common/designSystem'
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 const StyledControl = styled.div`
-  border-radius: 0.5rem;
+  border-radius: ${ds.measures.inputRadius};
   display: flex;
-  margin: 0 .25rem;
+  margin: 0 calc(${ds.measures.spacer}rem / 4);
   background-color: ${props => props.withLabel ? ds.colors.tableStripe : 'transparent'};
 
   &:first-child {
@@ -25,8 +25,8 @@ const StyledControl = styled.div`
   }
 
   & > ${Label} {
-    padding-left: 0.5rem;
-    padding-right: 0.25rem;
+    padding-left: calc(${ds.measures.spacer}rem / 2);
+    padding-right: calc(${ds.measures.spacer}rem / 4);
   }
 
   & > input,

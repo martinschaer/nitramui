@@ -35,21 +35,26 @@ export const modes = {
   dark: 'dark'
 }
 
-const tryToGet = (themes, theme, prop, mode, def) => {
-  try {
-    return themes[theme][prop][mode]
-  } catch (err) {
-    return def
+const tryToGetArr = (obj, path, def) => {
+  if (!path.length) {
+    return obj
   }
+  const newObj = obj[path[0]]
+  if (newObj === undefined) return def
+  return tryToGetArr(newObj, path.slice(1), def)
 }
 
-const buildCustomProp = (prop, lightDefault, darkDefault) => theme('mode', {
-  [modes.light]: ({ theme }) => tryToGet(theme.customThemes, theme.customTheme, prop, 'light', lightDefault),
-  [modes.dark]: ({ theme }) => tryToGet(theme.customThemes, theme.customTheme, prop, 'dark', darkDefault)
+const buildCustomProp = (group, prop, lightDefault, darkDefault) => theme('mode', {
+  [modes.light]: ({ theme }) =>
+    tryToGetArr(theme.customThemes, [theme.customTheme, group, prop, 'light'], lightDefault),
+  [modes.dark]: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, group, prop, 'dark'], darkDefault)
 })
 
 const designSystem = {
   colors: {
+    // -----------------------------------------------------------------------------------------------------------------
+    // FG & BG
+    // -----------------------------------------------------------------------------------------------------------------
     fg: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -61,7 +66,7 @@ const designSystem = {
           [modes.light]: BLACK,
           [modes.dark]: WHITE
         }),
-      custom: buildCustomProp('fg', EMPEROR, GALLERY)
+      custom: buildCustomProp('colors', 'fg', EMPEROR, GALLERY)
     }),
     fgMuted: theme('theme', {
       [themes.smooth]:
@@ -74,7 +79,7 @@ const designSystem = {
           [modes.light]: EMPEROR,
           [modes.dark]: EMPEROR
         }),
-      custom: buildCustomProp('fgMuted', BLACK_30, EMPEROR)
+      custom: buildCustomProp('colors', 'fgMuted', BLACK_30, EMPEROR)
     }),
     bg: theme('theme', {
       [themes.smooth]:
@@ -87,8 +92,12 @@ const designSystem = {
           [modes.light]: WHITE,
           [modes.dark]: BLACK
         }),
-      custom: buildCustomProp('bg', GALLERY, COD_GRAY)
+      custom: buildCustomProp('colors', 'bg', GALLERY, COD_GRAY)
     }),
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Border
+    // -----------------------------------------------------------------------------------------------------------------
     border: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -100,7 +109,7 @@ const designSystem = {
           [modes.light]: BLACK,
           [modes.dark]: WHITE
         }),
-      custom: buildCustomProp('border', MERCURY, EMPEROR)
+      custom: buildCustomProp('colors', 'border', MERCURY, EMPEROR)
     }),
     borderLight: theme('theme', {
       [themes.smooth]:
@@ -113,8 +122,254 @@ const designSystem = {
           [modes.light]: BLACK_3,
           [modes.dark]: DUNE
         }),
-      custom: buildCustomProp('borderLight', BLACK_3, DUNE)
+      custom: buildCustomProp('colors', 'borderLight', BLACK_3, DUNE)
     }),
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Button
+    // -----------------------------------------------------------------------------------------------------------------
+    buttonFg: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'buttonFg', EMPEROR, GALLERY)
+    }),
+    buttonFgDisabled: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: BLACK_30,
+          [modes.dark]: EMPEROR
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: EMPEROR
+        }),
+      custom: buildCustomProp('colors', 'buttonFgDisabled', BLACK_30, EMPEROR)
+    }),
+    buttonBorderDisabled: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: BLACK_3,
+          [modes.dark]: DUNE
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK_3,
+          [modes.dark]: DUNE
+        }),
+      custom: buildCustomProp('colors', 'buttonBorderDisabled', BLACK_3, DUNE)
+    }),
+    buttonBg: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      custom: buildCustomProp('colors', 'buttonBg', 'transparent', 'transparent')
+    }),
+    buttonBgSelected: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: BLACK_3,
+          [modes.dark]: BLACK_30
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: GALLERY,
+          [modes.dark]: COD_GRAY
+        }),
+      custom: buildCustomProp('colors', 'buttonBgSelected', BLACK_3, BLACK_30)
+    }),
+    buttonBgDisabled: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      custom: buildCustomProp('colors', 'buttonBgDisabled', 'transparent', 'transparent')
+    }),
+    buttonBgHover: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      custom: buildCustomProp('colors', 'buttonBgHover', 'transparent', 'transparent')
+    }),
+    buttonBorder: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: MERCURY,
+          [modes.dark]: EMPEROR
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'buttonBorder', MERCURY, EMPEROR)
+    }),
+    buttonBorderHover: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'buttonBorderHover', EMPEROR, GALLERY)
+    }),
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Input
+    // -----------------------------------------------------------------------------------------------------------------
+    inputBorder: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: MERCURY,
+          [modes.dark]: EMPEROR
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'inputBorder', MERCURY, EMPEROR)
+    }),
+    inputBorderActive: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'inputBorderActive', EMPEROR, GALLERY)
+    }),
+    inputBg: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      custom: buildCustomProp('colors', 'inputBg', 'transparent', 'transparent')
+    }),
+    inputBgFocus: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      custom: buildCustomProp('colors', 'inputBgFocus', 'transparent', 'transparent')
+    }),
+    inputBgDisabled: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      custom: buildCustomProp('colors', 'inputBgDisabled', 'transparent', 'transparent')
+    }),
+    inputBgHover: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      custom: buildCustomProp('colors', 'inputBgHover', 'transparent', 'transparent')
+    }),
+    inputFg: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'inputFg', EMPEROR, GALLERY)
+    }),
+    inputFgDisabled: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: BLACK_30,
+          [modes.dark]: EMPEROR
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: EMPEROR
+        }),
+      custom: buildCustomProp('colors', 'inputFgDisabled', BLACK_30, EMPEROR)
+    }),
+    inputBorderDisabled: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: BLACK_3,
+          [modes.dark]: DUNE
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK_3,
+          [modes.dark]: DUNE
+        }),
+      custom: buildCustomProp('colors', 'inputBorderDisabled', BLACK_3, DUNE)
+    }),
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Card
+    // -----------------------------------------------------------------------------------------------------------------
     card: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -126,7 +381,7 @@ const designSystem = {
           [modes.light]: WHITE,
           [modes.dark]: BLACK
         }),
-      custom: buildCustomProp('card', WHITE, DUNE)
+      custom: buildCustomProp('colors', 'card', WHITE, DUNE)
     }),
     cardBorder: theme('theme', {
       [themes.smooth]:
@@ -139,8 +394,12 @@ const designSystem = {
           [modes.light]: COD_GRAY,
           [modes.dark]: WHITE
         }),
-      custom: buildCustomProp('cardBorder', GALLERY, EMPEROR)
+      custom: buildCustomProp('colors', 'cardBorder', GALLERY, EMPEROR)
     }),
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Shadow
+    // -----------------------------------------------------------------------------------------------------------------
     shadow: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -152,8 +411,25 @@ const designSystem = {
           [modes.light]: 'none',
           [modes.dark]: 'none'
         }),
-      custom: buildCustomProp('shadow', BLACK_10, BLACK_10)
+      custom: buildCustomProp('colors', 'shadow', BLACK_10, BLACK_10)
     }),
+    buttonShadow: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: BLACK_10,
+          [modes.dark]: BLACK_10
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: 'none',
+          [modes.dark]: 'none'
+        }),
+      custom: buildCustomProp('colors', 'buttonShadow', BLACK_10, BLACK_10)
+    }),
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Link
+    // -----------------------------------------------------------------------------------------------------------------
     link: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -165,7 +441,7 @@ const designSystem = {
           [modes.light]: BLUE,
           [modes.dark]: YELLOW
         }),
-      custom: buildCustomProp('link', BLUE, YELLOW)
+      custom: buildCustomProp('colors', 'link', BLUE, YELLOW)
     }),
     linkVisited: theme('theme', {
       [themes.smooth]:
@@ -178,8 +454,12 @@ const designSystem = {
           [modes.light]: BLUEVIOLET,
           [modes.dark]: LIMA
         }),
-      custom: buildCustomProp('linkVisited', BLUEVIOLET, LIMA)
+      custom: buildCustomProp('colors', 'linkVisited', BLUEVIOLET, LIMA)
     }),
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Table
+    // -----------------------------------------------------------------------------------------------------------------
     tableStripe: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -191,7 +471,95 @@ const designSystem = {
           [modes.light]: GALLERY,
           [modes.dark]: COD_GRAY
         }),
-      custom: buildCustomProp('tableStripe', BLACK_3, BLACK_30)
+      custom: buildCustomProp('colors', 'tableStripe', BLACK_3, BLACK_30)
+    })
+  },
+
+  // -------------------------------------------------------------------------------------------------------------------
+  // Fonts
+  // -------------------------------------------------------------------------------------------------------------------
+  fonts: {
+    body: theme('theme', {
+      [themes.smooth]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+      [themes.hiContrast]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'fonts', 'body'], 'Arial')
+    }),
+    heading: theme('theme', {
+      [themes.smooth]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+      [themes.hiContrast]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'fonts', 'heading'], 'Arial')
+    })
+  },
+
+  // -------------------------------------------------------------------------------------------------------------------
+  // Weights
+  // -------------------------------------------------------------------------------------------------------------------
+  weights: {
+    normal: theme('theme', {
+      [themes.smooth]: '400',
+      [themes.hiContrast]: '400',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'normal'], '400')
+    }),
+    strong: theme('theme', {
+      [themes.smooth]: '600',
+      [themes.hiContrast]: '600',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'strong'], '600')
+    }),
+    heading: theme('theme', {
+      [themes.smooth]: '200',
+      [themes.hiContrast]: '200',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'heading'], '600')
+    })
+  },
+
+  // -------------------------------------------------------------------------------------------------------------------
+  // Measures
+  // -------------------------------------------------------------------------------------------------------------------
+  measures: {
+    radius: theme('theme', {
+      [themes.smooth]: '0.5rem',
+      [themes.hiContrast]: '0.5rem',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'radius'], '0.5rem')
+    }),
+    inputRadius: theme('theme', {
+      [themes.smooth]: '0.25rem',
+      [themes.hiContrast]: '0.25rem',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputRadius'], '0.5rem')
+    }),
+    buttonRadius: theme('theme', {
+      [themes.smooth]: '0.25rem',
+      [themes.hiContrast]: '0.25rem',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'buttonRadius'], '0.25rem')
+    }),
+    font: theme('theme', {
+      [themes.smooth]: '0.875rem',
+      [themes.hiContrast]: '0.875rem',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'font'], '1rem')
+    }),
+    inputFont: theme('theme', {
+      [themes.smooth]: '0.875rem',
+      [themes.hiContrast]: '0.875rem',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputFont'], '1rem')
+    }),
+    unit: theme('theme', {
+      [themes.smooth]: '16px',
+      [themes.hiContrast]: '16px',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'unit'], '16px')
+    }),
+    spacer: theme('theme', {
+      [themes.smooth]: 1,
+      [themes.hiContrast]: 1,
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'spacer'], 1)
+    }),
+    buttonSpacerH: theme('theme', {
+      [themes.smooth]: 1,
+      [themes.hiContrast]: 1,
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'buttonSpacerH'], 1)
+    }),
+    inputSpacerH: theme('theme', {
+      [themes.smooth]: 0.5,
+      [themes.hiContrast]: 0.5,
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputSpacerH'], 0.5)
     })
   }
 }
