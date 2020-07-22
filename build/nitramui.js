@@ -3782,60 +3782,6 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test' && 
   window['__styled-components-init__'] += 1;
 }
 
-// Local imports
-// ---------------------------------------------------------------------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------
-// Styled Components
-// ---------------------------------------------------------------------------------------------------------------------
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  align-items: flex-start;
-  margin: ${props => props.pushMargin ? '-1rem' : '0'};
-  ${props => props.scroll === 'vertical' ? `
-      overflow-y: scroll;
-      overflow-x: hidden;
-      flex-wrap: wrap;
-    ` : `
-      overflow-y: hidden;
-      overflow-x: scroll;
-      /* Fixes nested overflow scroll: */
-      /* https://stackoverflow.com/questions/43539284/overflow-hidden-with-nested-overflow-scroll-not-working */
-      height: 100%;
-    `}
-  ${props => props.h === 'half' ? 'height: 50%;' : 'height: 100%;'}
-  min-width: 100%;
-`;
-
-const Container = ({
-  children,
-  pushMargin,
-  height,
-  scroll
-}) => {
-  return /*#__PURE__*/React__default.createElement(StyledContainer, {
-    pushMargin: pushMargin,
-    h: height,
-    scroll: scroll
-  }, children);
-}; // ---------------------------------------------------------------------------------------------------------------------
-// PropTypes, defaults & export
-// ---------------------------------------------------------------------------------------------------------------------
-
-
-Container.propTypes = {
-  children: propTypes.node,
-  pushMargin: propTypes.bool,
-  height: propTypes.oneOf(['auto', 'half']),
-  scroll: propTypes.oneOf(['horizontal', 'vertical'])
-};
-Container.defaultProps = {
-  pushMargin: false,
-  scroll: 'horizontal'
-};
-
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 // StyledCard height property is called h so that it doesn’t appear in the resulting DOM node.
@@ -3854,9 +3800,9 @@ const StyledCard = styled.div`
   min-width: ${props => props.size === 'small' ? '32rem' : 'auto'};
   width: ${props => props.size === 'small' ? '33%' : 'auto'};
 
-  ${StyledContainer} > & {
-    margin: 1rem;
-  }
+  ${props => props.marginBottom && props.marginBottom === true ? 'margin-bottom: 1rem;' : `margin-bottom: ${props.marginBottom}rem;`}
+
+  ${props => props.margin && props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`}
 
   & & {
     background-color: ${designSystem.colors.card};
@@ -3913,14 +3859,18 @@ const Card = ({
   footer,
   height,
   children,
-  noPadding
+  noPadding,
+  margin,
+  marginBottom
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
   return /*#__PURE__*/React__default.createElement(StyledCard, {
     size: size,
-    h: height
+    h: height,
+    margin: margin,
+    marginBottom: marginBottom
   }, header && /*#__PURE__*/React__default.createElement(StyledCardHeader, null, header), children && /*#__PURE__*/React__default.createElement(StyledCardBody, {
     noPadding: noPadding
   }, children), footer && /*#__PURE__*/React__default.createElement(StyledCardFooter, null, footer));
@@ -3935,7 +3885,9 @@ Card.propTypes = {
   footer: propTypes.node,
   size: propTypes.oneOf(['auto', 'small']),
   height: propTypes.oneOfType([propTypes.oneOf(['default', 'full']), propTypes.number]),
-  noPadding: propTypes.bool
+  noPadding: propTypes.bool,
+  margin: propTypes.oneOfType([propTypes.bool, propTypes.number]),
+  marginBottom: propTypes.oneOfType([propTypes.bool, propTypes.number])
 };
 Card.defaultProps = {
   height: 'default'
@@ -4101,8 +4053,8 @@ const StyledTable = styled.table`
   display: table;
   border-collapse: collapse;
   border-spacing: 0;
-  /* margin: -1px; */
-  width: calc(100% + 2px);
+  width: max-content;
+  min-width: 100%;
 
   thead, tfoot {
     background-color: ${designSystem.colors.bg};
@@ -4121,10 +4073,6 @@ const StyledTable = styled.table`
 
   tr:nth-child(2n) {
     background-color: ${designSystem.colors.tableStripe};
-  }
-
-  @media (max-width: 768px) {
-    width: max-content;
   }
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Component
@@ -4146,6 +4094,60 @@ Table.propTypes = {
   children: propTypes.node
 };
 Table.defaultProps = {};
+
+// Local imports
+// ---------------------------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
+// Styled Components
+// ---------------------------------------------------------------------------------------------------------------------
+
+const StyledContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: flex-start;
+  margin: ${props => props.pushMargin ? '-1rem' : '0'};
+  ${props => props.scroll === 'vertical' ? `
+      overflow-y: scroll;
+      overflow-x: hidden;
+      flex-wrap: wrap;
+    ` : `
+      overflow-y: hidden;
+      overflow-x: scroll;
+      /* Fixes nested overflow scroll: */
+      /* https://stackoverflow.com/questions/43539284/overflow-hidden-with-nested-overflow-scroll-not-working */
+      height: 100%;
+    `}
+  ${props => props.h === 'half' ? 'height: 50%;' : 'height: 100%;'}
+  min-width: 100%;
+`;
+
+const Container = ({
+  children,
+  pushMargin,
+  height,
+  scroll
+}) => {
+  return /*#__PURE__*/React__default.createElement(StyledContainer, {
+    pushMargin: pushMargin,
+    h: height,
+    scroll: scroll
+  }, children);
+}; // ---------------------------------------------------------------------------------------------------------------------
+// PropTypes, defaults & export
+// ---------------------------------------------------------------------------------------------------------------------
+
+
+Container.propTypes = {
+  children: propTypes.node,
+  pushMargin: propTypes.bool,
+  height: propTypes.oneOf(['auto', 'half']),
+  scroll: propTypes.oneOf(['horizontal', 'vertical'])
+};
+Container.defaultProps = {
+  pushMargin: false,
+  scroll: 'horizontal'
+};
 
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
