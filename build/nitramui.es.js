@@ -36,6 +36,9 @@ theme.variants = function(name, prop, values) {
 
 var styledTheming = theme;
 
+// COLORS
+// ---------------------------------------------------------------------------------------------------------------------
+
 const WHITE = '#fff';
 const GALLERY = '#f0f0f0';
 const MERCURY = '#E5E5E5';
@@ -50,6 +53,9 @@ const YELLOW = '#ff0';
 const BLUE = '#00f';
 const LIMA = '#75d41d';
 const BLUEVIOLET = 'blueviolet'; // #8A2BE2
+// ---------------------------------------------------------------------------------------------------------------------
+// Exports
+// ---------------------------------------------------------------------------------------------------------------------
 
 const themes = {
   smooth: 'smooth',
@@ -59,6 +65,24 @@ const modes = {
   light: 'light',
   dark: 'dark'
 };
+
+const tryToGet = (themes, theme, prop, mode, def) => {
+  try {
+    return themes[theme][prop][mode];
+  } catch (err) {
+    return def;
+  }
+};
+
+const buildCustomProp = (prop, lightDefault, darkDefault) => styledTheming('mode', {
+  [modes.light]: ({
+    theme
+  }) => tryToGet(theme.customThemes, theme.customTheme, prop, 'light', lightDefault),
+  [modes.dark]: ({
+    theme
+  }) => tryToGet(theme.customThemes, theme.customTheme, prop, 'dark', darkDefault)
+});
+
 const designSystem = {
   colors: {
     fg: styledTheming('theme', {
@@ -69,7 +93,8 @@ const designSystem = {
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: BLACK,
         [modes.dark]: WHITE
-      })
+      }),
+      custom: buildCustomProp('fg', EMPEROR, GALLERY)
     }),
     fgMuted: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -79,7 +104,8 @@ const designSystem = {
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: EMPEROR,
         [modes.dark]: EMPEROR
-      })
+      }),
+      custom: buildCustomProp('fgMuted', BLACK_30, EMPEROR)
     }),
     bg: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -89,7 +115,8 @@ const designSystem = {
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: WHITE,
         [modes.dark]: BLACK
-      })
+      }),
+      custom: buildCustomProp('bg', GALLERY, COD_GRAY)
     }),
     border: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -99,17 +126,19 @@ const designSystem = {
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: BLACK,
         [modes.dark]: WHITE
-      })
+      }),
+      custom: buildCustomProp('border', MERCURY, EMPEROR)
     }),
     borderLight: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_10,
-        [modes.dark]: EMPEROR
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
       }),
       [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK_10,
-        [modes.dark]: EMPEROR
-      })
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      custom: buildCustomProp('borderLight', BLACK_3, DUNE)
     }),
     card: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -119,7 +148,8 @@ const designSystem = {
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: WHITE,
         [modes.dark]: BLACK
-      })
+      }),
+      custom: buildCustomProp('card', WHITE, DUNE)
     }),
     cardBorder: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -129,7 +159,8 @@ const designSystem = {
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: COD_GRAY,
         [modes.dark]: WHITE
-      })
+      }),
+      custom: buildCustomProp('cardBorder', GALLERY, EMPEROR)
     }),
     shadow: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -139,7 +170,8 @@ const designSystem = {
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: 'none',
         [modes.dark]: 'none'
-      })
+      }),
+      custom: buildCustomProp('shadow', BLACK_10, BLACK_10)
     }),
     link: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -149,7 +181,8 @@ const designSystem = {
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: BLUE,
         [modes.dark]: YELLOW
-      })
+      }),
+      custom: buildCustomProp('link', BLUE, YELLOW)
     }),
     linkVisited: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -159,7 +192,8 @@ const designSystem = {
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: BLUEVIOLET,
         [modes.dark]: LIMA
-      })
+      }),
+      custom: buildCustomProp('linkVisited', BLUEVIOLET, LIMA)
     }),
     tableStripe: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -169,7 +203,8 @@ const designSystem = {
       [themes.hiContrast]: styledTheming('mode', {
         [modes.light]: GALLERY,
         [modes.dark]: COD_GRAY
-      })
+      }),
+      custom: buildCustomProp('tableStripe', BLACK_3, BLACK_30)
     })
   }
 };
@@ -3793,9 +3828,9 @@ const StyledCard = styled.div`
   min-width: ${props => props.size === 'small' ? '32rem' : 'auto'};
   width: ${props => props.size === 'small' ? '33%' : 'auto'};
 
-  ${props => props.marginBottom && props.marginBottom === true ? 'margin-bottom: 1rem;' : `margin-bottom: ${props.marginBottom}rem;`}
+  ${props => props.marginBottom && (props.marginBottom === true ? 'margin-bottom: 1rem;' : `margin-bottom: ${props.marginBottom}rem;`)}
 
-  ${props => props.margin && props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`}
+  ${props => props.margin && (props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`)}
 
   & & {
     background-color: ${designSystem.colors.card};
@@ -4050,7 +4085,7 @@ const StyledTable = styled.table`
   min-width: 100%;
 
   thead, tfoot {
-    background-color: ${designSystem.colors.bg};
+    background-color: ${designSystem.colors.tableStripe};
     color: ${designSystem.colors.fg};
   }
 
@@ -4483,11 +4518,22 @@ const GlobalStyle$1 = createGlobalStyle`
 // ---------------------------------------------------------------------------------------------------------------------
 
 const NitramUI = ({
+  customThemes,
   children
 }) => {
   // TODO: use hooks for system/time–aware –saved– dark mode
   const [mode, setMode] = useState(modes.light);
-  const [theme, setTheme] = useState(themes.smooth); // -------------------------------------------------------------------------------------------------------------------
+  const [theme, setTheme] = useState(themes.smooth);
+  const [themeAux, setThemeAux] = useState(themes.smooth);
+  const [customTheme, setCustomTheme] = useState(themes.smooth);
+  React.useEffect(() => {
+    if (themes[theme]) {
+      setThemeAux(theme);
+    } else {
+      setThemeAux('custom');
+      setCustomTheme(theme);
+    }
+  }, [theme]); // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
 
@@ -4496,12 +4542,19 @@ const NitramUI = ({
       mode,
       setMode,
       theme,
-      setTheme
+      setTheme,
+      themes: { ...themes,
+        ...Object.keys(customThemes || {}).reduce((acc, x) => ({ ...acc,
+          x
+        }), {})
+      }
     }
   }, /*#__PURE__*/React.createElement(ThemeProvider, {
     theme: {
-      theme,
-      mode
+      theme: themeAux,
+      mode,
+      customThemes,
+      customTheme
     }
   }, /*#__PURE__*/React.createElement(GlobalStyle$1, null), children));
 }; // ---------------------------------------------------------------------------------------------------------------------
@@ -4510,7 +4563,8 @@ const NitramUI = ({
 
 
 NitramUI.propTypes = {
-  children: propTypes.node
+  children: propTypes.node,
+  customThemes: propTypes.object
 };
 NitramUI.defaultProps = {};
 
