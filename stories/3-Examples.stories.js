@@ -154,6 +154,7 @@ export const App = () => {
   return (
     <NitramUI
       customThemes={customThemes}
+      availableThemes={['groove', 'smooth']}
     >
       <NitramUIContext.Consumer>
         {({ mode, setMode, themes, theme, setTheme }) => (

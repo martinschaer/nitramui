@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import {
@@ -224,21 +224,64 @@ const GlobalStyle = createGlobalStyle`
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
+// Utils
+// ---------------------------------------------------------------------------------------------------------------------
+const isCustomTheme = theme => themes[theme]
+const getDefaultTheme = ({ availableThemes, returnOnlyPredef }) => (availableThemes && availableThemes.length)
+  ? (isCustomTheme(availableThemes[0]) && returnOnlyPredef ? themes.smooth : availableThemes[0])
+  : themes.smooth
+
+// ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 const NitramUI = ({
   customThemes,
+  availableThemes,
   children
 }) => {
+  // -------------------------------------------------------------------------------------------------------------------
+  // States
+  // -------------------------------------------------------------------------------------------------------------------
   // TODO: use hooks for system/time–aware –saved– dark mode
   const [mode, setMode] = useState(modes.light)
-  const [theme, setTheme] = useState(themes.smooth)
-  const [themeAux, setThemeAux] = useState(themes.smooth)
-  const [customTheme, setCustomTheme] = useState(themes.smooth)
+  const [theme, setTheme] = useState(getDefaultTheme({ availableThemes }))
+  const [themeAux, setThemeAux] = useState(getDefaultTheme({ availableThemes, returnOnlyPredef: true }))
+  const [customTheme, setCustomTheme] = useState(getDefaultTheme({ availableThemes }))
 
-  React.useEffect(
+  // -------------------------------------------------------------------------------------------------------------------
+  // Memos
+  // -------------------------------------------------------------------------------------------------------------------
+  const availableThemesObjects = useMemo(
     () => {
-      if (themes[theme]) {
+      let aTs = {}
+      if (!availableThemes) {
+        aTs = {
+          ...themes,
+          ...Object.keys(customThemes || {})
+            .reduce(
+              (acc, x) => ({ ...acc, x }),
+              {}
+            )
+        }
+      } else {
+        availableThemes.forEach(x => {
+          if ((customThemes && customThemes[x]) || themes[x]) {
+            aTs[x] = x
+          }
+        })
+      }
+      console.log(aTs)
+      return aTs
+    },
+    [customThemes, availableThemes]
+  )
+
+  // -------------------------------------------------------------------------------------------------------------------
+  // Effects
+  // -------------------------------------------------------------------------------------------------------------------
+  useEffect(
+    () => {
+      if (isCustomTheme(theme)) {
         setThemeAux(theme)
       } else {
         setThemeAux('custom')
@@ -258,7 +301,7 @@ const NitramUI = ({
         setMode,
         theme,
         setTheme,
-        themes: { ...themes, ...Object.keys(customThemes || {}).reduce((acc, x) => ({ ...acc, x }), {}) }
+        themes: availableThemesObjects
       }}
     >
       <ThemeProvider
@@ -276,7 +319,8 @@ const NitramUI = ({
 // ---------------------------------------------------------------------------------------------------------------------
 NitramUI.propTypes = {
   children: PropTypes.node,
-  customThemes: PropTypes.object
+  customThemes: PropTypes.object,
+  availableThemes: PropTypes.arrayOf(PropTypes.string)
 }
 
 NitramUI.defaultProps = {}
