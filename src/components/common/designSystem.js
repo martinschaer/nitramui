@@ -1,5 +1,9 @@
 import theme from 'styled-theming'
 
+// ---------------------------------------------------------------------------------------------------------------------
+// COLORS
+// ---------------------------------------------------------------------------------------------------------------------
+
 const WHITE = '#fff'
 const GALLERY = '#f0f0f0'
 const MERCURY = '#E5E5E5'
@@ -16,6 +20,10 @@ const YELLOW = '#ff0'
 const BLUE = '#00f'
 const LIMA = '#75d41d'
 const BLUEVIOLET = 'blueviolet' // #8A2BE2
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Exports
+// ---------------------------------------------------------------------------------------------------------------------
 
 export const themes = {
   smooth: 'smooth',
@@ -80,13 +88,13 @@ const designSystem = {
     borderLight: theme('theme', {
       [themes.smooth]:
         theme('mode', {
-          [modes.light]: BLACK_10,
-          [modes.dark]: EMPEROR
+          [modes.light]: BLACK_3,
+          [modes.dark]: DUNE
         }),
       [themes.hiContrast]:
         theme('mode', {
-          [modes.light]: BLACK_10,
-          [modes.dark]: EMPEROR
+          [modes.light]: BLACK_3,
+          [modes.dark]: DUNE
         })
     }),
     card: theme('theme', {

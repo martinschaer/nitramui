@@ -27,7 +27,7 @@ const StyledTable = styled.table`
   min-width: 100%;
 
   thead, tfoot {
-    background-color: ${ds.colors.bg};
+    background-color: ${ds.colors.tableStripe};
     color: ${ds.colors.fg};
   }
 
