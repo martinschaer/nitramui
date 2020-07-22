@@ -185,11 +185,26 @@ const GlobalStyle = createGlobalStyle`
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 const NitramUI = ({
+  customThemes,
   children
 }) => {
   // TODO: use hooks for system/time–aware –saved– dark mode
   const [mode, setMode] = useState(modes.light)
   const [theme, setTheme] = useState(themes.smooth)
+  const [themeAux, setThemeAux] = useState(themes.smooth)
+  const [customTheme, setCustomTheme] = useState(themes.smooth)
+
+  React.useEffect(
+    () => {
+      if (themes[theme]) {
+        setThemeAux(theme)
+      } else {
+        setThemeAux('custom')
+        setCustomTheme(theme)
+      }
+    },
+    [theme]
+  )
 
   // -------------------------------------------------------------------------------------------------------------------
   // Render
@@ -200,11 +215,12 @@ const NitramUI = ({
         mode,
         setMode,
         theme,
-        setTheme
+        setTheme,
+        themes: { ...themes, ...Object.keys(customThemes || {}).reduce((acc, x) => ({ ...acc, x }), {}) }
       }}
     >
       <ThemeProvider
-        theme={{ theme, mode }}
+        theme={{ theme: themeAux, mode, customThemes, customTheme }}
       >
         <GlobalStyle />
         {children}
@@ -217,7 +233,8 @@ const NitramUI = ({
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
 NitramUI.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  customThemes: PropTypes.object
 }
 
 NitramUI.defaultProps = {}

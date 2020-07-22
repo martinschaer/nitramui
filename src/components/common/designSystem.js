@@ -35,6 +35,19 @@ export const modes = {
   dark: 'dark'
 }
 
+const tryToGet = (themes, theme, prop, mode, def) => {
+  try {
+    return themes[theme][prop][mode]
+  } catch (err) {
+    return def
+  }
+}
+
+const buildCustomProp = (prop, lightDefault, darkDefault) => theme('mode', {
+  [modes.light]: ({ theme }) => tryToGet(theme.customThemes, theme.customTheme, prop, 'light', lightDefault),
+  [modes.dark]: ({ theme }) => tryToGet(theme.customThemes, theme.customTheme, prop, 'dark', darkDefault)
+})
+
 const designSystem = {
   colors: {
     fg: theme('theme', {
@@ -47,7 +60,8 @@ const designSystem = {
         theme('mode', {
           [modes.light]: BLACK,
           [modes.dark]: WHITE
-        })
+        }),
+      custom: buildCustomProp('fg', EMPEROR, GALLERY)
     }),
     fgMuted: theme('theme', {
       [themes.smooth]:
@@ -59,7 +73,8 @@ const designSystem = {
         theme('mode', {
           [modes.light]: EMPEROR,
           [modes.dark]: EMPEROR
-        })
+        }),
+      custom: buildCustomProp('fgMuted', BLACK_30, EMPEROR)
     }),
     bg: theme('theme', {
       [themes.smooth]:
@@ -71,7 +86,8 @@ const designSystem = {
         theme('mode', {
           [modes.light]: WHITE,
           [modes.dark]: BLACK
-        })
+        }),
+      custom: buildCustomProp('bg', GALLERY, COD_GRAY)
     }),
     border: theme('theme', {
       [themes.smooth]:
@@ -83,7 +99,8 @@ const designSystem = {
         theme('mode', {
           [modes.light]: BLACK,
           [modes.dark]: WHITE
-        })
+        }),
+      custom: buildCustomProp('border', MERCURY, EMPEROR)
     }),
     borderLight: theme('theme', {
       [themes.smooth]:
@@ -95,7 +112,8 @@ const designSystem = {
         theme('mode', {
           [modes.light]: BLACK_3,
           [modes.dark]: DUNE
-        })
+        }),
+      custom: buildCustomProp('borderLight', BLACK_3, DUNE)
     }),
     card: theme('theme', {
       [themes.smooth]:
@@ -107,7 +125,8 @@ const designSystem = {
         theme('mode', {
           [modes.light]: WHITE,
           [modes.dark]: BLACK
-        })
+        }),
+      custom: buildCustomProp('card', WHITE, DUNE)
     }),
     cardBorder: theme('theme', {
       [themes.smooth]:
@@ -119,7 +138,8 @@ const designSystem = {
         theme('mode', {
           [modes.light]: COD_GRAY,
           [modes.dark]: WHITE
-        })
+        }),
+      custom: buildCustomProp('cardBorder', GALLERY, EMPEROR)
     }),
     shadow: theme('theme', {
       [themes.smooth]:
@@ -131,7 +151,8 @@ const designSystem = {
         theme('mode', {
           [modes.light]: 'none',
           [modes.dark]: 'none'
-        })
+        }),
+      custom: buildCustomProp('shadow', BLACK_10, BLACK_10)
     }),
     link: theme('theme', {
       [themes.smooth]:
@@ -143,7 +164,8 @@ const designSystem = {
         theme('mode', {
           [modes.light]: BLUE,
           [modes.dark]: YELLOW
-        })
+        }),
+      custom: buildCustomProp('link', BLUE, YELLOW)
     }),
     linkVisited: theme('theme', {
       [themes.smooth]:
@@ -155,7 +177,8 @@ const designSystem = {
         theme('mode', {
           [modes.light]: BLUEVIOLET,
           [modes.dark]: LIMA
-        })
+        }),
+      custom: buildCustomProp('linkVisited', BLUEVIOLET, LIMA)
     }),
     tableStripe: theme('theme', {
       [themes.smooth]:
@@ -167,7 +190,8 @@ const designSystem = {
         theme('mode', {
           [modes.light]: GALLERY,
           [modes.dark]: COD_GRAY
-        })
+        }),
+      custom: buildCustomProp('tableStripe', BLACK_3, BLACK_30)
     })
   }
 }

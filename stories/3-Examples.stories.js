@@ -3,7 +3,6 @@ import { linkTo } from '@storybook/addon-links'
 // import { withKnobs } from '@storybook/addon-knobs'
 
 import {
-  themes,
   modes,
   Card,
   Pane,
@@ -22,6 +21,12 @@ export default {
 }
 
 const mode2Emoji = mode => mode === 'light' ? '🌞' : '🌙'
+
+const customThemes = {
+  lightOnDark: {
+    bg: { light: '#222', dark: '#111' }
+  }
+}
 
 const ExampleTable = () => {
   return (
@@ -112,9 +117,11 @@ const ExampleTable = () => {
 export const App = () => {
   const [text, setText] = React.useState('Lorem ipsum')
   return (
-    <NitramUI>
+    <NitramUI
+      customThemes={customThemes}
+    >
       <NitramUIContext.Consumer>
-        {({ mode, setMode, theme, setTheme }) => (
+        {({ mode, setMode, themes, theme, setTheme }) => (
           <Layout
             brand='Example'
             headerSlot='Hi, Jonathan'
