@@ -40,9 +40,9 @@ const StyledCard = styled.div`
   };
 
   ${props => props.marginBottom &&
-    props.marginBottom === true ? 'margin-bottom: 1rem;' : `margin-bottom: ${props.marginBottom}rem;`}
+    (props.marginBottom === true ? 'margin-bottom: 1rem;' : `margin-bottom: ${props.marginBottom}rem;`)}
 
-  ${props => props.margin && props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`}
+  ${props => props.margin && (props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`)}
 
   & & {
     background-color: ${ds.colors.card};
