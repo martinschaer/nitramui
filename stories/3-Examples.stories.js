@@ -202,6 +202,7 @@ export const App = () => {
                       <button type='button'>See all</button>
                     )}
                     noPadding
+                    margin
                   >
                     <Table>
                       <thead>
@@ -253,6 +254,7 @@ export const App = () => {
                       <button type='button'>See all</button>
                     }
                     noPadding
+                    margin
                   >
                     <Table>
                       <thead>
@@ -293,6 +295,7 @@ export const App = () => {
                     {({ mode, setMode, theme, setTheme }) => (
                       <Card
                         size='small'
+                        margin
                         header={
                           <>
                             <Label heading>Header</Label>
@@ -391,8 +394,11 @@ export const Grid = () => {
                   </Card>
                 </Pane>
                 <Pane size='half' height='half'>
-                  <Card height='full' noPadding>
+                  <Card height='full'>
                     <h2>Hello world</h2>
+                    <Card marginBottom={2} noPadding>
+                      <ExampleTable />
+                    </Card>
                     <ExampleTable />
                   </Card>
                 </Pane>

@@ -23,7 +23,8 @@ const StyledTable = styled.table`
   display: table;
   border-collapse: collapse;
   border-spacing: 0;
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
 
   thead, tfoot {
     background-color: ${ds.colors.bg};
@@ -42,10 +43,6 @@ const StyledTable = styled.table`
 
   tr:nth-child(2n) {
     background-color: ${ds.colors.tableStripe};
-  }
-
-  @media (max-width: 768px) {
-    width: max-content;
   }
 `
 

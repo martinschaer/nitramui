@@ -6,7 +6,6 @@ import styled from 'styled-components'
 // Local imports
 // ---------------------------------------------------------------------------------------------------------------------
 import ds from '../common/designSystem'
-import { StyledContainer } from '../Container'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
@@ -40,9 +39,10 @@ const StyledCard = styled.div`
     : 'auto'
   };
 
-  ${StyledContainer} > & {
-    margin: 1rem;
-  }
+  ${props => props.marginBottom &&
+    props.marginBottom === true ? 'margin-bottom: 1rem;' : `margin-bottom: ${props.marginBottom}rem;`}
+
+  ${props => props.margin && props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`}
 
   & & {
     background-color: ${ds.colors.card};
@@ -103,7 +103,9 @@ const Card = ({
   footer,
   height,
   children,
-  noPadding
+  noPadding,
+  margin,
+  marginBottom
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
@@ -112,6 +114,8 @@ const Card = ({
     <StyledCard
       size={size}
       h={height}
+      margin={margin}
+      marginBottom={marginBottom}
     >
       {header && (<StyledCardHeader>{header}</StyledCardHeader>)}
       {children && (
@@ -136,7 +140,9 @@ Card.propTypes = {
     'small'
   ]),
   height: PropTypes.oneOfType([PropTypes.oneOf(['default', 'full']), PropTypes.number]),
-  noPadding: PropTypes.bool
+  noPadding: PropTypes.bool,
+  margin: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  marginBottom: PropTypes.oneOfType([PropTypes.bool, PropTypes.number])
 }
 Card.defaultProps = {
   height: 'default'
