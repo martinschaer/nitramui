@@ -73,25 +73,30 @@ const modes = {
   dark: 'dark'
 };
 
-const tryToGet = (themes, theme, prop, mode, def) => {
-  try {
-    return themes[theme][prop][mode];
-  } catch (err) {
-    return def;
+const tryToGetArr = (obj, path, def) => {
+  if (!path.length) {
+    return obj;
   }
+
+  const newObj = obj[path[0]];
+  if (newObj === undefined) return def;
+  return tryToGetArr(newObj, path.slice(1), def);
 };
 
-const buildCustomProp = (prop, lightDefault, darkDefault) => styledTheming('mode', {
+const buildCustomProp = (group, prop, lightDefault, darkDefault) => styledTheming('mode', {
   [modes.light]: ({
     theme
-  }) => tryToGet(theme.customThemes, theme.customTheme, prop, 'light', lightDefault),
+  }) => tryToGetArr(theme.customThemes, [theme.customTheme, group, prop, 'light'], lightDefault),
   [modes.dark]: ({
     theme
-  }) => tryToGet(theme.customThemes, theme.customTheme, prop, 'dark', darkDefault)
+  }) => tryToGetArr(theme.customThemes, [theme.customTheme, group, prop, 'dark'], darkDefault)
 });
 
 const designSystem = {
   colors: {
+    // -----------------------------------------------------------------------------------------------------------------
+    // FG & BG
+    // -----------------------------------------------------------------------------------------------------------------
     fg: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: EMPEROR,
@@ -101,7 +106,7 @@ const designSystem = {
         [modes.light]: BLACK,
         [modes.dark]: WHITE
       }),
-      custom: buildCustomProp('fg', EMPEROR, GALLERY)
+      custom: buildCustomProp('colors', 'fg', EMPEROR, GALLERY)
     }),
     fgMuted: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -112,7 +117,7 @@ const designSystem = {
         [modes.light]: EMPEROR,
         [modes.dark]: EMPEROR
       }),
-      custom: buildCustomProp('fgMuted', BLACK_30, EMPEROR)
+      custom: buildCustomProp('colors', 'fgMuted', BLACK_30, EMPEROR)
     }),
     bg: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -123,8 +128,11 @@ const designSystem = {
         [modes.light]: WHITE,
         [modes.dark]: BLACK
       }),
-      custom: buildCustomProp('bg', GALLERY, COD_GRAY)
+      custom: buildCustomProp('colors', 'bg', GALLERY, COD_GRAY)
     }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Border
+    // -----------------------------------------------------------------------------------------------------------------
     border: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: MERCURY,
@@ -134,7 +142,7 @@ const designSystem = {
         [modes.light]: BLACK,
         [modes.dark]: WHITE
       }),
-      custom: buildCustomProp('border', MERCURY, EMPEROR)
+      custom: buildCustomProp('colors', 'border', MERCURY, EMPEROR)
     }),
     borderLight: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -145,8 +153,215 @@ const designSystem = {
         [modes.light]: BLACK_3,
         [modes.dark]: DUNE
       }),
-      custom: buildCustomProp('borderLight', BLACK_3, DUNE)
+      custom: buildCustomProp('colors', 'borderLight', BLACK_3, DUNE)
     }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Button
+    // -----------------------------------------------------------------------------------------------------------------
+    buttonFg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'buttonFg', EMPEROR, GALLERY)
+    }),
+    buttonFgDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_30,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: EMPEROR
+      }),
+      custom: buildCustomProp('colors', 'buttonFgDisabled', BLACK_30, EMPEROR)
+    }),
+    buttonBorderDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      custom: buildCustomProp('colors', 'buttonBorderDisabled', BLACK_3, DUNE)
+    }),
+    buttonBg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'buttonBg', 'transparent', 'transparent')
+    }),
+    buttonBgSelected: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: BLACK_30
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: GALLERY,
+        [modes.dark]: COD_GRAY
+      }),
+      custom: buildCustomProp('colors', 'buttonBgSelected', BLACK_3, BLACK_30)
+    }),
+    buttonBgDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'buttonBgDisabled', 'transparent', 'transparent')
+    }),
+    buttonBgHover: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'buttonBgHover', 'transparent', 'transparent')
+    }),
+    buttonBorder: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: MERCURY,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'buttonBorder', MERCURY, EMPEROR)
+    }),
+    buttonBorderHover: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'buttonBorderHover', EMPEROR, GALLERY)
+    }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Input
+    // -----------------------------------------------------------------------------------------------------------------
+    inputBorder: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: MERCURY,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'inputBorder', MERCURY, EMPEROR)
+    }),
+    inputBorderActive: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'inputBorderActive', EMPEROR, GALLERY)
+    }),
+    inputBg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'inputBg', 'transparent', 'transparent')
+    }),
+    inputBgFocus: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'inputBgFocus', 'transparent', 'transparent')
+    }),
+    inputBgDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'inputBgDisabled', 'transparent', 'transparent')
+    }),
+    inputBgHover: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'inputBgHover', 'transparent', 'transparent')
+    }),
+    inputFg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'inputFg', EMPEROR, GALLERY)
+    }),
+    inputFgDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_30,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: EMPEROR
+      }),
+      custom: buildCustomProp('colors', 'inputFgDisabled', BLACK_30, EMPEROR)
+    }),
+    inputBorderDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      custom: buildCustomProp('colors', 'inputBorderDisabled', BLACK_3, DUNE)
+    }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Card
+    // -----------------------------------------------------------------------------------------------------------------
     card: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: WHITE,
@@ -156,7 +371,7 @@ const designSystem = {
         [modes.light]: WHITE,
         [modes.dark]: BLACK
       }),
-      custom: buildCustomProp('card', WHITE, DUNE)
+      custom: buildCustomProp('colors', 'card', WHITE, DUNE)
     }),
     cardBorder: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -167,8 +382,11 @@ const designSystem = {
         [modes.light]: COD_GRAY,
         [modes.dark]: WHITE
       }),
-      custom: buildCustomProp('cardBorder', GALLERY, EMPEROR)
+      custom: buildCustomProp('colors', 'cardBorder', GALLERY, EMPEROR)
     }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Shadow
+    // -----------------------------------------------------------------------------------------------------------------
     shadow: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: BLACK_10,
@@ -178,8 +396,22 @@ const designSystem = {
         [modes.light]: 'none',
         [modes.dark]: 'none'
       }),
-      custom: buildCustomProp('shadow', BLACK_10, BLACK_10)
+      custom: buildCustomProp('colors', 'shadow', BLACK_10, BLACK_10)
     }),
+    buttonShadow: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_10,
+        [modes.dark]: BLACK_10
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'none',
+        [modes.dark]: 'none'
+      }),
+      custom: buildCustomProp('colors', 'buttonShadow', BLACK_10, BLACK_10)
+    }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Link
+    // -----------------------------------------------------------------------------------------------------------------
     link: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: BLUE,
@@ -189,7 +421,7 @@ const designSystem = {
         [modes.light]: BLUE,
         [modes.dark]: YELLOW
       }),
-      custom: buildCustomProp('link', BLUE, YELLOW)
+      custom: buildCustomProp('colors', 'link', BLUE, YELLOW)
     }),
     linkVisited: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -200,8 +432,11 @@ const designSystem = {
         [modes.light]: BLUEVIOLET,
         [modes.dark]: LIMA
       }),
-      custom: buildCustomProp('linkVisited', BLUEVIOLET, LIMA)
+      custom: buildCustomProp('colors', 'linkVisited', BLUEVIOLET, LIMA)
     }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Table
+    // -----------------------------------------------------------------------------------------------------------------
     tableStripe: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: BLACK_3,
@@ -211,7 +446,120 @@ const designSystem = {
         [modes.light]: GALLERY,
         [modes.dark]: COD_GRAY
       }),
-      custom: buildCustomProp('tableStripe', BLACK_3, BLACK_30)
+      custom: buildCustomProp('colors', 'tableStripe', BLACK_3, BLACK_30)
+    })
+  },
+  // -------------------------------------------------------------------------------------------------------------------
+  // Fonts
+  // -------------------------------------------------------------------------------------------------------------------
+  fonts: {
+    body: styledTheming('theme', {
+      [themes.smooth]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+      [themes.hiContrast]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'fonts', 'body'], 'Arial')
+    }),
+    heading: styledTheming('theme', {
+      [themes.smooth]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+      [themes.hiContrast]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'fonts', 'heading'], 'Arial')
+    })
+  },
+  // -------------------------------------------------------------------------------------------------------------------
+  // Weights
+  // -------------------------------------------------------------------------------------------------------------------
+  weights: {
+    normal: styledTheming('theme', {
+      [themes.smooth]: '400',
+      [themes.hiContrast]: '400',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'normal'], '400')
+    }),
+    strong: styledTheming('theme', {
+      [themes.smooth]: '600',
+      [themes.hiContrast]: '600',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'strong'], '600')
+    }),
+    heading: styledTheming('theme', {
+      [themes.smooth]: '200',
+      [themes.hiContrast]: '200',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'heading'], '600')
+    })
+  },
+  // -------------------------------------------------------------------------------------------------------------------
+  // Measures
+  // -------------------------------------------------------------------------------------------------------------------
+  measures: {
+    radius: styledTheming('theme', {
+      [themes.smooth]: '0.5rem',
+      [themes.hiContrast]: '0.5rem',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'radius'], '0.5rem')
+    }),
+    inputRadius: styledTheming('theme', {
+      [themes.smooth]: '0.25rem',
+      [themes.hiContrast]: '0.25rem',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputRadius'], '0.5rem')
+    }),
+    buttonRadius: styledTheming('theme', {
+      [themes.smooth]: '0.25rem',
+      [themes.hiContrast]: '0.25rem',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'buttonRadius'], '0.25rem')
+    }),
+    font: styledTheming('theme', {
+      [themes.smooth]: '0.875rem',
+      [themes.hiContrast]: '0.875rem',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'font'], '1rem')
+    }),
+    inputFont: styledTheming('theme', {
+      [themes.smooth]: '0.875rem',
+      [themes.hiContrast]: '0.875rem',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputFont'], '1rem')
+    }),
+    unit: styledTheming('theme', {
+      [themes.smooth]: '16px',
+      [themes.hiContrast]: '16px',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'unit'], '16px')
+    }),
+    spacer: styledTheming('theme', {
+      [themes.smooth]: 1,
+      [themes.hiContrast]: 1,
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'spacer'], 1)
+    }),
+    buttonSpacerH: styledTheming('theme', {
+      [themes.smooth]: 1,
+      [themes.hiContrast]: 1,
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'buttonSpacerH'], 1)
+    }),
+    inputSpacerH: styledTheming('theme', {
+      [themes.smooth]: 0.5,
+      [themes.hiContrast]: 0.5,
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputSpacerH'], 0.5)
     })
   }
 };
@@ -3826,7 +4174,7 @@ const StyledCard = styled.div`
   box-sizing: border-box;
   box-shadow: 0 0 1rem ${designSystem.colors.shadow};
   border: 1px solid ${designSystem.colors.cardBorder};
-  border-radius: 0.5rem;
+  border-radius: ${designSystem.measures.radius};
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -4049,9 +4397,9 @@ Pane.defaultProps = {
   height: 'full'
 };
 
-const headingStyles = css(["font-family:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;font-weight:200;"]);
-const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:600;"], designSystem.colors.fgMuted, 1 / 12);
-const labelStyles = css(["line-height:2rem;height:2rem;padding:0 1rem;display:inline-block;margin:0.25rem;"]);
+const headingStyles = css(["font-family:", ";font-weight:", ";"], designSystem.fonts.heading, designSystem.weights.heading);
+const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:", ";"], designSystem.colors.fgMuted, 1 / 12, designSystem.weights.strong);
+const labelStyles = css(["line-height:calc(", "rem * 2);height:calc(", "rem * 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], designSystem.measures.spacer, designSystem.measures.spacer, designSystem.measures.spacer, designSystem.measures.spacer, designSystem.measures.spacer);
 
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4256,9 +4604,9 @@ Layout.defaultProps = {};
 // ---------------------------------------------------------------------------------------------------------------------
 
 const StyledControl = styled.div`
-  border-radius: 0.5rem;
+  border-radius: ${designSystem.measures.inputRadius};
   display: flex;
-  margin: 0 .25rem;
+  margin: 0 calc(${designSystem.measures.spacer}rem / 4);
   background-color: ${props => props.withLabel ? designSystem.colors.tableStripe : 'transparent'};
 
   &:first-child {
@@ -4269,8 +4617,8 @@ const StyledControl = styled.div`
   }
 
   & > ${Label} {
-    padding-left: 0.5rem;
-    padding-right: 0.25rem;
+    padding-left: calc(${designSystem.measures.spacer}rem / 2);
+    padding-right: calc(${designSystem.measures.spacer}rem / 4);
   }
 
   & > input,
@@ -4366,12 +4714,16 @@ html, body {
   height: 100%;
 }
 
+html {
+  font-size: ${designSystem.measures.unit};
+}
+
 body {
   color: ${designSystem.colors.fg};
   background-color: ${designSystem.colors.bg};
-  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 400;
+  font-family: ${designSystem.fonts.body};
+  font-size: ${designSystem.measures.font};
+  font-weight: ${designSystem.weights.normal};
 }
 
 h1,
@@ -4392,7 +4744,7 @@ p {
 }
 
 strong {
-  font-weight: 600;
+  font-weight: ${designSystem.weights.strong};
 }
 
 input,
@@ -4412,11 +4764,11 @@ pre {
     width: 0.5rem;
     height: 0.5rem;
     background-color: ${designSystem.colors.bg};
-    border-radius: 0.25rem;
+    border-radius: ${designSystem.measures.radius};
   }
   &::-webkit-scrollbar-thumb {
     background-color: ${designSystem.colors.fgMuted};
-    border-radius: 0.25rem;
+    border-radius: ${designSystem.measures.radius};
   }
 }
 
@@ -4452,14 +4804,14 @@ a {
   }
 }
 
-button,
-input,
-select {
+button {
   ${labelStyles}
-  border: 1px solid ${designSystem.colors.border};
-  background-color: transparent;
-  color: ${designSystem.colors.fg};
-  border-radius: 0.25rem;
+  padding: 0 ${designSystem.measures.buttonSpacerH}rem;
+  font-size: ${designSystem.measures.inputFont};
+  border: 1px solid ${designSystem.colors.buttonBorder};
+  background-color: ${designSystem.colors.buttonBg};
+  color: ${designSystem.colors.buttonFg};
+  border-radius: ${designSystem.measures.radius};
   box-sizing: border-box;
   cursor: pointer;
   transform: perspective(100rem);
@@ -4468,33 +4820,73 @@ select {
   &:focus,
   &:active,
   &.active {
-    border-color: ${designSystem.colors.fg};
+    border-color: ${designSystem.colors.buttonBorderHover};
+    background-color: ${designSystem.colors.buttonBgHover};
     outline: none;
-  }
-
-  &:disabled {
-    color: ${designSystem.colors.fgMuted};
-    border-color: ${designSystem.colors.borderLight};
-    cursor: default;
-
-    &:hover,
-    &:focus {
-      border-color: ${designSystem.colors.borderLight};
-    }
-  }
-}
-
-button {
-  &.selected {
-    background-color: ${designSystem.colors.tableStripe};
-    transform: perspective(100rem) translateZ(-2rem);
-    box-shadow: inset 0 0 .25rem 0 ${designSystem.colors.shadow};
   }
 
   &:active,
   &.active {
     transform: perspective(100rem) translateZ(-2rem);
     box-shadow: inset 0 0 .25rem 2px ${designSystem.colors.shadow};
+  }
+
+  &:disabled {
+    color: ${designSystem.colors.buttonFgDisabled};
+    border-color: ${designSystem.colors.buttonBorderDisabled};
+    background-color: ${designSystem.colors.buttonBgDisabled};
+    cursor: default;
+
+    &:hover,
+    &:focus {
+      border-color: ${designSystem.colors.buttonBorderDisabled};
+    }
+  }
+
+  &.selected {
+    background-color: ${designSystem.colors.buttonBgSelected};
+    transform: perspective(100rem) translateZ(-2rem);
+    box-shadow: inset 0 0 .25rem 0 ${designSystem.colors.buttonShadow};
+  }
+}
+
+input,
+select {
+  ${''
+/* TODO: fox horizontal padding */
+}
+  ${labelStyles}
+  padding: 0 ${designSystem.measures.inputSpacerH}rem;
+  font-size: ${designSystem.measures.inputFont};
+  border: 1px solid ${designSystem.colors.inputBorder};
+  background-color: ${designSystem.colors.inputBg};
+  color: ${designSystem.colors.inputFg};
+  border-radius: ${designSystem.measures.inputRadius};
+  box-sizing: border-box;
+
+  &:hover {
+    border-color: ${designSystem.colors.inputBorderActive};
+    background-color: ${designSystem.colors.inputBgHover};
+    outline: none;
+  }
+  &:focus,
+  &:active,
+  &.active {
+    border-color: ${designSystem.colors.inputBorderActive};
+    background-color: ${designSystem.colors.inputBgFocus};
+    outline: none;
+  }
+
+  &:disabled {
+    color: ${designSystem.colors.inputFgDisabled};
+    border-color: ${designSystem.colors.inputBorderDisabled};
+    background-color: ${designSystem.colors.inputBgDisabled};
+    cursor: default;
+
+    &:hover,
+    &:focus {
+      border-color: ${designSystem.colors.inputBorderDisabled};
+    }
   }
 }
 
