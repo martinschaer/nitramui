@@ -377,6 +377,17 @@ const designSystem = {
       }),
       custom: buildCustomProp('colors', 'cardBorder', GALLERY, EMPEROR)
     }),
+    cardHeaderBorder: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: GALLERY,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: COD_GRAY,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'cardHeaderBorder', GALLERY, EMPEROR)
+    }),
     // -----------------------------------------------------------------------------------------------------------------
     // Shadow
     // -----------------------------------------------------------------------------------------------------------------
@@ -4185,6 +4196,8 @@ const StyledCard = styled.div`
 
   ${props => props.marginBottom && (props.marginBottom === true ? 'margin-bottom: 1rem;' : `margin-bottom: ${props.marginBottom}rem;`)}
 
+  ${props => props.marginTop && (props.marginTop === true ? 'margin-top: 1rem;' : `margin-top: ${props.marginTop}rem;`)}
+
   ${props => props.margin && (props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`)}
 
   & & {
@@ -4203,7 +4216,7 @@ const StyledCard = styled.div`
 `;
 const StyledCardHeader = styled.header`
   align-items: center;
-  border-bottom: 1px solid ${designSystem.colors.cardBorder};
+  border-bottom: 1px solid ${designSystem.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: wrap;
   padding: 0.25rem;
@@ -4226,7 +4239,7 @@ const StyledCardBody = styled.main`
 `;
 const StyledCardFooter = styled.footer`
   align-items: center;
-  border-top: 1px solid ${designSystem.colors.cardBorder};
+  border-top: 1px solid ${designSystem.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -4244,6 +4257,7 @@ const Card = ({
   children,
   noPadding,
   margin,
+  marginTop,
   marginBottom
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
@@ -4253,6 +4267,7 @@ const Card = ({
     size: size,
     h: height,
     margin: margin,
+    marginTop: marginTop,
     marginBottom: marginBottom
   }, header && /*#__PURE__*/React.createElement(StyledCardHeader, null, header), children && /*#__PURE__*/React.createElement(StyledCardBody, {
     noPadding: noPadding
@@ -4270,6 +4285,7 @@ Card.propTypes = {
   height: propTypes.oneOfType([propTypes.oneOf(['default', 'full']), propTypes.number]),
   noPadding: propTypes.bool,
   margin: propTypes.oneOfType([propTypes.bool, propTypes.number]),
+  marginTop: propTypes.oneOfType([propTypes.bool, propTypes.number]),
   marginBottom: propTypes.oneOfType([propTypes.bool, propTypes.number])
 };
 Card.defaultProps = {
