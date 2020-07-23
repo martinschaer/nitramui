@@ -12,7 +12,7 @@ export const preHeadingStyles = css`
   letter-spacing: ${1 / 12}em;
   text-transform: uppercase;
   font-size: .8rem;
-  font-weight: ${ds.weights.strong};
+  font-weight: ${ds.weights.preheading};
 `
 
 export const labelStyles = css`

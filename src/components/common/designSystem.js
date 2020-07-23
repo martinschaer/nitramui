@@ -509,6 +509,11 @@ const designSystem = {
       [themes.smooth]: '200',
       [themes.hiContrast]: '200',
       custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'heading'], '600')
+    }),
+    preheading: theme('theme', {
+      [themes.smooth]: '600',
+      [themes.hiContrast]: '600',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'preheading'], '600')
     })
   },
 
