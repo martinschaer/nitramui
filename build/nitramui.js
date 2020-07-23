@@ -492,6 +492,13 @@ const designSystem = {
       custom: ({
         theme
       }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'heading'], '600')
+    }),
+    preheading: styledTheming('theme', {
+      [themes.smooth]: '600',
+      [themes.hiContrast]: '600',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'preheading'], '600')
     })
   },
   // -------------------------------------------------------------------------------------------------------------------
@@ -4398,7 +4405,7 @@ Pane.defaultProps = {
 };
 
 const headingStyles = css(["font-family:", ";font-weight:", ";"], designSystem.fonts.heading, designSystem.weights.heading);
-const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:", ";"], designSystem.colors.fgMuted, 1 / 12, designSystem.weights.strong);
+const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:", ";"], designSystem.colors.fgMuted, 1 / 12, designSystem.weights.preheading);
 const labelStyles = css(["line-height:calc(", "rem * 2);height:calc(", "rem * 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], designSystem.measures.spacer, designSystem.measures.spacer, designSystem.measures.spacer, designSystem.measures.spacer, designSystem.measures.spacer);
 
 // Styled Components
