@@ -396,6 +396,19 @@ const designSystem = {
         }),
       custom: buildCustomProp('colors', 'cardBorder', GALLERY, EMPEROR)
     }),
+    cardHeaderBorder: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: GALLERY,
+          [modes.dark]: EMPEROR
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: COD_GRAY,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'cardHeaderBorder', GALLERY, EMPEROR)
+    }),
 
     // -----------------------------------------------------------------------------------------------------------------
     // Shadow

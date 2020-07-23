@@ -42,6 +42,9 @@ const StyledCard = styled.div`
   ${props => props.marginBottom &&
     (props.marginBottom === true ? 'margin-bottom: 1rem;' : `margin-bottom: ${props.marginBottom}rem;`)}
 
+  ${props => props.marginTop &&
+    (props.marginTop === true ? 'margin-top: 1rem;' : `margin-top: ${props.marginTop}rem;`)}
+
   ${props => props.margin && (props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`)}
 
   & & {
@@ -61,7 +64,7 @@ const StyledCard = styled.div`
 
 const StyledCardHeader = styled.header`
   align-items: center;
-  border-bottom: 1px solid ${ds.colors.cardBorder};
+  border-bottom: 1px solid ${ds.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: wrap;
   padding: 0.25rem;
@@ -86,7 +89,7 @@ const StyledCardBody = styled.main`
 
 const StyledCardFooter = styled.footer`
   align-items: center;
-  border-top: 1px solid ${ds.colors.cardBorder};
+  border-top: 1px solid ${ds.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -105,6 +108,7 @@ const Card = ({
   children,
   noPadding,
   margin,
+  marginTop,
   marginBottom
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
@@ -115,6 +119,7 @@ const Card = ({
       size={size}
       h={height}
       margin={margin}
+      marginTop={marginTop}
       marginBottom={marginBottom}
     >
       {header && (<StyledCardHeader>{header}</StyledCardHeader>)}
@@ -142,6 +147,7 @@ Card.propTypes = {
   height: PropTypes.oneOfType([PropTypes.oneOf(['default', 'full']), PropTypes.number]),
   noPadding: PropTypes.bool,
   margin: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  marginTop: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   marginBottom: PropTypes.oneOfType([PropTypes.bool, PropTypes.number])
 }
 Card.defaultProps = {
