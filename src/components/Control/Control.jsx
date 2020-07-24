@@ -52,7 +52,7 @@ const Control = ({ type, label, value, onChange, options }) => {
           </select>
         )
         : (
-          <input id={uid.current} type='text' value={value} onChange={evt => onChange(evt.target.value)} />
+          <input id={uid.current} type={type || 'text'} value={value} onChange={evt => onChange(evt.target.value)} />
         )}
     </StyledControl>
   )
