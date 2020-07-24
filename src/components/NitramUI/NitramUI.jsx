@@ -270,7 +270,6 @@ const NitramUI = ({
           }
         })
       }
-      console.log(aTs)
       return aTs
     },
     [customThemes, availableThemes]
