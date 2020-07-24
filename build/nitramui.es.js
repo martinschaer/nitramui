@@ -4667,7 +4667,7 @@ const Control = ({
     value: x.value
   }, x.label))) : /*#__PURE__*/React.createElement("input", {
     id: uid.current,
-    type: "text",
+    type: type || 'text',
     value: value,
     onChange: evt => onChange(evt.target.value)
   }));
@@ -4827,7 +4827,7 @@ button {
   border: 1px solid ${designSystem.colors.buttonBorder};
   background-color: ${designSystem.colors.buttonBg};
   color: ${designSystem.colors.buttonFg};
-  border-radius: ${designSystem.measures.radius};
+  border-radius: ${designSystem.measures.buttonRadius};
   box-sizing: border-box;
   cursor: pointer;
   transform: perspective(100rem);
@@ -4868,9 +4868,6 @@ button {
 
 input,
 select {
-  ${''
-/* TODO: fox horizontal padding */
-}
   ${labelStyles}
   padding: 0 ${designSystem.measures.inputSpacerH}rem;
   font-size: ${designSystem.measures.inputFont};
@@ -4982,7 +4979,6 @@ const NitramUI = ({
       });
     }
 
-    console.log(aTs);
     return aTs;
   }, [customThemes, availableThemes]); // -------------------------------------------------------------------------------------------------------------------
   // Effects
