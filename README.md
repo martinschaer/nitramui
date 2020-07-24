@@ -37,11 +37,10 @@ Add these lines in the head of your `index.html`:
 
 This is due to an issue with @import and createGlobalStyle. Read more: [Note regarding css @import and createGlobalStyle](https://styled-components.com/docs/faqs#note-regarding-css-import-and-createglobalstyle).
 
-### Themes
+### NitramUI options
 
-TO-DO: add instructions for ThemeProvider
-
-TO-DO: add screenshots
+- customThemes
+- availableThemes
 
 ## Roadmap
 
@@ -61,6 +60,7 @@ TO-DO: add screenshots
 - [x] Add Pane size: half
 - [x] Fix labelStyles (or just vertical padding) for inputs and selects
 - [x] Create form control component (for inputs and selects with or without labels)
+- [ ] Add instructions for customThemes and availableThemes props
 - [ ] Add instructions for NitramUIContext.Consumer, and controlling modes and themes
 - [ ] Add hook for dark mode
 - [ ] Add packagequality.com badge
