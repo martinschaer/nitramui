@@ -24,6 +24,8 @@ const StyledCard = styled.div`
   transition-property: 'border-color';
   transition-duration: .1s;
 
+  ${props => props.color && (`border-top: .5rem solid ${props.color} !important;`)}
+
   height: ${props =>
     props.h === 'full'
     ? '100%'
@@ -107,6 +109,7 @@ const StyledCardFooter = styled.footer`
 // ---------------------------------------------------------------------------------------------------------------------
 const Card = ({
   size,
+  color,
   header,
   footer,
   height,
@@ -124,6 +127,7 @@ const Card = ({
   return (
     <StyledCard
       size={size}
+      color={color}
       h={height}
       hoverable={hoverable}
       margin={margin}
@@ -153,6 +157,7 @@ Card.propTypes = {
     'auto',
     'small'
   ]),
+  color: PropTypes.string,
   height: PropTypes.oneOfType([PropTypes.oneOf(['default', 'full']), PropTypes.number]),
   noPadding: PropTypes.bool,
   hoverable: PropTypes.bool,

@@ -453,6 +453,7 @@ export const Grid = () => {
                     noPadding
                     hoverable
                     onClick={linkTo('Examples', 'App')}
+                    color='#018EFF'
                   >
                     <ExampleTable />
                   </Card>
