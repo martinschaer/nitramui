@@ -121,7 +121,7 @@ button {
   border: 1px solid ${ds.colors.buttonBorder};
   background-color: ${ds.colors.buttonBg};
   color: ${ds.colors.buttonFg};
-  border-radius: ${ds.measures.radius};
+  border-radius: ${ds.measures.buttonRadius};
   box-sizing: border-box;
   cursor: pointer;
   transform: perspective(100rem);
@@ -162,7 +162,6 @@ button {
 
 input,
 select {
-  ${'' /* TODO: fox horizontal padding */}
   ${labelStyles}
   padding: 0 ${ds.measures.inputSpacerH}rem;
   font-size: ${ds.measures.inputFont};
