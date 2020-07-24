@@ -384,6 +384,17 @@ const designSystem = {
       }),
       custom: buildCustomProp('colors', 'cardBorder', GALLERY, EMPEROR)
     }),
+    cardBorderHover: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'cardBorderHover', EMPEROR, GALLERY)
+    }),
     cardHeaderBorder: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: GALLERY,
@@ -4196,6 +4207,9 @@ const StyledCard = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  cursor: ${props => props.onClick ? 'pointer' : 'default'};
+  transition-property: 'border-color';
+  transition-duration: .1s;
 
   height: ${props => props.h === 'full' ? '100%' : typeof props.h === 'number' ? `${props.h}rem` : 'auto'};
   min-width: ${props => props.size === 'small' ? '32rem' : 'auto'};
@@ -4220,6 +4234,8 @@ const StyledCard = styled.div`
   @media (max-width: 768px) {
     min-width: -webkit-fill-available;
   }
+
+  ${props => props.hoverable === true ? `&:hover { border-color: ${designSystem.colors.cardBorderHover(props)}; }` : ''}
 `;
 const StyledCardHeader = styled.header`
   align-items: center;
@@ -4263,9 +4279,11 @@ const Card = ({
   height,
   children,
   noPadding,
+  hoverable,
   margin,
   marginTop,
-  marginBottom
+  marginBottom,
+  onClick
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
@@ -4273,9 +4291,11 @@ const Card = ({
   return /*#__PURE__*/React__default.createElement(StyledCard, {
     size: size,
     h: height,
+    hoverable: hoverable,
     margin: margin,
     marginTop: marginTop,
-    marginBottom: marginBottom
+    marginBottom: marginBottom,
+    onClick: onClick && (() => onClick())
   }, header && /*#__PURE__*/React__default.createElement(StyledCardHeader, null, header), children && /*#__PURE__*/React__default.createElement(StyledCardBody, {
     noPadding: noPadding
   }, children), footer && /*#__PURE__*/React__default.createElement(StyledCardFooter, null, footer));
@@ -4291,9 +4311,11 @@ Card.propTypes = {
   size: propTypes.oneOf(['auto', 'small']),
   height: propTypes.oneOfType([propTypes.oneOf(['default', 'full']), propTypes.number]),
   noPadding: propTypes.bool,
+  hoverable: propTypes.bool,
   margin: propTypes.oneOfType([propTypes.bool, propTypes.number]),
   marginTop: propTypes.oneOfType([propTypes.bool, propTypes.number]),
-  marginBottom: propTypes.oneOfType([propTypes.bool, propTypes.number])
+  marginBottom: propTypes.oneOfType([propTypes.bool, propTypes.number]),
+  onClick: propTypes.func
 };
 Card.defaultProps = {
   height: 'default'
