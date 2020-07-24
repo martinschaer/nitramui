@@ -396,6 +396,19 @@ const designSystem = {
         }),
       custom: buildCustomProp('colors', 'cardBorder', GALLERY, EMPEROR)
     }),
+    cardBorderHover: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'cardBorderHover', EMPEROR, GALLERY)
+    }),
     cardHeaderBorder: theme('theme', {
       [themes.smooth]:
         theme('mode', {

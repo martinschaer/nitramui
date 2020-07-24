@@ -426,18 +426,19 @@ export const Grid = () => {
                       <Label heading>Hello World</Label>
                     }
                     noPadding
+                    hoverable
                   >
                     <ExampleTable />
                   </Card>
                 </Pane>
                 <Pane size='golden-width' height='half'>
-                  <Card height='full'>
+                  <Card height='full' hoverable>
                     <h2>Hello world</h2>
                     <ExampleTable />
                   </Card>
                 </Pane>
                 <Pane size='half' height='half'>
-                  <Card height='full'>
+                  <Card height='full' hoverable>
                     <h2>Hello world</h2>
                     <Card marginBottom={2} noPadding>
                       <ExampleTable />
@@ -450,6 +451,8 @@ export const Grid = () => {
                     height='full'
                     footer={(<Label heading>Hello World</Label>)}
                     noPadding
+                    hoverable
+                    onClick={linkTo('Examples', 'App')}
                   >
                     <ExampleTable />
                   </Card>

@@ -20,6 +20,9 @@ const StyledCard = styled.div`
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  cursor: ${props => props.onClick ? 'pointer' : 'default'};
+  transition-property: 'border-color';
+  transition-duration: .1s;
 
   height: ${props =>
     props.h === 'full'
@@ -60,6 +63,8 @@ const StyledCard = styled.div`
   @media (max-width: 768px) {
     min-width: -webkit-fill-available;
   }
+
+  ${props => props.hoverable === true ? `&:hover { border-color: ${ds.colors.cardBorderHover(props)}; }` : ''}
 `
 
 const StyledCardHeader = styled.header`
@@ -107,9 +112,11 @@ const Card = ({
   height,
   children,
   noPadding,
+  hoverable,
   margin,
   marginTop,
-  marginBottom
+  marginBottom,
+  onClick
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
@@ -118,9 +125,11 @@ const Card = ({
     <StyledCard
       size={size}
       h={height}
+      hoverable={hoverable}
       margin={margin}
       marginTop={marginTop}
       marginBottom={marginBottom}
+      onClick={onClick && (() => onClick())}
     >
       {header && (<StyledCardHeader>{header}</StyledCardHeader>)}
       {children && (
@@ -146,9 +155,11 @@ Card.propTypes = {
   ]),
   height: PropTypes.oneOfType([PropTypes.oneOf(['default', 'full']), PropTypes.number]),
   noPadding: PropTypes.bool,
+  hoverable: PropTypes.bool,
   margin: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   marginTop: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  marginBottom: PropTypes.oneOfType([PropTypes.bool, PropTypes.number])
+  marginBottom: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  onClick: PropTypes.func
 }
 Card.defaultProps = {
   height: 'default'
