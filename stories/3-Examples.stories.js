@@ -438,8 +438,8 @@ export const Grid = () => {
                   </Card>
                 </Pane>
                 <Pane size='half' height='half'>
-                  <Card height='full' hoverable>
-                    <h2>Hello world</h2>
+                  <Card height='full' hoverable compact>
+                    <h2>Compact card</h2>
                     <Card marginBottom={2} noPadding>
                       <ExampleTable />
                     </Card>
@@ -454,6 +454,7 @@ export const Grid = () => {
                     hoverable
                     onClick={linkTo('Examples', 'App')}
                     color='#018EFF'
+                    colorBorderPosition='left'
                   >
                     <ExampleTable />
                   </Card>
