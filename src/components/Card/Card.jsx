@@ -78,7 +78,7 @@ const StyledCardHeader = styled.header`
 `
 
 const StyledCardBody = styled.main`
-  padding: ${props => props.noPadding ? '0' : '2rem'};
+  padding: ${props => props.noPadding ? '0' : props.compact ? '1rem' : '2rem'};
   overflow: scroll;
 
   & > *:first-child {
@@ -115,6 +115,7 @@ const Card = ({
   height,
   children,
   noPadding,
+  compact,
   hoverable,
   margin,
   marginTop,
@@ -137,7 +138,7 @@ const Card = ({
     >
       {header && (<StyledCardHeader>{header}</StyledCardHeader>)}
       {children && (
-        <StyledCardBody noPadding={noPadding}>
+        <StyledCardBody noPadding={noPadding} compact={compact}>
           {children}
         </StyledCardBody>
       )}
@@ -160,6 +161,7 @@ Card.propTypes = {
   color: PropTypes.string,
   height: PropTypes.oneOfType([PropTypes.oneOf(['default', 'full']), PropTypes.number]),
   noPadding: PropTypes.bool,
+  compact: PropTypes.bool,
   hoverable: PropTypes.bool,
   margin: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   marginTop: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
