@@ -4211,7 +4211,7 @@ const StyledCard = styled.div`
   transition-property: 'border-color';
   transition-duration: .1s;
 
-  ${props => props.color && `border-top: .5rem solid ${props.color} !important;`}
+  ${props => props.color && `border-${props.colorBorderPosition}: ${designSystem.measures.radius(props)} solid ${props.color} !important;`}
 
   height: ${props => props.h === 'full' ? '100%' : typeof props.h === 'number' ? `${props.h}rem` : 'auto'};
   min-width: ${props => props.size === 'small' ? '32rem' : 'auto'};
@@ -4247,7 +4247,7 @@ const StyledCardHeader = styled.header`
   padding: 0.25rem;
 `;
 const StyledCardBody = styled.main`
-  padding: ${props => props.noPadding ? '0' : '2rem'};
+  padding: ${props => props.noPadding ? '0' : props.compact ? '1rem' : '2rem'};
   overflow: scroll;
 
   & > *:first-child {
@@ -4277,11 +4277,13 @@ const StyledCardFooter = styled.footer`
 const Card = ({
   size,
   color,
+  colorBorderPosition,
   header,
   footer,
   height,
   children,
   noPadding,
+  compact,
   hoverable,
   margin,
   marginTop,
@@ -4294,6 +4296,7 @@ const Card = ({
   return /*#__PURE__*/React__default.createElement(StyledCard, {
     size: size,
     color: color,
+    colorBorderPosition: colorBorderPosition,
     h: height,
     hoverable: hoverable,
     margin: margin,
@@ -4301,7 +4304,8 @@ const Card = ({
     marginBottom: marginBottom,
     onClick: onClick && (() => onClick())
   }, header && /*#__PURE__*/React__default.createElement(StyledCardHeader, null, header), children && /*#__PURE__*/React__default.createElement(StyledCardBody, {
-    noPadding: noPadding
+    noPadding: noPadding,
+    compact: compact
   }, children), footer && /*#__PURE__*/React__default.createElement(StyledCardFooter, null, footer));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
@@ -4314,8 +4318,10 @@ Card.propTypes = {
   footer: propTypes.node,
   size: propTypes.oneOf(['auto', 'small']),
   color: propTypes.string,
+  colorBorderPosition: propTypes.oneOf(['top', 'right', 'bottom', 'left']),
   height: propTypes.oneOfType([propTypes.oneOf(['default', 'full']), propTypes.number]),
   noPadding: propTypes.bool,
+  compact: propTypes.bool,
   hoverable: propTypes.bool,
   margin: propTypes.oneOfType([propTypes.bool, propTypes.number]),
   marginTop: propTypes.oneOfType([propTypes.bool, propTypes.number]),
@@ -4323,7 +4329,8 @@ Card.propTypes = {
   onClick: propTypes.func
 };
 Card.defaultProps = {
-  height: 'default'
+  height: 'default',
+  colorBorderPosition: 'top'
 };
 
 const GOLDEN_RATIO = 1.61803398875;
