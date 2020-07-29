@@ -25,6 +25,7 @@ const StyledTable = styled.table`
   border-spacing: 0;
   width: max-content;
   min-width: 100%;
+  table-layout: fixed;
 
   thead, tfoot {
     background-color: ${ds.colors.tableStripe};
@@ -34,6 +35,7 @@ const StyledTable = styled.table`
   th, td {
     border: 1px solid ${ds.colors.border};
     padding: 0.5em;
+    word-wrap: break-word;
   }
 
   th {
