@@ -60,6 +60,9 @@ This is due to an issue with @import and createGlobalStyle. Read more: [Note reg
 - [x] Add Pane size: half
 - [x] Fix labelStyles (or just vertical padding) for inputs and selects
 - [x] Create form control component (for inputs and selects with or without labels)
+- [ ] Add button link (https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md)
+- [ ] Pass ref to controls
+- [ ] Make onChange optional on controls
 - [ ] Add instructions for customThemes and availableThemes props
 - [ ] Add instructions for NitramUIContext.Consumer, and controlling modes and themes
 - [ ] Add hook for dark mode
