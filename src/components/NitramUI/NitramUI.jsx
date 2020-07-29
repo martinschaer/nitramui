@@ -197,11 +197,25 @@ select {
   }
 }
 
+.mt {
+  margin-top: 1em !important;
+}
+.mts {
+  margin-top: .5em !important;
+}
+
 .mr {
   margin-right: 1em !important;
 }
 .mrs {
   margin-right: .5em !important;
+}
+
+.mb {
+  margin-bottom: 1em !important;
+}
+.mbs {
+  margin-bottom: .5em !important;
 }
 
 .ml {
