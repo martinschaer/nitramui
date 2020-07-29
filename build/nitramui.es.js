@@ -4488,6 +4488,7 @@ const StyledTable = styled.table`
   border-spacing: 0;
   width: max-content;
   min-width: 100%;
+  table-layout: fixed;
 
   thead, tfoot {
     background-color: ${designSystem.colors.tableStripe};
@@ -4497,6 +4498,7 @@ const StyledTable = styled.table`
   th, td {
     border: 1px solid ${designSystem.colors.border};
     padding: 0.5em;
+    word-wrap: break-word;
   }
 
   th {
@@ -4937,11 +4939,25 @@ select {
   }
 }
 
+.mt {
+  margin-top: 1em !important;
+}
+.mts {
+  margin-top: .5em !important;
+}
+
 .mr {
   margin-right: 1em !important;
 }
 .mrs {
   margin-right: .5em !important;
+}
+
+.mb {
+  margin-bottom: 1em !important;
+}
+.mbs {
+  margin-bottom: .5em !important;
 }
 
 .ml {
