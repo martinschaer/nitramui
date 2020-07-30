@@ -71,7 +71,7 @@ const Layout = ({ brand, children, headerSlot, footerSlot, menu, menuB, footerMe
           {footerMenu}
           {footerMenuB && (
             <div style={{ display: 'flex', marginLeft: 'auto' }}>
-              {menuB}
+              {footerMenuB}
             </div>
           )}
         </StyledFooter>
