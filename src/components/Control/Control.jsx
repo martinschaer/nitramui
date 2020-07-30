@@ -17,6 +17,7 @@ const StyledControl = styled.div`
   margin: 0 calc(${ds.measures.spacer}rem / 4);
   background-color: ${props => props.withLabel ? ds.colors.controlBg : 'transparent'};
   position: relative;
+  padding: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
 
   &:first-child {
     margin-left: 0;
@@ -29,9 +30,12 @@ const StyledControl = styled.div`
     padding-left: calc(${ds.measures.spacer}rem / 2);
     padding-right: calc(${ds.measures.spacer}rem / 4);
     font-weight: ${ds.weights.controlLabel};
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
     ${props => props.labelInside && (`
       position: absolute;
-      top: -.8em;
+      top: -.2em;
       font-size: .8em;
     `)}
   }
@@ -39,6 +43,7 @@ const StyledControl = styled.div`
   & > input,
   & > select {
     flex-grow: 1;
+    margin: 0;
     ${props => props.labelInside && (`
       padding-top: 0.8em;
     `)}
