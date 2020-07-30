@@ -45,7 +45,7 @@ const StyledFooter = styled.header`
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
-const Layout = ({ brand, children, headerSlot, footerSlot, menu, menuB }) => {
+const Layout = ({ brand, children, headerSlot, footerSlot, menu, menuB, footerMenu, footerMenuB }) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
@@ -68,6 +68,12 @@ const Layout = ({ brand, children, headerSlot, footerSlot, menu, menuB }) => {
       {(footerSlot || brand) && (
         <StyledFooter>
           <Label heading>{footerSlot || `Copyright © 2020 ${brand}`}</Label>
+          {footerMenu}
+          {footerMenuB && (
+            <div style={{ display: 'flex', marginLeft: 'auto' }}>
+              {menuB}
+            </div>
+          )}
         </StyledFooter>
       )}
     </StyledLayout>
@@ -83,7 +89,9 @@ Layout.propTypes = {
   menuB: PropTypes.node,
   children: PropTypes.node,
   headerSlot: PropTypes.node,
-  footerSlot: PropTypes.node
+  footerSlot: PropTypes.node,
+  footerMenu: PropTypes.node,
+  footerMenuB: PropTypes.node
 }
 Layout.defaultProps = {}
 
