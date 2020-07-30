@@ -4652,7 +4652,9 @@ const Layout = ({
   headerSlot,
   footerSlot,
   menu,
-  menuB
+  menuB,
+  footerMenu,
+  footerMenuB
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
@@ -4666,7 +4668,12 @@ const Layout = ({
     }
   }, menuB)), /*#__PURE__*/React.createElement(StyledMain, null, children), (footerSlot || brand) && /*#__PURE__*/React.createElement(StyledFooter, null, /*#__PURE__*/React.createElement(Label, {
     heading: true
-  }, footerSlot || `Copyright © 2020 ${brand}`)));
+  }, footerSlot || `Copyright © 2020 ${brand}`), footerMenu, footerMenuB && /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      marginLeft: 'auto'
+    }
+  }, menuB)));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4678,7 +4685,9 @@ Layout.propTypes = {
   menuB: propTypes.node,
   children: propTypes.node,
   headerSlot: propTypes.node,
-  footerSlot: propTypes.node
+  footerSlot: propTypes.node,
+  footerMenu: propTypes.node,
+  footerMenuB: propTypes.node
 };
 Layout.defaultProps = {};
 
@@ -5146,5 +5155,5 @@ NitramUI.propTypes = {
 };
 NitramUI.defaultProps = {};
 
-export { Card, Container, Control, Label, Layout, NitramUI, NitramUIContext, Pane, Table, modes, styled, themes };
+export { Card, Container, Control, Label, Layout, NitramUI, NitramUIContext, Pane, Table, designSystem as ds, modes, styled, themes };
 //# sourceMappingURL=nitramui.es.js.map

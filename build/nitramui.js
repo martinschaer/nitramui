@@ -4659,7 +4659,9 @@ const Layout = ({
   headerSlot,
   footerSlot,
   menu,
-  menuB
+  menuB,
+  footerMenu,
+  footerMenuB
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
@@ -4673,7 +4675,12 @@ const Layout = ({
     }
   }, menuB)), /*#__PURE__*/React__default.createElement(StyledMain, null, children), (footerSlot || brand) && /*#__PURE__*/React__default.createElement(StyledFooter, null, /*#__PURE__*/React__default.createElement(Label, {
     heading: true
-  }, footerSlot || `Copyright © 2020 ${brand}`)));
+  }, footerSlot || `Copyright © 2020 ${brand}`), footerMenu, footerMenuB && /*#__PURE__*/React__default.createElement("div", {
+    style: {
+      display: 'flex',
+      marginLeft: 'auto'
+    }
+  }, menuB)));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4685,7 +4692,9 @@ Layout.propTypes = {
   menuB: propTypes.node,
   children: propTypes.node,
   headerSlot: propTypes.node,
-  footerSlot: propTypes.node
+  footerSlot: propTypes.node,
+  footerMenu: propTypes.node,
+  footerMenuB: propTypes.node
 };
 Layout.defaultProps = {};
 
@@ -5162,6 +5171,7 @@ exports.NitramUI = NitramUI;
 exports.NitramUIContext = NitramUIContext;
 exports.Pane = Pane;
 exports.Table = Table;
+exports.ds = designSystem;
 exports.modes = modes;
 exports.styled = styled;
 exports.themes = themes;
