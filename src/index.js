@@ -2,7 +2,6 @@
 // Exports
 // ---------------------------------------------------------------------------------------------------------------------
 export { default as ds, modes, themes } from './components/common/designSystem'
-export { default as styled } from 'styled-components'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Components
