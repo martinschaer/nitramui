@@ -59,6 +59,7 @@ const BLACK_30 = 'rgba(0, 0, 0, 0.3)';
 const YELLOW = '#ff0';
 const BLUE = '#00f';
 const LIMA = '#75d41d';
+const RED = '#f22';
 const BLUEVIOLET = 'blueviolet'; // #8A2BE2
 // ---------------------------------------------------------------------------------------------------------------------
 // Exports
@@ -293,6 +294,28 @@ const designSystem = {
       }),
       custom: buildCustomProp('colors', 'inputBorderActive', EMPEROR, GALLERY)
     }),
+    inputBorderDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      custom: buildCustomProp('colors', 'inputBorderDisabled', BLACK_3, DUNE)
+    }),
+    inputBorderInvalid: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: RED,
+        [modes.dark]: RED
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: RED,
+        [modes.dark]: RED
+      }),
+      custom: buildCustomProp('colors', 'inputBorderInvalid', RED, RED)
+    }),
     inputBg: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: 'transparent',
@@ -358,17 +381,6 @@ const designSystem = {
         [modes.dark]: EMPEROR
       }),
       custom: buildCustomProp('colors', 'inputFgDisabled', BLACK_30, EMPEROR)
-    }),
-    inputBorderDisabled: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: DUNE
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: DUNE
-      }),
-      custom: buildCustomProp('colors', 'inputBorderDisabled', BLACK_3, DUNE)
     }),
     // -----------------------------------------------------------------------------------------------------------------
     // Card
@@ -4713,9 +4725,27 @@ const StyledControl = styled.div`
   & > select {
     flex-grow: 1;
     margin: 0;
+    max-width: 100%;
     ${props => props.labelInside && `
       padding-top: 0.8em;
     `}
+  }
+
+  &.invalid > input,
+  &.invalid > select {
+    border-color: ${designSystem.colors.inputBorderInvalid};
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      border-color: ${designSystem.colors.inputBorderActive};
+    }
+  }
+
+  &.disabled {
+    ${Label} {
+      color: ${designSystem.colors.inputFgDisabled};
+    }
   }
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Component
@@ -4726,12 +4756,15 @@ const Control = ({
   label,
   value,
   onChange,
+  invalid,
+  disabled,
   labelInside,
   options
 }) => {
   const uid = React.useRef(Math.random().toString(36).substr(2, 9));
   return /*#__PURE__*/React__default.createElement(StyledControl, {
     withLabel: label,
+    className: [invalid && 'invalid', disabled && 'disabled'].join(' '),
     labelInside: labelInside
   }, label && /*#__PURE__*/React__default.createElement(Label, {
     as: "label",
@@ -4739,6 +4772,7 @@ const Control = ({
   }, label), type === 'select' ? /*#__PURE__*/React__default.createElement("select", {
     id: uid.current,
     value: value,
+    disabled: disabled,
     onChange: evt => onChange(evt.target.value)
   }, options.map(x => /*#__PURE__*/React__default.createElement("option", {
     key: x.value,
@@ -4747,6 +4781,7 @@ const Control = ({
     id: uid.current,
     type: type || 'text',
     value: value,
+    disabled: disabled,
     onChange: evt => onChange(evt.target.value)
   }));
 }; // ---------------------------------------------------------------------------------------------------------------------
@@ -4756,9 +4791,11 @@ const Control = ({
 
 Control.propTypes = {
   type: propTypes.string,
-  label: propTypes.string,
+  label: propTypes.node,
   value: propTypes.string,
   onChange: propTypes.func,
+  invalid: propTypes.bool,
+  disabled: propTypes.bool,
   labelInside: propTypes.bool,
   options: propTypes.arrayOf(propTypes.shape({
     label: propTypes.string,
