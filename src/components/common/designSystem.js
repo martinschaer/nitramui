@@ -19,6 +19,7 @@ const BLACK_30 = 'rgba(0, 0, 0, 0.3)'
 const YELLOW = '#ff0'
 const BLUE = '#00f'
 const LIMA = '#75d41d'
+const RED = '#f22'
 const BLUEVIOLET = 'blueviolet' // #8A2BE2
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -288,6 +289,32 @@ const designSystem = {
         }),
       custom: buildCustomProp('colors', 'inputBorderActive', EMPEROR, GALLERY)
     }),
+    inputBorderDisabled: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: BLACK_3,
+          [modes.dark]: DUNE
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK_3,
+          [modes.dark]: DUNE
+        }),
+      custom: buildCustomProp('colors', 'inputBorderDisabled', BLACK_3, DUNE)
+    }),
+    inputBorderInvalid: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: RED,
+          [modes.dark]: RED
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: RED,
+          [modes.dark]: RED
+        }),
+      custom: buildCustomProp('colors', 'inputBorderInvalid', RED, RED)
+    }),
     inputBg: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -365,19 +392,6 @@ const designSystem = {
           [modes.dark]: EMPEROR
         }),
       custom: buildCustomProp('colors', 'inputFgDisabled', BLACK_30, EMPEROR)
-    }),
-    inputBorderDisabled: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: BLACK_3,
-          [modes.dark]: DUNE
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: BLACK_3,
-          [modes.dark]: DUNE
-        }),
-      custom: buildCustomProp('colors', 'inputBorderDisabled', BLACK_3, DUNE)
     }),
 
     // -----------------------------------------------------------------------------------------------------------------

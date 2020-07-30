@@ -44,30 +44,58 @@ const StyledControl = styled.div`
   & > select {
     flex-grow: 1;
     margin: 0;
+    max-width: 100%;
     ${props => props.labelInside && (`
       padding-top: 0.8em;
     `)}
+  }
+
+  &.invalid > input,
+  &.invalid > select {
+    border-color: ${ds.colors.inputBorderInvalid};
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      border-color: ${ds.colors.inputBorderActive};
+    }
+  }
+
+  &.disabled {
+    ${Label} {
+      color: ${ds.colors.inputFgDisabled};
+    }
   }
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
-const Control = ({ type, label, value, onChange, labelInside, options }) => {
+const Control = ({ type, label, value, onChange, invalid, disabled, labelInside, options }) => {
   const uid = useRef(Math.random().toString(36).substr(2, 9))
   return (
-    <StyledControl withLabel={label} labelInside={labelInside}>
+    <StyledControl
+      withLabel={label}
+      className={[invalid && 'invalid', disabled && 'disabled'].join(' ')}
+      labelInside={labelInside}
+    >
       {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
       {type === 'select'
         ? (
-          <select id={uid.current} value={value} onChange={evt => onChange(evt.target.value)}>
+          <select id={uid.current} value={value} disabled={disabled} onChange={evt => onChange(evt.target.value)}>
             {options.map(x => (
               <option key={x.value} value={x.value}>{x.label}</option>
             ))}
           </select>
         )
         : (
-          <input id={uid.current} type={type || 'text'} value={value} onChange={evt => onChange(evt.target.value)} />
+          <input
+            id={uid.current}
+            type={type || 'text'}
+            value={value}
+            disabled={disabled}
+            onChange={evt => onChange(evt.target.value)}
+          />
         )}
     </StyledControl>
   )
@@ -78,9 +106,11 @@ const Control = ({ type, label, value, onChange, labelInside, options }) => {
 // ---------------------------------------------------------------------------------------------------------------------
 Control.propTypes = {
   type: PropTypes.string,
-  label: PropTypes.string,
+  label: PropTypes.node,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  invalid: PropTypes.bool,
+  disabled: PropTypes.bool,
   labelInside: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }))
 }

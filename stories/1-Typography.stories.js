@@ -104,6 +104,20 @@ export const Typography = () => {
               type='input'
               label='Name'
               labelInside
+              invalid
+              onChange={() => {}}
+            />
+            <Control
+              type='input'
+              label='Name'
+              invalid
+              onChange={() => {}}
+            />
+            <Control
+              type='input'
+              label='Name'
+              invalid
+              disabled
               onChange={() => {}}
             />
           </Card>
