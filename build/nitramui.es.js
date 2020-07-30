@@ -251,8 +251,19 @@ const designSystem = {
       custom: buildCustomProp('colors', 'buttonBorderHover', EMPEROR, GALLERY)
     }),
     // -----------------------------------------------------------------------------------------------------------------
-    // Input
+    // Controls
     // -----------------------------------------------------------------------------------------------------------------
+    controlBg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: BLACK_30
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: GALLERY,
+        [modes.dark]: COD_GRAY
+      }),
+      custom: buildCustomProp('colors', 'controlBg', BLACK_3, BLACK_30)
+    }),
     inputBorder: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: MERCURY,
@@ -514,6 +525,13 @@ const designSystem = {
       custom: ({
         theme
       }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'preheading'], '600')
+    }),
+    controlLabel: styledTheming('theme', {
+      [themes.smooth]: '400',
+      [themes.hiContrast]: '400',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'controlLabel'], '400')
     })
   },
   // -------------------------------------------------------------------------------------------------------------------
@@ -4659,7 +4677,8 @@ const StyledControl = styled.div`
   border-radius: ${designSystem.measures.inputRadius};
   display: flex;
   margin: 0 calc(${designSystem.measures.spacer}rem / 4);
-  background-color: ${props => props.withLabel ? designSystem.colors.tableStripe : 'transparent'};
+  background-color: ${props => props.withLabel ? designSystem.colors.controlBg : 'transparent'};
+  position: relative;
 
   &:first-child {
     margin-left: 0;
@@ -4671,11 +4690,20 @@ const StyledControl = styled.div`
   & > ${Label} {
     padding-left: calc(${designSystem.measures.spacer}rem / 2);
     padding-right: calc(${designSystem.measures.spacer}rem / 4);
+    font-weight: ${designSystem.weights.controlLabel};
+    ${props => props.labelInside && `
+      position: absolute;
+      top: -.8em;
+      font-size: .8em;
+    `}
   }
 
   & > input,
   & > select {
     flex-grow: 1;
+    ${props => props.labelInside && `
+      padding-top: 0.8em;
+    `}
   }
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Component
@@ -4686,11 +4714,13 @@ const Control = ({
   label,
   value,
   onChange,
+  labelInside,
   options
 }) => {
   const uid = useRef(Math.random().toString(36).substr(2, 9));
   return /*#__PURE__*/React.createElement(StyledControl, {
-    withLabel: label
+    withLabel: label,
+    labelInside: labelInside
   }, label && /*#__PURE__*/React.createElement(Label, {
     as: "label",
     htmlFor: uid.current
@@ -4717,6 +4747,7 @@ Control.propTypes = {
   label: propTypes.string,
   value: propTypes.string,
   onChange: propTypes.func,
+  labelInside: propTypes.bool,
   options: propTypes.arrayOf(propTypes.shape({
     label: propTypes.string,
     value: propTypes.string
