@@ -247,8 +247,21 @@ const designSystem = {
     }),
 
     // -----------------------------------------------------------------------------------------------------------------
-    // Input
+    // Controls
     // -----------------------------------------------------------------------------------------------------------------
+    controlBg: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: BLACK_3,
+          [modes.dark]: BLACK_30
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: GALLERY,
+          [modes.dark]: COD_GRAY
+        }),
+      custom: buildCustomProp('colors', 'controlBg', BLACK_3, BLACK_30)
+    }),
     inputBorder: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -540,6 +553,11 @@ const designSystem = {
       [themes.smooth]: '600',
       [themes.hiContrast]: '600',
       custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'preheading'], '600')
+    }),
+    controlLabel: theme('theme', {
+      [themes.smooth]: '400',
+      [themes.hiContrast]: '400',
+      custom: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'controlLabel'], '400')
     })
   },
 

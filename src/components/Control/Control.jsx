@@ -15,7 +15,8 @@ const StyledControl = styled.div`
   border-radius: ${ds.measures.inputRadius};
   display: flex;
   margin: 0 calc(${ds.measures.spacer}rem / 4);
-  background-color: ${props => props.withLabel ? ds.colors.tableStripe : 'transparent'};
+  background-color: ${props => props.withLabel ? ds.colors.controlBg : 'transparent'};
+  position: relative;
 
   &:first-child {
     margin-left: 0;
@@ -27,21 +28,30 @@ const StyledControl = styled.div`
   & > ${Label} {
     padding-left: calc(${ds.measures.spacer}rem / 2);
     padding-right: calc(${ds.measures.spacer}rem / 4);
+    font-weight: ${ds.weights.controlLabel};
+    ${props => props.labelInside && (`
+      position: absolute;
+      top: -.8em;
+      font-size: .8em;
+    `)}
   }
 
   & > input,
   & > select {
     flex-grow: 1;
+    ${props => props.labelInside && (`
+      padding-top: 0.8em;
+    `)}
   }
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
-const Control = ({ type, label, value, onChange, options }) => {
+const Control = ({ type, label, value, onChange, labelInside, options }) => {
   const uid = useRef(Math.random().toString(36).substr(2, 9))
   return (
-    <StyledControl withLabel={label}>
+    <StyledControl withLabel={label} labelInside={labelInside}>
       {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
       {type === 'select'
         ? (
@@ -66,6 +76,7 @@ Control.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
+  labelInside: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }))
 }
 Control.defaultProps = {}

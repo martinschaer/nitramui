@@ -5,6 +5,7 @@ import {
   Pane,
   Table,
   Layout,
+  Control,
   NitramUI
 } from '../src'
 
@@ -94,6 +95,17 @@ export const Typography = () => {
                 </tr>
               </tbody>
             </Table>
+            <Control
+              type='input'
+              label='Name'
+              onChange={() => {}}
+            />
+            <Control
+              type='input'
+              label='Name'
+              labelInside
+              onChange={() => {}}
+            />
           </Card>
         </Pane>
       </Layout>
