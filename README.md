@@ -61,11 +61,13 @@ This is due to an issue with @import and createGlobalStyle. Read more: [Note reg
 - [x] Fix labelStyles (or just vertical padding) for inputs and selects
 - [x] Create form control component (for inputs and selects with or without labels)
 - [x] Make onChange optional on controls
+- [ ] Export design system variables aware of theme and mode
+- [ ] Fix too many scrollbars on Windows
 - [ ] Add button link (https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md)
 - [ ] Pass ref to controls
 - [ ] Add instructions for customThemes and availableThemes props
 - [ ] Add instructions for NitramUIContext.Consumer, and controlling modes and themes
-- [ ] Add hook for dark mode
+- [ ] Add hook for auto dark mode
 - [ ] Add packagequality.com badge
 - [ ] Create React App template
 - [ ] Have the outter pane have the scroll. E.g: default pane inside full-width pane
