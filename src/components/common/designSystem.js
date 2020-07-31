@@ -525,6 +525,32 @@ const designSystem = {
           [modes.dark]: COD_GRAY
         }),
       custom: buildCustomProp('colors', 'tableStripe', BLACK_3, BLACK_30)
+    }),
+    tableHoverBg: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: MERCURY,
+          [modes.dark]: EMPEROR
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'tableHoverBg', MERCURY, EMPEROR)
+    }),
+    tableHoverFg: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: WHITE,
+          [modes.dark]: BLACK
+        }),
+      custom: buildCustomProp('colors', 'tableHoverFg', EMPEROR, GALLERY)
     })
   },
 

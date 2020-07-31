@@ -46,12 +46,18 @@ const StyledTable = styled.table`
   tr:nth-child(2n) {
     background-color: ${ds.colors.tableStripe};
   }
+
+  ${props => props.hoverable === true && `tbody tr:hover {
+    background-color: ${ds.colors.tableHoverBg(props)};
+    color: ${ds.colors.tableHoverFg(props)}
+  }`}
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 const Table = ({
+  hoverable,
   children
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
@@ -59,7 +65,7 @@ const Table = ({
   // -------------------------------------------------------------------------------------------------------------------
   return (
     <StyledTableContainer>
-      <StyledTable>
+      <StyledTable hoverable={hoverable}>
         {children}
       </StyledTable>
     </StyledTableContainer>
@@ -70,7 +76,8 @@ const Table = ({
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
 Table.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  hoverable: PropTypes.bool
 }
 Table.defaultProps = {}
 

@@ -65,7 +65,7 @@ const customThemes = {
 
 const ExampleTable = () => {
   return (
-    <Table>
+    <Table hoverable>
       <thead>
         <tr>
           <th>Client</th>
@@ -299,7 +299,7 @@ export const App = () => {
                     noPadding
                     margin
                   >
-                    <Table>
+                    <Table hoverable>
                       <thead>
                         <tr>
                           <th>Client</th>
