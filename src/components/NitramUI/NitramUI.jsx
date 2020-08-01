@@ -313,7 +313,9 @@ const NitramUI = ({
         setMode,
         theme,
         setTheme,
-        themes: availableThemesObjects
+        themes: availableThemesObjects,
+        ds,
+        getDSProp: x => typeof x === 'function' && x({ theme: { theme, mode } })
       }}
     >
       <ThemeProvider
