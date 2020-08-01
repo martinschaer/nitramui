@@ -4,6 +4,7 @@ import { linkTo } from '@storybook/addon-links'
 
 import {
   modes,
+  styled,
   Card,
   Pane,
   Label,
@@ -19,6 +20,10 @@ export default {
   title: 'Examples'
   // decorators: [withKnobs]
 }
+
+const Hola = styled.span`
+  color: red;
+`
 
 const mode2Emoji = mode => mode === 'light' ? '🌞' : '🌙'
 
@@ -157,7 +162,7 @@ export const App = () => {
       // availableThemes={['groove', 'smooth']}
     >
       <NitramUIContext.Consumer>
-        {({ mode, setMode, themes, theme, setTheme }) => (
+        {({ mode, setMode, themes, theme, setTheme, ds, getDSProp }) => (
           <Layout
             brand='Example'
             headerSlot='Hi, Jonathan'
@@ -334,52 +339,55 @@ export const App = () => {
                   {/* ---------------------------------------------------------------------------------------------- */}
                   {/* Card                                                                                           */}
                   {/* ---------------------------------------------------------------------------------------------- */}
-                  <NitramUIContext.Consumer>
-                    {({ mode, setMode, theme, setTheme }) => (
-                      <Card
-                        size='small'
-                        margin
-                        header={
-                          <>
-                            <Label heading>Header</Label>
-                            <Control
-                              type='select'
-                              value={mode}
-                              onChange={setMode}
-                              options={Object.entries(modes).map(([_key, value]) => ({ label: value, value }))}
-                            />
-                            <Control
-                              type='select'
-                              value={theme}
-                              onChange={setTheme}
-                              options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
-                            />
-                            <button type='button'>See all</button>
-                          </>
-                        }
-                        footer={
-                          <>
-                            <Label heading>Footer</Label>
-                            <Label>Footer</Label>
-                            <Control
-                              type='input'
-                              label='Name'
-                              value={text}
-                              onChange={setText}
-                            />
-                            <button type='button'>Ok</button>
-                            <Label>Footer</Label>
-                          </>
-                        }
-                      >
-                        <p>{text}, <a href='/'>dolor sit amed</a></p>
-                        <p>
-                          <button type='button'>More</button>
-                          <button type='button'>More</button>
-                        </p>
-                      </Card>
-                    )}
-                  </NitramUIContext.Consumer>
+                  <Card
+                    size='small'
+                    margin
+                    header={
+                      <>
+                        <Label heading>Header</Label>
+                        <Control
+                          type='select'
+                          value={mode}
+                          onChange={setMode}
+                          options={Object.entries(modes).map(([_key, value]) => ({ label: value, value }))}
+                        />
+                        <Control
+                          type='select'
+                          value={theme}
+                          onChange={setTheme}
+                          options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
+                        />
+                        <button type='button'>See all</button>
+                      </>
+                    }
+                    footer={
+                      <>
+                        <Label heading>Footer</Label>
+                        <Label>Footer</Label>
+                        <Control
+                          type='input'
+                          label='Name'
+                          value={text}
+                          onChange={setText}
+                        />
+                        <button type='button'>Ok</button>
+                        <Label>Footer</Label>
+                      </>
+                    }
+                  >
+                    <p><Hola>{text}</Hola>, <a href='/'>dolor sit amed</a></p>
+                    <p>
+                      <button type='button'>More</button>
+                      <button type='button'>More</button>
+                    </p>
+                  </Card>
+                  <Card
+                    size='small'
+                    margin
+                  >
+                    <p>ds.colors.fg: {getDSProp(ds.colors.fg)}</p>
+                    <p>ds.colors.bg: {getDSProp(ds.colors.bg)}</p>
+                  </Card>
                 </Container>
               </Card>
             </Pane>
