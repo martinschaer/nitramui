@@ -37,10 +37,77 @@ Add these lines in the head of your `index.html`:
 
 This is due to an issue with @import and createGlobalStyle. Read more: [Note regarding css @import and createGlobalStyle](https://styled-components.com/docs/faqs#note-regarding-css-import-and-createglobalstyle).
 
-### NitramUI options
+## NitramUI options
 
 - customThemes
 - availableThemes
+
+## NitramUIContext
+
+- **mode**: (string) current mode name. Default: `light`.
+- **setMode**: (function) sets mode.
+- **theme**: (string) current theme name. Defaults to the first theme in the availableThemes NitramUI prop, or to `smooth` if availableThemes is not set.
+- **setTheme**: (function) sets theme.
+- **themes**: (object) available themes, built-in and custom. Default:
+     ```JSON
+     {
+       "smooth": "smooth",
+       "hiContrast": "hiContrast"
+     }
+     ```
+- **ds**: (object) design system definition. Each attributed has to be accesed using `getDSVal`. See: [designSystem](src/components/common/designSystem.js)
+- **getDSVal**: (function) useful to get mode and theme aware values from the design system. Example: `getDSVal(ds.colors.bg)`
+
+## Change theme and mode
+
+```jsx
+import { modes, NitramUI, NitramUIContext } from 'nitramui'
+
+export const App = () => {
+  return (
+    <NitramUI>
+      <NitramUIContext.Consumer>
+        {({ mode, setMode }) => (
+          <Layout
+            menuB={(
+              <Control
+                type='select'
+                value={mode}
+                onChange={setMode}
+                options={Object.entries(modes).map(([_key, value]) => ({ label: value, value }))}
+              />
+            )}
+          >
+            <p>FG color: {getDSVal(ds.colors.fg)}</p>
+          </Layout>
+        )}
+      </NitramUIContext.Consumer>
+    </NitramUI>
+  )
+}
+```
+
+## Get design system attributees (theme and mode aware)
+
+```jsx
+import { NitramUI, NitramUIContext } from 'nitramui'
+
+export const App = () => {
+  return (
+    <NitramUI>
+      <NitramUIContext.Consumer>
+        {({ ds, getDSVal }) => (
+          <Layout>
+            <p>FG color: {getDSVal(ds.colors.fg)}</p>
+          </Layout>
+        )}
+      </NitramUIContext.Consumer>
+    </NitramUI>
+  )
+}
+```
+
+Note: NitramUIContext has to be consumed within NitramUI scope.
 
 ## Roadmap
 
@@ -61,12 +128,12 @@ This is due to an issue with @import and createGlobalStyle. Read more: [Note reg
 - [x] Fix labelStyles (or just vertical padding) for inputs and selects
 - [x] Create form control component (for inputs and selects with or without labels)
 - [x] Make onChange optional on controls
-- [ ] Export design system variables aware of theme and mode
+- [x] Export design system variables aware of theme and mode
+- [x] Add instructions for NitramUIContext.Consumer, and controlling modes and themes
 - [ ] Fix too many scrollbars on Windows
 - [ ] Add button link (https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md)
 - [ ] Pass ref to controls
 - [ ] Add instructions for customThemes and availableThemes props
-- [ ] Add instructions for NitramUIContext.Consumer, and controlling modes and themes
 - [ ] Add hook for auto dark mode
 - [ ] Add packagequality.com badge
 - [ ] Create React App template
