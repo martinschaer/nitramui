@@ -1,643 +1,5 @@
 import React, { useContext, useMemo, useRef, useEffect, createElement, useDebugValue, useState } from 'react';
 
-function getThemeValue(name, props, values) {
-  var value = (
-    props.theme &&
-    props.theme[name]
-  );
-
-  var themeValue;
-
-  if (typeof value === 'function') {
-    themeValue = value(values);
-  } else {
-    themeValue = values[value];
-  }
-
-  if (typeof themeValue === 'function') {
-    return themeValue(props);
-  } else {
-    return themeValue;
-  }
-}
-
-function theme(name, values) {
-  return function(props) {
-    return getThemeValue(name, props, values);
-  };
-}
-
-theme.variants = function(name, prop, values) {
-  return function(props) {
-    var variant = props[prop] && values[props[prop]];
-    return variant && getThemeValue(name, props, variant);
-  };
-};
-
-var styledTheming = theme;
-
-// COLORS
-// ---------------------------------------------------------------------------------------------------------------------
-
-const WHITE = '#fff';
-const GALLERY = '#f0f0f0';
-const MERCURY = '#E5E5E5';
-const EMPEROR = '#535353';
-const DUNE = '#252321';
-const COD_GRAY = '#1C1917';
-const BLACK = '#000';
-const BLACK_3 = 'rgba(0, 0, 0, 0.03)';
-const BLACK_10 = 'rgba(0, 0, 0, 0.1)';
-const BLACK_30 = 'rgba(0, 0, 0, 0.3)';
-const YELLOW = '#ff0';
-const BLUE = '#00f';
-const LIMA = '#75d41d';
-const RED = '#f22';
-const BLUEVIOLET = 'blueviolet'; // #8A2BE2
-// ---------------------------------------------------------------------------------------------------------------------
-// Exports
-// ---------------------------------------------------------------------------------------------------------------------
-
-const themes = {
-  smooth: 'smooth',
-  hiContrast: 'hiContrast'
-};
-const modes = {
-  light: 'light',
-  dark: 'dark'
-};
-
-const tryToGetArr = (obj, path, def) => {
-  if (!path.length) {
-    return obj;
-  }
-
-  const newObj = obj[path[0]];
-  if (newObj === undefined) return def;
-  return tryToGetArr(newObj, path.slice(1), def);
-};
-
-const buildCustomProp = (group, prop, lightDefault, darkDefault) => styledTheming('mode', {
-  [modes.light]: ({
-    theme
-  }) => tryToGetArr(theme.customThemes, [theme.customTheme, group, prop, 'light'], lightDefault),
-  [modes.dark]: ({
-    theme
-  }) => tryToGetArr(theme.customThemes, [theme.customTheme, group, prop, 'dark'], darkDefault)
-});
-
-const designSystem = {
-  colors: {
-    // -----------------------------------------------------------------------------------------------------------------
-    // FG & BG
-    // -----------------------------------------------------------------------------------------------------------------
-    fg: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: GALLERY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'fg', EMPEROR, GALLERY)
-    }),
-    fgMuted: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_30,
-        [modes.dark]: EMPEROR
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: EMPEROR
-      }),
-      custom: buildCustomProp('colors', 'fgMuted', BLACK_30, EMPEROR)
-    }),
-    bg: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: GALLERY,
-        [modes.dark]: COD_GRAY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: WHITE,
-        [modes.dark]: BLACK
-      }),
-      custom: buildCustomProp('colors', 'bg', GALLERY, COD_GRAY)
-    }),
-    // -----------------------------------------------------------------------------------------------------------------
-    // Border
-    // -----------------------------------------------------------------------------------------------------------------
-    border: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: MERCURY,
-        [modes.dark]: EMPEROR
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'border', MERCURY, EMPEROR)
-    }),
-    borderLight: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: DUNE
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: DUNE
-      }),
-      custom: buildCustomProp('colors', 'borderLight', BLACK_3, DUNE)
-    }),
-    // -----------------------------------------------------------------------------------------------------------------
-    // Button
-    // -----------------------------------------------------------------------------------------------------------------
-    buttonFg: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: GALLERY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'buttonFg', EMPEROR, GALLERY)
-    }),
-    buttonFgDisabled: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_30,
-        [modes.dark]: EMPEROR
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: EMPEROR
-      }),
-      custom: buildCustomProp('colors', 'buttonFgDisabled', BLACK_30, EMPEROR)
-    }),
-    buttonBorderDisabled: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: DUNE
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: DUNE
-      }),
-      custom: buildCustomProp('colors', 'buttonBorderDisabled', BLACK_3, DUNE)
-    }),
-    buttonBg: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      custom: buildCustomProp('colors', 'buttonBg', 'transparent', 'transparent')
-    }),
-    buttonBgSelected: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: BLACK_30
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: GALLERY,
-        [modes.dark]: COD_GRAY
-      }),
-      custom: buildCustomProp('colors', 'buttonBgSelected', BLACK_3, BLACK_30)
-    }),
-    buttonBgDisabled: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      custom: buildCustomProp('colors', 'buttonBgDisabled', 'transparent', 'transparent')
-    }),
-    buttonBgHover: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      custom: buildCustomProp('colors', 'buttonBgHover', 'transparent', 'transparent')
-    }),
-    buttonBorder: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: MERCURY,
-        [modes.dark]: EMPEROR
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'buttonBorder', MERCURY, EMPEROR)
-    }),
-    buttonBorderHover: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: GALLERY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'buttonBorderHover', EMPEROR, GALLERY)
-    }),
-    // -----------------------------------------------------------------------------------------------------------------
-    // Controls
-    // -----------------------------------------------------------------------------------------------------------------
-    controlBg: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: BLACK_30
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: GALLERY,
-        [modes.dark]: COD_GRAY
-      }),
-      custom: buildCustomProp('colors', 'controlBg', BLACK_3, BLACK_30)
-    }),
-    inputBorder: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: MERCURY,
-        [modes.dark]: EMPEROR
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'inputBorder', MERCURY, EMPEROR)
-    }),
-    inputBorderActive: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: GALLERY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'inputBorderActive', EMPEROR, GALLERY)
-    }),
-    inputBorderDisabled: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: DUNE
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: DUNE
-      }),
-      custom: buildCustomProp('colors', 'inputBorderDisabled', BLACK_3, DUNE)
-    }),
-    inputBorderInvalid: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: RED,
-        [modes.dark]: RED
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: RED,
-        [modes.dark]: RED
-      }),
-      custom: buildCustomProp('colors', 'inputBorderInvalid', RED, RED)
-    }),
-    inputBg: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      custom: buildCustomProp('colors', 'inputBg', 'transparent', 'transparent')
-    }),
-    inputBgFocus: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      custom: buildCustomProp('colors', 'inputBgFocus', 'transparent', 'transparent')
-    }),
-    inputBgDisabled: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      custom: buildCustomProp('colors', 'inputBgDisabled', 'transparent', 'transparent')
-    }),
-    inputBgHover: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      custom: buildCustomProp('colors', 'inputBgHover', 'transparent', 'transparent')
-    }),
-    inputFg: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: GALLERY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'inputFg', EMPEROR, GALLERY)
-    }),
-    inputFgDisabled: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_30,
-        [modes.dark]: EMPEROR
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: EMPEROR
-      }),
-      custom: buildCustomProp('colors', 'inputFgDisabled', BLACK_30, EMPEROR)
-    }),
-    // -----------------------------------------------------------------------------------------------------------------
-    // Card
-    // -----------------------------------------------------------------------------------------------------------------
-    card: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: WHITE,
-        [modes.dark]: DUNE
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: WHITE,
-        [modes.dark]: BLACK
-      }),
-      custom: buildCustomProp('colors', 'card', WHITE, DUNE)
-    }),
-    cardBorder: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: GALLERY,
-        [modes.dark]: EMPEROR
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: COD_GRAY,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'cardBorder', GALLERY, EMPEROR)
-    }),
-    cardBorderHover: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: GALLERY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'cardBorderHover', EMPEROR, GALLERY)
-    }),
-    cardHeaderBorder: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: GALLERY,
-        [modes.dark]: EMPEROR
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: COD_GRAY,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'cardHeaderBorder', GALLERY, EMPEROR)
-    }),
-    // -----------------------------------------------------------------------------------------------------------------
-    // Shadow
-    // -----------------------------------------------------------------------------------------------------------------
-    shadow: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_10,
-        [modes.dark]: BLACK_10
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'none',
-        [modes.dark]: 'none'
-      }),
-      custom: buildCustomProp('colors', 'shadow', BLACK_10, BLACK_10)
-    }),
-    buttonShadow: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_10,
-        [modes.dark]: BLACK_10
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'none',
-        [modes.dark]: 'none'
-      }),
-      custom: buildCustomProp('colors', 'buttonShadow', BLACK_10, BLACK_10)
-    }),
-    // -----------------------------------------------------------------------------------------------------------------
-    // Link
-    // -----------------------------------------------------------------------------------------------------------------
-    link: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLUE,
-        [modes.dark]: YELLOW
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLUE,
-        [modes.dark]: YELLOW
-      }),
-      custom: buildCustomProp('colors', 'link', BLUE, YELLOW)
-    }),
-    linkVisited: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLUEVIOLET,
-        [modes.dark]: LIMA
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLUEVIOLET,
-        [modes.dark]: LIMA
-      }),
-      custom: buildCustomProp('colors', 'linkVisited', BLUEVIOLET, LIMA)
-    }),
-    // -----------------------------------------------------------------------------------------------------------------
-    // Table
-    // -----------------------------------------------------------------------------------------------------------------
-    tableStripe: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: BLACK_30
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: GALLERY,
-        [modes.dark]: COD_GRAY
-      }),
-      custom: buildCustomProp('colors', 'tableStripe', BLACK_3, BLACK_30)
-    }),
-    tableHoverBg: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: MERCURY,
-        [modes.dark]: EMPEROR
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'tableHoverBg', MERCURY, EMPEROR)
-    }),
-    tableHoverFg: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: GALLERY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: WHITE,
-        [modes.dark]: BLACK
-      }),
-      custom: buildCustomProp('colors', 'tableHoverFg', EMPEROR, GALLERY)
-    })
-  },
-  // -------------------------------------------------------------------------------------------------------------------
-  // Fonts
-  // -------------------------------------------------------------------------------------------------------------------
-  fonts: {
-    body: styledTheming('theme', {
-      [themes.smooth]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
-      [themes.hiContrast]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'fonts', 'body'], 'Arial')
-    }),
-    heading: styledTheming('theme', {
-      [themes.smooth]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
-      [themes.hiContrast]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'fonts', 'heading'], 'Arial')
-    })
-  },
-  // -------------------------------------------------------------------------------------------------------------------
-  // Weights
-  // -------------------------------------------------------------------------------------------------------------------
-  weights: {
-    normal: styledTheming('theme', {
-      [themes.smooth]: '400',
-      [themes.hiContrast]: '400',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'normal'], '400')
-    }),
-    strong: styledTheming('theme', {
-      [themes.smooth]: '600',
-      [themes.hiContrast]: '600',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'strong'], '600')
-    }),
-    heading: styledTheming('theme', {
-      [themes.smooth]: '200',
-      [themes.hiContrast]: '200',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'heading'], '600')
-    }),
-    preheading: styledTheming('theme', {
-      [themes.smooth]: '600',
-      [themes.hiContrast]: '600',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'preheading'], '600')
-    }),
-    controlLabel: styledTheming('theme', {
-      [themes.smooth]: '400',
-      [themes.hiContrast]: '400',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'controlLabel'], '400')
-    })
-  },
-  // -------------------------------------------------------------------------------------------------------------------
-  // Measures
-  // -------------------------------------------------------------------------------------------------------------------
-  measures: {
-    radius: styledTheming('theme', {
-      [themes.smooth]: '0.5rem',
-      [themes.hiContrast]: '0.5rem',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'radius'], '0.5rem')
-    }),
-    inputRadius: styledTheming('theme', {
-      [themes.smooth]: '0.25rem',
-      [themes.hiContrast]: '0.25rem',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputRadius'], '0.5rem')
-    }),
-    buttonRadius: styledTheming('theme', {
-      [themes.smooth]: '0.25rem',
-      [themes.hiContrast]: '0.25rem',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'buttonRadius'], '0.25rem')
-    }),
-    font: styledTheming('theme', {
-      [themes.smooth]: '0.875rem',
-      [themes.hiContrast]: '0.875rem',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'font'], '1rem')
-    }),
-    inputFont: styledTheming('theme', {
-      [themes.smooth]: '0.875rem',
-      [themes.hiContrast]: '0.875rem',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputFont'], '1rem')
-    }),
-    unit: styledTheming('theme', {
-      [themes.smooth]: '16px',
-      [themes.hiContrast]: '16px',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'unit'], '16px')
-    }),
-    spacer: styledTheming('theme', {
-      [themes.smooth]: 1,
-      [themes.hiContrast]: 1,
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'spacer'], 1)
-    }),
-    buttonSpacerH: styledTheming('theme', {
-      [themes.smooth]: 1,
-      [themes.hiContrast]: 1,
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'buttonSpacerH'], 1)
-    }),
-    inputSpacerH: styledTheming('theme', {
-      [themes.smooth]: 0.5,
-      [themes.hiContrast]: 0.5,
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputSpacerH'], 0.5)
-    })
-  }
-};
-
 function createCommonjsModule(fn, basedir, module) {
 	return module = {
 	  path: basedir,
@@ -877,851 +239,6 @@ if (process.env.NODE_ENV === 'production') {
   module.exports = reactIs_production_min;
 } else {
   module.exports = reactIs_development;
-}
-});
-
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-var objectAssign = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-var ReactPropTypesSecret_1 = ReactPropTypesSecret;
-
-var printWarning = function() {};
-
-if (process.env.NODE_ENV !== 'production') {
-  var ReactPropTypesSecret$1 = ReactPropTypesSecret_1;
-  var loggedTypeFailures = {};
-  var has = Function.call.bind(Object.prototype.hasOwnProperty);
-
-  printWarning = function(text) {
-    var message = 'Warning: ' + text;
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (process.env.NODE_ENV !== 'production') {
-    for (var typeSpecName in typeSpecs) {
-      if (has(typeSpecs, typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          if (typeof typeSpecs[typeSpecName] !== 'function') {
-            var err = Error(
-              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
-              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.'
-            );
-            err.name = 'Invariant Violation';
-            throw err;
-          }
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret$1);
-        } catch (ex) {
-          error = ex;
-        }
-        if (error && !(error instanceof Error)) {
-          printWarning(
-            (componentName || 'React class') + ': type specification of ' +
-            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
-            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
-            'You may have forgotten to pass an argument to the type checker ' +
-            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
-            'shape all require an argument).'
-          );
-        }
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          printWarning(
-            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
-          );
-        }
-      }
-    }
-  }
-}
-
-/**
- * Resets warning cache when testing.
- *
- * @private
- */
-checkPropTypes.resetWarningCache = function() {
-  if (process.env.NODE_ENV !== 'production') {
-    loggedTypeFailures = {};
-  }
-};
-
-var checkPropTypes_1 = checkPropTypes;
-
-var has$1 = Function.call.bind(Object.prototype.hasOwnProperty);
-var printWarning$1 = function() {};
-
-if (process.env.NODE_ENV !== 'production') {
-  printWarning$1 = function(text) {
-    var message = 'Warning: ' + text;
-    if (typeof console !== 'undefined') {
-      console.error(message);
-    }
-    try {
-      // --- Welcome to debugging React ---
-      // This error was thrown as a convenience so that you can use this stack
-      // to find the callsite that caused this warning to fire.
-      throw new Error(message);
-    } catch (x) {}
-  };
-}
-
-function emptyFunctionThatReturnsNull() {
-  return null;
-}
-
-var factoryWithTypeCheckers = function(isValidElement, throwOnDirectAccess) {
-  /* global Symbol */
-  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
-  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
-
-  /**
-   * Returns the iterator method function contained on the iterable object.
-   *
-   * Be sure to invoke the function with the iterable as context:
-   *
-   *     var iteratorFn = getIteratorFn(myIterable);
-   *     if (iteratorFn) {
-   *       var iterator = iteratorFn.call(myIterable);
-   *       ...
-   *     }
-   *
-   * @param {?object} maybeIterable
-   * @return {?function}
-   */
-  function getIteratorFn(maybeIterable) {
-    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
-    if (typeof iteratorFn === 'function') {
-      return iteratorFn;
-    }
-  }
-
-  /**
-   * Collection of methods that allow declaration and validation of props that are
-   * supplied to React components. Example usage:
-   *
-   *   var Props = require('ReactPropTypes');
-   *   var MyArticle = React.createClass({
-   *     propTypes: {
-   *       // An optional string prop named "description".
-   *       description: Props.string,
-   *
-   *       // A required enum prop named "category".
-   *       category: Props.oneOf(['News','Photos']).isRequired,
-   *
-   *       // A prop named "dialog" that requires an instance of Dialog.
-   *       dialog: Props.instanceOf(Dialog).isRequired
-   *     },
-   *     render: function() { ... }
-   *   });
-   *
-   * A more formal specification of how these methods are used:
-   *
-   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
-   *   decl := ReactPropTypes.{type}(.isRequired)?
-   *
-   * Each and every declaration produces a function with the same signature. This
-   * allows the creation of custom validation functions. For example:
-   *
-   *  var MyLink = React.createClass({
-   *    propTypes: {
-   *      // An optional string or URI prop named "href".
-   *      href: function(props, propName, componentName) {
-   *        var propValue = props[propName];
-   *        if (propValue != null && typeof propValue !== 'string' &&
-   *            !(propValue instanceof URI)) {
-   *          return new Error(
-   *            'Expected a string or an URI for ' + propName + ' in ' +
-   *            componentName
-   *          );
-   *        }
-   *      }
-   *    },
-   *    render: function() {...}
-   *  });
-   *
-   * @internal
-   */
-
-  var ANONYMOUS = '<<anonymous>>';
-
-  // Important!
-  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
-  var ReactPropTypes = {
-    array: createPrimitiveTypeChecker('array'),
-    bool: createPrimitiveTypeChecker('boolean'),
-    func: createPrimitiveTypeChecker('function'),
-    number: createPrimitiveTypeChecker('number'),
-    object: createPrimitiveTypeChecker('object'),
-    string: createPrimitiveTypeChecker('string'),
-    symbol: createPrimitiveTypeChecker('symbol'),
-
-    any: createAnyTypeChecker(),
-    arrayOf: createArrayOfTypeChecker,
-    element: createElementTypeChecker(),
-    elementType: createElementTypeTypeChecker(),
-    instanceOf: createInstanceTypeChecker,
-    node: createNodeChecker(),
-    objectOf: createObjectOfTypeChecker,
-    oneOf: createEnumTypeChecker,
-    oneOfType: createUnionTypeChecker,
-    shape: createShapeTypeChecker,
-    exact: createStrictShapeTypeChecker,
-  };
-
-  /**
-   * inlined Object.is polyfill to avoid requiring consumers ship their own
-   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-   */
-  /*eslint-disable no-self-compare*/
-  function is(x, y) {
-    // SameValue algorithm
-    if (x === y) {
-      // Steps 1-5, 7-10
-      // Steps 6.b-6.e: +0 != -0
-      return x !== 0 || 1 / x === 1 / y;
-    } else {
-      // Step 6.a: NaN == NaN
-      return x !== x && y !== y;
-    }
-  }
-  /*eslint-enable no-self-compare*/
-
-  /**
-   * We use an Error-like object for backward compatibility as people may call
-   * PropTypes directly and inspect their output. However, we don't use real
-   * Errors anymore. We don't inspect their stack anyway, and creating them
-   * is prohibitively expensive if they are created too often, such as what
-   * happens in oneOfType() for any type before the one that matched.
-   */
-  function PropTypeError(message) {
-    this.message = message;
-    this.stack = '';
-  }
-  // Make `instanceof Error` still work for returned errors.
-  PropTypeError.prototype = Error.prototype;
-
-  function createChainableTypeChecker(validate) {
-    if (process.env.NODE_ENV !== 'production') {
-      var manualPropTypeCallCache = {};
-      var manualPropTypeWarningCount = 0;
-    }
-    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
-      componentName = componentName || ANONYMOUS;
-      propFullName = propFullName || propName;
-
-      if (secret !== ReactPropTypesSecret_1) {
-        if (throwOnDirectAccess) {
-          // New behavior only for users of `prop-types` package
-          var err = new Error(
-            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-            'Use `PropTypes.checkPropTypes()` to call them. ' +
-            'Read more at http://fb.me/use-check-prop-types'
-          );
-          err.name = 'Invariant Violation';
-          throw err;
-        } else if (process.env.NODE_ENV !== 'production' && typeof console !== 'undefined') {
-          // Old behavior for people using React.PropTypes
-          var cacheKey = componentName + ':' + propName;
-          if (
-            !manualPropTypeCallCache[cacheKey] &&
-            // Avoid spamming the console because they are often not actionable except for lib authors
-            manualPropTypeWarningCount < 3
-          ) {
-            printWarning$1(
-              'You are manually calling a React.PropTypes validation ' +
-              'function for the `' + propFullName + '` prop on `' + componentName  + '`. This is deprecated ' +
-              'and will throw in the standalone `prop-types` package. ' +
-              'You may be seeing this warning due to a third-party PropTypes ' +
-              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.'
-            );
-            manualPropTypeCallCache[cacheKey] = true;
-            manualPropTypeWarningCount++;
-          }
-        }
-      }
-      if (props[propName] == null) {
-        if (isRequired) {
-          if (props[propName] === null) {
-            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
-          }
-          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
-        }
-        return null;
-      } else {
-        return validate(props, propName, componentName, location, propFullName);
-      }
-    }
-
-    var chainedCheckType = checkType.bind(null, false);
-    chainedCheckType.isRequired = checkType.bind(null, true);
-
-    return chainedCheckType;
-  }
-
-  function createPrimitiveTypeChecker(expectedType) {
-    function validate(props, propName, componentName, location, propFullName, secret) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== expectedType) {
-        // `propValue` being instance of, say, date/regexp, pass the 'object'
-        // check, but we can offer a more precise error message here rather than
-        // 'of type `object`'.
-        var preciseType = getPreciseType(propValue);
-
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createAnyTypeChecker() {
-    return createChainableTypeChecker(emptyFunctionThatReturnsNull);
-  }
-
-  function createArrayOfTypeChecker(typeChecker) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (typeof typeChecker !== 'function') {
-        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
-      }
-      var propValue = props[propName];
-      if (!Array.isArray(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
-      }
-      for (var i = 0; i < propValue.length; i++) {
-        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret_1);
-        if (error instanceof Error) {
-          return error;
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createElementTypeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      if (!isValidElement(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createElementTypeTypeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      if (!reactIs.isValidElementType(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement type.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createInstanceTypeChecker(expectedClass) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (!(props[propName] instanceof expectedClass)) {
-        var expectedClassName = expectedClass.name || ANONYMOUS;
-        var actualClassName = getClassName(props[propName]);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createEnumTypeChecker(expectedValues) {
-    if (!Array.isArray(expectedValues)) {
-      if (process.env.NODE_ENV !== 'production') {
-        if (arguments.length > 1) {
-          printWarning$1(
-            'Invalid arguments supplied to oneOf, expected an array, got ' + arguments.length + ' arguments. ' +
-            'A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z]).'
-          );
-        } else {
-          printWarning$1('Invalid argument supplied to oneOf, expected an array.');
-        }
-      }
-      return emptyFunctionThatReturnsNull;
-    }
-
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      for (var i = 0; i < expectedValues.length; i++) {
-        if (is(propValue, expectedValues[i])) {
-          return null;
-        }
-      }
-
-      var valuesString = JSON.stringify(expectedValues, function replacer(key, value) {
-        var type = getPreciseType(value);
-        if (type === 'symbol') {
-          return String(value);
-        }
-        return value;
-      });
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + String(propValue) + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createObjectOfTypeChecker(typeChecker) {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (typeof typeChecker !== 'function') {
-        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
-      }
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
-      }
-      for (var key in propValue) {
-        if (has$1(propValue, key)) {
-          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret_1);
-          if (error instanceof Error) {
-            return error;
-          }
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createUnionTypeChecker(arrayOfTypeCheckers) {
-    if (!Array.isArray(arrayOfTypeCheckers)) {
-      process.env.NODE_ENV !== 'production' ? printWarning$1('Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
-      return emptyFunctionThatReturnsNull;
-    }
-
-    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-      var checker = arrayOfTypeCheckers[i];
-      if (typeof checker !== 'function') {
-        printWarning$1(
-          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
-          'received ' + getPostfixForTypeWarning(checker) + ' at index ' + i + '.'
-        );
-        return emptyFunctionThatReturnsNull;
-      }
-    }
-
-    function validate(props, propName, componentName, location, propFullName) {
-      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
-        var checker = arrayOfTypeCheckers[i];
-        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret_1) == null) {
-          return null;
-        }
-      }
-
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createNodeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      if (!isNode(props[propName])) {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createShapeTypeChecker(shapeTypes) {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-      }
-      for (var key in shapeTypes) {
-        var checker = shapeTypes[key];
-        if (!checker) {
-          continue;
-        }
-        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret_1);
-        if (error) {
-          return error;
-        }
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
-  function createStrictShapeTypeChecker(shapeTypes) {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      var propType = getPropType(propValue);
-      if (propType !== 'object') {
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
-      }
-      // We need to check all keys in case some are required but missing from
-      // props.
-      var allKeys = objectAssign({}, props[propName], shapeTypes);
-      for (var key in allKeys) {
-        var checker = shapeTypes[key];
-        if (!checker) {
-          return new PropTypeError(
-            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
-            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
-            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
-          );
-        }
-        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret_1);
-        if (error) {
-          return error;
-        }
-      }
-      return null;
-    }
-
-    return createChainableTypeChecker(validate);
-  }
-
-  function isNode(propValue) {
-    switch (typeof propValue) {
-      case 'number':
-      case 'string':
-      case 'undefined':
-        return true;
-      case 'boolean':
-        return !propValue;
-      case 'object':
-        if (Array.isArray(propValue)) {
-          return propValue.every(isNode);
-        }
-        if (propValue === null || isValidElement(propValue)) {
-          return true;
-        }
-
-        var iteratorFn = getIteratorFn(propValue);
-        if (iteratorFn) {
-          var iterator = iteratorFn.call(propValue);
-          var step;
-          if (iteratorFn !== propValue.entries) {
-            while (!(step = iterator.next()).done) {
-              if (!isNode(step.value)) {
-                return false;
-              }
-            }
-          } else {
-            // Iterator will provide entry [k,v] tuples rather than values.
-            while (!(step = iterator.next()).done) {
-              var entry = step.value;
-              if (entry) {
-                if (!isNode(entry[1])) {
-                  return false;
-                }
-              }
-            }
-          }
-        } else {
-          return false;
-        }
-
-        return true;
-      default:
-        return false;
-    }
-  }
-
-  function isSymbol(propType, propValue) {
-    // Native Symbol.
-    if (propType === 'symbol') {
-      return true;
-    }
-
-    // falsy value can't be a Symbol
-    if (!propValue) {
-      return false;
-    }
-
-    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
-    if (propValue['@@toStringTag'] === 'Symbol') {
-      return true;
-    }
-
-    // Fallback for non-spec compliant Symbols which are polyfilled.
-    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
-      return true;
-    }
-
-    return false;
-  }
-
-  // Equivalent of `typeof` but with special handling for array and regexp.
-  function getPropType(propValue) {
-    var propType = typeof propValue;
-    if (Array.isArray(propValue)) {
-      return 'array';
-    }
-    if (propValue instanceof RegExp) {
-      // Old webkits (at least until Android 4.0) return 'function' rather than
-      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
-      // passes PropTypes.object.
-      return 'object';
-    }
-    if (isSymbol(propType, propValue)) {
-      return 'symbol';
-    }
-    return propType;
-  }
-
-  // This handles more types than `getPropType`. Only used for error messages.
-  // See `createPrimitiveTypeChecker`.
-  function getPreciseType(propValue) {
-    if (typeof propValue === 'undefined' || propValue === null) {
-      return '' + propValue;
-    }
-    var propType = getPropType(propValue);
-    if (propType === 'object') {
-      if (propValue instanceof Date) {
-        return 'date';
-      } else if (propValue instanceof RegExp) {
-        return 'regexp';
-      }
-    }
-    return propType;
-  }
-
-  // Returns a string that is postfixed to a warning about an invalid type.
-  // For example, "undefined" or "of type array"
-  function getPostfixForTypeWarning(value) {
-    var type = getPreciseType(value);
-    switch (type) {
-      case 'array':
-      case 'object':
-        return 'an ' + type;
-      case 'boolean':
-      case 'date':
-      case 'regexp':
-        return 'a ' + type;
-      default:
-        return type;
-    }
-  }
-
-  // Returns class name of the object, if any.
-  function getClassName(propValue) {
-    if (!propValue.constructor || !propValue.constructor.name) {
-      return ANONYMOUS;
-    }
-    return propValue.constructor.name;
-  }
-
-  ReactPropTypes.checkPropTypes = checkPropTypes_1;
-  ReactPropTypes.resetWarningCache = checkPropTypes_1.resetWarningCache;
-  ReactPropTypes.PropTypes = ReactPropTypes;
-
-  return ReactPropTypes;
-};
-
-function emptyFunction() {}
-function emptyFunctionWithReset() {}
-emptyFunctionWithReset.resetWarningCache = emptyFunction;
-
-var factoryWithThrowingShims = function() {
-  function shim(props, propName, componentName, location, propFullName, secret) {
-    if (secret === ReactPropTypesSecret_1) {
-      // It is still safe when called from React.
-      return;
-    }
-    var err = new Error(
-      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-      'Use PropTypes.checkPropTypes() to call them. ' +
-      'Read more at http://fb.me/use-check-prop-types'
-    );
-    err.name = 'Invariant Violation';
-    throw err;
-  }  shim.isRequired = shim;
-  function getShim() {
-    return shim;
-  }  // Important!
-  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-  var ReactPropTypes = {
-    array: shim,
-    bool: shim,
-    func: shim,
-    number: shim,
-    object: shim,
-    string: shim,
-    symbol: shim,
-
-    any: shim,
-    arrayOf: getShim,
-    element: shim,
-    elementType: shim,
-    instanceOf: getShim,
-    node: shim,
-    objectOf: getShim,
-    oneOf: getShim,
-    oneOfType: getShim,
-    shape: getShim,
-    exact: getShim,
-
-    checkPropTypes: emptyFunctionWithReset,
-    resetWarningCache: emptyFunction
-  };
-
-  ReactPropTypes.PropTypes = ReactPropTypes;
-
-  return ReactPropTypes;
-};
-
-var propTypes = createCommonjsModule(function (module) {
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (process.env.NODE_ENV !== 'production') {
-  var ReactIs = reactIs;
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = factoryWithTypeCheckers(ReactIs.isElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = factoryWithThrowingShims();
 }
 });
 
@@ -2465,7 +982,7 @@ function getStatics(component) {
 
 var defineProperty = Object.defineProperty;
 var getOwnPropertyNames = Object.getOwnPropertyNames;
-var getOwnPropertySymbols$1 = Object.getOwnPropertySymbols;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
 var getPrototypeOf = Object.getPrototypeOf;
 var objectPrototype = Object.prototype;
@@ -2482,8 +999,8 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
 
     var keys = getOwnPropertyNames(sourceComponent);
 
-    if (getOwnPropertySymbols$1) {
-      keys = keys.concat(getOwnPropertySymbols$1(sourceComponent));
+    if (getOwnPropertySymbols) {
+      keys = keys.concat(getOwnPropertySymbols(sourceComponent));
     }
 
     var targetStatics = getStatics(targetComponent);
@@ -4239,16 +2756,1499 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test' && 
   window['__styled-components-init__'] += 1;
 }
 
+function getThemeValue(name, props, values) {
+  var value = (
+    props.theme &&
+    props.theme[name]
+  );
+
+  var themeValue;
+
+  if (typeof value === 'function') {
+    themeValue = value(values);
+  } else {
+    themeValue = values[value];
+  }
+
+  if (typeof themeValue === 'function') {
+    return themeValue(props);
+  } else {
+    return themeValue;
+  }
+}
+
+function theme(name, values) {
+  return function(props) {
+    return getThemeValue(name, props, values);
+  };
+}
+
+theme.variants = function(name, prop, values) {
+  return function(props) {
+    var variant = props[prop] && values[props[prop]];
+    return variant && getThemeValue(name, props, variant);
+  };
+};
+
+var styledTheming = theme;
+
+// COLORS
+// ---------------------------------------------------------------------------------------------------------------------
+
+const WHITE = '#fff';
+const GALLERY = '#f0f0f0';
+const MERCURY = '#E5E5E5';
+const EMPEROR = '#535353';
+const DUNE = '#252321';
+const COD_GRAY = '#1C1917';
+const BLACK = '#000';
+const BLACK_3 = 'rgba(0, 0, 0, 0.03)';
+const BLACK_10 = 'rgba(0, 0, 0, 0.1)';
+const BLACK_30 = 'rgba(0, 0, 0, 0.3)';
+const YELLOW = '#ff0';
+const BLUE = '#00f';
+const LIMA = '#75d41d';
+const RED = '#f22';
+const BLUEVIOLET = 'blueviolet'; // #8A2BE2
+// ---------------------------------------------------------------------------------------------------------------------
+// Exports
+// ---------------------------------------------------------------------------------------------------------------------
+
+const themes = {
+  smooth: 'smooth',
+  hiContrast: 'hiContrast'
+};
+const modes = {
+  light: 'light',
+  dark: 'dark'
+};
+
+const tryToGetArr = (obj, path, def) => {
+  if (!path.length) {
+    return obj;
+  }
+
+  const newObj = obj[path[0]];
+  if (newObj === undefined) return def;
+  return tryToGetArr(newObj, path.slice(1), def);
+};
+
+const buildCustomProp = (group, prop, lightDefault, darkDefault) => styledTheming('mode', {
+  [modes.light]: ({
+    theme
+  }) => tryToGetArr(theme.customThemes, [theme.customTheme, group, prop, 'light'], lightDefault),
+  [modes.dark]: ({
+    theme
+  }) => tryToGetArr(theme.customThemes, [theme.customTheme, group, prop, 'dark'], darkDefault)
+});
+
+var ds = {
+  colors: {
+    // -----------------------------------------------------------------------------------------------------------------
+    // FG & BG
+    // -----------------------------------------------------------------------------------------------------------------
+    fg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'fg', EMPEROR, GALLERY)
+    }),
+    fgMuted: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_30,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: EMPEROR
+      }),
+      custom: buildCustomProp('colors', 'fgMuted', BLACK_30, EMPEROR)
+    }),
+    bg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: GALLERY,
+        [modes.dark]: COD_GRAY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: WHITE,
+        [modes.dark]: BLACK
+      }),
+      custom: buildCustomProp('colors', 'bg', GALLERY, COD_GRAY)
+    }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Border
+    // -----------------------------------------------------------------------------------------------------------------
+    border: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: MERCURY,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'border', MERCURY, EMPEROR)
+    }),
+    borderLight: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      custom: buildCustomProp('colors', 'borderLight', BLACK_3, DUNE)
+    }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Button
+    // -----------------------------------------------------------------------------------------------------------------
+    buttonFg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'buttonFg', EMPEROR, GALLERY)
+    }),
+    buttonFgDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_30,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: EMPEROR
+      }),
+      custom: buildCustomProp('colors', 'buttonFgDisabled', BLACK_30, EMPEROR)
+    }),
+    buttonBorderDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      custom: buildCustomProp('colors', 'buttonBorderDisabled', BLACK_3, DUNE)
+    }),
+    buttonBg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'buttonBg', 'transparent', 'transparent')
+    }),
+    buttonBgSelected: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: BLACK_30
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: GALLERY,
+        [modes.dark]: COD_GRAY
+      }),
+      custom: buildCustomProp('colors', 'buttonBgSelected', BLACK_3, BLACK_30)
+    }),
+    buttonBgDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'buttonBgDisabled', 'transparent', 'transparent')
+    }),
+    buttonBgHover: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'buttonBgHover', 'transparent', 'transparent')
+    }),
+    buttonBorder: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: MERCURY,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'buttonBorder', MERCURY, EMPEROR)
+    }),
+    buttonBorderHover: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'buttonBorderHover', EMPEROR, GALLERY)
+    }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Controls
+    // -----------------------------------------------------------------------------------------------------------------
+    controlBg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: BLACK_30
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: GALLERY,
+        [modes.dark]: COD_GRAY
+      }),
+      custom: buildCustomProp('colors', 'controlBg', BLACK_3, BLACK_30)
+    }),
+    inputBorder: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: MERCURY,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'inputBorder', MERCURY, EMPEROR)
+    }),
+    inputBorderActive: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'inputBorderActive', EMPEROR, GALLERY)
+    }),
+    inputBorderDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      custom: buildCustomProp('colors', 'inputBorderDisabled', BLACK_3, DUNE)
+    }),
+    inputBorderInvalid: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: RED,
+        [modes.dark]: RED
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: RED,
+        [modes.dark]: RED
+      }),
+      custom: buildCustomProp('colors', 'inputBorderInvalid', RED, RED)
+    }),
+    inputBg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'inputBg', 'transparent', 'transparent')
+    }),
+    inputBgFocus: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'inputBgFocus', 'transparent', 'transparent')
+    }),
+    inputBgDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'inputBgDisabled', 'transparent', 'transparent')
+    }),
+    inputBgHover: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'inputBgHover', 'transparent', 'transparent')
+    }),
+    inputFg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'inputFg', EMPEROR, GALLERY)
+    }),
+    inputFgDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_30,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: EMPEROR
+      }),
+      custom: buildCustomProp('colors', 'inputFgDisabled', BLACK_30, EMPEROR)
+    }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Card
+    // -----------------------------------------------------------------------------------------------------------------
+    card: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: WHITE,
+        [modes.dark]: DUNE
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: WHITE,
+        [modes.dark]: BLACK
+      }),
+      custom: buildCustomProp('colors', 'card', WHITE, DUNE)
+    }),
+    cardBorder: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: GALLERY,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: COD_GRAY,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'cardBorder', GALLERY, EMPEROR)
+    }),
+    cardBorderHover: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'cardBorderHover', EMPEROR, GALLERY)
+    }),
+    cardHeaderBorder: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: GALLERY,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: COD_GRAY,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'cardHeaderBorder', GALLERY, EMPEROR)
+    }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Shadow
+    // -----------------------------------------------------------------------------------------------------------------
+    shadow: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_10,
+        [modes.dark]: BLACK_10
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'none',
+        [modes.dark]: 'none'
+      }),
+      custom: buildCustomProp('colors', 'shadow', BLACK_10, BLACK_10)
+    }),
+    buttonShadow: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_10,
+        [modes.dark]: BLACK_10
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'none',
+        [modes.dark]: 'none'
+      }),
+      custom: buildCustomProp('colors', 'buttonShadow', BLACK_10, BLACK_10)
+    }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Link
+    // -----------------------------------------------------------------------------------------------------------------
+    link: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLUE,
+        [modes.dark]: YELLOW
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLUE,
+        [modes.dark]: YELLOW
+      }),
+      custom: buildCustomProp('colors', 'link', BLUE, YELLOW)
+    }),
+    linkVisited: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLUEVIOLET,
+        [modes.dark]: LIMA
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLUEVIOLET,
+        [modes.dark]: LIMA
+      }),
+      custom: buildCustomProp('colors', 'linkVisited', BLUEVIOLET, LIMA)
+    }),
+    // -----------------------------------------------------------------------------------------------------------------
+    // Table
+    // -----------------------------------------------------------------------------------------------------------------
+    tableStripe: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: BLACK_30
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: GALLERY,
+        [modes.dark]: COD_GRAY
+      }),
+      custom: buildCustomProp('colors', 'tableStripe', BLACK_3, BLACK_30)
+    }),
+    tableHoverBg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: MERCURY,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'tableHoverBg', MERCURY, EMPEROR)
+    }),
+    tableHoverFg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: WHITE,
+        [modes.dark]: BLACK
+      }),
+      custom: buildCustomProp('colors', 'tableHoverFg', EMPEROR, GALLERY)
+    })
+  },
+  // -------------------------------------------------------------------------------------------------------------------
+  // Fonts
+  // -------------------------------------------------------------------------------------------------------------------
+  fonts: {
+    body: styledTheming('theme', {
+      [themes.smooth]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+      [themes.hiContrast]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'fonts', 'body'], 'Arial')
+    }),
+    heading: styledTheming('theme', {
+      [themes.smooth]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+      [themes.hiContrast]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'fonts', 'heading'], 'Arial')
+    })
+  },
+  // -------------------------------------------------------------------------------------------------------------------
+  // Weights
+  // -------------------------------------------------------------------------------------------------------------------
+  weights: {
+    normal: styledTheming('theme', {
+      [themes.smooth]: '400',
+      [themes.hiContrast]: '400',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'normal'], '400')
+    }),
+    strong: styledTheming('theme', {
+      [themes.smooth]: '600',
+      [themes.hiContrast]: '600',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'strong'], '600')
+    }),
+    heading: styledTheming('theme', {
+      [themes.smooth]: '200',
+      [themes.hiContrast]: '200',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'heading'], '600')
+    }),
+    preheading: styledTheming('theme', {
+      [themes.smooth]: '600',
+      [themes.hiContrast]: '600',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'preheading'], '600')
+    }),
+    controlLabel: styledTheming('theme', {
+      [themes.smooth]: '400',
+      [themes.hiContrast]: '400',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'controlLabel'], '400')
+    })
+  },
+  // -------------------------------------------------------------------------------------------------------------------
+  // Measures
+  // -------------------------------------------------------------------------------------------------------------------
+  measures: {
+    radius: styledTheming('theme', {
+      [themes.smooth]: '0.5rem',
+      [themes.hiContrast]: '0.5rem',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'radius'], '0.5rem')
+    }),
+    inputRadius: styledTheming('theme', {
+      [themes.smooth]: '0.25rem',
+      [themes.hiContrast]: '0.25rem',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputRadius'], '0.5rem')
+    }),
+    buttonRadius: styledTheming('theme', {
+      [themes.smooth]: '0.25rem',
+      [themes.hiContrast]: '0.25rem',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'buttonRadius'], '0.25rem')
+    }),
+    font: styledTheming('theme', {
+      [themes.smooth]: '0.875rem',
+      [themes.hiContrast]: '0.875rem',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'font'], '1rem')
+    }),
+    inputFont: styledTheming('theme', {
+      [themes.smooth]: '0.875rem',
+      [themes.hiContrast]: '0.875rem',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputFont'], '1rem')
+    }),
+    unit: styledTheming('theme', {
+      [themes.smooth]: '16px',
+      [themes.hiContrast]: '16px',
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'unit'], '16px')
+    }),
+    spacer: styledTheming('theme', {
+      [themes.smooth]: 1,
+      [themes.hiContrast]: 1,
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'spacer'], 1)
+    }),
+    buttonSpacerH: styledTheming('theme', {
+      [themes.smooth]: 1,
+      [themes.hiContrast]: 1,
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'buttonSpacerH'], 1)
+    }),
+    inputSpacerH: styledTheming('theme', {
+      [themes.smooth]: 0.5,
+      [themes.hiContrast]: 0.5,
+      custom: ({
+        theme
+      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputSpacerH'], 0.5)
+    })
+  }
+};
+
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+/* eslint-disable no-unused-vars */
+var getOwnPropertySymbols$1 = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+var objectAssign = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols$1) {
+			symbols = getOwnPropertySymbols$1(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+var ReactPropTypesSecret_1 = ReactPropTypesSecret;
+
+var printWarning = function() {};
+
+if (process.env.NODE_ENV !== 'production') {
+  var ReactPropTypesSecret$1 = ReactPropTypesSecret_1;
+  var loggedTypeFailures = {};
+  var has = Function.call.bind(Object.prototype.hasOwnProperty);
+
+  printWarning = function(text) {
+    var message = 'Warning: ' + text;
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+}
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (process.env.NODE_ENV !== 'production') {
+    for (var typeSpecName in typeSpecs) {
+      if (has(typeSpecs, typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          if (typeof typeSpecs[typeSpecName] !== 'function') {
+            var err = Error(
+              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
+              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.'
+            );
+            err.name = 'Invariant Violation';
+            throw err;
+          }
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret$1);
+        } catch (ex) {
+          error = ex;
+        }
+        if (error && !(error instanceof Error)) {
+          printWarning(
+            (componentName || 'React class') + ': type specification of ' +
+            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
+            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
+            'You may have forgotten to pass an argument to the type checker ' +
+            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
+            'shape all require an argument).'
+          );
+        }
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          printWarning(
+            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
+          );
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Resets warning cache when testing.
+ *
+ * @private
+ */
+checkPropTypes.resetWarningCache = function() {
+  if (process.env.NODE_ENV !== 'production') {
+    loggedTypeFailures = {};
+  }
+};
+
+var checkPropTypes_1 = checkPropTypes;
+
+var has$1 = Function.call.bind(Object.prototype.hasOwnProperty);
+var printWarning$1 = function() {};
+
+if (process.env.NODE_ENV !== 'production') {
+  printWarning$1 = function(text) {
+    var message = 'Warning: ' + text;
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+}
+
+function emptyFunctionThatReturnsNull() {
+  return null;
+}
+
+var factoryWithTypeCheckers = function(isValidElement, throwOnDirectAccess) {
+  /* global Symbol */
+  var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
+  var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
+
+  /**
+   * Returns the iterator method function contained on the iterable object.
+   *
+   * Be sure to invoke the function with the iterable as context:
+   *
+   *     var iteratorFn = getIteratorFn(myIterable);
+   *     if (iteratorFn) {
+   *       var iterator = iteratorFn.call(myIterable);
+   *       ...
+   *     }
+   *
+   * @param {?object} maybeIterable
+   * @return {?function}
+   */
+  function getIteratorFn(maybeIterable) {
+    var iteratorFn = maybeIterable && (ITERATOR_SYMBOL && maybeIterable[ITERATOR_SYMBOL] || maybeIterable[FAUX_ITERATOR_SYMBOL]);
+    if (typeof iteratorFn === 'function') {
+      return iteratorFn;
+    }
+  }
+
+  /**
+   * Collection of methods that allow declaration and validation of props that are
+   * supplied to React components. Example usage:
+   *
+   *   var Props = require('ReactPropTypes');
+   *   var MyArticle = React.createClass({
+   *     propTypes: {
+   *       // An optional string prop named "description".
+   *       description: Props.string,
+   *
+   *       // A required enum prop named "category".
+   *       category: Props.oneOf(['News','Photos']).isRequired,
+   *
+   *       // A prop named "dialog" that requires an instance of Dialog.
+   *       dialog: Props.instanceOf(Dialog).isRequired
+   *     },
+   *     render: function() { ... }
+   *   });
+   *
+   * A more formal specification of how these methods are used:
+   *
+   *   type := array|bool|func|object|number|string|oneOf([...])|instanceOf(...)
+   *   decl := ReactPropTypes.{type}(.isRequired)?
+   *
+   * Each and every declaration produces a function with the same signature. This
+   * allows the creation of custom validation functions. For example:
+   *
+   *  var MyLink = React.createClass({
+   *    propTypes: {
+   *      // An optional string or URI prop named "href".
+   *      href: function(props, propName, componentName) {
+   *        var propValue = props[propName];
+   *        if (propValue != null && typeof propValue !== 'string' &&
+   *            !(propValue instanceof URI)) {
+   *          return new Error(
+   *            'Expected a string or an URI for ' + propName + ' in ' +
+   *            componentName
+   *          );
+   *        }
+   *      }
+   *    },
+   *    render: function() {...}
+   *  });
+   *
+   * @internal
+   */
+
+  var ANONYMOUS = '<<anonymous>>';
+
+  // Important!
+  // Keep this list in sync with production version in `./factoryWithThrowingShims.js`.
+  var ReactPropTypes = {
+    array: createPrimitiveTypeChecker('array'),
+    bool: createPrimitiveTypeChecker('boolean'),
+    func: createPrimitiveTypeChecker('function'),
+    number: createPrimitiveTypeChecker('number'),
+    object: createPrimitiveTypeChecker('object'),
+    string: createPrimitiveTypeChecker('string'),
+    symbol: createPrimitiveTypeChecker('symbol'),
+
+    any: createAnyTypeChecker(),
+    arrayOf: createArrayOfTypeChecker,
+    element: createElementTypeChecker(),
+    elementType: createElementTypeTypeChecker(),
+    instanceOf: createInstanceTypeChecker,
+    node: createNodeChecker(),
+    objectOf: createObjectOfTypeChecker,
+    oneOf: createEnumTypeChecker,
+    oneOfType: createUnionTypeChecker,
+    shape: createShapeTypeChecker,
+    exact: createStrictShapeTypeChecker,
+  };
+
+  /**
+   * inlined Object.is polyfill to avoid requiring consumers ship their own
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+   */
+  /*eslint-disable no-self-compare*/
+  function is(x, y) {
+    // SameValue algorithm
+    if (x === y) {
+      // Steps 1-5, 7-10
+      // Steps 6.b-6.e: +0 != -0
+      return x !== 0 || 1 / x === 1 / y;
+    } else {
+      // Step 6.a: NaN == NaN
+      return x !== x && y !== y;
+    }
+  }
+  /*eslint-enable no-self-compare*/
+
+  /**
+   * We use an Error-like object for backward compatibility as people may call
+   * PropTypes directly and inspect their output. However, we don't use real
+   * Errors anymore. We don't inspect their stack anyway, and creating them
+   * is prohibitively expensive if they are created too often, such as what
+   * happens in oneOfType() for any type before the one that matched.
+   */
+  function PropTypeError(message) {
+    this.message = message;
+    this.stack = '';
+  }
+  // Make `instanceof Error` still work for returned errors.
+  PropTypeError.prototype = Error.prototype;
+
+  function createChainableTypeChecker(validate) {
+    if (process.env.NODE_ENV !== 'production') {
+      var manualPropTypeCallCache = {};
+      var manualPropTypeWarningCount = 0;
+    }
+    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+      componentName = componentName || ANONYMOUS;
+      propFullName = propFullName || propName;
+
+      if (secret !== ReactPropTypesSecret_1) {
+        if (throwOnDirectAccess) {
+          // New behavior only for users of `prop-types` package
+          var err = new Error(
+            'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+            'Use `PropTypes.checkPropTypes()` to call them. ' +
+            'Read more at http://fb.me/use-check-prop-types'
+          );
+          err.name = 'Invariant Violation';
+          throw err;
+        } else if (process.env.NODE_ENV !== 'production' && typeof console !== 'undefined') {
+          // Old behavior for people using React.PropTypes
+          var cacheKey = componentName + ':' + propName;
+          if (
+            !manualPropTypeCallCache[cacheKey] &&
+            // Avoid spamming the console because they are often not actionable except for lib authors
+            manualPropTypeWarningCount < 3
+          ) {
+            printWarning$1(
+              'You are manually calling a React.PropTypes validation ' +
+              'function for the `' + propFullName + '` prop on `' + componentName  + '`. This is deprecated ' +
+              'and will throw in the standalone `prop-types` package. ' +
+              'You may be seeing this warning due to a third-party PropTypes ' +
+              'library. See https://fb.me/react-warning-dont-call-proptypes ' + 'for details.'
+            );
+            manualPropTypeCallCache[cacheKey] = true;
+            manualPropTypeWarningCount++;
+          }
+        }
+      }
+      if (props[propName] == null) {
+        if (isRequired) {
+          if (props[propName] === null) {
+            return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required ' + ('in `' + componentName + '`, but its value is `null`.'));
+          }
+          return new PropTypeError('The ' + location + ' `' + propFullName + '` is marked as required in ' + ('`' + componentName + '`, but its value is `undefined`.'));
+        }
+        return null;
+      } else {
+        return validate(props, propName, componentName, location, propFullName);
+      }
+    }
+
+    var chainedCheckType = checkType.bind(null, false);
+    chainedCheckType.isRequired = checkType.bind(null, true);
+
+    return chainedCheckType;
+  }
+
+  function createPrimitiveTypeChecker(expectedType) {
+    function validate(props, propName, componentName, location, propFullName, secret) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== expectedType) {
+        // `propValue` being instance of, say, date/regexp, pass the 'object'
+        // check, but we can offer a more precise error message here rather than
+        // 'of type `object`'.
+        var preciseType = getPreciseType(propValue);
+
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + preciseType + '` supplied to `' + componentName + '`, expected ') + ('`' + expectedType + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createAnyTypeChecker() {
+    return createChainableTypeChecker(emptyFunctionThatReturnsNull);
+  }
+
+  function createArrayOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside arrayOf.');
+      }
+      var propValue = props[propName];
+      if (!Array.isArray(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an array.'));
+      }
+      for (var i = 0; i < propValue.length; i++) {
+        var error = typeChecker(propValue, i, componentName, location, propFullName + '[' + i + ']', ReactPropTypesSecret_1);
+        if (error instanceof Error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createElementTypeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      if (!isValidElement(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createElementTypeTypeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      if (!reactIs.isValidElementType(propValue)) {
+        var propType = getPropType(propValue);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement type.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createInstanceTypeChecker(expectedClass) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!(props[propName] instanceof expectedClass)) {
+        var expectedClassName = expectedClass.name || ANONYMOUS;
+        var actualClassName = getClassName(props[propName]);
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + actualClassName + '` supplied to `' + componentName + '`, expected ') + ('instance of `' + expectedClassName + '`.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createEnumTypeChecker(expectedValues) {
+    if (!Array.isArray(expectedValues)) {
+      if (process.env.NODE_ENV !== 'production') {
+        if (arguments.length > 1) {
+          printWarning$1(
+            'Invalid arguments supplied to oneOf, expected an array, got ' + arguments.length + ' arguments. ' +
+            'A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z]).'
+          );
+        } else {
+          printWarning$1('Invalid argument supplied to oneOf, expected an array.');
+        }
+      }
+      return emptyFunctionThatReturnsNull;
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      for (var i = 0; i < expectedValues.length; i++) {
+        if (is(propValue, expectedValues[i])) {
+          return null;
+        }
+      }
+
+      var valuesString = JSON.stringify(expectedValues, function replacer(key, value) {
+        var type = getPreciseType(value);
+        if (type === 'symbol') {
+          return String(value);
+        }
+        return value;
+      });
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + String(propValue) + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createObjectOfTypeChecker(typeChecker) {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (typeof typeChecker !== 'function') {
+        return new PropTypeError('Property `' + propFullName + '` of component `' + componentName + '` has invalid PropType notation inside objectOf.');
+      }
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
+      }
+      for (var key in propValue) {
+        if (has$1(propValue, key)) {
+          var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret_1);
+          if (error instanceof Error) {
+            return error;
+          }
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createUnionTypeChecker(arrayOfTypeCheckers) {
+    if (!Array.isArray(arrayOfTypeCheckers)) {
+      process.env.NODE_ENV !== 'production' ? printWarning$1('Invalid argument supplied to oneOfType, expected an instance of array.') : void 0;
+      return emptyFunctionThatReturnsNull;
+    }
+
+    for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+      var checker = arrayOfTypeCheckers[i];
+      if (typeof checker !== 'function') {
+        printWarning$1(
+          'Invalid argument supplied to oneOfType. Expected an array of check functions, but ' +
+          'received ' + getPostfixForTypeWarning(checker) + ' at index ' + i + '.'
+        );
+        return emptyFunctionThatReturnsNull;
+      }
+    }
+
+    function validate(props, propName, componentName, location, propFullName) {
+      for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
+        var checker = arrayOfTypeCheckers[i];
+        if (checker(props, propName, componentName, location, propFullName, ReactPropTypesSecret_1) == null) {
+          return null;
+        }
+      }
+
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`.'));
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createNodeChecker() {
+    function validate(props, propName, componentName, location, propFullName) {
+      if (!isNode(props[propName])) {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` supplied to ' + ('`' + componentName + '`, expected a ReactNode.'));
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      for (var key in shapeTypes) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          continue;
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret_1);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+    return createChainableTypeChecker(validate);
+  }
+
+  function createStrictShapeTypeChecker(shapeTypes) {
+    function validate(props, propName, componentName, location, propFullName) {
+      var propValue = props[propName];
+      var propType = getPropType(propValue);
+      if (propType !== 'object') {
+        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type `' + propType + '` ' + ('supplied to `' + componentName + '`, expected `object`.'));
+      }
+      // We need to check all keys in case some are required but missing from
+      // props.
+      var allKeys = objectAssign({}, props[propName], shapeTypes);
+      for (var key in allKeys) {
+        var checker = shapeTypes[key];
+        if (!checker) {
+          return new PropTypeError(
+            'Invalid ' + location + ' `' + propFullName + '` key `' + key + '` supplied to `' + componentName + '`.' +
+            '\nBad object: ' + JSON.stringify(props[propName], null, '  ') +
+            '\nValid keys: ' +  JSON.stringify(Object.keys(shapeTypes), null, '  ')
+          );
+        }
+        var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret_1);
+        if (error) {
+          return error;
+        }
+      }
+      return null;
+    }
+
+    return createChainableTypeChecker(validate);
+  }
+
+  function isNode(propValue) {
+    switch (typeof propValue) {
+      case 'number':
+      case 'string':
+      case 'undefined':
+        return true;
+      case 'boolean':
+        return !propValue;
+      case 'object':
+        if (Array.isArray(propValue)) {
+          return propValue.every(isNode);
+        }
+        if (propValue === null || isValidElement(propValue)) {
+          return true;
+        }
+
+        var iteratorFn = getIteratorFn(propValue);
+        if (iteratorFn) {
+          var iterator = iteratorFn.call(propValue);
+          var step;
+          if (iteratorFn !== propValue.entries) {
+            while (!(step = iterator.next()).done) {
+              if (!isNode(step.value)) {
+                return false;
+              }
+            }
+          } else {
+            // Iterator will provide entry [k,v] tuples rather than values.
+            while (!(step = iterator.next()).done) {
+              var entry = step.value;
+              if (entry) {
+                if (!isNode(entry[1])) {
+                  return false;
+                }
+              }
+            }
+          }
+        } else {
+          return false;
+        }
+
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  function isSymbol(propType, propValue) {
+    // Native Symbol.
+    if (propType === 'symbol') {
+      return true;
+    }
+
+    // falsy value can't be a Symbol
+    if (!propValue) {
+      return false;
+    }
+
+    // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
+    if (propValue['@@toStringTag'] === 'Symbol') {
+      return true;
+    }
+
+    // Fallback for non-spec compliant Symbols which are polyfilled.
+    if (typeof Symbol === 'function' && propValue instanceof Symbol) {
+      return true;
+    }
+
+    return false;
+  }
+
+  // Equivalent of `typeof` but with special handling for array and regexp.
+  function getPropType(propValue) {
+    var propType = typeof propValue;
+    if (Array.isArray(propValue)) {
+      return 'array';
+    }
+    if (propValue instanceof RegExp) {
+      // Old webkits (at least until Android 4.0) return 'function' rather than
+      // 'object' for typeof a RegExp. We'll normalize this here so that /bla/
+      // passes PropTypes.object.
+      return 'object';
+    }
+    if (isSymbol(propType, propValue)) {
+      return 'symbol';
+    }
+    return propType;
+  }
+
+  // This handles more types than `getPropType`. Only used for error messages.
+  // See `createPrimitiveTypeChecker`.
+  function getPreciseType(propValue) {
+    if (typeof propValue === 'undefined' || propValue === null) {
+      return '' + propValue;
+    }
+    var propType = getPropType(propValue);
+    if (propType === 'object') {
+      if (propValue instanceof Date) {
+        return 'date';
+      } else if (propValue instanceof RegExp) {
+        return 'regexp';
+      }
+    }
+    return propType;
+  }
+
+  // Returns a string that is postfixed to a warning about an invalid type.
+  // For example, "undefined" or "of type array"
+  function getPostfixForTypeWarning(value) {
+    var type = getPreciseType(value);
+    switch (type) {
+      case 'array':
+      case 'object':
+        return 'an ' + type;
+      case 'boolean':
+      case 'date':
+      case 'regexp':
+        return 'a ' + type;
+      default:
+        return type;
+    }
+  }
+
+  // Returns class name of the object, if any.
+  function getClassName(propValue) {
+    if (!propValue.constructor || !propValue.constructor.name) {
+      return ANONYMOUS;
+    }
+    return propValue.constructor.name;
+  }
+
+  ReactPropTypes.checkPropTypes = checkPropTypes_1;
+  ReactPropTypes.resetWarningCache = checkPropTypes_1.resetWarningCache;
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+function emptyFunction() {}
+function emptyFunctionWithReset() {}
+emptyFunctionWithReset.resetWarningCache = emptyFunction;
+
+var factoryWithThrowingShims = function() {
+  function shim(props, propName, componentName, location, propFullName, secret) {
+    if (secret === ReactPropTypesSecret_1) {
+      // It is still safe when called from React.
+      return;
+    }
+    var err = new Error(
+      'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
+      'Use PropTypes.checkPropTypes() to call them. ' +
+      'Read more at http://fb.me/use-check-prop-types'
+    );
+    err.name = 'Invariant Violation';
+    throw err;
+  }  shim.isRequired = shim;
+  function getShim() {
+    return shim;
+  }  // Important!
+  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
+  var ReactPropTypes = {
+    array: shim,
+    bool: shim,
+    func: shim,
+    number: shim,
+    object: shim,
+    string: shim,
+    symbol: shim,
+
+    any: shim,
+    arrayOf: getShim,
+    element: shim,
+    elementType: shim,
+    instanceOf: getShim,
+    node: shim,
+    objectOf: getShim,
+    oneOf: getShim,
+    oneOfType: getShim,
+    shape: getShim,
+    exact: getShim,
+
+    checkPropTypes: emptyFunctionWithReset,
+    resetWarningCache: emptyFunction
+  };
+
+  ReactPropTypes.PropTypes = ReactPropTypes;
+
+  return ReactPropTypes;
+};
+
+var propTypes = createCommonjsModule(function (module) {
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (process.env.NODE_ENV !== 'production') {
+  var ReactIs = reactIs;
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = factoryWithTypeCheckers(ReactIs.isElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = factoryWithThrowingShims();
+}
+});
+
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 // StyledCard height property is called h so that it doesn’t appear in the resulting DOM node.
 
 const StyledCard = styled.div`
-  background-color: ${designSystem.colors.card};
+  background-color: ${ds.colors.card};
   box-sizing: border-box;
-  box-shadow: 0 0 1rem ${designSystem.colors.shadow};
-  border: 1px solid ${designSystem.colors.cardBorder};
-  border-radius: ${designSystem.measures.radius};
+  box-shadow: 0 0 1rem ${ds.colors.shadow};
+  border: 1px solid ${ds.colors.cardBorder};
+  border-radius: ${ds.measures.radius};
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -4256,7 +4256,7 @@ const StyledCard = styled.div`
   transition-property: 'border-color';
   transition-duration: .1s;
 
-  ${props => props.color && `border-${props.colorBorderPosition}: ${designSystem.measures.radius(props)} solid ${props.color} !important;`}
+  ${props => props.color && `border-${props.colorBorderPosition}: ${ds.measures.radius(props)} solid ${props.color} !important;`}
 
   height: ${props => props.h === 'full' ? '100%' : typeof props.h === 'number' ? `${props.h}rem` : 'auto'};
   min-width: ${props => props.size === 'small' ? '32rem' : 'auto'};
@@ -4269,8 +4269,8 @@ const StyledCard = styled.div`
   ${props => props.margin && (props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`)}
 
   & & {
-    background-color: ${designSystem.colors.card};
-    border: 1px solid ${designSystem.colors.border};
+    background-color: ${ds.colors.card};
+    border: 1px solid ${ds.colors.border};
     box-shadow: none;
   }
 
@@ -4282,11 +4282,11 @@ const StyledCard = styled.div`
     min-width: -webkit-fill-available;
   }
 
-  ${props => props.hoverable === true ? `&:hover { border-color: ${designSystem.colors.cardBorderHover(props)}; }` : ''}
+  ${props => props.hoverable === true ? `&:hover { border-color: ${ds.colors.cardBorderHover(props)}; }` : ''}
 `;
 const StyledCardHeader = styled.header`
   align-items: center;
-  border-bottom: 1px solid ${designSystem.colors.cardHeaderBorder};
+  border-bottom: 1px solid ${ds.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: wrap;
   padding: 0.25rem;
@@ -4310,7 +4310,7 @@ const StyledCardBody = styled.main`
 `;
 const StyledCardFooter = styled.footer`
   align-items: center;
-  border-top: 1px solid ${designSystem.colors.cardHeaderBorder};
+  border-top: 1px solid ${ds.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -4415,7 +4415,7 @@ const StyledPane = styled.div`
   height: ${props => props.h === 'half' ? '50%' : typeof props.h === 'number' ? `${props.h}rem` : '100%'};
   flex-shrink: 0;
   padding: ${props => props.noPadding ? '0' : '1rem'};
-  outline: 1px dashed ${designSystem.colors.borderLight};
+  outline: 1px dashed ${ds.colors.borderLight};
   overflow: scroll;
   max-width: 100%;
   width: ${props => props.size === 'full' ? '100%' : props.size === 'small' ? '16rem' : props.size === 'full-minus-small' ? 'calc(100vw - 16rem)' : props.size === 'golden-width' ? `${100 / GOLDEN_RATIO}%` : props.size === 'golden-width-rest' ? `${100 - 100 / GOLDEN_RATIO}%` : props.size === 'half' ? '50%' : props.size === 'third' ? '33.3%' : props.size === 'fourth' ? '25%' // default:
@@ -4500,9 +4500,9 @@ Pane.defaultProps = {
   height: 'full'
 };
 
-const headingStyles = css(["font-family:", ";font-weight:", ";"], designSystem.fonts.heading, designSystem.weights.heading);
-const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:", ";"], designSystem.colors.fgMuted, 1 / 12, designSystem.weights.preheading);
-const labelStyles = css(["line-height:calc(", "rem * 2);height:calc(", "rem * 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], designSystem.measures.spacer, designSystem.measures.spacer, designSystem.measures.spacer, designSystem.measures.spacer, designSystem.measures.spacer);
+const headingStyles = css(["font-family:", ";font-weight:", ";"], ds.fonts.heading, ds.weights.heading);
+const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:", ";"], ds.colors.fgMuted, 1 / 12, ds.weights.preheading);
+const labelStyles = css(["line-height:calc(", "rem * 2);height:calc(", "rem * 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.measures.spacer, ds.measures.spacer, ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
 
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4544,12 +4544,12 @@ const StyledTable = styled.table`
   table-layout: fixed;
 
   thead, tfoot {
-    background-color: ${designSystem.colors.tableStripe};
-    color: ${designSystem.colors.fg};
+    background-color: ${ds.colors.tableStripe};
+    color: ${ds.colors.fg};
   }
 
   th, td {
-    border: 1px solid ${designSystem.colors.border};
+    border: 1px solid ${ds.colors.border};
     padding: 0.5em;
     word-wrap: break-word;
   }
@@ -4560,12 +4560,12 @@ const StyledTable = styled.table`
   }
 
   tr:nth-child(2n) {
-    background-color: ${designSystem.colors.tableStripe};
+    background-color: ${ds.colors.tableStripe};
   }
 
   ${props => props.hoverable === true && `tbody tr:hover {
-    background-color: ${designSystem.colors.tableHoverBg(props)};
-    color: ${designSystem.colors.tableHoverFg(props)}
+    background-color: ${ds.colors.tableHoverBg(props)};
+    color: ${ds.colors.tableHoverFg(props)}
   }`}
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Component
@@ -4655,8 +4655,8 @@ const StyledLayout = styled.div`
   height: 100%;
 `;
 const StyledHeader = styled.header`
-  background-color: ${designSystem.colors.card};
-  border-bottom: 1px solid ${designSystem.colors.border};
+  background-color: ${ds.colors.card};
+  border-bottom: 1px solid ${ds.colors.border};
   box-sizing: border-box;
   align-items: center;
   padding: 0.25rem;
@@ -4664,11 +4664,11 @@ const StyledHeader = styled.header`
   flex-wrap: wrap;
 `;
 const StyledMain = styled(Container)`
-  background-color: ${designSystem.colors.bg};
+  background-color: ${ds.colors.bg};
 `;
 const StyledFooter = styled.header`
-  background-color: ${designSystem.colors.card};
-  border-top: 1px solid ${designSystem.colors.border};
+  background-color: ${ds.colors.card};
+  border-top: 1px solid ${ds.colors.border};
   box-sizing: border-box;
   align-items: center;
   padding: 0.25rem;
@@ -4691,7 +4691,7 @@ const Layout = ({
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
-  return /*#__PURE__*/React.createElement(StyledLayout, null, (headerSlot || brand) && /*#__PURE__*/React.createElement(StyledHeader, null, /*#__PURE__*/React.createElement(Label, {
+  return /*#__PURE__*/React.createElement(StyledLayout, null, (headerSlot || brand || menu || menuB) && /*#__PURE__*/React.createElement(StyledHeader, null, /*#__PURE__*/React.createElement(Label, {
     heading: true
   }, headerSlot || brand), menu, menuB && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -4727,12 +4727,12 @@ Layout.defaultProps = {};
 // ---------------------------------------------------------------------------------------------------------------------
 
 const StyledControl = styled.div`
-  border-radius: ${designSystem.measures.inputRadius};
+  border-radius: ${ds.measures.inputRadius};
   display: flex;
-  margin: 0 calc(${designSystem.measures.spacer}rem / 4);
-  background-color: ${props => props.withLabel ? designSystem.colors.controlBg : 'transparent'};
+  margin: 0 calc(${ds.measures.spacer}rem / 4);
+  background-color: ${props => props.withLabel ? ds.colors.controlBg : 'transparent'};
   position: relative;
-  padding: calc(${designSystem.measures.spacer}rem / 4) calc(${designSystem.measures.spacer}rem / 4);
+  padding: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
 
   &:first-child {
     margin-left: 0;
@@ -4742,9 +4742,9 @@ const StyledControl = styled.div`
   }
 
   & > ${Label} {
-    padding-left: calc(${designSystem.measures.spacer}rem / 2);
-    padding-right: calc(${designSystem.measures.spacer}rem / 4);
-    font-weight: ${designSystem.weights.controlLabel};
+    padding-left: calc(${ds.measures.spacer}rem / 2);
+    padding-right: calc(${ds.measures.spacer}rem / 4);
+    font-weight: ${ds.weights.controlLabel};
     margin-top: 0;
     margin-bottom: 0;
     margin-left: 0;
@@ -4767,18 +4767,18 @@ const StyledControl = styled.div`
 
   &.invalid > input,
   &.invalid > select {
-    border-color: ${designSystem.colors.inputBorderInvalid};
+    border-color: ${ds.colors.inputBorderInvalid};
     &:hover,
     &:focus,
     &:active,
     &.active {
-      border-color: ${designSystem.colors.inputBorderActive};
+      border-color: ${ds.colors.inputBorderActive};
     }
   }
 
   &.disabled {
     ${Label} {
-      color: ${designSystem.colors.inputFgDisabled};
+      color: ${ds.colors.inputFgDisabled};
     }
   }
 `; // ---------------------------------------------------------------------------------------------------------------------
@@ -4873,7 +4873,7 @@ styleInject(css_248z);
 const NitramUIContext = /*#__PURE__*/React.createContext({
   mode: modes.light,
   setMode: () => {},
-  theme: themes.light,
+  theme: themes.smooth,
   setTheme: () => {}
 });
 
@@ -4883,15 +4883,15 @@ html, body {
 }
 
 html {
-  font-size: ${designSystem.measures.unit};
+  font-size: ${ds.measures.unit};
 }
 
 body {
-  color: ${designSystem.colors.fg};
-  background-color: ${designSystem.colors.bg};
-  font-family: ${designSystem.fonts.body};
-  font-size: ${designSystem.measures.font};
-  font-weight: ${designSystem.weights.normal};
+  color: ${ds.colors.fg};
+  background-color: ${ds.colors.bg};
+  font-family: ${ds.fonts.body};
+  font-size: ${ds.measures.font};
+  font-weight: ${ds.weights.normal};
 }
 
 h1,
@@ -4912,7 +4912,7 @@ p {
 }
 
 strong {
-  font-weight: ${designSystem.weights.strong};
+  font-weight: ${ds.weights.strong};
 }
 
 input,
@@ -4927,16 +4927,16 @@ pre {
   overflow-x: scroll;
   overflow-y: auto;
   padding: 0.5em;
-  background-color: ${designSystem.colors.tableStripe};
+  background-color: ${ds.colors.tableStripe};
   &::-webkit-scrollbar {
     width: 0.5rem;
     height: 0.5rem;
-    background-color: ${designSystem.colors.bg};
-    border-radius: ${designSystem.measures.radius};
+    background-color: ${ds.colors.bg};
+    border-radius: ${ds.measures.radius};
   }
   &::-webkit-scrollbar-thumb {
-    background-color: ${designSystem.colors.fgMuted};
-    border-radius: ${designSystem.measures.radius};
+    background-color: ${ds.colors.fgMuted};
+    border-radius: ${ds.measures.radius};
   }
 }
 
@@ -4960,10 +4960,10 @@ p {
 
 a {
   text-decoration: none;
-  color: ${designSystem.colors.link};
+  color: ${ds.colors.link};
 
   &:visited {
-    color: ${designSystem.colors.linkVisited};
+    color: ${ds.colors.linkVisited};
   }
 
   &:hover,
@@ -4974,12 +4974,12 @@ a {
 
 button {
   ${labelStyles}
-  padding: 0 ${designSystem.measures.buttonSpacerH}rem;
-  font-size: ${designSystem.measures.inputFont};
-  border: 1px solid ${designSystem.colors.buttonBorder};
-  background-color: ${designSystem.colors.buttonBg};
-  color: ${designSystem.colors.buttonFg};
-  border-radius: ${designSystem.measures.buttonRadius};
+  padding: 0 ${ds.measures.buttonSpacerH}rem;
+  font-size: ${ds.measures.inputFont};
+  border: 1px solid ${ds.colors.buttonBorder};
+  background-color: ${ds.colors.buttonBg};
+  color: ${ds.colors.buttonFg};
+  border-radius: ${ds.measures.buttonRadius};
   box-sizing: border-box;
   cursor: pointer;
   transform: perspective(100rem);
@@ -4988,69 +4988,69 @@ button {
   &:focus,
   &:active,
   &.active {
-    border-color: ${designSystem.colors.buttonBorderHover};
-    background-color: ${designSystem.colors.buttonBgHover};
+    border-color: ${ds.colors.buttonBorderHover};
+    background-color: ${ds.colors.buttonBgHover};
     outline: none;
   }
 
   &:active,
   &.active {
     transform: perspective(100rem) translateZ(-2rem);
-    box-shadow: inset 0 0 .25rem 2px ${designSystem.colors.shadow};
+    box-shadow: inset 0 0 .25rem 2px ${ds.colors.shadow};
   }
 
   &:disabled {
-    color: ${designSystem.colors.buttonFgDisabled};
-    border-color: ${designSystem.colors.buttonBorderDisabled};
-    background-color: ${designSystem.colors.buttonBgDisabled};
+    color: ${ds.colors.buttonFgDisabled};
+    border-color: ${ds.colors.buttonBorderDisabled};
+    background-color: ${ds.colors.buttonBgDisabled};
     cursor: default;
 
     &:hover,
     &:focus {
-      border-color: ${designSystem.colors.buttonBorderDisabled};
+      border-color: ${ds.colors.buttonBorderDisabled};
     }
   }
 
   &.selected {
-    background-color: ${designSystem.colors.buttonBgSelected};
+    background-color: ${ds.colors.buttonBgSelected};
     transform: perspective(100rem) translateZ(-2rem);
-    box-shadow: inset 0 0 .25rem 0 ${designSystem.colors.buttonShadow};
+    box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
   }
 }
 
 input,
 select {
   ${labelStyles}
-  padding: 0 ${designSystem.measures.inputSpacerH}rem;
-  font-size: ${designSystem.measures.inputFont};
-  border: 1px solid ${designSystem.colors.inputBorder};
-  background-color: ${designSystem.colors.inputBg};
-  color: ${designSystem.colors.inputFg};
-  border-radius: ${designSystem.measures.inputRadius};
+  padding: 0 ${ds.measures.inputSpacerH}rem;
+  font-size: ${ds.measures.inputFont};
+  border: 1px solid ${ds.colors.inputBorder};
+  background-color: ${ds.colors.inputBg};
+  color: ${ds.colors.inputFg};
+  border-radius: ${ds.measures.inputRadius};
   box-sizing: border-box;
 
   &:hover {
-    border-color: ${designSystem.colors.inputBorderActive};
-    background-color: ${designSystem.colors.inputBgHover};
+    border-color: ${ds.colors.inputBorderActive};
+    background-color: ${ds.colors.inputBgHover};
     outline: none;
   }
   &:focus,
   &:active,
   &.active {
-    border-color: ${designSystem.colors.inputBorderActive};
-    background-color: ${designSystem.colors.inputBgFocus};
+    border-color: ${ds.colors.inputBorderActive};
+    background-color: ${ds.colors.inputBgFocus};
     outline: none;
   }
 
   &:disabled {
-    color: ${designSystem.colors.inputFgDisabled};
-    border-color: ${designSystem.colors.inputBorderDisabled};
-    background-color: ${designSystem.colors.inputBgDisabled};
+    color: ${ds.colors.inputFgDisabled};
+    border-color: ${ds.colors.inputBorderDisabled};
+    background-color: ${ds.colors.inputBgDisabled};
     cursor: default;
 
     &:hover,
     &:focus {
-      border-color: ${designSystem.colors.inputBorderDisabled};
+      border-color: ${ds.colors.inputBorderDisabled};
     }
   }
 }
@@ -5167,7 +5167,14 @@ const NitramUI = ({
       setMode,
       theme,
       setTheme,
-      themes: availableThemesObjects
+      themes: availableThemesObjects,
+      ds,
+      getDSProp: x => typeof x === 'function' && x({
+        theme: {
+          theme,
+          mode
+        }
+      })
     }
   }, /*#__PURE__*/React.createElement(ThemeProvider, {
     theme: {
@@ -5189,5 +5196,5 @@ NitramUI.propTypes = {
 };
 NitramUI.defaultProps = {};
 
-export { Card, Container, Control, Label, Layout, NitramUI, NitramUIContext, Pane, Table, designSystem as ds, modes, themes };
+export { Card, Container, Control, Label, Layout, NitramUI, NitramUIContext, Pane, Table, css, ds, modes, styled, themes };
 //# sourceMappingURL=nitramui.es.js.map
