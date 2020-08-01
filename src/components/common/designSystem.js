@@ -51,7 +51,7 @@ const buildCustomProp = (group, prop, lightDefault, darkDefault) => theme('mode'
   [modes.dark]: ({ theme }) => tryToGetArr(theme.customThemes, [theme.customTheme, group, prop, 'dark'], darkDefault)
 })
 
-const designSystem = {
+export default {
   colors: {
     // -----------------------------------------------------------------------------------------------------------------
     // FG & BG
@@ -652,5 +652,3 @@ const designSystem = {
     })
   }
 }
-
-export default designSystem
