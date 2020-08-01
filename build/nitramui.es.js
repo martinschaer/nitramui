@@ -4294,7 +4294,6 @@ const StyledCardHeader = styled.header`
 const StyledCardBody = styled.main`
   padding: ${props => props.noPadding ? '0' : props.compact ? '1rem' : '2rem'};
   overflow: scroll;
-  min-height: 100%;
 
   & > *:first-child {
     margin-top: 0;
