@@ -51,7 +51,7 @@ const Layout = ({ brand, children, headerSlot, footerSlot, menu, menuB, footerMe
   // -------------------------------------------------------------------------------------------------------------------
   return (
     <StyledLayout>
-      {(headerSlot || brand) && (
+      {(headerSlot || brand || menu || menuB) && (
         <StyledHeader>
           <Label heading>{headerSlot || brand}</Label>
           {menu}
