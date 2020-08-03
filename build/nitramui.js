@@ -4300,7 +4300,7 @@ const StyledCardHeader = styled.header`
 `;
 const StyledCardBody = styled.main`
   padding: ${props => props.noPadding ? '0' : props.compact ? '1rem' : '2rem'};
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
 
   & > *:first-child {
@@ -4423,7 +4423,7 @@ const StyledPane = styled.div`
   flex-shrink: 0;
   padding: ${props => props.noPadding ? '0' : '1rem'};
   outline: 1px dashed ${ds.colors.borderLight};
-  overflow: scroll;
+  overflow: auto;
   max-width: 100%;
   width: ${props => props.size === 'full' ? '100%' : props.size === 'small' ? '16rem' : props.size === 'full-minus-small' ? 'calc(100vw - 16rem)' : props.size === 'golden-width' ? `${100 / GOLDEN_RATIO}%` : props.size === 'golden-width-rest' ? `${100 - 100 / GOLDEN_RATIO}%` : props.size === 'half' ? '50%' : props.size === 'third' ? '33.3%' : props.size === 'fourth' ? '25%' // default:
 : '50rem'};
@@ -4539,7 +4539,7 @@ Label.defaultProps = {};
 
 const StyledTableContainer = styled.div`
   @media (max-width: 768px) {
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 `;
 const StyledTable = styled.table`
@@ -4612,12 +4612,12 @@ const StyledContainer = styled.div`
   align-items: flex-start;
   margin: ${props => props.pushMargin ? '-1rem' : '0'};
   ${props => props.scroll === 'vertical' ? `
-      overflow-y: scroll;
+      overflow-y: auto;
       overflow-x: hidden;
       flex-wrap: wrap;
     ` : `
       overflow-y: hidden;
-      overflow-x: scroll;
+      overflow-x: auto;
       /* Fixes nested overflow scroll: */
       /* https://stackoverflow.com/questions/43539284/overflow-hidden-with-nested-overflow-scroll-not-working */
       height: 100%;
@@ -4931,7 +4931,7 @@ pre {
 }
 
 pre {
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: auto;
   padding: 0.5em;
   background-color: ${ds.colors.tableStripe};
