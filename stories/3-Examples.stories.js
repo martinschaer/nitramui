@@ -162,7 +162,7 @@ export const App = () => {
       // availableThemes={['groove', 'smooth']}
     >
       <NitramUIContext.Consumer>
-        {({ mode, setMode, themes, theme, setTheme, ds, getDSProp }) => (
+        {({ mode, setMode, themes, theme, setTheme, ds, getDSVal }) => (
           <Layout
             brand='Example'
             headerSlot='Hi, Jonathan'
@@ -385,8 +385,8 @@ export const App = () => {
                     size='small'
                     margin
                   >
-                    <p>ds.colors.fg: {getDSProp(ds.colors.fg)}</p>
-                    <p>ds.colors.bg: {getDSProp(ds.colors.bg)}</p>
+                    <p>ds.colors.fg: {getDSVal(ds.colors.fg)}</p>
+                    <p>ds.colors.bg: {getDSVal(ds.colors.bg)}</p>
                   </Card>
                 </Container>
               </Card>

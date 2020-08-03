@@ -264,6 +264,10 @@ const NitramUI = ({
   // -------------------------------------------------------------------------------------------------------------------
   // Memos
   // -------------------------------------------------------------------------------------------------------------------
+  const themeProviderObj = useMemo(
+    () => ({ theme: themeAux, mode, customThemes, customTheme }),
+    [themeAux, mode, customThemes, customTheme]
+  )
   const availableThemesObjects = useMemo(
     () => {
       let aTs = {}
@@ -315,11 +319,11 @@ const NitramUI = ({
         setTheme,
         themes: availableThemesObjects,
         ds,
-        getDSProp: x => typeof x === 'function' && x({ theme: { theme, mode } })
+        getDSVal: x => typeof x === 'function' && x({ theme: themeProviderObj })
       }}
     >
       <ThemeProvider
-        theme={{ theme: themeAux, mode, customThemes, customTheme }}
+        theme={themeProviderObj}
       >
         <GlobalStyle />
         {children}
