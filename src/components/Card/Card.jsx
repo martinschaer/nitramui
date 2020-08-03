@@ -80,7 +80,7 @@ const StyledCardHeader = styled.header`
 
 const StyledCardBody = styled.main`
   padding: ${props => props.noPadding ? '0' : props.compact ? '1rem' : '2rem'};
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
 
   & > *:first-child {

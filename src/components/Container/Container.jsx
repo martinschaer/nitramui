@@ -17,13 +17,13 @@ export const StyledContainer = styled.div`
   margin: ${props => props.pushMargin ? '-1rem' : '0'};
   ${props => props.scroll === 'vertical'
     ? `
-      overflow-y: scroll;
+      overflow-y: auto;
       overflow-x: hidden;
       flex-wrap: wrap;
     `
     : `
       overflow-y: hidden;
-      overflow-x: scroll;
+      overflow-x: auto;
       /* Fixes nested overflow scroll: */
       /* https://stackoverflow.com/questions/43539284/overflow-hidden-with-nested-overflow-scroll-not-working */
       height: 100%;

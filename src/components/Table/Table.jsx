@@ -15,7 +15,7 @@ import {
 // ---------------------------------------------------------------------------------------------------------------------
 const StyledTableContainer = styled.div`
   @media (max-width: 768px) {
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 `
 

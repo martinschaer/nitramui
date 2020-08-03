@@ -66,7 +66,7 @@ pre {
 }
 
 pre {
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: auto;
   padding: 0.5em;
   background-color: ${ds.colors.tableStripe};

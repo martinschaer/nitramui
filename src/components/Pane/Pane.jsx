@@ -28,7 +28,7 @@ const StyledPane = styled.div`
   flex-shrink: 0;
   padding: ${props => props.noPadding ? '0' : '1rem'};
   outline: 1px dashed ${ds.colors.borderLight};
-  overflow: scroll;
+  overflow: auto;
   max-width: 100%;
   width: ${
     props => props.size === 'full'
