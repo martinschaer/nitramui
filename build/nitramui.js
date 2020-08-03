@@ -5135,6 +5135,12 @@ const NitramUI = ({
   // Memos
   // -------------------------------------------------------------------------------------------------------------------
 
+  const themeProviderObj = React.useMemo(() => ({
+    theme: themeAux,
+    mode,
+    customThemes,
+    customTheme
+  }), [themeAux, mode, customThemes, customTheme]);
   const availableThemesObjects = React.useMemo(() => {
     let aTs = {};
 
@@ -5176,20 +5182,12 @@ const NitramUI = ({
       setTheme,
       themes: availableThemesObjects,
       ds,
-      getDSProp: x => typeof x === 'function' && x({
-        theme: {
-          theme,
-          mode
-        }
+      getDSVal: x => typeof x === 'function' && x({
+        theme: themeProviderObj
       })
     }
   }, /*#__PURE__*/React__default.createElement(ThemeProvider, {
-    theme: {
-      theme: themeAux,
-      mode,
-      customThemes,
-      customTheme
-    }
+    theme: themeProviderObj
   }, /*#__PURE__*/React__default.createElement(GlobalStyle$1, null), children));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
