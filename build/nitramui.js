@@ -4599,6 +4599,23 @@ Table.propTypes = {
 };
 Table.defaultProps = {};
 
+const buttonStyle = css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:hover,&:focus,&:active,&.active{border-color:", ";background-color:", ";outline:none;}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";}"], labelStyles, ds.measures.buttonSpacerH, ds.measures.inputFont, props => props.type === 'plain' ? 'transparent' : ds.colors.buttonBorder, props => props.type === 'plain' ? 'transparent' : ds.colors.buttonBg, ds.colors.buttonFg, ds.measures.buttonRadius, ds.colors.buttonBorderHover, ds.colors.buttonBgHover, ds.colors.shadow, ds.colors.buttonFgDisabled, ds.colors.buttonBorderDisabled, ds.colors.buttonBgDisabled, ds.colors.buttonBorderDisabled, ds.colors.buttonBgSelected, ds.colors.buttonShadow); // ---------------------------------------------------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------------------------------------------------
+
+const Button = styled.button`
+  ${buttonStyle}
+`; // ---------------------------------------------------------------------------------------------------------------------
+// PropTypes, defaults & export
+// ---------------------------------------------------------------------------------------------------------------------
+
+Button.propTypes = {
+  type: propTypes.oneOf(['plain', 'default'])
+};
+Button.defaultProps = {
+  type: 'default'
+};
+
 // Local imports
 // ---------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4759,6 +4776,7 @@ const StyledControl = styled.div`
       position: absolute;
       top: -.2em;
       font-size: .8em;
+      white-space: nowrap;
     `}
   }
 
@@ -4980,49 +4998,7 @@ a {
 }
 
 button {
-  ${labelStyles}
-  padding: 0 ${ds.measures.buttonSpacerH}rem;
-  font-size: ${ds.measures.inputFont};
-  border: 1px solid ${ds.colors.buttonBorder};
-  background-color: ${ds.colors.buttonBg};
-  color: ${ds.colors.buttonFg};
-  border-radius: ${ds.measures.buttonRadius};
-  box-sizing: border-box;
-  cursor: pointer;
-  transform: perspective(100rem);
-
-  &:hover,
-  &:focus,
-  &:active,
-  &.active {
-    border-color: ${ds.colors.buttonBorderHover};
-    background-color: ${ds.colors.buttonBgHover};
-    outline: none;
-  }
-
-  &:active,
-  &.active {
-    transform: perspective(100rem) translateZ(-2rem);
-    box-shadow: inset 0 0 .25rem 2px ${ds.colors.shadow};
-  }
-
-  &:disabled {
-    color: ${ds.colors.buttonFgDisabled};
-    border-color: ${ds.colors.buttonBorderDisabled};
-    background-color: ${ds.colors.buttonBgDisabled};
-    cursor: default;
-
-    &:hover,
-    &:focus {
-      border-color: ${ds.colors.buttonBorderDisabled};
-    }
-  }
-
-  &.selected {
-    background-color: ${ds.colors.buttonBgSelected};
-    transform: perspective(100rem) translateZ(-2rem);
-    box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
-  }
+  ${buttonStyle}
 }
 
 input,
@@ -5201,6 +5177,7 @@ NitramUI.propTypes = {
 };
 NitramUI.defaultProps = {};
 
+exports.Button = Button;
 exports.Card = Card;
 exports.Container = Container;
 exports.Control = Control;
