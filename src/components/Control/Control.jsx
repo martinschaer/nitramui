@@ -37,6 +37,7 @@ const StyledControl = styled.div`
       position: absolute;
       top: -.2em;
       font-size: .8em;
+      white-space: nowrap;
     `)}
   }
 
