@@ -25,8 +25,11 @@ export const buttonStyle = css`
   &:focus,
   &:active,
   &.active {
-    border-color: ${ds.colors.buttonBorderHover};
-    background-color: ${ds.colors.buttonBgHover};
+    color: ${props => props.variant === 'plain' ? ds.colors.buttonFgHoverPlain : ds.colors.buttonFgHover};
+    border-color: ${props => props.variant === 'plain'
+      ? ds.colors.buttonBorderHoverPlain
+      : ds.colors.buttonBorderHover};
+    background-color: ${props => props.variant === 'plain' ? ds.colors.buttonBgHoverPlain : ds.colors.buttonBgHover};
     outline: none;
   }
 
@@ -38,13 +41,13 @@ export const buttonStyle = css`
 
   &:disabled {
     color: ${ds.colors.buttonFgDisabled};
-    border-color: ${ds.colors.buttonBorderDisabled};
-    background-color: ${ds.colors.buttonBgDisabled};
+    border-color: ${props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled};
+    background-color: ${props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled};
     cursor: default;
 
     &:hover,
     &:focus {
-      border-color: ${ds.colors.buttonBorderDisabled};
+      border-color: ${props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled};
     }
   }
 

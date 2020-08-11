@@ -155,6 +155,32 @@ export default {
         }),
       custom: buildCustomProp('colors', 'buttonFgPlain', EMPEROR, GALLERY)
     }),
+    buttonFgHover: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'buttonFgHover', EMPEROR, GALLERY)
+    }),
+    buttonFgHoverPlain: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'buttonFgHover', EMPEROR, GALLERY)
+    }),
     buttonFgDisabled: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -233,6 +259,19 @@ export default {
         }),
       custom: buildCustomProp('colors', 'buttonBgHover', 'transparent', 'transparent')
     }),
+    buttonBgHoverPlain: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      custom: buildCustomProp('colors', 'buttonBgHoverPlain', 'transparent', 'transparent')
+    }),
     buttonBorder: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -284,6 +323,19 @@ export default {
           [modes.dark]: WHITE
         }),
       custom: buildCustomProp('colors', 'buttonBorderHover', EMPEROR, GALLERY)
+    }),
+    buttonBorderHoverPlain: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'buttonBorderHoverPlain', EMPEROR, GALLERY)
     }),
 
     // -----------------------------------------------------------------------------------------------------------------
