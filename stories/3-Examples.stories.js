@@ -9,6 +9,7 @@ import {
   Pane,
   Label,
   Table,
+  Button,
   Layout,
   Control,
   Container,
@@ -378,7 +379,7 @@ export const App = () => {
                     <p><Hola>{text}</Hola>, <a href='/'>dolor sit amed</a></p>
                     <p>
                       <button type='button'>More</button>
-                      <button type='button'>More</button>
+                      <Button type='plain'>More</Button>
                     </p>
                   </Card>
                   <Card
@@ -476,6 +477,4 @@ export const Grid = () => {
   )
 }
 
-App.story = {
-  name: 'App'
-}
+App.storyName = 'App'

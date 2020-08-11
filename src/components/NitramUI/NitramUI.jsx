@@ -12,6 +12,7 @@ import {
 import reset from '../common/reset'
 import ds, { modes, themes } from '../common/designSystem'
 import { NitramUIContext } from './NitramUIContext'
+import { buttonStyle } from '../Button/Button'
 import {
   headingStyles,
   preHeadingStyles,
@@ -115,49 +116,7 @@ a {
 }
 
 button {
-  ${labelStyles}
-  padding: 0 ${ds.measures.buttonSpacerH}rem;
-  font-size: ${ds.measures.inputFont};
-  border: 1px solid ${ds.colors.buttonBorder};
-  background-color: ${ds.colors.buttonBg};
-  color: ${ds.colors.buttonFg};
-  border-radius: ${ds.measures.buttonRadius};
-  box-sizing: border-box;
-  cursor: pointer;
-  transform: perspective(100rem);
-
-  &:hover,
-  &:focus,
-  &:active,
-  &.active {
-    border-color: ${ds.colors.buttonBorderHover};
-    background-color: ${ds.colors.buttonBgHover};
-    outline: none;
-  }
-
-  &:active,
-  &.active {
-    transform: perspective(100rem) translateZ(-2rem);
-    box-shadow: inset 0 0 .25rem 2px ${ds.colors.shadow};
-  }
-
-  &:disabled {
-    color: ${ds.colors.buttonFgDisabled};
-    border-color: ${ds.colors.buttonBorderDisabled};
-    background-color: ${ds.colors.buttonBgDisabled};
-    cursor: default;
-
-    &:hover,
-    &:focus {
-      border-color: ${ds.colors.buttonBorderDisabled};
-    }
-  }
-
-  &.selected {
-    background-color: ${ds.colors.buttonBgSelected};
-    transform: perspective(100rem) translateZ(-2rem);
-    box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
-  }
+  ${buttonStyle}
 }
 
 input,

@@ -130,6 +130,8 @@ Note: NitramUIContext has to be consumed within NitramUI scope.
 - [x] Make onChange optional on controls
 - [x] Export design system variables aware of theme and mode
 - [x] Add instructions for NitramUIContext.Consumer, and controlling modes and themes
+- [x] Add button variants (secondary, text, …)
+- [ ] Prevent control labels from being selected (reproduce with double click on them)
 - [ ] Fix too many scrollbars on Windows
 - [ ] Add button link (https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md)
 - [ ] Pass ref to controls
