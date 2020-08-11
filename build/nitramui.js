@@ -4599,7 +4599,7 @@ Table.propTypes = {
 };
 Table.defaultProps = {};
 
-const buttonStyle = css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:hover,&:focus,&:active,&.active{border-color:", ";background-color:", ";outline:none;}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";}"], labelStyles, ds.measures.buttonSpacerH, ds.measures.inputFont, props => props.type === 'plain' ? 'transparent' : ds.colors.buttonBorder, props => props.type === 'plain' ? 'transparent' : ds.colors.buttonBg, ds.colors.buttonFg, ds.measures.buttonRadius, ds.colors.buttonBorderHover, ds.colors.buttonBgHover, ds.colors.shadow, ds.colors.buttonFgDisabled, ds.colors.buttonBorderDisabled, ds.colors.buttonBgDisabled, ds.colors.buttonBorderDisabled, ds.colors.buttonBgSelected, ds.colors.buttonShadow); // ---------------------------------------------------------------------------------------------------------------------
+const buttonStyle = css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:hover,&:focus,&:active,&.active{border-color:", ";background-color:", ";outline:none;}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";}"], labelStyles, ds.measures.buttonSpacerH, ds.measures.inputFont, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorder, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBg, ds.colors.buttonFg, ds.measures.buttonRadius, ds.colors.buttonBorderHover, ds.colors.buttonBgHover, ds.colors.shadow, ds.colors.buttonFgDisabled, ds.colors.buttonBorderDisabled, ds.colors.buttonBgDisabled, ds.colors.buttonBorderDisabled, ds.colors.buttonBgSelected, ds.colors.buttonShadow); // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -4610,10 +4610,10 @@ const Button = styled.button`
 // ---------------------------------------------------------------------------------------------------------------------
 
 Button.propTypes = {
-  type: propTypes.oneOf(['plain', 'default'])
+  variant: propTypes.oneOf(['plain', 'default'])
 };
 Button.defaultProps = {
-  type: 'default'
+  variant: 'default'
 };
 
 // Local imports
