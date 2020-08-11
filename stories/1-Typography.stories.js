@@ -127,6 +127,4 @@ export const Typography = () => {
   )
 }
 
-Typography.story = {
-  name: 'Typography'
-}
+Typography.storyName = 'Typography'

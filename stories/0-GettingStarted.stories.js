@@ -47,6 +47,4 @@ export const Readme = () => {
   )
 }
 
-Readme.story = {
-  name: 'Read me'
-}
+Readme.storyName = 'Read me'
