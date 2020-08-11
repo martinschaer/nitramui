@@ -142,6 +142,19 @@ export default {
         }),
       custom: buildCustomProp('colors', 'buttonFg', EMPEROR, GALLERY)
     }),
+    buttonFgPlain: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'buttonFgPlain', EMPEROR, GALLERY)
+    }),
     buttonFgDisabled: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -155,19 +168,6 @@ export default {
         }),
       custom: buildCustomProp('colors', 'buttonFgDisabled', BLACK_30, EMPEROR)
     }),
-    buttonBorderDisabled: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: BLACK_3,
-          [modes.dark]: DUNE
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: BLACK_3,
-          [modes.dark]: DUNE
-        }),
-      custom: buildCustomProp('colors', 'buttonBorderDisabled', BLACK_3, DUNE)
-    }),
     buttonBg: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -180,6 +180,19 @@ export default {
           [modes.dark]: 'transparent'
         }),
       custom: buildCustomProp('colors', 'buttonBg', 'transparent', 'transparent')
+    }),
+    buttonBgPlain: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      custom: buildCustomProp('colors', 'buttonBgPlain', 'transparent', 'transparent')
     }),
     buttonBgSelected: theme('theme', {
       [themes.smooth]:
@@ -232,6 +245,32 @@ export default {
           [modes.dark]: WHITE
         }),
       custom: buildCustomProp('colors', 'buttonBorder', MERCURY, EMPEROR)
+    }),
+    buttonBorderPlain: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: 'transparent',
+          [modes.dark]: 'transparent'
+        }),
+      custom: buildCustomProp('colors', 'buttonBorderPlain', 'transparent', 'transparent')
+    }),
+    buttonBorderDisabled: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: BLACK_3,
+          [modes.dark]: DUNE
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK_3,
+          [modes.dark]: DUNE
+        }),
+      custom: buildCustomProp('colors', 'buttonBorderDisabled', BLACK_3, DUNE)
     }),
     buttonBorderHover: theme('theme', {
       [themes.smooth]:

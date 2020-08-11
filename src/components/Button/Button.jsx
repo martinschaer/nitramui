@@ -13,9 +13,9 @@ export const buttonStyle = css`
   ${labelStyles}
   padding: 0 ${ds.measures.buttonSpacerH}rem;
   font-size: ${ds.measures.inputFont};
-  border: 1px solid ${props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorder};
-  background-color: ${props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBg};
-  color: ${ds.colors.buttonFg};
+  border: 1px solid ${props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder};
+  background-color: ${props => props.variant === 'plain' ? ds.colors.buttonBgPlain : ds.colors.buttonBg};
+  color: ${props => props.variant === 'plain' ? ds.colors.buttonFgPlain : ds.colors.buttonFg};
   border-radius: ${ds.measures.buttonRadius};
   box-sizing: border-box;
   cursor: pointer;
@@ -71,7 +71,8 @@ Button.propTypes = {
   ])
 }
 Button.defaultProps = {
-  variant: 'default'
+  variant: 'default',
+  type: 'button'
 }
 
 export default Button
