@@ -2919,6 +2919,17 @@ var ds = {
       }),
       custom: buildCustomProp('colors', 'buttonFg', EMPEROR, GALLERY)
     }),
+    buttonFgPlain: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'buttonFgPlain', EMPEROR, GALLERY)
+    }),
     buttonFgDisabled: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: BLACK_30,
@@ -2930,17 +2941,6 @@ var ds = {
       }),
       custom: buildCustomProp('colors', 'buttonFgDisabled', BLACK_30, EMPEROR)
     }),
-    buttonBorderDisabled: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: DUNE
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: DUNE
-      }),
-      custom: buildCustomProp('colors', 'buttonBorderDisabled', BLACK_3, DUNE)
-    }),
     buttonBg: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: 'transparent',
@@ -2951,6 +2951,17 @@ var ds = {
         [modes.dark]: 'transparent'
       }),
       custom: buildCustomProp('colors', 'buttonBg', 'transparent', 'transparent')
+    }),
+    buttonBgPlain: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'buttonBgPlain', 'transparent', 'transparent')
     }),
     buttonBgSelected: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -2995,6 +3006,28 @@ var ds = {
         [modes.dark]: WHITE
       }),
       custom: buildCustomProp('colors', 'buttonBorder', MERCURY, EMPEROR)
+    }),
+    buttonBorderPlain: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'buttonBorderPlain', 'transparent', 'transparent')
+    }),
+    buttonBorderDisabled: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: DUNE
+      }),
+      custom: buildCustomProp('colors', 'buttonBorderDisabled', BLACK_3, DUNE)
     }),
     buttonBorderHover: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -4592,7 +4625,7 @@ Table.propTypes = {
 };
 Table.defaultProps = {};
 
-const buttonStyle = css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:hover,&:focus,&:active,&.active{border-color:", ";background-color:", ";outline:none;}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";}"], labelStyles, ds.measures.buttonSpacerH, ds.measures.inputFont, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorder, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBg, ds.colors.buttonFg, ds.measures.buttonRadius, ds.colors.buttonBorderHover, ds.colors.buttonBgHover, ds.colors.shadow, ds.colors.buttonFgDisabled, ds.colors.buttonBorderDisabled, ds.colors.buttonBgDisabled, ds.colors.buttonBorderDisabled, ds.colors.buttonBgSelected, ds.colors.buttonShadow); // ---------------------------------------------------------------------------------------------------------------------
+const buttonStyle = css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:hover,&:focus,&:active,&.active{border-color:", ";background-color:", ";outline:none;}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";}"], labelStyles, ds.measures.buttonSpacerH, ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : ds.colors.buttonFg, ds.measures.buttonRadius, ds.colors.buttonBorderHover, ds.colors.buttonBgHover, ds.colors.shadow, ds.colors.buttonFgDisabled, ds.colors.buttonBorderDisabled, ds.colors.buttonBgDisabled, ds.colors.buttonBorderDisabled, ds.colors.buttonBgSelected, ds.colors.buttonShadow); // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -4606,7 +4639,8 @@ Button.propTypes = {
   variant: propTypes.oneOf(['plain', 'default'])
 };
 Button.defaultProps = {
-  variant: 'default'
+  variant: 'default',
+  type: 'button'
 };
 
 // Local imports
