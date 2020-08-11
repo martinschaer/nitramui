@@ -13,8 +13,8 @@ export const buttonStyle = css`
   ${labelStyles}
   padding: 0 ${ds.measures.buttonSpacerH}rem;
   font-size: ${ds.measures.inputFont};
-  border: 1px solid ${props => props.type === 'plain' ? 'transparent' : ds.colors.buttonBorder};
-  background-color: ${props => props.type === 'plain' ? 'transparent' : ds.colors.buttonBg};
+  border: 1px solid ${props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorder};
+  background-color: ${props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBg};
   color: ${ds.colors.buttonFg};
   border-radius: ${ds.measures.buttonRadius};
   box-sizing: border-box;
@@ -65,13 +65,13 @@ const Button = styled.button`
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
 Button.propTypes = {
-  type: PropTypes.oneOf([
+  variant: PropTypes.oneOf([
     'plain',
     'default'
   ])
 }
 Button.defaultProps = {
-  type: 'default'
+  variant: 'default'
 }
 
 export default Button

@@ -379,7 +379,7 @@ export const App = () => {
                     <p><Hola>{text}</Hola>, <a href='/'>dolor sit amed</a></p>
                     <p>
                       <button type='button'>More</button>
-                      <Button type='plain'>More</Button>
+                      <Button variant='plain'>More</Button>
                     </p>
                   </Card>
                   <Card
