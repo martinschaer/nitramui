@@ -206,7 +206,7 @@ export const App = () => {
                   <span role='img' aria-label='gear emoji' className='mr fw'>⚙️</span>Settings
                 </button>
               </p>
-              <p>
+              <div className='mb'>
                 <Control
                   type='select'
                   label='Mode'
@@ -214,8 +214,8 @@ export const App = () => {
                   onChange={setMode}
                   options={Object.entries(modes).map(([_key, value]) => ({ label: value, value }))}
                 />
-              </p>
-              <p>
+              </div>
+              <div className='mb'>
                 <Control
                   type='select'
                   label='Theme'
@@ -223,7 +223,7 @@ export const App = () => {
                   onChange={setTheme}
                   options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
                 />
-              </p>
+              </div>
             </Pane>
             <Pane size='full-minus-small'>
               {/* TODO: make it dynamic depending on the time of the day */}
