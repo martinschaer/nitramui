@@ -1,6 +1,6 @@
 {
   "name": "nitramui",
-  "version": "0.1.40",
+  "version": "0.1.41",
   "description": "UI framework for React projects.",
   "homepage": "https://martinschaer.github.io/nitramui/",
   "main": "build/nitramui.js",
@@ -13,6 +13,7 @@
     "start": "npm run storybook",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o docs",
+    "bs": "npm run build-storybook",
     "lint": "eslint --ext .jsx,.js src/",
     "build": "rollup -c"
   },
