@@ -38,6 +38,7 @@ const StyledControl = styled.div`
       top: -.2em;
       font-size: .8em;
       white-space: nowrap;
+      user-select: none;
     `)}
   }
 

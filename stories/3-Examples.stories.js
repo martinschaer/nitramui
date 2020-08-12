@@ -381,6 +381,15 @@ export const App = () => {
                       <button type='button'>More</button>
                       <Button variant='plain'>More</Button>
                     </p>
+                    <div>
+                      <Control
+                        labelInside
+                        type='input'
+                        label='Name'
+                        value={text}
+                        onChange={setText}
+                      />
+                    </div>
                   </Card>
                   <Card
                     size='small'
