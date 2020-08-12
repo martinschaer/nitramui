@@ -179,7 +179,7 @@ export default {
           [modes.light]: BLACK,
           [modes.dark]: WHITE
         }),
-      custom: buildCustomProp('colors', 'buttonFgHover', EMPEROR, GALLERY)
+      custom: buildCustomProp('colors', 'buttonFgHoverPlain', EMPEROR, GALLERY)
     }),
     buttonFgDisabled: theme('theme', {
       [themes.smooth]:
