@@ -11,6 +11,7 @@ import {
   Table,
   Button,
   Layout,
+  Loading,
   Control,
   Container,
   NitramUI,
@@ -376,9 +377,9 @@ export const App = () => {
                       </>
                     }
                   >
-                    <p><Hola>{text}</Hola>, <a href='/'>dolor sit amed</a></p>
+                    <p><Hola>{text}</Hola>, <a href='/'>dolor sit amed</a> <Loading inline /></p>
                     <p>
-                      <button type='button'>More</button>
+                      <button type='button'>More <Loading inline icon='⧗' /></button>
                       <Button variant='plain'>More</Button>
                     </p>
                     <div>
@@ -395,6 +396,7 @@ export const App = () => {
                     size='small'
                     margin
                   >
+                    <Loading />
                     <p>ds.colors.fg: {getDSVal(ds.colors.fg)}</p>
                     <p>ds.colors.bg: {getDSVal(ds.colors.bg)}</p>
                   </Card>

@@ -10,7 +10,7 @@
 		"description": "Section comments"
 	},
 	"Import React and PropTypes": {
-		"scope": "javascriptreact",
+		"scope": "javascript,javascriptreact",
 		"prefix": "import React",
 		"body": [
 			"import React from 'react'",
