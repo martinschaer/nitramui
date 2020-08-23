@@ -1,6 +1,5 @@
 import React from 'react'
 import { linkTo } from '@storybook/addon-links'
-// import { withKnobs } from '@storybook/addon-knobs'
 
 import {
   modes,
@@ -20,7 +19,6 @@ import {
 
 export default {
   title: 'Examples'
-  // decorators: [withKnobs]
 }
 
 const Hola = styled.span`

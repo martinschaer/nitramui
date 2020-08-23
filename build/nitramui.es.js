@@ -4810,9 +4810,9 @@ const Layout = ({
       display: 'flex',
       marginLeft: 'auto'
     }
-  }, menuB)), /*#__PURE__*/React.createElement(StyledMain, null, children), (footerSlot || brand) && /*#__PURE__*/React.createElement(StyledFooter, null, /*#__PURE__*/React.createElement(Label, {
+  }, menuB)), /*#__PURE__*/React.createElement(StyledMain, null, children), (footerSlot || brand) && /*#__PURE__*/React.createElement(StyledFooter, null, footerSlot || /*#__PURE__*/React.createElement(Label, {
     heading: true
-  }, footerSlot || `Copyright © 2020 ${brand}`), footerMenu, footerMenuB && /*#__PURE__*/React.createElement("div", {
+  }, "`Copyright \xA9 2020 $", brand, "`"), footerMenu, footerMenuB && /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       marginLeft: 'auto'

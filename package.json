@@ -1,6 +1,6 @@
 {
   "name": "nitramui",
-  "version": "0.1.43",
+  "version": "0.1.44",
   "description": "UI framework for React projects.",
   "homepage": "https://martinschaer.github.io/nitramui/",
   "main": "build/nitramui.js",
@@ -35,8 +35,6 @@
     "@rollup/plugin-babel": "^5.0.4",
     "@rollup/plugin-commonjs": "^13.0.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
-    "@storybook/addon-docs": "^6.0.2",
-    "@storybook/addon-knobs": "^6.0.2",
     "@storybook/addon-links": "^6.0.2",
     "@storybook/addon-storysource": "^6.0.2",
     "@storybook/addons": "^6.0.2",
