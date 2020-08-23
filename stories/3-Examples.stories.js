@@ -165,6 +165,7 @@ export const App = () => {
         {({ mode, setMode, themes, theme, setTheme, ds, getDSVal }) => (
           <Layout
             brand='Example'
+            footerSlot='Example'
             headerSlot='Hi, Jonathan'
             menu={(
               <>
