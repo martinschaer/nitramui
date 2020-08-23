@@ -67,7 +67,7 @@ const Layout = ({ brand, children, headerSlot, footerSlot, menu, menuB, footerMe
       </StyledMain>
       {(footerSlot || brand) && (
         <StyledFooter>
-          <Label heading>{footerSlot || `Copyright © 2020 ${brand}`}</Label>
+          {footerSlot || (<Label heading>`Copyright © 2020 ${brand}`</Label>)}
           {footerMenu}
           {footerMenuB && (
             <div style={{ display: 'flex', marginLeft: 'auto' }}>
