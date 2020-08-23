@@ -2743,6 +2743,23 @@ function createGlobalStyle(strings) {
 
   return React__default.memo(GlobalStyleComponent);
 }
+
+// 
+function keyframes(strings) {
+  /* Warning if you've used keyframes on React Native */
+  if (process.env.NODE_ENV !== 'production' && typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+    // eslint-disable-next-line no-console
+    console.warn('`keyframes` cannot be used on ReactNative, only on the web. To do animation in ReactNative please use Animated.');
+  }
+
+  for (var _len = arguments.length, interpolations = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    interpolations[_key - 1] = arguments[_key];
+  }
+
+  var rules = css.apply(void 0, [strings].concat(interpolations)).join('');
+  var name = generateComponentId(rules);
+  return new Keyframes(name, [rules, name, '@keyframes']);
+}
 /* Warning if you've imported this file on React Native */
 
 if (process.env.NODE_ENV !== 'production' && typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
@@ -4825,6 +4842,43 @@ Layout.propTypes = {
 };
 Layout.defaultProps = {};
 
+// Styled components
+// ---------------------------------------------------------------------------------------------------------------------
+
+const rotate = keyframes(["0%{transform:rotate(0deg);}17%{transform:rotate(180deg);}51%{transform:rotate(180deg);}68%{transform:rotate(360deg);}100%{transform:rotate(360deg);}"]);
+const StyledLoadingInline = styled.span`
+  animation: ${rotate} 2s linear infinite;
+  display: inline-block;
+`;
+const StyledLoading = styled.div`
+  font-size: 4em;
+  text-align: center;
+  color: ${ds.colors.fgMuted};
+  padding: 0.5em 0;
+  animation: ${rotate} 2s linear infinite;
+`; // ---------------------------------------------------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------------------------------------------------
+
+const Loading = ({
+  inline,
+  icon
+}) => {
+  return inline ? /*#__PURE__*/React__default.createElement(StyledLoadingInline, null, icon) : /*#__PURE__*/React__default.createElement(StyledLoading, null, icon);
+}; // ---------------------------------------------------------------------------------------------------------------------
+// PropTypes, defaults & export
+// ---------------------------------------------------------------------------------------------------------------------
+
+
+Loading.propTypes = {
+  inline: propTypes.bool,
+  icon: propTypes.node
+};
+Loading.defaultProps = {
+  icon: '⏳' // ⧗
+
+};
+
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -5262,6 +5316,7 @@ exports.Container = Container;
 exports.Control = Control;
 exports.Label = Label;
 exports.Layout = Layout;
+exports.Loading = Loading;
 exports.NitramUI = NitramUI;
 exports.NitramUIContext = NitramUIContext;
 exports.Pane = Pane;
