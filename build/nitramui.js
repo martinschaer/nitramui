@@ -3246,6 +3246,17 @@ var ds = {
       }),
       custom: buildCustomProp('colors', 'card', WHITE, DUNE)
     }),
+    cardSelected: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: WHITE,
+        [modes.dark]: DUNE
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: WHITE,
+        [modes.dark]: BLACK
+      }),
+      custom: buildCustomProp('colors', 'cardSelected', WHITE, DUNE)
+    }),
     cardBorder: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: GALLERY,
@@ -3267,6 +3278,17 @@ var ds = {
         [modes.dark]: WHITE
       }),
       custom: buildCustomProp('colors', 'cardBorderHover', EMPEROR, GALLERY)
+    }),
+    cardBorderSelected: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'cardBorderSelected', EMPEROR, GALLERY)
     }),
     cardHeaderBorder: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -4345,10 +4367,10 @@ if (process.env.NODE_ENV !== 'production') {
 // StyledCard height property is called h so that it doesn’t appear in the resulting DOM node.
 
 const StyledCard = styled.div`
-  background-color: ${ds.colors.card};
+  background-color: ${props => props.selected ? ds.colors.cardSelected : ds.colors.card};
   box-sizing: border-box;
   box-shadow: 0 0 1rem ${ds.colors.shadow};
-  border: 1px solid ${ds.colors.cardBorder};
+  border: 1px solid ${props => props.selected ? ds.colors.cardBorderSelected : ds.colors.cardBorder};
   border-radius: ${ds.measures.radius};
   overflow: hidden;
   display: flex;
@@ -4370,8 +4392,6 @@ const StyledCard = styled.div`
   ${props => props.margin && (props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`)}
 
   & & {
-    background-color: ${ds.colors.card};
-    border: 1px solid ${ds.colors.border};
     box-shadow: none;
   }
 
@@ -4390,7 +4410,7 @@ const StyledCardHeader = styled.header`
   border-bottom: 1px solid ${ds.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: wrap;
-  padding: 0.25rem;
+  padding: ${props => props.compactHeader ? '0' : '0.25rem'};
 `;
 const StyledCardBody = styled.main`
   padding: ${props => props.noPadding ? '0' : props.compact ? '1rem' : '2rem'};
@@ -4416,7 +4436,7 @@ const StyledCardFooter = styled.footer`
   flex-wrap: wrap;
   justify-content: flex-end;
   margin-top: auto;
-  padding: 0.25rem;
+  padding: ${props => props.compactFooter ? '0' : '0.25rem'};
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4431,7 +4451,10 @@ const Card = ({
   children,
   noPadding,
   compact,
+  compactHeader,
+  compactFooter,
   hoverable,
+  selected,
   margin,
   marginTop,
   marginBottom,
@@ -4446,14 +4469,19 @@ const Card = ({
     colorBorderPosition: colorBorderPosition,
     h: height,
     hoverable: hoverable,
+    selected: selected,
     margin: margin,
     marginTop: marginTop,
     marginBottom: marginBottom,
     onClick: onClick && (() => onClick())
-  }, header && /*#__PURE__*/React__default.createElement(StyledCardHeader, null, header), children && /*#__PURE__*/React__default.createElement(StyledCardBody, {
+  }, header && /*#__PURE__*/React__default.createElement(StyledCardHeader, {
+    compactHeader: compactHeader
+  }, header), children && /*#__PURE__*/React__default.createElement(StyledCardBody, {
     noPadding: noPadding,
     compact: compact
-  }, children), footer && /*#__PURE__*/React__default.createElement(StyledCardFooter, null, footer));
+  }, children), footer && /*#__PURE__*/React__default.createElement(StyledCardFooter, {
+    compactFooter: compactFooter
+  }, footer));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4469,7 +4497,10 @@ Card.propTypes = {
   height: propTypes.oneOfType([propTypes.oneOf(['default', 'full']), propTypes.number]),
   noPadding: propTypes.bool,
   compact: propTypes.bool,
+  compactHeader: propTypes.bool,
+  compactFooter: propTypes.bool,
   hoverable: propTypes.bool,
+  selected: propTypes.bool,
   margin: propTypes.oneOfType([propTypes.bool, propTypes.number]),
   marginTop: propTypes.oneOfType([propTypes.bool, propTypes.number]),
   marginBottom: propTypes.oneOfType([propTypes.bool, propTypes.number]),
@@ -4609,7 +4640,8 @@ const labelStyles = css(["line-height:calc(", "rem * 2);height:calc(", "rem * 2)
 // ---------------------------------------------------------------------------------------------------------------------
 
 const Label = styled.span`
-  ${labelStyles}
+  ${props => props.compact ? `line-height: calc(${ds.measures.spacer(props)}rem * 2);
+  height: calc(${ds.measures.spacer(props)}rem * 2);` : labelStyles}
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
   &:first-child {
@@ -4624,6 +4656,7 @@ const Label = styled.span`
 
 Label.propTypes = {
   heading: propTypes.bool,
+  compact: propTypes.bool,
   children: propTypes.node
 };
 Label.defaultProps = {};
@@ -4693,7 +4726,7 @@ Table.propTypes = {
 };
 Table.defaultProps = {};
 
-const buttonStyle = css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:hover,&:focus,&:active,&.active{color:", ";border-color:", ";background-color:", ";outline:none;}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";}"], labelStyles, ds.measures.buttonSpacerH, ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : ds.colors.buttonFg, ds.measures.buttonRadius, props => props.variant === 'plain' ? ds.colors.buttonFgHoverPlain : ds.colors.buttonFgHover, props => props.variant === 'plain' ? ds.colors.buttonBorderHoverPlain : ds.colors.buttonBorderHover, props => props.variant === 'plain' ? ds.colors.buttonBgHoverPlain : ds.colors.buttonBgHover, ds.colors.shadow, ds.colors.buttonFgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, ds.colors.buttonBgSelected, ds.colors.buttonShadow); // ---------------------------------------------------------------------------------------------------------------------
+const buttonStyle = css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:hover,&:focus,&:active,&.active{color:", ";background-color:", ";border-color:", ";outline:none;}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";}"], labelStyles, ds.measures.buttonSpacerH, ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) !== 'transparent' ? ds.colors.buttonBg : ds.colors.bg : ds.colors.buttonFg, ds.measures.buttonRadius, props => props.variant === 'plain' ? ds.colors.buttonFgHoverPlain : ds.colors.buttonFgHover, props => props.variant === 'plain' ? ds.colors.buttonBgHoverPlain : ds.colors.buttonBgHover, props => props.variant === 'plain' ? ds.colors.buttonBorderHoverPlain : ds.colors.buttonBorderHover, ds.colors.shadow, ds.colors.buttonFgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, ds.colors.buttonBgSelected, ds.colors.buttonShadow); // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -4704,7 +4737,7 @@ const Button = styled.button`
 // ---------------------------------------------------------------------------------------------------------------------
 
 Button.propTypes = {
-  variant: propTypes.oneOf(['plain', 'default'])
+  variant: propTypes.oneOf(['plain', 'inverted', 'default'])
 };
 Button.defaultProps = {
   variant: 'default',
