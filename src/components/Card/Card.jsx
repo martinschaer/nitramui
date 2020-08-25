@@ -12,10 +12,10 @@ import ds from '../common/designSystem'
 // ---------------------------------------------------------------------------------------------------------------------
 // StyledCard height property is called h so that it doesn’t appear in the resulting DOM node.
 const StyledCard = styled.div`
-  background-color: ${ds.colors.card};
+  background-color: ${props => props.selected ? ds.colors.cardSelected : ds.colors.card};
   box-sizing: border-box;
   box-shadow: 0 0 1rem ${ds.colors.shadow};
-  border: 1px solid ${ds.colors.cardBorder};
+  border: 1px solid ${props => props.selected ? ds.colors.cardBorderSelected : ds.colors.cardBorder};
   border-radius: ${ds.measures.radius};
   overflow: hidden;
   display: flex;
@@ -54,8 +54,6 @@ const StyledCard = styled.div`
   ${props => props.margin && (props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`)}
 
   & & {
-    background-color: ${ds.colors.card};
-    border: 1px solid ${ds.colors.border};
     box-shadow: none;
   }
 
@@ -75,7 +73,7 @@ const StyledCardHeader = styled.header`
   border-bottom: 1px solid ${ds.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: wrap;
-  padding: 0.25rem;
+  padding: ${props => props.compactHeader ? '0' : '0.25rem'};
 `
 
 const StyledCardBody = styled.main`
@@ -103,7 +101,7 @@ const StyledCardFooter = styled.footer`
   flex-wrap: wrap;
   justify-content: flex-end;
   margin-top: auto;
-  padding: 0.25rem;
+  padding: ${props => props.compactFooter ? '0' : '0.25rem'};
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -119,7 +117,10 @@ const Card = ({
   children,
   noPadding,
   compact,
+  compactHeader,
+  compactFooter,
   hoverable,
+  selected,
   margin,
   marginTop,
   marginBottom,
@@ -135,18 +136,19 @@ const Card = ({
       colorBorderPosition={colorBorderPosition}
       h={height}
       hoverable={hoverable}
+      selected={selected}
       margin={margin}
       marginTop={marginTop}
       marginBottom={marginBottom}
       onClick={onClick && (() => onClick())}
     >
-      {header && (<StyledCardHeader>{header}</StyledCardHeader>)}
+      {header && (<StyledCardHeader compactHeader={compactHeader}>{header}</StyledCardHeader>)}
       {children && (
         <StyledCardBody noPadding={noPadding} compact={compact}>
           {children}
         </StyledCardBody>
       )}
-      {footer && (<StyledCardFooter>{footer}</StyledCardFooter>)}
+      {footer && (<StyledCardFooter compactFooter={compactFooter}>{footer}</StyledCardFooter>)}
     </StyledCard>
   )
 }
@@ -167,7 +169,10 @@ Card.propTypes = {
   height: PropTypes.oneOfType([PropTypes.oneOf(['default', 'full']), PropTypes.number]),
   noPadding: PropTypes.bool,
   compact: PropTypes.bool,
+  compactHeader: PropTypes.bool,
+  compactFooter: PropTypes.bool,
   hoverable: PropTypes.bool,
+  selected: PropTypes.bool,
   margin: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   marginTop: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   marginBottom: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),

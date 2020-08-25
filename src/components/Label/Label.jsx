@@ -9,12 +9,14 @@ import {
   headingStyles,
   preHeadingStyles
 } from '../common/typography'
+import ds from '../common/designSystem'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 const Label = styled.span`
-  ${labelStyles}
+  ${props => props.compact ? `line-height: calc(${ds.measures.spacer(props)}rem * 2);
+  height: calc(${ds.measures.spacer(props)}rem * 2);` : labelStyles}
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
   &:first-child {
@@ -30,6 +32,7 @@ const Label = styled.span`
 // ---------------------------------------------------------------------------------------------------------------------
 Label.propTypes = {
   heading: PropTypes.bool,
+  compact: PropTypes.bool,
   children: PropTypes.node
 }
 Label.defaultProps = {}

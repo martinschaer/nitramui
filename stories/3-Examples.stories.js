@@ -394,10 +394,19 @@ export const App = () => {
                   <Card
                     size='small'
                     margin
+                    compact
+                    compactHeader
+                    header={(<Label compact>Compact header</Label>)}
                   >
                     <Loading />
                     <p>ds.colors.fg: {getDSVal(ds.colors.fg)}</p>
                     <p>ds.colors.bg: {getDSVal(ds.colors.bg)}</p>
+                    <Card compact hoverable compactFooter marginBottom footer={(<Label compact>Footer</Label>)}>
+                      <p>Hello world</p>
+                    </Card>
+                    <Card selected compact compactFooter marginBottom footer={(<Label compact>Footer</Label>)}>
+                      <p>Hello world</p>
+                    </Card>
                   </Card>
                 </Container>
               </Card>

@@ -501,6 +501,19 @@ export default {
         }),
       custom: buildCustomProp('colors', 'card', WHITE, DUNE)
     }),
+    cardSelected: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: WHITE,
+          [modes.dark]: DUNE
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: WHITE,
+          [modes.dark]: BLACK
+        }),
+      custom: buildCustomProp('colors', 'cardSelected', WHITE, DUNE)
+    }),
     cardBorder: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -526,6 +539,19 @@ export default {
           [modes.dark]: WHITE
         }),
       custom: buildCustomProp('colors', 'cardBorderHover', EMPEROR, GALLERY)
+    }),
+    cardBorderSelected: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'cardBorderSelected', EMPEROR, GALLERY)
     }),
     cardHeaderBorder: theme('theme', {
       [themes.smooth]:
