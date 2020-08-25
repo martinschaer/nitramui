@@ -14,8 +14,20 @@ export const buttonStyle = css`
   padding: 0 ${ds.measures.buttonSpacerH}rem;
   font-size: ${ds.measures.inputFont};
   border: 1px solid ${props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder};
-  background-color: ${props => props.variant === 'plain' ? ds.colors.buttonBgPlain : ds.colors.buttonBg};
-  color: ${props => props.variant === 'plain' ? ds.colors.buttonFgPlain : ds.colors.buttonFg};
+  background-color: ${
+    props => props.variant === 'plain'
+      ? ds.colors.buttonBgPlain
+      : props.variant === 'inverted'
+        ? ds.colors.buttonFg
+        : ds.colors.buttonBg
+  };
+  color: ${
+    props => props.variant === 'plain'
+      ? ds.colors.buttonFgPlain
+      : props.variant === 'inverted'
+        ? ds.colors.buttonBg(props) !== 'transparent' ? ds.colors.buttonBg : ds.colors.bg
+        : ds.colors.buttonFg
+  };
   border-radius: ${ds.measures.buttonRadius};
   box-sizing: border-box;
   cursor: pointer;
@@ -25,11 +37,20 @@ export const buttonStyle = css`
   &:focus,
   &:active,
   &.active {
-    color: ${props => props.variant === 'plain' ? ds.colors.buttonFgHoverPlain : ds.colors.buttonFgHover};
-    border-color: ${props => props.variant === 'plain'
-      ? ds.colors.buttonBorderHoverPlain
-      : ds.colors.buttonBorderHover};
-    background-color: ${props => props.variant === 'plain' ? ds.colors.buttonBgHoverPlain : ds.colors.buttonBgHover};
+    color: ${
+      props => props.variant === 'plain'
+        ? ds.colors.buttonFgHoverPlain
+        : ds.colors.buttonFgHover
+    };
+    background-color: ${
+      props => props.variant === 'plain'
+        ? ds.colors.buttonBgHoverPlain
+        : ds.colors.buttonBgHover
+    };
+    border-color: ${
+      props => props.variant === 'plain'
+        ? ds.colors.buttonBorderHoverPlain
+        : ds.colors.buttonBorderHover};
     outline: none;
   }
 
@@ -70,6 +91,7 @@ const Button = styled.button`
 Button.propTypes = {
   variant: PropTypes.oneOf([
     'plain',
+    'inverted',
     'default'
   ])
 }

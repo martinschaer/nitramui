@@ -38,6 +38,7 @@ const customThemes = {
       buttonBgSelected: { light: '#0071CC', dark: '#0071CC' },
       buttonBgHover: { light: '#33A4FF', dark: '#33A4FF' },
       buttonFg: { light: 'white', dark: 'white' },
+      buttonFgHover: { light: 'white', dark: 'white' },
       buttonFgDisabled: { light: '#018EFF', dark: '#018EFF' },
       buttonBgDisabled: { light: 'transparent', dark: 'transparent' },
       buttonBorder: { light: '#018EFF', dark: '#018EFF' },
@@ -380,6 +381,7 @@ export const App = () => {
                     <p>
                       <button type='button'>More <Loading inline icon='⧗' /></button>
                       <Button variant='plain'>More</Button>
+                      <Button variant='inverted'>More</Button>
                     </p>
                     <div>
                       <Control
