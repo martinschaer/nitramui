@@ -63,7 +63,7 @@ select,
 textarea,
 code,
 pre {
-  font-family: 'Inconsolata', monospace;
+  font-family: ${ds.fonts.controls};
 }
 
 pre {

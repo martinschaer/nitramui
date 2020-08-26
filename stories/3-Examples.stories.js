@@ -52,7 +52,8 @@ const customThemes = {
     },
     fonts: {
       body: 'Helvetica, Arial',
-      heading: 'serif'
+      heading: 'serif',
+      controls: 'sans-serif'
     },
     weights: {
       strong: 700
