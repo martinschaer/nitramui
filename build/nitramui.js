@@ -2835,6 +2835,11 @@ const LIMA = '#75d41d';
 const RED = '#f22';
 const BLUEVIOLET = 'blueviolet'; // #8A2BE2
 // ---------------------------------------------------------------------------------------------------------------------
+// FONTS
+// ---------------------------------------------------------------------------------------------------------------------
+
+const FONT_INTER = '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif';
+const FONT_MONO = '\'Inconsolata\', monospace'; // ---------------------------------------------------------------------------------------------------------------------
 // Exports
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -2857,14 +2862,16 @@ const tryToGetArr = (obj, path, def) => {
   return tryToGetArr(newObj, path.slice(1), def);
 };
 
-const buildCustomProp = (group, prop, lightDefault, darkDefault) => styledTheming('mode', {
+const buildCustomProp = (group, prop, lightDefault, darkDefault) => darkDefault !== undefined ? styledTheming('mode', {
   [modes.light]: ({
     theme
   }) => tryToGetArr(theme.customThemes, [theme.customTheme, group, prop, 'light'], lightDefault),
   [modes.dark]: ({
     theme
   }) => tryToGetArr(theme.customThemes, [theme.customTheme, group, prop, 'dark'], darkDefault)
-});
+}) : ({
+  theme
+}) => tryToGetArr(theme.customThemes, [theme.customTheme, group, prop], lightDefault);
 
 var ds = {
   colors: {
@@ -3393,18 +3400,19 @@ var ds = {
   // -------------------------------------------------------------------------------------------------------------------
   fonts: {
     body: styledTheming('theme', {
-      [themes.smooth]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
-      [themes.hiContrast]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'fonts', 'body'], 'Arial')
+      [themes.smooth]: FONT_INTER,
+      [themes.hiContrast]: FONT_INTER,
+      custom: buildCustomProp('fonts', 'body', FONT_INTER)
     }),
     heading: styledTheming('theme', {
-      [themes.smooth]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
-      [themes.hiContrast]: '\'Inter\', \'Helvetica Neue\', Helvetica, Arial, sans-serif',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'fonts', 'heading'], 'Arial')
+      [themes.smooth]: FONT_INTER,
+      [themes.hiContrast]: FONT_INTER,
+      custom: buildCustomProp('fonts', 'heading', FONT_INTER)
+    }),
+    controls: styledTheming('theme', {
+      [themes.smooth]: FONT_MONO,
+      [themes.hiContrast]: FONT_MONO,
+      custom: buildCustomProp('fonts', 'controls', FONT_MONO)
     })
   },
   // -------------------------------------------------------------------------------------------------------------------
@@ -3414,37 +3422,27 @@ var ds = {
     normal: styledTheming('theme', {
       [themes.smooth]: '400',
       [themes.hiContrast]: '400',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'normal'], '400')
+      custom: buildCustomProp('weights', 'normal', '400')
     }),
     strong: styledTheming('theme', {
       [themes.smooth]: '600',
       [themes.hiContrast]: '600',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'strong'], '600')
+      custom: buildCustomProp('weights', 'strong', '600')
     }),
     heading: styledTheming('theme', {
       [themes.smooth]: '200',
       [themes.hiContrast]: '200',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'heading'], '600')
+      custom: buildCustomProp('weights', 'heading', '200')
     }),
     preheading: styledTheming('theme', {
       [themes.smooth]: '600',
       [themes.hiContrast]: '600',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'preheading'], '600')
+      custom: buildCustomProp('weights', 'preheading', '600')
     }),
     controlLabel: styledTheming('theme', {
       [themes.smooth]: '400',
       [themes.hiContrast]: '400',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'weights', 'controlLabel'], '400')
+      custom: buildCustomProp('weights', 'controlLabel', '400')
     })
   },
   // -------------------------------------------------------------------------------------------------------------------
@@ -3454,65 +3452,47 @@ var ds = {
     radius: styledTheming('theme', {
       [themes.smooth]: '0.5rem',
       [themes.hiContrast]: '0.5rem',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'radius'], '0.5rem')
+      custom: buildCustomProp('measures', 'radius', '0.5rem')
     }),
     inputRadius: styledTheming('theme', {
       [themes.smooth]: '0.25rem',
       [themes.hiContrast]: '0.25rem',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputRadius'], '0.5rem')
+      custom: buildCustomProp('measures', 'inputRadius', '0.25rem')
     }),
     buttonRadius: styledTheming('theme', {
       [themes.smooth]: '0.25rem',
       [themes.hiContrast]: '0.25rem',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'buttonRadius'], '0.25rem')
+      custom: buildCustomProp('measures', 'buttonRadius', '0.25rem')
     }),
     font: styledTheming('theme', {
       [themes.smooth]: '0.875rem',
       [themes.hiContrast]: '0.875rem',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'font'], '1rem')
+      custom: buildCustomProp('measures', 'font', '0.875rem')
     }),
     inputFont: styledTheming('theme', {
       [themes.smooth]: '0.875rem',
       [themes.hiContrast]: '0.875rem',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputFont'], '1rem')
+      custom: buildCustomProp('measures', 'inputFont', '0.875rem')
     }),
     unit: styledTheming('theme', {
       [themes.smooth]: '16px',
       [themes.hiContrast]: '16px',
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'unit'], '16px')
+      custom: buildCustomProp('measures', 'unit', '16px')
     }),
     spacer: styledTheming('theme', {
       [themes.smooth]: 1,
       [themes.hiContrast]: 1,
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'spacer'], 1)
+      custom: buildCustomProp('measures', 'spacer', 1)
     }),
     buttonSpacerH: styledTheming('theme', {
       [themes.smooth]: 1,
       [themes.hiContrast]: 1,
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'buttonSpacerH'], 1)
+      custom: buildCustomProp('measures', 'buttonSpacerH', 1)
     }),
     inputSpacerH: styledTheming('theme', {
       [themes.smooth]: 0.5,
       [themes.hiContrast]: 0.5,
-      custom: ({
-        theme
-      }) => tryToGetArr(theme.customThemes, [theme.customTheme, 'measures', 'inputSpacerH'], 0.5)
+      custom: buildCustomProp('measures', 'inputSpacerH', 0.5)
     })
   }
 };
@@ -5111,7 +5091,7 @@ select,
 textarea,
 code,
 pre {
-  font-family: 'Inconsolata', monospace;
+  font-family: ${ds.fonts.controls};
 }
 
 pre {
