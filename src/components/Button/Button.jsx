@@ -47,7 +47,7 @@ export const buttonStyle = css`
         border-color: ${ds.colors.buttonBorderHover(props)};`
     }
     outline: none;
-    ${props => props.extraStyles?.hover}
+    ${({ extraStyles = {} }) => extraStyles.hover}
   }
 
   &:active,
@@ -73,10 +73,10 @@ export const buttonStyle = css`
     background-color: ${ds.colors.buttonBgSelected};
     transform: perspective(100rem) translateZ(-2rem);
     box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
-    ${props => props.extraStyles?.selected}
+    ${({ extraStyles = {} }) => extraStyles.selected}
   }
 
-  ${props => props.extraStyles?.base}
+  ${({ extraStyles = {} }) => extraStyles.base}
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -104,7 +104,8 @@ Button.propTypes = {
 }
 Button.defaultProps = {
   variant: 'default',
-  type: 'button'
+  type: 'button',
+  extraStyles: {}
 }
 
 export default Button

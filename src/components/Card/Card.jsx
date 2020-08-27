@@ -67,12 +67,12 @@ const StyledCard = styled.div`
 
   ${props => props.hoverable === true ? css`&:hover {
     border-color: ${ds.colors.cardBorderHover};
-    ${props.extraStyles?.hover}
+    ${({ extraStyles = {} }) => extraStyles.hover}
   }` : ''}
 
-  ${props => props.selected && props.extraStyles?.selected}
+  ${({ selected, extraStyles = {} }) => selected && extraStyles.selected}
 
-  ${props => props.extraStyles?.base}
+  ${({ extraStyles = {} }) => extraStyles.base}
 `
 
 const StyledCardHeader = styled.header`
@@ -194,7 +194,8 @@ Card.propTypes = {
 }
 Card.defaultProps = {
   height: 'default',
-  colorBorderPosition: 'top'
+  colorBorderPosition: 'top',
+  extraStyles: {}
 }
 
 export default Card
