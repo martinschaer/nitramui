@@ -3464,6 +3464,11 @@ var ds = {
       [themes.hiContrast]: '0.25rem',
       custom: buildCustomProp('measures', 'buttonRadius', '0.25rem')
     }),
+    buttonRadiusSmall: styledTheming('theme', {
+      [themes.smooth]: '0.25rem',
+      [themes.hiContrast]: '0.25rem',
+      custom: buildCustomProp('measures', 'buttonRadiusSmall', '0.25rem')
+    }),
     font: styledTheming('theme', {
       [themes.smooth]: '0.875rem',
       [themes.hiContrast]: '0.875rem',
@@ -3473,6 +3478,11 @@ var ds = {
       [themes.smooth]: '0.875rem',
       [themes.hiContrast]: '0.875rem',
       custom: buildCustomProp('measures', 'inputFont', '0.875rem')
+    }),
+    inputFontSmall: styledTheming('theme', {
+      [themes.smooth]: '0.66rem',
+      [themes.hiContrast]: '0.66rem',
+      custom: buildCustomProp('measures', 'inputFontSmall', '0.66rem')
     }),
     unit: styledTheming('theme', {
       [themes.smooth]: '16px',
@@ -3488,6 +3498,11 @@ var ds = {
       [themes.smooth]: 1,
       [themes.hiContrast]: 1,
       custom: buildCustomProp('measures', 'buttonSpacerH', 1)
+    }),
+    buttonSpacerHSmall: styledTheming('theme', {
+      [themes.smooth]: 0.5,
+      [themes.hiContrast]: 0.5,
+      custom: buildCustomProp('measures', 'buttonSpacerHSmall', 0.5)
     }),
     inputSpacerH: styledTheming('theme', {
       [themes.smooth]: 0.5,
@@ -4615,6 +4630,7 @@ Pane.defaultProps = {
 const headingStyles = css(["font-family:", ";font-weight:", ";"], ds.fonts.heading, ds.weights.heading);
 const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:", ";"], ds.colors.fgMuted, 1 / 12, ds.weights.preheading);
 const labelStyles = css(["line-height:calc(", "rem * 2);height:calc(", "rem * 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.measures.spacer, ds.measures.spacer, ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
+const labelStylesSmall = css(["line-height:calc(", "rem * 3 / 2);height:calc(", "rem * 3 / 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.measures.spacer, ds.measures.spacer, props => ds.measures.spacer(props) / 2, ds.measures.spacer, ds.measures.spacer);
 
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4706,7 +4722,7 @@ Table.propTypes = {
 };
 Table.defaultProps = {};
 
-const buttonStyle = css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:hover,&:focus,&:active,&.active{color:", ";background-color:", ";border-color:", ";outline:none;}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";}"], labelStyles, ds.measures.buttonSpacerH, ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) !== 'transparent' ? ds.colors.buttonBg : ds.colors.bg : ds.colors.buttonFg, ds.measures.buttonRadius, props => props.variant === 'plain' ? ds.colors.buttonFgHoverPlain : ds.colors.buttonFgHover, props => props.variant === 'plain' ? ds.colors.buttonBgHoverPlain : ds.colors.buttonBgHover, props => props.variant === 'plain' ? ds.colors.buttonBorderHoverPlain : ds.colors.buttonBorderHover, ds.colors.shadow, ds.colors.buttonFgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, ds.colors.buttonBgSelected, ds.colors.buttonShadow); // ---------------------------------------------------------------------------------------------------------------------
+const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:hover,&:focus,&:active,&.active{color:", ";background-color:", ";border-color:", ";outline:none;}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";}"], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) !== 'transparent' ? ds.colors.buttonBg : ds.colors.bg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.variant === 'plain' ? ds.colors.buttonFgHoverPlain : ds.colors.buttonFgHover, props => props.variant === 'plain' ? ds.colors.buttonBgHoverPlain : ds.colors.buttonBgHover, props => props.variant === 'plain' ? ds.colors.buttonBorderHoverPlain : ds.colors.buttonBorderHover, ds.colors.shadow, ds.colors.buttonFgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, ds.colors.buttonBgSelected, ds.colors.buttonShadow); // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -4717,11 +4733,11 @@ const Button = styled.button`
 // ---------------------------------------------------------------------------------------------------------------------
 
 Button.propTypes = {
-  variant: propTypes.oneOf(['plain', 'inverted', 'default'])
+  variant: propTypes.oneOf(['plain', 'inverted', 'default']),
+  small: propTypes.bool
 };
 Button.defaultProps = {
-  variant: 'default',
-  type: 'button'
+  variant: 'default'
 };
 
 // Local imports
