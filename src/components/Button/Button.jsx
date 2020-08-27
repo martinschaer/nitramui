@@ -38,21 +38,16 @@ export const buttonStyle = css`
   &:focus,
   &:active,
   &.active {
-    color: ${
-      props => props.variant === 'plain'
-        ? ds.colors.buttonFgHoverPlain
-        : ds.colors.buttonFgHover
-    };
-    background-color: ${
-      props => props.variant === 'plain'
-        ? ds.colors.buttonBgHoverPlain
-        : ds.colors.buttonBgHover
-    };
-    border-color: ${
-      props => props.variant === 'plain'
-        ? ds.colors.buttonBorderHoverPlain
-        : ds.colors.buttonBorderHover};
+    ${props => props.variant === 'plain'
+      ? `color: ${ds.colors.buttonFgHoverPlain(props)};
+        background-color: ${ds.colors.buttonBgHoverPlain(props)};
+        border-color: ${ds.colors.buttonBorderHoverPlain(props)};`
+      : `color: ${ds.colors.buttonFgHover(props)};
+        background-color: ${ds.colors.buttonBgHover(props)};
+        border-color: ${ds.colors.buttonBorderHover(props)};`
+    }
     outline: none;
+    ${props => props.extraStyles?.hover}
   }
 
   &:active,
@@ -74,10 +69,14 @@ export const buttonStyle = css`
   }
 
   &.selected {
+    color: ${ds.colors.buttonFgSelected};
     background-color: ${ds.colors.buttonBgSelected};
     transform: perspective(100rem) translateZ(-2rem);
     box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
+    ${props => props.extraStyles?.selected}
   }
+
+  ${props => props.extraStyles?.base}
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -95,10 +94,17 @@ Button.propTypes = {
     'inverted',
     'default'
   ]),
-  small: PropTypes.bool
+  small: PropTypes.bool,
+  type: PropTypes.oneOf(['button', 'submit']),
+  extraStyles: PropTypes.shape({
+    base: PropTypes.any,
+    hover: PropTypes.any,
+    selected: PropTypes.any
+  })
 }
 Button.defaultProps = {
-  variant: 'default'
+  variant: 'default',
+  type: 'button'
 }
 
 export default Button

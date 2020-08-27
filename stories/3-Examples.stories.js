@@ -3,6 +3,7 @@ import { linkTo } from '@storybook/addon-links'
 
 import {
   modes,
+  css,
   styled,
   Card,
   Pane,
@@ -35,6 +36,7 @@ const customThemes = {
       card: { light: '#F9FAFB', dark: '#212B36' },
       border: { light: '#DFE3E8', dark: '#637381' },
       buttonBg: { light: '#018EFF', dark: '#018EFF' },
+      buttonFgSelected: { light: '#F9FAFB', dark: '#F9FAFB' },
       buttonBgSelected: { light: '#0071CC', dark: '#0071CC' },
       buttonBgHover: { light: '#33A4FF', dark: '#33A4FF' },
       buttonFg: { light: 'white', dark: 'white' },
@@ -158,6 +160,7 @@ const ExampleTable = () => {
 // ---------------------------------------------------------------------------------------------------------------------
 export const App = () => {
   const [text, setText] = React.useState('Lorem ipsum')
+
   return (
     <NitramUI
       customThemes={customThemes}
@@ -380,10 +383,21 @@ export const App = () => {
                   >
                     <p><Hola>{text}</Hola>, <a href='/'>dolor sit amed</a> <Loading inline /></p>
                     <p>
-                      <button type='button'>More <Loading inline icon='⧗' /></button>
-                      <Button variant='plain'>More</Button>
-                      <Button variant='inverted'>More</Button>
-                      <Button small>More</Button>
+                      <button type='button'>Normal <Loading inline icon='⧗' /></button>
+                      <button type='button' className='selected'>Selected</button>
+                      <Button variant='plain'>Plain</Button>
+                      <Button variant='plain' className='selected'>Plain selected</Button>
+                      <Button variant='inverted'>Inverted</Button>
+                      <Button variant='inverted' className='selected'>Inverted selected</Button>
+                      <Button small>Small</Button>
+                      <Button small className='selected'>Small</Button>
+                      <Button
+                        extraStyles={{
+                          hover: css`box-shadow: inset 0 0 0 1px ${ds.colors.buttonBorderHoverPlain};`
+                        }}
+                      >
+                        Extra hover
+                      </Button>
                     </p>
                     <div>
                       <Control
@@ -409,6 +423,20 @@ export const App = () => {
                       <p>Hello world</p>
                     </Card>
                     <Card selected compact compactFooter marginBottom footer={(<Label compact>Footer</Label>)}>
+                      <p>Hello world</p>
+                    </Card>
+                    <Card
+                      selected
+                      hoverable
+                      compact
+                      compactFooter
+                      marginBottom
+                      footer={(<Label compact>Footer</Label>)}
+                      extraStyles={{
+                        hover: css`
+box-shadow: inset 0 0 0 1px ${ds.colors.buttonBorderHoverPlain} !important;`
+                      }}
+                    >
                       <p>Hello world</p>
                     </Card>
                   </Card>

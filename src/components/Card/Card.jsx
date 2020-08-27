@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Local imports
@@ -65,7 +65,14 @@ const StyledCard = styled.div`
     min-width: -webkit-fill-available;
   }
 
-  ${props => props.hoverable === true ? `&:hover { border-color: ${ds.colors.cardBorderHover(props)}; }` : ''}
+  ${props => props.hoverable === true ? css`&:hover {
+    border-color: ${ds.colors.cardBorderHover};
+    ${props.extraStyles?.hover}
+  }` : ''}
+
+  ${props => props.selected && props.extraStyles?.selected}
+
+  ${props => props.extraStyles?.base}
 `
 
 const StyledCardHeader = styled.header`
@@ -124,6 +131,7 @@ const Card = ({
   margin,
   marginTop,
   marginBottom,
+  extraStyles,
   onClick
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
@@ -140,6 +148,7 @@ const Card = ({
       margin={margin}
       marginTop={marginTop}
       marginBottom={marginBottom}
+      extraStyles={extraStyles}
       onClick={onClick && (() => onClick())}
     >
       {header && (<StyledCardHeader compactHeader={compactHeader}>{header}</StyledCardHeader>)}
@@ -176,7 +185,12 @@ Card.propTypes = {
   margin: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   marginTop: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   marginBottom: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  extraStyles: PropTypes.shape({
+    base: PropTypes.any,
+    hover: PropTypes.any,
+    selected: PropTypes.any
+  })
 }
 Card.defaultProps = {
   height: 'default',
