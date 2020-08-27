@@ -2994,6 +2994,17 @@ var ds = {
       }),
       custom: buildCustomProp('colors', 'buttonFgDisabled', BLACK_30, EMPEROR)
     }),
+    buttonFgSelected: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'buttonFgSelected', EMPEROR, GALLERY)
+    }),
     buttonBg: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: 'transparent',
@@ -4398,7 +4409,11 @@ const StyledCard = styled.div`
     min-width: -webkit-fill-available;
   }
 
-  ${props => props.hoverable === true ? `&:hover { border-color: ${ds.colors.cardBorderHover(props)}; }` : ''}
+  ${props => props.hoverable === true ? css(["&:hover{border-color:", ";", "}"], ds.colors.cardBorderHover, props.extraStyles?.hover) : ''}
+
+  ${props => props.selected && props.extraStyles?.selected}
+
+  ${props => props.extraStyles?.base}
 `;
 const StyledCardHeader = styled.header`
   align-items: center;
@@ -4453,6 +4468,7 @@ const Card = ({
   margin,
   marginTop,
   marginBottom,
+  extraStyles,
   onClick
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
@@ -4468,6 +4484,7 @@ const Card = ({
     margin: margin,
     marginTop: marginTop,
     marginBottom: marginBottom,
+    extraStyles: extraStyles,
     onClick: onClick && (() => onClick())
   }, header && /*#__PURE__*/React__default.createElement(StyledCardHeader, {
     compactHeader: compactHeader
@@ -4499,7 +4516,12 @@ Card.propTypes = {
   margin: propTypes.oneOfType([propTypes.bool, propTypes.number]),
   marginTop: propTypes.oneOfType([propTypes.bool, propTypes.number]),
   marginBottom: propTypes.oneOfType([propTypes.bool, propTypes.number]),
-  onClick: propTypes.func
+  onClick: propTypes.func,
+  extraStyles: propTypes.shape({
+    base: propTypes.any,
+    hover: propTypes.any,
+    selected: propTypes.any
+  })
 };
 Card.defaultProps = {
   height: 'default',
@@ -4722,7 +4744,11 @@ Table.propTypes = {
 };
 Table.defaultProps = {};
 
-const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:hover,&:focus,&:active,&.active{color:", ";background-color:", ";border-color:", ";outline:none;}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";}"], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) !== 'transparent' ? ds.colors.buttonBg : ds.colors.bg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.variant === 'plain' ? ds.colors.buttonFgHoverPlain : ds.colors.buttonFgHover, props => props.variant === 'plain' ? ds.colors.buttonBgHoverPlain : ds.colors.buttonBgHover, props => props.variant === 'plain' ? ds.colors.buttonBorderHoverPlain : ds.colors.buttonBorderHover, ds.colors.shadow, ds.colors.buttonFgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, ds.colors.buttonBgSelected, ds.colors.buttonShadow); // ---------------------------------------------------------------------------------------------------------------------
+const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:hover,&:focus,&:active,&.active{", " outline:none;", "}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{color:", ";background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) !== 'transparent' ? ds.colors.buttonBg : ds.colors.bg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.variant === 'plain' ? `color: ${ds.colors.buttonFgHoverPlain(props)};
+        background-color: ${ds.colors.buttonBgHoverPlain(props)};
+        border-color: ${ds.colors.buttonBorderHoverPlain(props)};` : `color: ${ds.colors.buttonFgHover(props)};
+        background-color: ${ds.colors.buttonBgHover(props)};
+        border-color: ${ds.colors.buttonBorderHover(props)};`, props => props.extraStyles?.hover, ds.colors.shadow, ds.colors.buttonFgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, ds.colors.buttonFgSelected, ds.colors.buttonBgSelected, ds.colors.buttonShadow, props => props.extraStyles?.selected, props => props.extraStyles?.base); // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -4734,10 +4760,17 @@ const Button = styled.button`
 
 Button.propTypes = {
   variant: propTypes.oneOf(['plain', 'inverted', 'default']),
-  small: propTypes.bool
+  small: propTypes.bool,
+  type: propTypes.oneOf(['button', 'submit']),
+  extraStyles: propTypes.shape({
+    base: propTypes.any,
+    hover: propTypes.any,
+    selected: propTypes.any
+  })
 };
 Button.defaultProps = {
-  variant: 'default'
+  variant: 'default',
+  type: 'button'
 };
 
 // Local imports
