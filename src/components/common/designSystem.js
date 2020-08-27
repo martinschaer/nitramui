@@ -750,6 +750,11 @@ export default {
       [themes.hiContrast]: '0.25rem',
       custom: buildCustomProp('measures', 'buttonRadius', '0.25rem')
     }),
+    buttonRadiusSmall: theme('theme', {
+      [themes.smooth]: '0.25rem',
+      [themes.hiContrast]: '0.25rem',
+      custom: buildCustomProp('measures', 'buttonRadiusSmall', '0.25rem')
+    }),
     font: theme('theme', {
       [themes.smooth]: '0.875rem',
       [themes.hiContrast]: '0.875rem',
@@ -759,6 +764,11 @@ export default {
       [themes.smooth]: '0.875rem',
       [themes.hiContrast]: '0.875rem',
       custom: buildCustomProp('measures', 'inputFont', '0.875rem')
+    }),
+    inputFontSmall: theme('theme', {
+      [themes.smooth]: '0.66rem',
+      [themes.hiContrast]: '0.66rem',
+      custom: buildCustomProp('measures', 'inputFontSmall', '0.66rem')
     }),
     unit: theme('theme', {
       [themes.smooth]: '16px',
@@ -774,6 +784,11 @@ export default {
       [themes.smooth]: 1,
       [themes.hiContrast]: 1,
       custom: buildCustomProp('measures', 'buttonSpacerH', 1)
+    }),
+    buttonSpacerHSmall: theme('theme', {
+      [themes.smooth]: 0.5,
+      [themes.hiContrast]: 0.5,
+      custom: buildCustomProp('measures', 'buttonSpacerHSmall', 0.5)
     }),
     inputSpacerH: theme('theme', {
       [themes.smooth]: 0.5,

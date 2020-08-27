@@ -6,13 +6,14 @@ import styled, { css } from 'styled-components'
 // ---------------------------------------------------------------------------------------------------------------------
 import ds from '../common/designSystem'
 import {
-  labelStyles
+  labelStyles,
+  labelStylesSmall
 } from '../common/typography'
 
 export const buttonStyle = css`
-  ${labelStyles}
-  padding: 0 ${ds.measures.buttonSpacerH}rem;
-  font-size: ${ds.measures.inputFont};
+  ${props => props.small ? labelStylesSmall : labelStyles}
+  font-size: ${props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont};
+  vertical-align: bottom; /* fixes issue when font-size is in rems */
   border: 1px solid ${props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder};
   background-color: ${
     props => props.variant === 'plain'
@@ -28,7 +29,7 @@ export const buttonStyle = css`
         ? ds.colors.buttonBg(props) !== 'transparent' ? ds.colors.buttonBg : ds.colors.bg
         : ds.colors.buttonFg
   };
-  border-radius: ${ds.measures.buttonRadius};
+  border-radius: ${props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius};
   box-sizing: border-box;
   cursor: pointer;
   transform: perspective(100rem);
@@ -93,11 +94,11 @@ Button.propTypes = {
     'plain',
     'inverted',
     'default'
-  ])
+  ]),
+  small: PropTypes.bool
 }
 Button.defaultProps = {
-  variant: 'default',
-  type: 'button'
+  variant: 'default'
 }
 
 export default Button

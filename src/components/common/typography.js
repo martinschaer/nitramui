@@ -22,3 +22,11 @@ export const labelStyles = css`
   display: inline-block;
   margin: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
 `
+
+export const labelStylesSmall = css`
+  line-height: calc(${ds.measures.spacer}rem * 3 / 2);
+  height: calc(${ds.measures.spacer}rem * 3 / 2);
+  padding: 0 ${props => ds.measures.spacer(props) / 2}rem;
+  display: inline-block;
+  margin: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
+`

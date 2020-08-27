@@ -383,6 +383,7 @@ export const App = () => {
                       <button type='button'>More <Loading inline icon='⧗' /></button>
                       <Button variant='plain'>More</Button>
                       <Button variant='inverted'>More</Button>
+                      <Button small>More</Button>
                     </p>
                     <div>
                       <Control
