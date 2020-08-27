@@ -4409,11 +4409,18 @@ const StyledCard = styled.div`
     min-width: -webkit-fill-available;
   }
 
-  ${props => props.hoverable === true ? css(["&:hover{border-color:", ";", "}"], ds.colors.cardBorderHover, props.extraStyles?.hover) : ''}
+  ${props => props.hoverable === true ? css(["&:hover{border-color:", ";", "}"], ds.colors.cardBorderHover, ({
+  extraStyles = {}
+}) => extraStyles.hover) : ''}
 
-  ${props => props.selected && props.extraStyles?.selected}
+  ${({
+  selected,
+  extraStyles = {}
+}) => selected && extraStyles.selected}
 
-  ${props => props.extraStyles?.base}
+  ${({
+  extraStyles = {}
+}) => extraStyles.base}
 `;
 const StyledCardHeader = styled.header`
   align-items: center;
@@ -4525,7 +4532,8 @@ Card.propTypes = {
 };
 Card.defaultProps = {
   height: 'default',
-  colorBorderPosition: 'top'
+  colorBorderPosition: 'top',
+  extraStyles: {}
 };
 
 const GOLDEN_RATIO = 1.61803398875;
@@ -4748,7 +4756,13 @@ const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px s
         background-color: ${ds.colors.buttonBgHoverPlain(props)};
         border-color: ${ds.colors.buttonBorderHoverPlain(props)};` : `color: ${ds.colors.buttonFgHover(props)};
         background-color: ${ds.colors.buttonBgHover(props)};
-        border-color: ${ds.colors.buttonBorderHover(props)};`, props => props.extraStyles?.hover, ds.colors.shadow, ds.colors.buttonFgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, ds.colors.buttonFgSelected, ds.colors.buttonBgSelected, ds.colors.buttonShadow, props => props.extraStyles?.selected, props => props.extraStyles?.base); // ---------------------------------------------------------------------------------------------------------------------
+        border-color: ${ds.colors.buttonBorderHover(props)};`, ({
+  extraStyles = {}
+}) => extraStyles.hover, ds.colors.shadow, ds.colors.buttonFgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, ds.colors.buttonFgSelected, ds.colors.buttonBgSelected, ds.colors.buttonShadow, ({
+  extraStyles = {}
+}) => extraStyles.selected, ({
+  extraStyles = {}
+}) => extraStyles.base); // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -4770,7 +4784,8 @@ Button.propTypes = {
 };
 Button.defaultProps = {
   variant: 'default',
-  type: 'button'
+  type: 'button',
+  extraStyles: {}
 };
 
 // Local imports
