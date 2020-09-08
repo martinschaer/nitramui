@@ -11,6 +11,7 @@ import {
   Table,
   Button,
   Layout,
+  Divider,
   Loading,
   Control,
   Container,
@@ -172,6 +173,16 @@ export const App = () => {
             brand='Example'
             footerSlot='Example'
             headerSlot='Hi, Jonathan'
+            toolbar={(
+              <>
+                <Label>Label</Label>
+                <Divider />
+                <Button>Button</Button>
+                <Button variant='plain'>Plain</Button>
+                <Button variant='inverted'>Inverted</Button>
+                <Button small>Small</Button>
+              </>
+            )}
             menu={(
               <>
                 <button type='button' className='selected' onClick={linkTo('Examples', 'App')}>App</button>
