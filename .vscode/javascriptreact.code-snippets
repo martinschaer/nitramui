@@ -9,6 +9,14 @@
 		],
 		"description": "Section comments"
 	},
+	"Export default": {
+		"scope": "javascript,javascriptreact",
+		"prefix": "export default",
+		"body": [
+			"export { default } from './$1'",
+			""
+		]
+	},
 	"Import React and PropTypes": {
 		"scope": "javascript,javascriptreact",
 		"prefix": "import React",
