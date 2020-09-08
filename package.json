@@ -1,6 +1,6 @@
 {
   "name": "nitramui",
-  "version": "0.1.50",
+  "version": "0.1.51",
   "description": "UI framework for React projects.",
   "homepage": "https://martinschaer.github.io/nitramui/",
   "main": "build/nitramui.js",
@@ -40,7 +40,7 @@
     "@storybook/addons": "^6.0.2",
     "@storybook/react": "^6.0.2",
     "babel-loader": "^8.1.0",
-    "babel-plugin-styled-components": "^1.10.7",
+    "babel-plugin-styled-components": "^1.11.1",
     "eslint": "^7.3.1",
     "eslint-config-react-app": "^5.2.1",
     "eslint-config-standard": "^14.1.1",

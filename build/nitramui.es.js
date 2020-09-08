@@ -4566,6 +4566,7 @@ const StyledPane = styled.div`
   flex-shrink: 0;
   padding: ${props => props.noPadding ? '0' : '1rem'};
   outline: 1px dashed ${ds.colors.borderLight};
+  ${props => props.shadow && css(["box-shadow:0 0 1rem ", ";"], ds.colors.shadow)}
   overflow: auto;
   max-width: 100%;
   width: ${props => props.size === 'full' ? '100%' : props.size === 'small' ? '16rem' : props.size === 'full-minus-small' ? 'calc(100vw - 16rem)' : props.size === 'golden-width' ? `${100 / GOLDEN_RATIO}%` : props.size === 'golden-width-rest' ? `${100 - 100 / GOLDEN_RATIO}%` : props.size === 'half' ? '50%' : props.size === 'third' ? '33.3%' : props.size === 'fourth' ? '25%' // default:
@@ -4582,6 +4583,7 @@ const StyledPane = styled.div`
 const Pane = ({
   size,
   height,
+  shadow,
   noPadding,
   children
 }) => {
@@ -4632,6 +4634,7 @@ const Pane = ({
     id: uid.current,
     size: size,
     h: height,
+    shadow: shadow,
     noPadding: noPadding
   }, children);
 }; // ---------------------------------------------------------------------------------------------------------------------
@@ -4642,6 +4645,7 @@ const Pane = ({
 Pane.propTypes = {
   size: propTypes.oneOf(['default', 'small', 'full', 'full-minus-small', 'square', 'golden-horizontal', 'golden-vertical', 'golden-width', 'golden-width-rest', 'half', 'third', 'fourth']),
   height: propTypes.oneOfType([propTypes.oneOf(['half', 'full']), propTypes.number]),
+  shadow: propTypes.bool,
   noPadding: propTypes.bool,
   children: propTypes.node
 };
@@ -4871,6 +4875,7 @@ const Layout = ({
   brand,
   children,
   headerSlot,
+  toolbar,
   footerSlot,
   menu,
   menuB,
@@ -4887,7 +4892,7 @@ const Layout = ({
       display: 'flex',
       marginLeft: 'auto'
     }
-  }, menuB)), /*#__PURE__*/React.createElement(StyledMain, null, children), (footerSlot || brand) && /*#__PURE__*/React.createElement(StyledFooter, null, /*#__PURE__*/React.createElement(Label, {
+  }, menuB)), toolbar && /*#__PURE__*/React.createElement(StyledHeader, null, toolbar), /*#__PURE__*/React.createElement(StyledMain, null, children), (footerSlot || brand) && /*#__PURE__*/React.createElement(StyledFooter, null, /*#__PURE__*/React.createElement(Label, {
     heading: true
   }, footerSlot || `Copyright © 2020 ${brand}`), footerMenu, footerMenuB && /*#__PURE__*/React.createElement("div", {
     style: {
@@ -4906,11 +4911,30 @@ Layout.propTypes = {
   menuB: propTypes.node,
   children: propTypes.node,
   headerSlot: propTypes.node,
+  toolbar: propTypes.node,
   footerSlot: propTypes.node,
   footerMenu: propTypes.node,
   footerMenuB: propTypes.node
 };
 Layout.defaultProps = {};
+
+// Component
+// ---------------------------------------------------------------------------------------------------------------------
+
+const Divider = styled.span`
+  display: inline-block;
+  margin: ${props => props.noMargin ? 0 : '0 1em'};
+  border-right: 1px solid ${ds.colors.border};
+  height: 1.8em;
+  vertical-align: middle;
+`; // ---------------------------------------------------------------------------------------------------------------------
+// PropTypes, defaults & export
+// ---------------------------------------------------------------------------------------------------------------------
+
+Divider.propTypes = {
+  noMargin: propTypes.bool
+};
+Divider.defaultProps = {};
 
 // Styled components
 // ---------------------------------------------------------------------------------------------------------------------
@@ -5380,5 +5404,5 @@ NitramUI.propTypes = {
 };
 NitramUI.defaultProps = {};
 
-export { Button, Card, Container, Control, Label, Layout, Loading, NitramUI, NitramUIContext, Pane, Table, css, ds, modes, styled, themes };
+export { Button, Card, Container, Control, Divider, Label, Layout, Loading, NitramUI, NitramUIContext, Pane, Table, css, ds, modes, styled, themes };
 //# sourceMappingURL=nitramui.es.js.map
