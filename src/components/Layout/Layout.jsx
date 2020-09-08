@@ -45,7 +45,17 @@ const StyledFooter = styled.header`
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
-const Layout = ({ brand, children, headerSlot, footerSlot, menu, menuB, footerMenu, footerMenuB }) => {
+const Layout = ({
+  brand,
+  children,
+  headerSlot,
+  toolbar,
+  footerSlot,
+  menu,
+  menuB,
+  footerMenu,
+  footerMenuB
+}) => {
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
@@ -60,6 +70,11 @@ const Layout = ({ brand, children, headerSlot, footerSlot, menu, menuB, footerMe
               {menuB}
             </div>
           )}
+        </StyledHeader>
+      )}
+      {toolbar && (
+        <StyledHeader>
+          {toolbar}
         </StyledHeader>
       )}
       <StyledMain>
@@ -89,6 +104,7 @@ Layout.propTypes = {
   menuB: PropTypes.node,
   children: PropTypes.node,
   headerSlot: PropTypes.node,
+  toolbar: PropTypes.node,
   footerSlot: PropTypes.node,
   footerMenu: PropTypes.node,
   footerMenuB: PropTypes.node
