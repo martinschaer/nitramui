@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Local imports
@@ -28,6 +28,7 @@ const StyledPane = styled.div`
   flex-shrink: 0;
   padding: ${props => props.noPadding ? '0' : '1rem'};
   outline: 1px dashed ${ds.colors.borderLight};
+  ${props => props.shadow && css`box-shadow: 0 0 1rem ${ds.colors.shadow};`}
   overflow: auto;
   max-width: 100%;
   width: ${
@@ -63,6 +64,7 @@ const StyledPane = styled.div`
 const Pane = ({
   size,
   height,
+  shadow,
   noPadding,
   children
 }) => {
@@ -118,6 +120,7 @@ const Pane = ({
       id={uid.current}
       size={size}
       h={height}
+      shadow={shadow}
       noPadding={noPadding}
     >
       {children}
@@ -144,6 +147,7 @@ Pane.propTypes = {
     'fourth'
   ]),
   height: PropTypes.oneOfType([PropTypes.oneOf(['half', 'full']), PropTypes.number]),
+  shadow: PropTypes.bool,
   noPadding: PropTypes.bool,
   children: PropTypes.node
 }

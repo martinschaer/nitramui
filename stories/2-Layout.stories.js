@@ -15,7 +15,7 @@ export default {
 export const Main = () => (
   <NitramUI>
     <Layout>
-      <Pane size='small'>
+      <Pane size='small' shadow>
         <>
           <h2 className='pre-heading'>Pane sizes ➝</h2>
           <h1>This is a small one</h1>
@@ -89,7 +89,7 @@ export const Main = () => (
           <h2>Window width minus golden-width</h2>
         </>
       </Pane>
-      <Pane size='third'>
+      <Pane size='third' shadow>
         <>
           <h2 className='pre-heading'>Seventh pane</h2>
           <h1><code>third</code> size</h1>
