@@ -7,6 +7,80 @@ import styled, { css } from 'styled-components'
 // ---------------------------------------------------------------------------------------------------------------------
 import ds from '../common/designSystem'
 
+const POSITIONS = [
+  'top',
+  'right',
+  'bottom',
+  'left',
+  'top left',
+  'top right',
+  'bottom right',
+  'bottom left',
+  'with text'
+]
+
+const Dot = styled.div`
+  position: absolute;
+  background-color: ${props => props.color || ds.colors.link};
+  border-radius: ${ds.measures.radius};
+  width: ${ds.measures.radius};
+  height: ${ds.measures.radius};
+  ${props => props.position === 'top' && css`
+    top: ${props.separation};
+    left: 50%;
+    margin-top: calc(${ds.measures.radius} / -2);
+    margin-left: calc(${ds.measures.radius} / -2);
+  `}
+  ${props => props.position === 'right' && css`
+    top: 50%;
+    right: ${props.separation};
+    margin-top: calc(${ds.measures.radius} / -2);
+    margin-right: calc(${ds.measures.radius} / -2);
+  `}
+  ${props => props.position === 'bottom' && css`
+    bottom: ${props.separation};
+    left: 50%;
+    margin-bottom: calc(${ds.measures.radius} / -2);
+    margin-left: calc(${ds.measures.radius} / -2);
+  `}
+  ${props => props.position === 'left' && css`
+    top: 50%;
+    left: ${props.separation};
+    margin-top: calc(${ds.measures.radius} / -2);
+    margin-left: calc(${ds.measures.radius} / -2);
+  `}
+  ${props => props.position === 'top right' && css`
+    top: ${props.separation};
+    right: ${props.separation};
+    margin-top: calc(${ds.measures.radius} / -2);
+    margin-right: calc(${ds.measures.radius} / -2);
+  `}
+  ${props => props.position === 'top left' && css`
+    top: ${props.separation};
+    left: ${props.separation};
+    margin-top: calc(${ds.measures.radius} / -2);
+    margin-left: calc(${ds.measures.radius} / -2);
+  `}
+  ${props => props.position === 'bottom right' && css`
+    bottom: ${props.separation};
+    right: ${props.separation};
+    margin-bottom: calc(${ds.measures.radius} / -2);
+    margin-right: calc(${ds.measures.radius} / -2);
+  `}
+  ${props => props.position === 'bottom left' && css`
+    bottom: ${props.separation};
+    left: ${props.separation};
+    margin-bottom: calc(${ds.measures.radius} / -2);
+    margin-left: calc(${ds.measures.radius} / -2);
+  `}
+  ${props => props.position === 'with text' && css`
+    top: calc((${props.separation} * 2) + 0.66rem);
+    left: ${props.separation};
+    margin-top: calc(${ds.measures.radius} / -2);
+    margin-left: calc(${ds.measures.radius} / -2);
+  `}
+`
+
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
@@ -23,6 +97,7 @@ const StyledCard = styled.div`
   cursor: ${props => props.onClick ? 'pointer' : 'default'};
   transition-property: 'border-color';
   transition-duration: .1s;
+  position: relative;
 
   ${props => props.color &&
     (`border-${props.colorBorderPosition}: ${ds.measures.radius(props)} solid ${props.color} !important;`)}
@@ -132,6 +207,7 @@ const Card = ({
   marginTop,
   marginBottom,
   extraStyles,
+  stickers,
   onClick
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
@@ -158,6 +234,13 @@ const Card = ({
         </StyledCardBody>
       )}
       {footer && (<StyledCardFooter compactFooter={compactFooter}>{footer}</StyledCardFooter>)}
+      {stickers?.dot && (
+        <Dot
+          position={typeof stickers.dot === 'string' ? stickers.dot : stickers.dot.p}
+          color={color}
+          separation={noPadding ? '0' : compact ? '0.5rem' : '1rem'}
+        />
+      )}
     </StyledCard>
   )
 }
@@ -190,6 +273,19 @@ Card.propTypes = {
     base: PropTypes.any,
     hover: PropTypes.any,
     selected: PropTypes.any
+  }),
+  stickers: PropTypes.shape({
+    dot: PropTypes.oneOf([
+      // either specify the position as a value for dot…
+      ...POSITIONS,
+      // …or pass an object with the position (p) and color (c)
+      PropTypes.shape({
+        // p for position
+        p: PropTypes.oneOf(POSITIONS),
+        // c for color
+        c: PropTypes.string
+      })
+    ])
   })
 }
 Card.defaultProps = {

@@ -430,6 +430,35 @@ export const App = () => {
                     <Loading />
                     <p>ds.colors.fg: {getDSVal(ds.colors.fg)}</p>
                     <p>ds.colors.bg: {getDSVal(ds.colors.bg)}</p>
+                    <Card compact hoverable marginBottom stickers={{ dot: 'top' }}><p>Unread message (top)</p></Card>
+                    <Card compact hoverable marginBottom stickers={{ dot: 'right' }}>
+                      <p>Unread message (right)</p>
+                    </Card>
+                    <Card compact hoverable marginBottom stickers={{ dot: 'bottom' }}>
+                      <p>Unread message (bottom)</p>
+                    </Card>
+                    <Card compact hoverable marginBottom stickers={{ dot: { p: 'left', c: 'red' } }}>
+                      <p>Hello world (left)</p>
+                    </Card>
+                    <Card compact hoverable marginBottom stickers={{ dot: 'top right' }}>
+                      <p>Unread message (top right)</p>
+                    </Card>
+                    <Card compact hoverable marginBottom stickers={{ dot: 'top left' }}>
+                      <p>Unread message (top left)</p>
+                    </Card>
+                    <Card compact hoverable marginBottom stickers={{ dot: 'bottom right' }}>
+                      <p>Unread message (bottom right)</p>
+                    </Card>
+                    <Card compact hoverable marginBottom stickers={{ dot: 'bottom left' }}>
+                      <p>Unread message (bottom left)</p>
+                    </Card>
+                    <Card compact hoverable marginBottom stickers={{ dot: 'with text' }}>
+                      <p>Unread message (with text)</p>
+                    </Card>
+                    <Card hoverable marginBottom stickers={{ dot: 'with text' }}>
+                      <p>Unread message (with text)</p>
+                      <p>Unread message</p>
+                    </Card>
                     <Card compact hoverable compactFooter marginBottom footer={(<Label compact>Footer</Label>)}>
                       <p>Hello world</p>
                     </Card>
