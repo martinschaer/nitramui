@@ -4368,6 +4368,23 @@ if (process.env.NODE_ENV !== 'production') {
 }
 });
 
+const POSITIONS = ['top', 'right', 'bottom', 'left', 'top left', 'top right', 'bottom right', 'bottom left', 'with text'];
+const Dot = styled.div`
+  position: absolute;
+  background-color: ${props => props.color || ds.colors.link};
+  border-radius: ${ds.measures.radius};
+  width: ${ds.measures.radius};
+  height: ${ds.measures.radius};
+  ${props => props.position === 'top' && css(["top:", ";left:50%;margin-top:calc(", " / -2);margin-left:calc(", " / -2);"], props.separation, ds.measures.radius, ds.measures.radius)}
+  ${props => props.position === 'right' && css(["top:50%;right:", ";margin-top:calc(", " / -2);margin-right:calc(", " / -2);"], props.separation, ds.measures.radius, ds.measures.radius)}
+  ${props => props.position === 'bottom' && css(["bottom:", ";left:50%;margin-bottom:calc(", " / -2);margin-left:calc(", " / -2);"], props.separation, ds.measures.radius, ds.measures.radius)}
+  ${props => props.position === 'left' && css(["top:50%;left:", ";margin-top:calc(", " / -2);margin-left:calc(", " / -2);"], props.separation, ds.measures.radius, ds.measures.radius)}
+  ${props => props.position === 'top right' && css(["top:", ";right:", ";margin-top:calc(", " / -2);margin-right:calc(", " / -2);"], props.separation, props.separation, ds.measures.radius, ds.measures.radius)}
+  ${props => props.position === 'top left' && css(["top:", ";left:", ";margin-top:calc(", " / -2);margin-left:calc(", " / -2);"], props.separation, props.separation, ds.measures.radius, ds.measures.radius)}
+  ${props => props.position === 'bottom right' && css(["bottom:", ";right:", ";margin-bottom:calc(", " / -2);margin-right:calc(", " / -2);"], props.separation, props.separation, ds.measures.radius, ds.measures.radius)}
+  ${props => props.position === 'bottom left' && css(["bottom:", ";left:", ";margin-bottom:calc(", " / -2);margin-left:calc(", " / -2);"], props.separation, props.separation, ds.measures.radius, ds.measures.radius)}
+  ${props => props.position === 'with text' && css(["top:calc((", " * 2) + 0.66rem);left:", ";margin-top:calc(", " / -2);margin-left:calc(", " / -2);"], props.separation, props.separation, ds.measures.radius, ds.measures.radius)}
+`; // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 // StyledCard height property is called h so that it doesn’t appear in the resulting DOM node.
@@ -4384,6 +4401,7 @@ const StyledCard = styled.div`
   cursor: ${props => props.onClick ? 'pointer' : 'default'};
   transition-property: 'border-color';
   transition-duration: .1s;
+  position: relative;
 
   ${props => props.color && `border-${props.colorBorderPosition}: ${ds.measures.radius(props)} solid ${props.color} !important;`}
 
@@ -4476,6 +4494,7 @@ const Card = ({
   marginTop,
   marginBottom,
   extraStyles,
+  stickers,
   onClick
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
@@ -4500,7 +4519,11 @@ const Card = ({
     compact: compact
   }, children), footer && /*#__PURE__*/React__default.createElement(StyledCardFooter, {
     compactFooter: compactFooter
-  }, footer));
+  }, footer), stickers?.dot && /*#__PURE__*/React__default.createElement(Dot, {
+    position: typeof stickers.dot === 'string' ? stickers.dot : stickers.dot.p,
+    color: color,
+    separation: noPadding ? '0' : compact ? '0.5rem' : '1rem'
+  }));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4528,6 +4551,16 @@ Card.propTypes = {
     base: propTypes.any,
     hover: propTypes.any,
     selected: propTypes.any
+  }),
+  stickers: propTypes.shape({
+    dot: propTypes.oneOf([// either specify the position as a value for dot…
+    ...POSITIONS, // …or pass an object with the position (p) and color (c)
+    propTypes.shape({
+      // p for position
+      p: propTypes.oneOf(POSITIONS),
+      // c for color
+      c: propTypes.string
+    })])
   })
 };
 Card.defaultProps = {
