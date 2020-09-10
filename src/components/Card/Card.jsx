@@ -234,7 +234,7 @@ const Card = ({
         </StyledCardBody>
       )}
       {footer && (<StyledCardFooter compactFooter={compactFooter}>{footer}</StyledCardFooter>)}
-      {stickers?.dot && (
+      {stickers && stickers.dot && (
         <Dot
           position={typeof stickers.dot === 'string' ? stickers.dot : stickers.dot.p}
           color={color}
@@ -275,9 +275,9 @@ Card.propTypes = {
     selected: PropTypes.any
   }),
   stickers: PropTypes.shape({
-    dot: PropTypes.oneOf([
+    dot: PropTypes.oneOfType([
       // either specify the position as a value for dot…
-      ...POSITIONS,
+      PropTypes.oneOf(POSITIONS),
       // …or pass an object with the position (p) and color (c)
       PropTypes.shape({
         // p for position
