@@ -4519,7 +4519,7 @@ const Card = ({
     compact: compact
   }, children), footer && /*#__PURE__*/React__default.createElement(StyledCardFooter, {
     compactFooter: compactFooter
-  }, footer), stickers?.dot && /*#__PURE__*/React__default.createElement(Dot, {
+  }, footer), stickers && stickers.dot && /*#__PURE__*/React__default.createElement(Dot, {
     position: typeof stickers.dot === 'string' ? stickers.dot : stickers.dot.p,
     color: color,
     separation: noPadding ? '0' : compact ? '0.5rem' : '1rem'
@@ -4553,8 +4553,8 @@ Card.propTypes = {
     selected: propTypes.any
   }),
   stickers: propTypes.shape({
-    dot: propTypes.oneOf([// either specify the position as a value for dot…
-    ...POSITIONS, // …or pass an object with the position (p) and color (c)
+    dot: propTypes.oneOfType([// either specify the position as a value for dot…
+    propTypes.oneOf(POSITIONS), // …or pass an object with the position (p) and color (c)
     propTypes.shape({
       // p for position
       p: propTypes.oneOf(POSITIONS),
