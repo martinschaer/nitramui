@@ -4782,7 +4782,7 @@ Table.propTypes = {
 };
 Table.defaultProps = {};
 
-const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:hover,&:focus,&:active,&.active{", " outline:none;", "}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{color:", ";background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) !== 'transparent' ? ds.colors.buttonBg : ds.colors.bg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.variant === 'plain' ? `color: ${ds.colors.buttonFgHoverPlain(props)};
+const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:visited{color:inherit;}&:hover,&:focus,&:active,&.active{", " outline:none;text-decoration:none;", "}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{color:", ";background-color:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) !== 'transparent' ? ds.colors.buttonBg : ds.colors.bg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.variant === 'plain' ? `color: ${ds.colors.buttonFgHoverPlain(props)};
         background-color: ${ds.colors.buttonBgHoverPlain(props)};
         border-color: ${ds.colors.buttonBorderHoverPlain(props)};` : `color: ${ds.colors.buttonFgHover(props)};
         background-color: ${ds.colors.buttonBgHover(props)};
@@ -5230,14 +5230,16 @@ p {
     max-width: 100%;
   }
 
-  & > button:first-child ,
-  & > input:first-child ,
-  & > select:first-child {
+  & > button:first-child,
+  & > .button:first-child,
+  & > input:first-child,
+  & > select:first-child{
     margin-left: 0;
   }
 
-  & > button:last-child ,
-  & > input:last-child ,
+  & > button:last-child,
+  & > .button:last-child,
+  & > input:last-child,
   & > select:last-child {
     margin-right: 0;
   }
@@ -5257,6 +5259,7 @@ a {
   }
 }
 
+.button,
 button {
   ${buttonStyle}
 }
