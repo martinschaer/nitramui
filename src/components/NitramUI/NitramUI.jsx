@@ -88,14 +88,16 @@ p {
     max-width: 100%;
   }
 
-  & > button:first-child ,
-  & > input:first-child ,
-  & > select:first-child {
+  & > button:first-child,
+  & > .button:first-child,
+  & > input:first-child,
+  & > select:first-child{
     margin-left: 0;
   }
 
-  & > button:last-child ,
-  & > input:last-child ,
+  & > button:last-child,
+  & > .button:last-child,
+  & > input:last-child,
   & > select:last-child {
     margin-right: 0;
   }
@@ -115,6 +117,7 @@ a {
   }
 }
 
+.button,
 button {
   ${buttonStyle}
 }

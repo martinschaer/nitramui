@@ -34,6 +34,10 @@ export const buttonStyle = css`
   cursor: pointer;
   transform: perspective(100rem);
 
+  &:visited {
+    color: inherit;
+  }
+
   &:hover,
   &:focus,
   &:active,
@@ -47,6 +51,7 @@ export const buttonStyle = css`
         border-color: ${ds.colors.buttonBorderHover(props)};`
     }
     outline: none;
+    text-decoration: none;
     ${({ extraStyles = {} }) => extraStyles.hover}
   }
 

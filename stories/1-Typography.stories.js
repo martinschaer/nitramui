@@ -4,6 +4,7 @@ import {
   Card,
   Pane,
   Table,
+  Button,
   Layout,
   Control,
   NitramUI
@@ -11,7 +12,10 @@ import {
 
 export default {
   title: 'Typography',
-  component: Layout
+  component: Layout,
+  parameters: {
+    layout: 'fullscreen'
+  }
 }
 
 export const Typography = () => {
@@ -21,13 +25,16 @@ export const Typography = () => {
         <Pane size='small'>
           <h2 className='pre-heading'>Menu</h2>
           <nav>
-            <p><button type='button'>Button</button></p>
+            <p><Button>Button default</Button></p>
+            <p><Button variant='plain'>Button plain</Button></p>
+            <p><Button variant='inverted'>Button inverted</Button></p>
+            <p><a href='/' className='button'>Button anchor</a></p>
             <p><a href={`/?_=${Math.random().toString(36).substr(2, 9)}`}>Link</a></p>
             <p><a href='/'>Visited</a></p>
           </nav>
         </Pane>
         <Pane size='full-minus-small'>
-          <Card>
+          <Card height='full'>
             <h2 className='pre-heading'>Pre-Heading</h2>
             <h1>H1 — Hello world</h1>
             <h2>H1 — Hello world</h2>
