@@ -9,7 +9,10 @@ import {
 
 export default {
   title: 'Layout',
-  component: Layout
+  component: Layout,
+  parameters: {
+    layout: 'fullscreen'
+  }
 }
 
 export const Main = () => (

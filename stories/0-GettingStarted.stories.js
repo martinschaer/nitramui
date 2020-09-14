@@ -16,7 +16,10 @@ const README = marked(readmeMD)
 const mode2Emoji = mode => mode === 'light' ? '🌞' : '🌙'
 
 export default {
-  title: 'Getting Started'
+  title: 'Getting Started',
+  parameters: {
+    layout: 'fullscreen'
+  }
 }
 
 export const Readme = () => {

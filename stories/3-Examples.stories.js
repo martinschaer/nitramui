@@ -20,7 +20,10 @@ import {
 } from '../src'
 
 export default {
-  title: 'Examples'
+  title: 'Examples',
+  parameters: {
+    layout: 'fullscreen'
+  }
 }
 
 const Hola = styled.span`
