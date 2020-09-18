@@ -39,7 +39,10 @@ const customThemes = {
       bg: { light: '#F9FAFB', dark: '#000' },
       card: { light: '#F9FAFB', dark: '#212B36' },
       border: { light: '#DFE3E8', dark: '#637381' },
-      buttonBg: { light: '#018EFF', dark: '#018EFF' },
+      buttonBg: {
+        light: 'linear-gradient(-225deg, #A100FF 0%, #00BAFF 100%)',
+        dark: 'linear-gradient(-225deg, #A100FF 0%, #00BAFF 100%)'
+      },
       buttonFgSelected: { light: '#F9FAFB', dark: '#F9FAFB' },
       buttonBgSelected: { light: '#0071CC', dark: '#0071CC' },
       buttonBgHover: { light: '#33A4FF', dark: '#33A4FF' },
@@ -47,7 +50,7 @@ const customThemes = {
       buttonFgHover: { light: 'white', dark: 'white' },
       buttonFgDisabled: { light: '#018EFF', dark: '#018EFF' },
       buttonBgDisabled: { light: 'transparent', dark: 'transparent' },
-      buttonBorder: { light: '#018EFF', dark: '#018EFF' },
+      buttonBorder: { light: '#F9FAFB', dark: '#212B36' },
       buttonBorderHover: { light: '#33A4FF', dark: '#33A4FF' },
       inputFg: { light: '#212B36', dark: '#F9FAFB' },
       inputBg: { light: '#FFF', dark: 'transparent' },

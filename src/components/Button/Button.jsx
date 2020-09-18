@@ -15,18 +15,20 @@ export const buttonStyle = css`
   font-size: ${props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont};
   vertical-align: bottom; /* fixes issue when font-size is in rems */
   border: 1px solid ${props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder};
-  background-color: ${
+  background: ${
     props => props.variant === 'plain'
       ? ds.colors.buttonBgPlain
       : props.variant === 'inverted'
-        ? ds.colors.buttonFg
+        ? (ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg)
         : ds.colors.buttonBg
   };
   color: ${
     props => props.variant === 'plain'
       ? ds.colors.buttonFgPlain
       : props.variant === 'inverted'
-        ? ds.colors.buttonBg(props) !== 'transparent' ? ds.colors.buttonBg : ds.colors.bg
+        ? ds.colors.buttonBg(props) === 'transparent'
+          ? ds.colors.bg
+          : ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg
         : ds.colors.buttonFg
   };
   border-radius: ${props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius};
@@ -44,10 +46,10 @@ export const buttonStyle = css`
   &.active {
     ${props => props.variant === 'plain'
       ? `color: ${ds.colors.buttonFgHoverPlain(props)};
-        background-color: ${ds.colors.buttonBgHoverPlain(props)};
+        background: ${ds.colors.buttonBgHoverPlain(props)};
         border-color: ${ds.colors.buttonBorderHoverPlain(props)};`
       : `color: ${ds.colors.buttonFgHover(props)};
-        background-color: ${ds.colors.buttonBgHover(props)};
+        background: ${ds.colors.buttonBgHover(props)};
         border-color: ${ds.colors.buttonBorderHover(props)};`
     }
     outline: none;
@@ -64,7 +66,7 @@ export const buttonStyle = css`
   &:disabled {
     color: ${ds.colors.buttonFgDisabled};
     border-color: ${props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled};
-    background-color: ${props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled};
+    background: ${props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled};
     cursor: default;
 
     &:hover,
@@ -75,7 +77,7 @@ export const buttonStyle = css`
 
   &.selected {
     color: ${ds.colors.buttonFgSelected};
-    background-color: ${ds.colors.buttonBgSelected};
+    background: ${ds.colors.buttonBgSelected};
     transform: perspective(100rem) translateZ(-2rem);
     box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
     ${({ extraStyles = {} }) => extraStyles.selected}
