@@ -10,6 +10,13 @@ import {
   labelStylesSmall
 } from '../common/typography'
 
+const selectedCSS = css`
+  color: ${ds.colors.buttonFgSelected};
+  background: ${ds.colors.buttonBgSelected};
+  transform: perspective(100rem) translateZ(-2rem);
+  box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
+`
+
 export const buttonStyle = css`
   ${props => props.small ? labelStylesSmall : labelStyles}
   font-size: ${props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont};
@@ -75,11 +82,10 @@ export const buttonStyle = css`
     }
   }
 
+  ${props => props.selected ? selectedCSS : null}
+  ${props => props.selected ? ({ extraStyles = {} }) => extraStyles.selected : null}
   &.selected {
-    color: ${ds.colors.buttonFgSelected};
-    background: ${ds.colors.buttonBgSelected};
-    transform: perspective(100rem) translateZ(-2rem);
-    box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
+    ${selectedCSS}
     ${({ extraStyles = {} }) => extraStyles.selected}
   }
 
@@ -102,6 +108,7 @@ Button.propTypes = {
     'default'
   ]),
   small: PropTypes.bool,
+  selected: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit']),
   extraStyles: PropTypes.shape({
     base: PropTypes.any,
