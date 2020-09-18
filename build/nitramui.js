@@ -4727,6 +4727,18 @@ Label.defaultProps = {};
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
+const Muted = styled.span`
+  color: ${ds.colors.fgMuted};
+`; // ---------------------------------------------------------------------------------------------------------------------
+// PropTypes, defaults & export
+// ---------------------------------------------------------------------------------------------------------------------
+
+Muted.propTypes = {};
+Muted.defaultProps = {};
+
+// Styled Components
+// ---------------------------------------------------------------------------------------------------------------------
+
 const StyledTableContainer = styled.div`
   @media (max-width: 768px) {
     overflow-x: auto;
@@ -4789,13 +4801,16 @@ Table.propTypes = {
 };
 Table.defaultProps = {};
 
-const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:visited{color:inherit;}&:hover,&:focus,&:active,&.active{", " outline:none;text-decoration:none;", "}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}&.selected{color:", ";background:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.variant === 'plain' ? `color: ${ds.colors.buttonFgHoverPlain(props)};
+const selectedCSS = css(["color:", ";background:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";"], ds.colors.buttonFgSelected, ds.colors.buttonBgSelected, ds.colors.buttonShadow);
+const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:visited{color:inherit;}&:hover,&:focus,&:active,&.active{", " outline:none;text-decoration:none;", "}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.variant === 'plain' ? `color: ${ds.colors.buttonFgHoverPlain(props)};
         background: ${ds.colors.buttonBgHoverPlain(props)};
         border-color: ${ds.colors.buttonBorderHoverPlain(props)};` : `color: ${ds.colors.buttonFgHover(props)};
         background: ${ds.colors.buttonBgHover(props)};
         border-color: ${ds.colors.buttonBorderHover(props)};`, ({
   extraStyles = {}
-}) => extraStyles.hover, ds.colors.shadow, ds.colors.buttonFgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, ds.colors.buttonFgSelected, ds.colors.buttonBgSelected, ds.colors.buttonShadow, ({
+}) => extraStyles.hover, ds.colors.shadow, ds.colors.buttonFgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.selected ? selectedCSS : null, props => props.selected ? ({
+  extraStyles = {}
+}) => extraStyles.selected : null, selectedCSS, ({
   extraStyles = {}
 }) => extraStyles.selected, ({
   extraStyles = {}
@@ -4812,6 +4827,7 @@ const Button = styled.button`
 Button.propTypes = {
   variant: propTypes.oneOf(['plain', 'inverted', 'default']),
   small: propTypes.bool,
+  selected: propTypes.bool,
   type: propTypes.oneOf(['button', 'submit']),
   extraStyles: propTypes.shape({
     base: propTypes.any,
@@ -5013,6 +5029,24 @@ Loading.defaultProps = {
 
 };
 
+function _extends$1() {
+  _extends$1 = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends$1.apply(this, arguments);
+}
+
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -5077,16 +5111,19 @@ const StyledControl = styled.div`
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Control = ({
-  type,
-  label,
-  value,
-  onChange,
-  invalid,
-  disabled,
-  labelInside,
-  options
-}) => {
+const Control = props => {
+  const {
+    type,
+    label,
+    value,
+    onChange,
+    invalid,
+    disabled,
+    labelInside,
+    options,
+    min,
+    max
+  } = props;
   const uid = React.useRef(Math.random().toString(36).substr(2, 9));
   return /*#__PURE__*/React__default.createElement(StyledControl, {
     withLabel: label,
@@ -5103,13 +5140,16 @@ const Control = ({
   }, options.map(x => /*#__PURE__*/React__default.createElement("option", {
     key: x.value,
     value: x.value
-  }, x.label))) : /*#__PURE__*/React__default.createElement("input", {
+  }, x.label))) : /*#__PURE__*/React__default.createElement("input", _extends$1({
     id: uid.current,
     type: type || 'text',
     value: value,
     disabled: disabled,
     onChange: evt => onChange(evt.target.value)
-  }));
+  }, {
+    min,
+    max
+  })));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
@@ -5118,7 +5158,7 @@ const Control = ({
 Control.propTypes = {
   type: propTypes.string,
   label: propTypes.node,
-  value: propTypes.string,
+  value: propTypes.oneOfType([propTypes.string, propTypes.number]),
   onChange: propTypes.func,
   invalid: propTypes.bool,
   disabled: propTypes.bool,
@@ -5126,7 +5166,9 @@ Control.propTypes = {
   options: propTypes.arrayOf(propTypes.shape({
     label: propTypes.string,
     value: propTypes.string
-  }))
+  })),
+  min: propTypes.number,
+  max: propTypes.number
 };
 Control.defaultProps = {
   onChange: () => {}
@@ -5455,6 +5497,7 @@ exports.Divider = Divider;
 exports.Label = Label;
 exports.Layout = Layout;
 exports.Loading = Loading;
+exports.Muted = Muted;
 exports.NitramUI = NitramUI;
 exports.NitramUIContext = NitramUIContext;
 exports.Pane = Pane;
