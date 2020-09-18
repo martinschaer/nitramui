@@ -73,7 +73,8 @@ const StyledControl = styled.div`
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
-const Control = ({ type, label, value, onChange, invalid, disabled, labelInside, options }) => {
+const Control = (props) => {
+  const { type, label, value, onChange, invalid, disabled, labelInside, options, min, max } = props
   const uid = useRef(Math.random().toString(36).substr(2, 9))
   return (
     <StyledControl
@@ -84,7 +85,12 @@ const Control = ({ type, label, value, onChange, invalid, disabled, labelInside,
       {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
       {type === 'select'
         ? (
-          <select id={uid.current} value={value} disabled={disabled} onChange={evt => onChange(evt.target.value)}>
+          <select
+            id={uid.current}
+            value={value}
+            disabled={disabled}
+            onChange={evt => onChange(evt.target.value)}
+          >
             {options.map(x => (
               <option key={x.value} value={x.value}>{x.label}</option>
             ))}
@@ -97,6 +103,7 @@ const Control = ({ type, label, value, onChange, invalid, disabled, labelInside,
             value={value}
             disabled={disabled}
             onChange={evt => onChange(evt.target.value)}
+            {...{ min, max }}
           />
         )}
     </StyledControl>
@@ -109,12 +116,14 @@ const Control = ({ type, label, value, onChange, invalid, disabled, labelInside,
 Control.propTypes = {
   type: PropTypes.string,
   label: PropTypes.node,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
   invalid: PropTypes.bool,
   disabled: PropTypes.bool,
   labelInside: PropTypes.bool,
-  options: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }))
+  options: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, value: PropTypes.string })),
+  min: PropTypes.number,
+  max: PropTypes.number
 }
 Control.defaultProps = {
   onChange: () => {}
