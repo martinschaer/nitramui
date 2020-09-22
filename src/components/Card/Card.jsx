@@ -131,6 +131,9 @@ const StyledCard = styled.div`
   & & {
     box-shadow: none;
   }
+  .hollow & {
+    box-shadow: 0 0 1rem ${ds.colors.shadow};
+  }
 
   .pre-heading {
     margin-top: 0;
@@ -228,6 +231,7 @@ const Card = ({
       marginBottom={marginBottom}
       extraStyles={extraStyles}
       onClick={onClick && (() => onClick())}
+      className={hollow ? 'hollow' : null}
     >
       {header && (<StyledCardHeader compactHeader={compactHeader}>{header}</StyledCardHeader>)}
       {children && (
