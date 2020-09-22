@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Local imports
@@ -40,6 +40,11 @@ const StyledControl = styled.div`
       white-space: nowrap;
       user-select: none;
     `)}
+    ${props => props.comfort && !props.labelInside && css`
+      line-height: calc(${ds.measures.spacer}rem * 3);
+      height: calc(${ds.measures.spacer}rem * 3);
+      padding: 0 ${ds.measures.spacer * (3 / 2)}rem;
+    `}
   }
 
   & > input,
@@ -50,6 +55,11 @@ const StyledControl = styled.div`
     ${props => props.labelInside && (`
       padding-top: 0.8em;
     `)}
+    ${props => props.comfort && css`
+      line-height: calc(${ds.measures.spacer}rem * 3);
+      height: calc(${ds.measures.spacer}rem * 3);
+      padding: 0 ${ds.measures.spacer * (3 / 2)}rem;
+    `}
   }
 
   &.invalid > input,
@@ -74,13 +84,14 @@ const StyledControl = styled.div`
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 const Control = (props) => {
-  const { type, label, value, onChange, invalid, disabled, labelInside, options, min, max } = props
+  const { type, label, value, onChange, invalid, disabled, labelInside, comfort, options, min, max } = props
   const uid = useRef(Math.random().toString(36).substr(2, 9))
   return (
     <StyledControl
       withLabel={label}
       className={[invalid && 'invalid', disabled && 'disabled'].join(' ')}
       labelInside={labelInside}
+      comfort={comfort}
     >
       {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
       {type === 'select'
@@ -121,6 +132,7 @@ Control.propTypes = {
   invalid: PropTypes.bool,
   disabled: PropTypes.bool,
   labelInside: PropTypes.bool,
+  comfort: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, value: PropTypes.string })),
   min: PropTypes.number,
   max: PropTypes.number

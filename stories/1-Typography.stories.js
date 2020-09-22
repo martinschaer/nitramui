@@ -116,8 +116,27 @@ export const Typography = () => {
                   </tbody>
                 </Table>
                 <Control
-                  type='input'
-                  label='Name'
+                  labelInside
+                  type='text'
+                  label='text labelInside'
+                  onChange={() => {}}
+                />
+                <Control
+                  labelInside
+                  comfort
+                  type='text'
+                  label='text labelInside comfort'
+                  onChange={() => {}}
+                />
+                <Control
+                  type='text'
+                  label='text'
+                  onChange={() => {}}
+                />
+                <Control
+                  comfort
+                  type='text'
+                  label='text comfort'
                   onChange={() => {}}
                 />
                 <Control
@@ -127,20 +146,20 @@ export const Typography = () => {
                   max={10}
                 />
                 <Control
-                  type='input'
+                  type='text'
                   label='Name'
                   labelInside
                   invalid
                   onChange={() => {}}
                 />
                 <Control
-                  type='input'
+                  type='text'
                   label='Name'
                   invalid
                   onChange={() => {}}
                 />
                 <Control
-                  type='input'
+                  type='text'
                   label='Name'
                   invalid
                   disabled
