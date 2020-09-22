@@ -431,6 +431,7 @@ export const App = () => {
                     margin
                     compact
                     compactHeader
+                    hollow
                     header={(<Label compact>Compact header</Label>)}
                   >
                     <Loading />

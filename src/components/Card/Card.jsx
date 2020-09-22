@@ -86,7 +86,7 @@ const Dot = styled.div`
 // ---------------------------------------------------------------------------------------------------------------------
 // StyledCard height property is called h so that it doesn’t appear in the resulting DOM node.
 const StyledCard = styled.div`
-  background-color: ${props => props.selected ? ds.colors.cardSelected : ds.colors.card};
+  background-color: ${props => props.selected ? ds.colors.cardSelected : props.hollow ? ds.colors.bg : ds.colors.card};
   box-sizing: border-box;
   box-shadow: 0 0 1rem ${ds.colors.shadow};
   border: 1px solid ${props => props.selected ? ds.colors.cardBorderSelected : ds.colors.cardBorder};
@@ -201,6 +201,7 @@ const Card = ({
   compact,
   compactHeader,
   compactFooter,
+  hollow,
   hoverable,
   selected,
   margin,
@@ -220,6 +221,7 @@ const Card = ({
       colorBorderPosition={colorBorderPosition}
       h={height}
       hoverable={hoverable}
+      hollow={hollow}
       selected={selected}
       margin={margin}
       marginTop={marginTop}
@@ -263,6 +265,7 @@ Card.propTypes = {
   compact: PropTypes.bool,
   compactHeader: PropTypes.bool,
   compactFooter: PropTypes.bool,
+  hollow: PropTypes.bool,
   hoverable: PropTypes.bool,
   selected: PropTypes.bool,
   margin: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
