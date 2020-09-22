@@ -11,7 +11,7 @@ import {
   Control,
   Divider,
   NitramUI,
-  NitramUIContext
+  NitramUIContext, Label
 } from '../src'
 
 export default {
@@ -25,6 +25,7 @@ export default {
 const mode2Emoji = mode => mode === 'light' ? '🌞' : '🌙'
 
 export const Typography = () => {
+  const textRef = React.useRef()
   return (
     <NitramUI>
       <NitramUIContext.Consumer>
@@ -116,12 +117,22 @@ export const Typography = () => {
                     </tr>
                   </tbody>
                 </Table>
-                <Control
-                  labelInside
-                  type='text'
-                  label='text labelInside'
-                  onChange={() => {}}
-                />
+                <Divider horizontal />
+                <Card compact hollow header={<Label heading>Forwarding ref</Label>} marginBottom>
+                  <Control
+                    labelInside
+                    type='text'
+                    label='text labelInside'
+                    ref={textRef}
+                  />
+                  <Button
+                    onClick={
+                      () => { textRef.current.value = textRef.current.value.toUpperCase() }
+                    }
+                  >
+                    toUpperCase
+                  </Button>
+                </Card>
                 <Control
                   labelInside
                   comfort
@@ -132,13 +143,11 @@ export const Typography = () => {
                 <Control
                   type='text'
                   label='text'
-                  onChange={() => {}}
                 />
                 <Control
                   comfort
                   type='text'
                   label='text comfort'
-                  onChange={() => {}}
                 />
                 <Control
                   type='number'
@@ -151,20 +160,17 @@ export const Typography = () => {
                   label='Name'
                   labelInside
                   invalid
-                  onChange={() => {}}
                 />
                 <Control
                   type='text'
                   label='Name'
                   invalid
-                  onChange={() => {}}
                 />
                 <Control
                   type='text'
                   label='Name'
                   invalid
                   disabled
-                  onChange={() => {}}
                 />
                 <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', margin: '1rem 0' }}>
                   <Control type='text' label='Comfort + labelInside' comfort labelInside />

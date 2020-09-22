@@ -94,7 +94,7 @@ const StyledControl = styled.div`
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
-const Control = (props) => {
+const Control = React.forwardRef((props, ref) => {
   const { type, label, value, onChange, invalid, disabled, labelInside, comfort, small, options, min, max } = props
   const uid = useRef(Math.random().toString(36).substr(2, 9))
   return (
@@ -113,6 +113,7 @@ const Control = (props) => {
             value={value}
             disabled={disabled}
             onChange={evt => onChange(evt.target.value)}
+            ref={ref}
           >
             {options.map(x => (
               <option key={x.value} value={x.value}>{x.label}</option>
@@ -126,12 +127,13 @@ const Control = (props) => {
             value={value}
             disabled={disabled}
             onChange={evt => onChange(evt.target.value)}
+            ref={ref}
             {...{ min, max }}
           />
         )}
     </StyledControl>
   )
-}
+})
 
 // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
