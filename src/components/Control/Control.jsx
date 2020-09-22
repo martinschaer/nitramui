@@ -7,6 +7,9 @@ import styled, { css } from 'styled-components'
 // ---------------------------------------------------------------------------------------------------------------------
 import Label from '../Label'
 import ds from '../common/designSystem'
+import {
+  labelStylesSmall
+} from '../common/typography'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
@@ -27,6 +30,10 @@ const StyledControl = styled.div`
   }
 
   & > ${Label} {
+    ${props => props.small && css`
+      ${labelStylesSmall}
+      font-size: ${ds.measures.inputFontSmall};
+    `}
     padding-left: calc(${ds.measures.spacer}rem / 2);
     padding-right: calc(${ds.measures.spacer}rem / 4);
     font-weight: ${ds.weights.controlLabel};
@@ -49,6 +56,10 @@ const StyledControl = styled.div`
 
   & > input,
   & > select {
+    ${props => props.small && css`
+      ${labelStylesSmall}
+      font-size: ${ds.measures.inputFontSmall};
+    `}
     flex-grow: 1;
     margin: 0;
     max-width: 100%;
@@ -84,7 +95,7 @@ const StyledControl = styled.div`
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 const Control = (props) => {
-  const { type, label, value, onChange, invalid, disabled, labelInside, comfort, options, min, max } = props
+  const { type, label, value, onChange, invalid, disabled, labelInside, comfort, small, options, min, max } = props
   const uid = useRef(Math.random().toString(36).substr(2, 9))
   return (
     <StyledControl
@@ -92,6 +103,7 @@ const Control = (props) => {
       className={[invalid && 'invalid', disabled && 'disabled'].join(' ')}
       labelInside={labelInside}
       comfort={comfort}
+      small={small}
     >
       {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
       {type === 'select'
@@ -133,6 +145,7 @@ Control.propTypes = {
   disabled: PropTypes.bool,
   labelInside: PropTypes.bool,
   comfort: PropTypes.bool,
+  small: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, value: PropTypes.string })),
   min: PropTypes.number,
   max: PropTypes.number

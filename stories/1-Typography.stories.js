@@ -9,6 +9,7 @@ import {
   Button,
   Layout,
   Control,
+  Divider,
   NitramUI,
   NitramUIContext
 } from '../src'
@@ -165,6 +166,19 @@ export const Typography = () => {
                   disabled
                   onChange={() => {}}
                 />
+                <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', margin: '1rem 0' }}>
+                  <Control type='text' label='Comfort + labelInside' comfort labelInside />
+                  <Button>Save</Button>
+                  <Divider />
+                  <Control type='text' label='Normal' />
+                  <Button>Save</Button>
+                  <Divider />
+                  <Control type='text' label='Small' small />
+                  <Button small>Save</Button>
+                  <Divider />
+                  <Button>Save</Button>
+                  <Button small>Save</Button>
+                </div>
               </Card>
             </Pane>
           </Layout>
