@@ -4418,6 +4418,9 @@ const StyledCard = styled.div`
   & & {
     box-shadow: none;
   }
+  .hollow & {
+    box-shadow: 0 0 1rem ${ds.colors.shadow};
+  }
 
   .pre-heading {
     margin-top: 0;
@@ -4513,7 +4516,8 @@ const Card = ({
     marginTop: marginTop,
     marginBottom: marginBottom,
     extraStyles: extraStyles,
-    onClick: onClick && (() => onClick())
+    onClick: onClick && (() => onClick()),
+    className: hollow ? 'hollow' : null
   }, header && /*#__PURE__*/React__default.createElement(StyledCardHeader, {
     compactHeader: compactHeader
   }, header), children && /*#__PURE__*/React__default.createElement(StyledCardBody, {
