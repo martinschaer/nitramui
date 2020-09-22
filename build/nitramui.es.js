@@ -4383,7 +4383,7 @@ const Dot = styled.div`
 // StyledCard height property is called h so that it doesn’t appear in the resulting DOM node.
 
 const StyledCard = styled.div`
-  background-color: ${props => props.selected ? ds.colors.cardSelected : ds.colors.card};
+  background-color: ${props => props.selected ? ds.colors.cardSelected : props.hollow ? ds.colors.bg : ds.colors.card};
   box-sizing: border-box;
   box-shadow: 0 0 1rem ${ds.colors.shadow};
   border: 1px solid ${props => props.selected ? ds.colors.cardBorderSelected : ds.colors.cardBorder};
@@ -4481,6 +4481,7 @@ const Card = ({
   compact,
   compactHeader,
   compactFooter,
+  hollow,
   hoverable,
   selected,
   margin,
@@ -4499,6 +4500,7 @@ const Card = ({
     colorBorderPosition: colorBorderPosition,
     h: height,
     hoverable: hoverable,
+    hollow: hollow,
     selected: selected,
     margin: margin,
     marginTop: marginTop,
@@ -4534,6 +4536,7 @@ Card.propTypes = {
   compact: propTypes.bool,
   compactHeader: propTypes.bool,
   compactFooter: propTypes.bool,
+  hollow: propTypes.bool,
   hoverable: propTypes.bool,
   selected: propTypes.bool,
   margin: propTypes.oneOfType([propTypes.bool, propTypes.number]),
@@ -4971,17 +4974,15 @@ Layout.defaultProps = {};
 // ---------------------------------------------------------------------------------------------------------------------
 
 const Divider = styled.span`
-  display: inline-block;
-  margin: ${props => props.noMargin ? 0 : '0 1em'};
-  border-right: 1px solid ${ds.colors.border};
-  height: 1.8em;
+  ${props => props.horizontal ? css(["display:block;margin:", ";border-top:1px solid ", ";"], props => props.noMargin ? 0 : '1em 0', ds.colors.border) : css(["display:inline-block;margin:", ";border-right:1px solid ", ";height:1.8em;"], props => props.noMargin ? 0 : '0 1em', ds.colors.border)}
   vertical-align: middle;
 `; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
 
 Divider.propTypes = {
-  noMargin: propTypes.bool
+  noMargin: propTypes.bool,
+  horizontal: propTypes.bool
 };
 Divider.defaultProps = {};
 
@@ -5059,6 +5060,7 @@ const StyledControl = styled.div`
   }
 
   & > ${Label} {
+    ${props => props.small && css(["", " font-size:", ";"], labelStylesSmall, ds.measures.inputFontSmall)}
     padding-left: calc(${ds.measures.spacer}rem / 2);
     padding-right: calc(${ds.measures.spacer}rem / 4);
     font-weight: ${ds.weights.controlLabel};
@@ -5072,16 +5074,19 @@ const StyledControl = styled.div`
       white-space: nowrap;
       user-select: none;
     `}
+    ${props => props.comfort && !props.labelInside && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);padding:0 ", "rem;"], ds.measures.spacer, ds.measures.spacer, ds.measures.spacer * (3 / 2))}
   }
 
   & > input,
   & > select {
+    ${props => props.small && css(["", " font-size:", ";"], labelStylesSmall, ds.measures.inputFontSmall)}
     flex-grow: 1;
     margin: 0;
     max-width: 100%;
     ${props => props.labelInside && `
       padding-top: 0.8em;
     `}
+    ${props => props.comfort && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);padding:0 ", "rem;"], ds.measures.spacer, ds.measures.spacer, ds.measures.spacer * (3 / 2))}
   }
 
   &.invalid > input,
@@ -5104,7 +5109,7 @@ const StyledControl = styled.div`
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Control = props => {
+const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
   const {
     type,
     label,
@@ -5113,6 +5118,8 @@ const Control = props => {
     invalid,
     disabled,
     labelInside,
+    comfort,
+    small,
     options,
     min,
     max
@@ -5121,7 +5128,9 @@ const Control = props => {
   return /*#__PURE__*/React.createElement(StyledControl, {
     withLabel: label,
     className: [invalid && 'invalid', disabled && 'disabled'].join(' '),
-    labelInside: labelInside
+    labelInside: labelInside,
+    comfort: comfort,
+    small: small
   }, label && /*#__PURE__*/React.createElement(Label, {
     as: "label",
     htmlFor: uid.current
@@ -5129,7 +5138,8 @@ const Control = props => {
     id: uid.current,
     value: value,
     disabled: disabled,
-    onChange: evt => onChange(evt.target.value)
+    onChange: evt => onChange(evt.target.value),
+    ref: ref
   }, options.map(x => /*#__PURE__*/React.createElement("option", {
     key: x.value,
     value: x.value
@@ -5138,15 +5148,15 @@ const Control = props => {
     type: type || 'text',
     value: value,
     disabled: disabled,
-    onChange: evt => onChange(evt.target.value)
+    onChange: evt => onChange(evt.target.value),
+    ref: ref
   }, {
     min,
     max
   })));
-}; // ---------------------------------------------------------------------------------------------------------------------
+}); // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
-
 
 Control.propTypes = {
   type: propTypes.string,
@@ -5156,6 +5166,8 @@ Control.propTypes = {
   invalid: propTypes.bool,
   disabled: propTypes.bool,
   labelInside: propTypes.bool,
+  comfort: propTypes.bool,
+  small: propTypes.bool,
   options: propTypes.arrayOf(propTypes.shape({
     label: propTypes.string,
     value: propTypes.string
