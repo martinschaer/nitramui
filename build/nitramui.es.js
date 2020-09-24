@@ -4569,6 +4569,60 @@ Card.defaultProps = {
   extraStyles: {}
 };
 
+// Component
+// ---------------------------------------------------------------------------------------------------------------------
+
+const Flex = styled.div`
+  height: ${({
+  fullHeight
+}) => fullHeight ? '100%' : 'auto'};
+  display: flex;
+  flex-direction: ${({
+  direction = 'row'
+}) => direction};
+  justify-content: ${({
+  justifyContent = 'normal'
+}) => justifyContent};
+  justify-items: ${({
+  justifyItems = 'normal'
+}) => justifyItems};
+  align-content: ${({
+  alignContent = 'normal'
+}) => alignContent};
+  align-items: ${({
+  alignItems = 'normal'
+}) => alignItems};
+  flex-wrap: ${({
+  flexWrap = 'nowrap'
+}) => flexWrap};
+  flex-grow: ${({
+  flexGrow = 0
+}) => flexGrow};
+  flex-shrink: ${({
+  flexShrink = 1
+}) => flexShrink};
+`; // ---------------------------------------------------------------------------------------------------------------------
+// PropTypes, defaults & export
+// ---------------------------------------------------------------------------------------------------------------------
+
+const iiu = ['inherit', 'initial', 'unset'];
+const baseline = ['baseline', 'first baseline', 'last baseline'];
+const space = ['space-between', 'space-around', 'space-evenly'];
+const safeCenter = ['safe center', 'unsafe center'];
+const align = ['normal', 'center', 'start', 'end', 'flex-start', 'flex-end'];
+Flex.propTypes = {
+  fullHeight: propTypes.bool,
+  direction: propTypes.oneOf(['row', 'row-reverse', 'column', 'column-reverse', ...iiu]),
+  justifyContent: propTypes.oneOf(['auto', 'self-start', 'self-end', 'stretch', 'left', 'right', ...align, ...space, ...safeCenter, ...iiu]),
+  justifyItems: propTypes.oneOf(['auto', 'self-start', 'self-end', 'stretch', 'left', 'right', ...align, ...baseline, ...safeCenter, ...iiu]),
+  alignContent: propTypes.oneOf(['stretch', ...align, ...baseline, ...space, ...safeCenter, ...iiu]),
+  alignItems: propTypes.oneOf(['stretch', ...align, ...baseline, ...safeCenter, ...iiu]),
+  flexWrap: propTypes.oneOf(['nowrap', 'wrap', 'wrap-reverse', ...iiu]),
+  flexGrow: propTypes.oneOf([propTypes.objectOf(propTypes.number), ...iiu]),
+  flexShrink: propTypes.oneOf([propTypes.objectOf(propTypes.number), ...iiu])
+};
+Flex.defaultProps = {};
+
 const GOLDEN_RATIO = 1.61803398875;
 const convertRemToPixels = rem => {
   return rem * parseFloat(window.getComputedStyle(document.documentElement).fontSize);
@@ -5502,5 +5556,5 @@ NitramUI.propTypes = {
 };
 NitramUI.defaultProps = {};
 
-export { Button, Card, Container, Control, Divider, Label, Layout, Loading, Muted, NitramUI, NitramUIContext, Pane, Table, css, ds, modes, styled, themes };
+export { Button, Card, Container, Control, Divider, Flex, Label, Layout, Loading, Muted, NitramUI, NitramUIContext, Pane, Table, css, ds, modes, styled, themes };
 //# sourceMappingURL=nitramui.es.js.map
