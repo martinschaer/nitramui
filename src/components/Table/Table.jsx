@@ -25,7 +25,7 @@ const StyledTable = styled.table`
   border-spacing: 0;
   width: max-content;
   min-width: 100%;
-  table-layout: fixed;
+  table-layout: ${props => props.layout};
 
   thead, tfoot {
     background-color: ${ds.colors.tableStripe};
@@ -58,6 +58,7 @@ const StyledTable = styled.table`
 // ---------------------------------------------------------------------------------------------------------------------
 const Table = ({
   hoverable,
+  layout,
   children
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
@@ -77,8 +78,11 @@ const Table = ({
 // ---------------------------------------------------------------------------------------------------------------------
 Table.propTypes = {
   children: PropTypes.node,
+  layout: PropTypes.oneOf(['fixed', 'auto']),
   hoverable: PropTypes.bool
 }
-Table.defaultProps = {}
+Table.defaultProps = {
+  layout: 'auto'
+}
 
 export default Table
