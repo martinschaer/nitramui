@@ -4757,7 +4757,7 @@ const StyledTable = styled.table`
   border-spacing: 0;
   width: max-content;
   min-width: 100%;
-  table-layout: fixed;
+  table-layout: ${props => props.layout};
 
   thead, tfoot {
     background-color: ${ds.colors.tableStripe};
@@ -4789,6 +4789,7 @@ const StyledTable = styled.table`
 
 const Table = ({
   hoverable,
+  layout,
   children
 }) => {
   // -------------------------------------------------------------------------------------------------------------------
@@ -4804,9 +4805,12 @@ const Table = ({
 
 Table.propTypes = {
   children: propTypes.node,
+  layout: propTypes.oneOf(['fixed', 'auto']),
   hoverable: propTypes.bool
 };
-Table.defaultProps = {};
+Table.defaultProps = {
+  layout: 'auto'
+};
 
 const selectedCSS = css(["color:", ";background:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";"], ds.colors.buttonFgSelected, ds.colors.buttonBgSelected, ds.colors.buttonShadow);
 const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:visited{color:inherit;}&:hover,&:focus,&:active,&.active{", " outline:none;text-decoration:none;", "}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.variant === 'plain' ? `color: ${ds.colors.buttonFgHoverPlain(props)};
