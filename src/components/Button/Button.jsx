@@ -26,7 +26,7 @@ export const buttonStyle = css`
     props => props.variant === 'plain'
       ? ds.colors.buttonBgPlain
       : props.variant === 'inverted'
-        ? (ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg)
+        ? (ds.colors.buttonBg(props)?.indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg)
         : ds.colors.buttonBg
   };
   color: ${
@@ -35,7 +35,7 @@ export const buttonStyle = css`
       : props.variant === 'inverted'
         ? ds.colors.buttonBg(props) === 'transparent'
           ? ds.colors.bg
-          : ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg
+          : ds.colors.buttonBg(props)?.indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg
         : ds.colors.buttonFg
   };
   border-radius: ${props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius};
