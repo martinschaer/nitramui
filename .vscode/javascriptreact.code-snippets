@@ -37,7 +37,8 @@
 			"$1.propTypes = {}",
 			"$1.defaultProps = {}",
 			"",
-			"export default $1"
+			"export default $1",
+			""
 		],
 		"description": "Import React and PropTypes"
 	}
