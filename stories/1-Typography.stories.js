@@ -3,6 +3,7 @@ import React from 'react'
 import {
   modes,
   Card,
+  Flex,
   Pane,
   Table,
   Muted,
@@ -172,7 +173,7 @@ export const Typography = () => {
                   invalid
                   disabled
                 />
-                <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', margin: '1rem 0' }}>
+                <Flex flexWrap='wrap' alignItems='center' style={{ margin: '1rem 0' }}>
                   <Control type='text' label='Comfort + labelInside' comfort labelInside />
                   <Button>Save</Button>
                   <Divider />
@@ -184,7 +185,7 @@ export const Typography = () => {
                   <Divider />
                   <Button>Save</Button>
                   <Button small>Save</Button>
-                </div>
+                </Flex>
               </Card>
             </Pane>
           </Layout>

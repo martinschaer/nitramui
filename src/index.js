@@ -9,6 +9,7 @@ export { default as ds, modes, themes } from './components/common/designSystem'
 // Components
 // ---------------------------------------------------------------------------------------------------------------------
 export { default as Card } from './components/Card'
+export { default as Flex } from './components/Flex'
 export { default as Pane } from './components/Pane'
 export { default as Label } from './components/Label'
 export { default as Muted } from './components/Muted'
