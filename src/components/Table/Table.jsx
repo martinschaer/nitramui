@@ -14,9 +14,7 @@ import {
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 const StyledTableContainer = styled.div`
-  @media (max-width: 768px) {
-    overflow-x: auto;
-  }
+  overflow-x: auto;
 `
 
 const StyledTable = styled.table`
@@ -36,6 +34,8 @@ const StyledTable = styled.table`
     border: 1px solid ${ds.colors.border};
     padding: 0.5em;
     word-wrap: break-word;
+    min-width: 4em;
+    max-width: 20em;
   }
 
   th {

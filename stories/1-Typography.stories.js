@@ -116,6 +116,16 @@ export const Typography = () => {
                       <td>Next week</td>
                       <td>Not started</td>
                     </tr>
+                    <tr>
+                      <td>Long text</td>
+                      <td>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris luctus, magna a scelerisque
+                        convallis, leo magna lobortis diam, at sollicitudin nisl elit vitae tortor. Quisque mattis
+                        pharetra ornare. In orci elit, efficitur non felis vel, blandit viverra ligula. Nam et nunc eu
+                        augue venenatis dapibus. Quisque et feugiat lorem.
+                      </td>
+                      <td>Not started</td>
+                    </tr>
                   </tbody>
                 </Table>
                 <Divider horizontal />
