@@ -4444,7 +4444,7 @@ const StyledCardHeader = styled.header`
   padding: ${props => props.compactHeader ? '0' : '0.25rem'};
 `;
 const StyledCardBody = styled.main`
-  padding: ${props => props.noPadding ? '0' : props.compact ? '1rem' : '2rem'};
+  padding: ${props => props.noPadding ? '0' : props.mini ? '0.5rem' : props.compact ? '1rem' : '2rem'};
   overflow-y: auto;
   height: 100%;
 
@@ -4481,6 +4481,7 @@ const Card = ({
   height,
   children,
   noPadding,
+  mini,
   compact,
   compactHeader,
   compactFooter,
@@ -4519,7 +4520,8 @@ const Card = ({
     compactHeader: compactHeader
   }, header), children && /*#__PURE__*/React.createElement(StyledCardBody, {
     noPadding: noPadding,
-    compact: compact
+    compact: compact,
+    mini: mini
   }, children), footer && /*#__PURE__*/React.createElement(StyledCardFooter, {
     compactFooter: compactFooter
   }, footer), stickers && stickers.dot && /*#__PURE__*/React.createElement(Dot, {
@@ -4541,6 +4543,7 @@ Card.propTypes = {
   colorBorderPosition: propTypes.oneOf(['top', 'right', 'bottom', 'left']),
   height: propTypes.oneOfType([propTypes.oneOf(['default', 'full']), propTypes.number]),
   noPadding: propTypes.bool,
+  mini: propTypes.bool,
   compact: propTypes.bool,
   compactHeader: propTypes.bool,
   compactFooter: propTypes.bool,
@@ -5133,6 +5136,11 @@ const Popup = styled.div`
   z-index: 10;
   left: calc(${ds.measures.spacer}rem / 4);
   right: calc(${ds.measures.spacer}rem / 4);
+`;
+const Actionable = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `; // ---------------------------------------------------------------------------------------------------------------------
 // MultiselectActionable
 // ---------------------------------------------------------------------------------------------------------------------
@@ -5142,6 +5150,7 @@ const MultiselectActionable = /*#__PURE__*/React.forwardRef((props, ref) => {
   const actionableRef = useRef();
   const {
     id,
+    label,
     value,
     onChange,
     disabled,
@@ -5180,13 +5189,19 @@ const MultiselectActionable = /*#__PURE__*/React.forwardRef((props, ref) => {
   // Render
   // -------------------------------------------------------------------------------------------------------------------
 
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, label && /*#__PURE__*/React.createElement(Label, {
+    as: "label",
+    htmlFor: id,
+    onClick: () => {
+      actionableRef.current.focus();
+      setOpen(true);
+    }
+  }, label), /*#__PURE__*/React.createElement(Actionable, {
     ref: actionableRef,
     tabIndex: 0,
     className: `nui-actionable${disabled ? ' disabled' : ''}`,
     onBlur: evt => {
       const contained = popupRef.current.contains(evt.relatedTarget);
-      console.log(contained, popupRef.current, evt.relatedTarget, evt.currentTarget, evt.target);
       if (!contained) setOpen(false);else actionableRef.current.focus();
     },
     onClick: () => setOpen(!open)
@@ -5198,7 +5213,7 @@ const MultiselectActionable = /*#__PURE__*/React.forwardRef((props, ref) => {
       top: top
     }
   }, /*#__PURE__*/React.createElement(Card, {
-    compact: true,
+    mini: true,
     forceShadow: true,
     low: true,
     selected: true
@@ -5235,6 +5250,7 @@ const MultiselectActionable = /*#__PURE__*/React.forwardRef((props, ref) => {
 });
 MultiselectActionable.propTypes = {
   id: propTypes.string,
+  label: propTypes.string,
   value: PROP_VALUE,
   disabled: propTypes.bool,
   onChange: propTypes.func,
@@ -5338,10 +5354,10 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     labelInside: labelInside,
     comfort: comfort,
     small: small
-  }, label && /*#__PURE__*/React.createElement(Label, {
+  }, type === 'select' ? /*#__PURE__*/React.createElement(React.Fragment, null, label && /*#__PURE__*/React.createElement(Label, {
     as: "label",
     htmlFor: uid.current
-  }, label), type === 'select' ? /*#__PURE__*/React.createElement("select", {
+  }, label), /*#__PURE__*/React.createElement("select", {
     id: uid.current,
     value: value,
     disabled: disabled,
@@ -5350,14 +5366,18 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
   }, options.map(x => /*#__PURE__*/React.createElement("option", {
     key: x.value,
     value: x.value
-  }, x.label))) : type === 'multiselect' ? /*#__PURE__*/React.createElement(MultiselectActionable, {
+  }, x.label)))) : type === 'multiselect' ? /*#__PURE__*/React.createElement(MultiselectActionable, {
     id: uid.current,
+    label: label,
     value: value,
     disabled: disabled,
     onChange: value => onChange(value),
     options: options,
     ref: ref
-  }) : /*#__PURE__*/React.createElement("input", _extends$1({
+  }) : /*#__PURE__*/React.createElement(React.Fragment, null, label && /*#__PURE__*/React.createElement(Label, {
+    as: "label",
+    htmlFor: uid.current
+  }, label), /*#__PURE__*/React.createElement("input", _extends$1({
     id: uid.current,
     type: type || 'text',
     value: value,
@@ -5367,7 +5387,7 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
   }, {
     min,
     max
-  })));
+  }))));
 }); // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
