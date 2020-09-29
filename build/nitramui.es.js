@@ -4385,7 +4385,6 @@ const Dot = styled.div`
 const StyledCard = styled.div`
   background-color: ${props => props.selected ? ds.colors.cardSelected : props.hollow ? ds.colors.bg : ds.colors.card};
   box-sizing: border-box;
-  box-shadow: 0 0 1rem ${ds.colors.shadow};
   border: 1px solid ${props => props.selected ? ds.colors.cardBorderSelected : ds.colors.cardBorder};
   border-radius: ${ds.measures.radius};
   overflow: hidden;
@@ -4408,11 +4407,12 @@ const StyledCard = styled.div`
 
   ${props => props.margin && (props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`)}
 
+  box-shadow: 0 0 ${p => p.low ? '0.5rem' : '1rem'} ${ds.colors.shadow}${p => p.forceShadow ? ' !important' : ''};
   & & {
     box-shadow: none;
   }
   .hollow & {
-    box-shadow: 0 0 1rem ${ds.colors.shadow};
+    box-shadow: 0 0 ${p => p.low ? '0.5rem' : '1rem'} ${ds.colors.shadow};
   }
 
   .pre-heading {
@@ -4485,6 +4485,8 @@ const Card = ({
   compactHeader,
   compactFooter,
   hollow,
+  low,
+  forceShadow,
   hoverable,
   selected,
   margin,
@@ -4503,7 +4505,9 @@ const Card = ({
     colorBorderPosition: colorBorderPosition,
     h: height,
     hoverable: hoverable,
+    low: low,
     hollow: hollow,
+    forceShadow: forceShadow,
     selected: selected,
     margin: margin,
     marginTop: marginTop,
@@ -4541,6 +4545,8 @@ Card.propTypes = {
   compactHeader: propTypes.bool,
   compactFooter: propTypes.bool,
   hollow: propTypes.bool,
+  low: propTypes.bool,
+  forceShadow: propTypes.bool,
   hoverable: propTypes.bool,
   selected: propTypes.bool,
   margin: propTypes.oneOfType([propTypes.bool, propTypes.number]),
@@ -4794,9 +4800,7 @@ Muted.defaultProps = {};
 // ---------------------------------------------------------------------------------------------------------------------
 
 const StyledTableContainer = styled.div`
-  @media (max-width: 768px) {
-    overflow-x: auto;
-  }
+  overflow-x: auto;
 `;
 const StyledTable = styled.table`
   display: table;
@@ -4815,6 +4819,8 @@ const StyledTable = styled.table`
     border: 1px solid ${ds.colors.border};
     padding: 0.5em;
     word-wrap: break-word;
+    min-width: 4em;
+    max-width: 20em;
   }
 
   th {
@@ -4860,7 +4866,7 @@ Table.defaultProps = {
 };
 
 const selectedCSS = css(["color:", ";background:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";"], ds.colors.buttonFgSelected, ds.colors.buttonBgSelected, ds.colors.buttonShadow);
-const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;cursor:pointer;transform:perspective(100rem);&:visited{color:inherit;}&:hover,&:focus,&:active,&.active{", " outline:none;text-decoration:none;", "}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.variant === 'plain' ? `color: ${ds.colors.buttonFgHoverPlain(props)};
+const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;", " cursor:pointer;transform:perspective(100rem);&:visited{color:inherit;}&:hover,&:focus,&:active,&.active{", " outline:none;text-decoration:none;", "}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null, props => props.variant === 'plain' ? `color: ${ds.colors.buttonFgHoverPlain(props)};
         background: ${ds.colors.buttonBgHoverPlain(props)};
         border-color: ${ds.colors.buttonBorderHoverPlain(props)};` : `color: ${ds.colors.buttonFgHover(props)};
         background: ${ds.colors.buttonBgHover(props)};
@@ -4884,6 +4890,7 @@ const Button = styled.button`
 
 Button.propTypes = {
   variant: propTypes.oneOf(['plain', 'inverted', 'default']),
+  fill: propTypes.bool,
   small: propTypes.bool,
   selected: propTypes.bool,
   type: propTypes.oneOf(['button', 'submit']),
@@ -5103,6 +5110,139 @@ function _extends$1() {
   return _extends$1.apply(this, arguments);
 }
 
+const getLabel = (val, options) => {
+  let result = val;
+
+  for (const o of options) {
+    if (o.value === val) {
+      result = o.label;
+      break;
+    }
+  }
+
+  return result;
+};
+
+const PROP_VALUE = propTypes.oneOfType([propTypes.string, propTypes.number]);
+const PROP_OPTIONS = propTypes.arrayOf(propTypes.shape({
+  label: propTypes.string,
+  value: propTypes.string
+}));
+const Popup = styled.div`
+  position: absolute;
+  z-index: 10;
+  left: calc(${ds.measures.spacer}rem / 4);
+  right: calc(${ds.measures.spacer}rem / 4);
+`; // ---------------------------------------------------------------------------------------------------------------------
+// MultiselectActionable
+// ---------------------------------------------------------------------------------------------------------------------
+
+const MultiselectActionable = /*#__PURE__*/React.forwardRef((props, ref) => {
+  const popupRef = useRef();
+  const actionableRef = useRef();
+  const {
+    id,
+    value,
+    onChange,
+    disabled,
+    options
+  } = props;
+  const [open, setOpen] = useState(false); // const [tempValue, setTempValue] = useState(value)
+
+  const [top] = useState('2.5rem'); // -------------------------------------------------------------------------------------------------------------------
+  // Reducers
+  // -------------------------------------------------------------------------------------------------------------------
+
+  const [selected, dispatchSelected] = React.useReducer((state, action) => {
+    let index;
+    let result;
+
+    switch (action.type) {
+      case 'reset':
+        result = [];
+        break;
+
+      default:
+        index = state.indexOf(action.value);
+
+        if (index === -1) {
+          result = [...state, action.value];
+        } else {
+          result = [...state];
+          result.splice(index, 1);
+        }
+
+    }
+
+    onChange(result);
+    return result;
+  }, [...(value || [])]); // -------------------------------------------------------------------------------------------------------------------
+  // Render
+  // -------------------------------------------------------------------------------------------------------------------
+
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    ref: actionableRef,
+    tabIndex: 0,
+    className: `nui-actionable${disabled ? ' disabled' : ''}`,
+    onBlur: evt => {
+      const contained = popupRef.current.contains(evt.relatedTarget);
+      console.log(contained, popupRef.current, evt.relatedTarget, evt.currentTarget, evt.target);
+      if (!contained) setOpen(false);else actionableRef.current.focus();
+    },
+    onClick: () => setOpen(!open)
+  }, selected.map(x => getLabel(x, options)).join(', ')), /*#__PURE__*/React.createElement(Popup, {
+    ref: popupRef,
+    style: {
+      display: open ? 'block' : 'none',
+      width: '32em',
+      top: top
+    }
+  }, /*#__PURE__*/React.createElement(Card, {
+    compact: true,
+    forceShadow: true,
+    low: true,
+    selected: true
+  }, options.map(x => /*#__PURE__*/React.createElement(Button, {
+    fill: true,
+    small: true,
+    key: x.value,
+    variant: "plain",
+    selected: selected.indexOf(x.value) !== -1,
+    extraStyles: {
+      base: {
+        textAlign: 'left'
+      }
+    },
+    onClick: evt => {
+      dispatchSelected({
+        value: x.value
+      });
+      evt.target.blur();
+    }
+  }, x.label)), /*#__PURE__*/React.createElement("select", {
+    style: {
+      display: 'none'
+    },
+    multiple: true,
+    id: id,
+    disabled: true,
+    ref: ref
+  }, options.map(x => /*#__PURE__*/React.createElement("option", {
+    key: x.value,
+    value: x.value,
+    selected: selected.indexOf(x.value) !== -1
+  }, x.label))))));
+});
+MultiselectActionable.propTypes = {
+  id: propTypes.string,
+  value: PROP_VALUE,
+  disabled: propTypes.bool,
+  onChange: propTypes.func,
+  options: PROP_OPTIONS
+};
+MultiselectActionable.defaultProps = {
+  onChange: () => {}
+}; // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -5113,6 +5253,8 @@ const StyledControl = styled.div`
   background-color: ${props => props.withLabel ? ds.colors.controlBg : 'transparent'};
   position: relative;
   padding: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
+  min-width: 10em;
+  max-width: 32em;
 
   &:first-child {
     margin-left: 0;
@@ -5140,7 +5282,9 @@ const StyledControl = styled.div`
   }
 
   & > input,
-  & > select {
+  & > select,
+  & > div.nui-actionable {
+    font-family: ${ds.fonts.controls};
     ${props => props.small && css(["", " font-size:", ";"], labelStylesSmall, ds.measures.inputFontSmall)}
     flex-grow: 1;
     margin: 0;
@@ -5152,7 +5296,8 @@ const StyledControl = styled.div`
   }
 
   &.invalid > input,
-  &.invalid > select {
+  &.invalid > select,
+  &.invalid > div.nui-actionable {
     border-color: ${ds.colors.inputBorderInvalid};
     &:hover,
     &:focus,
@@ -5205,7 +5350,14 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
   }, options.map(x => /*#__PURE__*/React.createElement("option", {
     key: x.value,
     value: x.value
-  }, x.label))) : /*#__PURE__*/React.createElement("input", _extends$1({
+  }, x.label))) : type === 'multiselect' ? /*#__PURE__*/React.createElement(MultiselectActionable, {
+    id: uid.current,
+    value: value,
+    disabled: disabled,
+    onChange: value => onChange(value),
+    options: options,
+    ref: ref
+  }) : /*#__PURE__*/React.createElement("input", _extends$1({
     id: uid.current,
     type: type || 'text',
     value: value,
@@ -5223,17 +5375,14 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
 Control.propTypes = {
   type: propTypes.string,
   label: propTypes.node,
-  value: propTypes.oneOfType([propTypes.string, propTypes.number]),
+  value: PROP_VALUE,
   onChange: propTypes.func,
   invalid: propTypes.bool,
   disabled: propTypes.bool,
   labelInside: propTypes.bool,
   comfort: propTypes.bool,
   small: propTypes.bool,
-  options: propTypes.arrayOf(propTypes.shape({
-    label: propTypes.string,
-    value: propTypes.string
-  })),
+  options: PROP_OPTIONS,
   min: propTypes.number,
   max: propTypes.number
 };
@@ -5381,7 +5530,8 @@ button {
 }
 
 input,
-select {
+select,
+.nui-actionable {
   ${labelStyles}
   padding: 0 ${ds.measures.inputSpacerH}rem;
   font-size: ${ds.measures.inputFont};
@@ -5404,6 +5554,7 @@ select {
     outline: none;
   }
 
+  &.disabled,
   &:disabled {
     color: ${ds.colors.inputFgDisabled};
     border-color: ${ds.colors.inputBorderDisabled};
