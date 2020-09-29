@@ -88,7 +88,6 @@ const Dot = styled.div`
 const StyledCard = styled.div`
   background-color: ${props => props.selected ? ds.colors.cardSelected : props.hollow ? ds.colors.bg : ds.colors.card};
   box-sizing: border-box;
-  box-shadow: 0 0 1rem ${ds.colors.shadow};
   border: 1px solid ${props => props.selected ? ds.colors.cardBorderSelected : ds.colors.cardBorder};
   border-radius: ${ds.measures.radius};
   overflow: hidden;
@@ -128,11 +127,12 @@ const StyledCard = styled.div`
 
   ${props => props.margin && (props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`)}
 
+  box-shadow: 0 0 ${p => p.low ? '0.5rem' : '1rem'} ${ds.colors.shadow}${p => p.forceShadow ? ' !important' : ''};
   & & {
     box-shadow: none;
   }
   .hollow & {
-    box-shadow: 0 0 1rem ${ds.colors.shadow};
+    box-shadow: 0 0 ${p => p.low ? '0.5rem' : '1rem'} ${ds.colors.shadow};
   }
 
   .pre-heading {
@@ -205,6 +205,8 @@ const Card = ({
   compactHeader,
   compactFooter,
   hollow,
+  low,
+  forceShadow,
   hoverable,
   selected,
   margin,
@@ -224,7 +226,9 @@ const Card = ({
       colorBorderPosition={colorBorderPosition}
       h={height}
       hoverable={hoverable}
+      low={low}
       hollow={hollow}
+      forceShadow={forceShadow}
       selected={selected}
       margin={margin}
       marginTop={marginTop}
@@ -270,6 +274,8 @@ Card.propTypes = {
   compactHeader: PropTypes.bool,
   compactFooter: PropTypes.bool,
   hollow: PropTypes.bool,
+  low: PropTypes.bool,
+  forceShadow: PropTypes.bool,
   hoverable: PropTypes.bool,
   selected: PropTypes.bool,
   margin: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
