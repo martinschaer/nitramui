@@ -34,13 +34,19 @@ const Popup = styled.div`
   right: calc(${ds.measures.spacer}rem / 4);
 `
 
+const Actionable = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
+
 // ---------------------------------------------------------------------------------------------------------------------
 // MultiselectActionable
 // ---------------------------------------------------------------------------------------------------------------------
 const MultiselectActionable = React.forwardRef((props, ref) => {
   const popupRef = useRef()
   const actionableRef = useRef()
-  const { id, value, onChange, disabled, options } = props
+  const { id, label, value, onChange, disabled, options } = props
   const [open, setOpen] = useState(false)
   // const [tempValue, setTempValue] = useState(value)
   const [top] = useState('2.5rem')
@@ -76,20 +82,24 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
   // -------------------------------------------------------------------------------------------------------------------
   return (
     <>
-      <div
+      {label && (
+        <Label as='label' htmlFor={id} onClick={() => { actionableRef.current.focus(); setOpen(true) }}>
+          {label}
+        </Label>
+      )}
+      <Actionable
         ref={actionableRef}
         tabIndex={0}
         className={`nui-actionable${disabled ? ' disabled' : ''}`}
         onBlur={(evt) => {
           const contained = popupRef.current.contains(evt.relatedTarget)
-          console.log(contained, popupRef.current, evt.relatedTarget, evt.currentTarget, evt.target)
           if (!contained) setOpen(false)
           else actionableRef.current.focus()
         }}
         onClick={() => setOpen(!open)}
       >
         {selected.map(x => getLabel(x, options)).join(', ')}
-      </div>
+      </Actionable>
       <Popup
         ref={popupRef}
         style={{
@@ -98,7 +108,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
           top: top
         }}
       >
-        <Card compact forceShadow low selected>
+        <Card mini forceShadow low selected>
           {options.map(x => (
             <Button
               fill
@@ -139,6 +149,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
 })
 MultiselectActionable.propTypes = {
   id: PropTypes.string,
+  label: PropTypes.string,
   value: PROP_VALUE,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
@@ -247,24 +258,27 @@ const Control = React.forwardRef((props, ref) => {
       comfort={comfort}
       small={small}
     >
-      {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
       {type === 'select'
         ? (
-          <select
-            id={uid.current}
-            value={value}
-            disabled={disabled}
-            onChange={evt => onChange(evt.target.value)}
-            ref={ref}
-          >
-            {options.map(x => (
-              <option key={x.value} value={x.value}>{x.label}</option>
-            ))}
-          </select>
+          <>
+            {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
+            <select
+              id={uid.current}
+              value={value}
+              disabled={disabled}
+              onChange={evt => onChange(evt.target.value)}
+              ref={ref}
+            >
+              {options.map(x => (
+                <option key={x.value} value={x.value}>{x.label}</option>
+              ))}
+            </select>
+          </>
         )
         : type === 'multiselect' ? (
           <MultiselectActionable
             id={uid.current}
+            label={label}
             value={value}
             disabled={disabled}
             onChange={value => onChange(value)}
@@ -273,15 +287,18 @@ const Control = React.forwardRef((props, ref) => {
           />
         )
           : (
-            <input
-              id={uid.current}
-              type={type || 'text'}
-              value={value}
-              disabled={disabled}
-              onChange={evt => onChange(evt.target.value)}
-              ref={ref}
-              {...{ min, max }}
-            />
+            <>
+              {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
+              <input
+                id={uid.current}
+                type={type || 'text'}
+                value={value}
+                disabled={disabled}
+                onChange={evt => onChange(evt.target.value)}
+                ref={ref}
+                {...{ min, max }}
+              />
+            </>
           )}
     </StyledControl>
   )
