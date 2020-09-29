@@ -123,7 +123,8 @@ button {
 }
 
 input,
-select {
+select,
+.nui-actionable {
   ${labelStyles}
   padding: 0 ${ds.measures.inputSpacerH}rem;
   font-size: ${ds.measures.inputFont};
@@ -146,6 +147,7 @@ select {
     outline: none;
   }
 
+  &.disabled,
   &:disabled {
     color: ${ds.colors.inputFgDisabled};
     border-color: ${ds.colors.inputBorderDisabled};

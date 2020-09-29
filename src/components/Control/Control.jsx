@@ -1,15 +1,152 @@
-import React, { useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Local imports
 // ---------------------------------------------------------------------------------------------------------------------
+import Card from '../Card'
 import Label from '../Label'
+import Button from '../Button'
 import ds from '../common/designSystem'
 import {
   labelStylesSmall
 } from '../common/typography'
+
+const getLabel = (val, options) => {
+  let result = val
+  for (const o of options) {
+    if (o.value === val) {
+      result = o.label
+      break
+    }
+  }
+  return result
+}
+
+const PROP_VALUE = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+const PROP_OPTIONS = PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }))
+
+const Popup = styled.div`
+  position: absolute;
+  z-index: 10;
+  left: calc(${ds.measures.spacer}rem / 4);
+  right: calc(${ds.measures.spacer}rem / 4);
+`
+
+// ---------------------------------------------------------------------------------------------------------------------
+// MultiselectActionable
+// ---------------------------------------------------------------------------------------------------------------------
+const MultiselectActionable = React.forwardRef((props, ref) => {
+  const popupRef = useRef()
+  const actionableRef = useRef()
+  const { id, value, onChange, disabled, options } = props
+  const [open, setOpen] = useState(false)
+  // const [tempValue, setTempValue] = useState(value)
+  const [top] = useState('2.5rem')
+
+  // -------------------------------------------------------------------------------------------------------------------
+  // Reducers
+  // -------------------------------------------------------------------------------------------------------------------
+  const [selected, dispatchSelected] = React.useReducer(
+    (state, action) => {
+      let index
+      let result
+      switch (action.type) {
+        case 'reset':
+          result = []
+          break
+        default:
+          index = state.indexOf(action.value)
+          if (index === -1) {
+            result = [...state, action.value]
+          } else {
+            result = [...state]
+            result.splice(index, 1)
+          }
+      }
+      onChange(result)
+      return result
+    },
+    [...(value || [])]
+  )
+
+  // -------------------------------------------------------------------------------------------------------------------
+  // Render
+  // -------------------------------------------------------------------------------------------------------------------
+  return (
+    <>
+      <div
+        ref={actionableRef}
+        tabIndex={0}
+        className={`nui-actionable${disabled ? ' disabled' : ''}`}
+        onBlur={(evt) => {
+          const contained = popupRef.current.contains(evt.relatedTarget)
+          console.log(contained, popupRef.current, evt.relatedTarget, evt.currentTarget, evt.target)
+          if (!contained) setOpen(false)
+          else actionableRef.current.focus()
+        }}
+        onClick={() => setOpen(!open)}
+      >
+        {selected.map(x => getLabel(x, options)).join(', ')}
+      </div>
+      <Popup
+        ref={popupRef}
+        style={{
+          display: open ? 'block' : 'none',
+          width: '32em',
+          top: top
+        }}
+      >
+        <Card compact forceShadow low selected>
+          {options.map(x => (
+            <Button
+              fill
+              small
+              key={x.value}
+              variant='plain'
+              selected={selected.indexOf(x.value) !== -1}
+              extraStyles={{ base: { textAlign: 'left' } }}
+              onClick={(evt) => {
+                dispatchSelected({ value: x.value })
+                evt.target.blur()
+              }}
+            >
+              {x.label}
+            </Button>
+          ))}
+          <select
+            style={{ display: 'none' }}
+            multiple
+            id={id}
+            disabled
+            ref={ref}
+          >
+            {options.map(x => (
+              <option
+                key={x.value}
+                value={x.value}
+                selected={selected.indexOf(x.value) !== -1}
+              >
+                {x.label}
+              </option>
+            ))}
+          </select>
+        </Card>
+      </Popup>
+    </>
+  )
+})
+MultiselectActionable.propTypes = {
+  id: PropTypes.string,
+  value: PROP_VALUE,
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func,
+  options: PROP_OPTIONS
+}
+MultiselectActionable.defaultProps = {
+  onChange: () => {}
+}
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Styled Components
@@ -57,7 +194,9 @@ const StyledControl = styled.div`
   }
 
   & > input,
-  & > select {
+  & > select,
+  & > div.nui-actionable {
+    font-family: ${ds.fonts.controls};
     ${props => props.small && css`
       ${labelStylesSmall}
       font-size: ${ds.measures.inputFontSmall};
@@ -76,7 +215,8 @@ const StyledControl = styled.div`
   }
 
   &.invalid > input,
-  &.invalid > select {
+  &.invalid > select,
+  &.invalid > div.nui-actionable {
     border-color: ${ds.colors.inputBorderInvalid};
     &:hover,
     &:focus,
@@ -122,17 +262,27 @@ const Control = React.forwardRef((props, ref) => {
             ))}
           </select>
         )
-        : (
-          <input
+        : type === 'multiselect' ? (
+          <MultiselectActionable
             id={uid.current}
-            type={type || 'text'}
             value={value}
             disabled={disabled}
-            onChange={evt => onChange(evt.target.value)}
+            onChange={value => onChange(value)}
+            options={options}
             ref={ref}
-            {...{ min, max }}
           />
-        )}
+        )
+          : (
+            <input
+              id={uid.current}
+              type={type || 'text'}
+              value={value}
+              disabled={disabled}
+              onChange={evt => onChange(evt.target.value)}
+              ref={ref}
+              {...{ min, max }}
+            />
+          )}
     </StyledControl>
   )
 })
@@ -143,14 +293,14 @@ const Control = React.forwardRef((props, ref) => {
 Control.propTypes = {
   type: PropTypes.string,
   label: PropTypes.node,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PROP_VALUE,
   onChange: PropTypes.func,
   invalid: PropTypes.bool,
   disabled: PropTypes.bool,
   labelInside: PropTypes.bool,
   comfort: PropTypes.bool,
   small: PropTypes.bool,
-  options: PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, value: PropTypes.string })),
+  options: PROP_OPTIONS,
   min: PropTypes.number,
   max: PropTypes.number
 }

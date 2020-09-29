@@ -158,6 +158,15 @@ export const Typography = () => {
                   onChange={() => {}}
                 />
                 <Control
+                  type='text'
+                  label='text'
+                />
+                <Control
+                  comfort
+                  type='text'
+                  label='text comfort'
+                />
+                <Control
                   labelInside
                   comfort
                   type='select'
@@ -166,23 +175,40 @@ export const Typography = () => {
                   onChange={() => {}}
                 />
                 <Control
-                  type='text'
-                  label='text'
-                />
-                <Control
                   type='select'
                   label='select'
                   options={selectOptions}
                 />
                 <Control
                   comfort
-                  type='text'
-                  label='text comfort'
+                  type='select'
+                  label='select comfort'
+                  options={selectOptions}
+                />
+                <Control
+                  labelInside
+                  type='multiselect'
+                  options={selectOptions}
+                  label='multiselect labelInside'
+                  onChange={() => {}}
+                />
+                <Control
+                  labelInside
+                  comfort
+                  type='multiselect'
+                  options={selectOptions}
+                  label='multiselect labelInside comfort'
+                  onChange={() => {}}
+                />
+                <Control
+                  type='multiselect'
+                  label='multiselect'
+                  options={selectOptions}
                 />
                 <Control
                   comfort
-                  type='select'
-                  label='select comfort'
+                  type='multiselect'
+                  label='multiselect comfort'
                   options={selectOptions}
                 />
                 <Control

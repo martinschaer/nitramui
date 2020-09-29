@@ -319,6 +319,8 @@ export const App = () => {
                   {/* Onboardings                                                                                    */}
                   {/* ---------------------------------------------------------------------------------------------- */}
                   <Card
+                    low
+                    forceShadow
                     size='small'
                     header={<Label heading>Onboardings</Label>}
                     footer={
