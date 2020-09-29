@@ -25,6 +25,12 @@ export default {
 
 const mode2Emoji = mode => mode === 'light' ? '🌞' : '🌙'
 
+const selectOptions = [
+  { label: 'One', value: 1 },
+  { label: 'Two', value: 2 },
+  { label: 'Three', value: 3 }
+]
+
 export const Typography = () => {
   const textRef = React.useRef()
   return (
@@ -152,13 +158,32 @@ export const Typography = () => {
                   onChange={() => {}}
                 />
                 <Control
+                  labelInside
+                  comfort
+                  type='select'
+                  options={selectOptions}
+                  label='select labelInside comfort'
+                  onChange={() => {}}
+                />
+                <Control
                   type='text'
                   label='text'
+                />
+                <Control
+                  type='select'
+                  label='select'
+                  options={selectOptions}
                 />
                 <Control
                   comfort
                   type='text'
                   label='text comfort'
+                />
+                <Control
+                  comfort
+                  type='select'
+                  label='select comfort'
+                  options={selectOptions}
                 />
                 <Control
                   type='number'
@@ -185,6 +210,7 @@ export const Typography = () => {
                 />
                 <Flex flexWrap='wrap' alignItems='center' style={{ margin: '1rem 0' }}>
                   <Control type='text' label='Comfort + labelInside' comfort labelInside />
+                  <Control type='select' options={selectOptions} label='Comfort + labelInside' comfort labelInside />
                   <Button>Save</Button>
                   <Divider />
                   <Control type='text' label='Normal' />

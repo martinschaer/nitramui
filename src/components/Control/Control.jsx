@@ -21,6 +21,8 @@ const StyledControl = styled.div`
   background-color: ${props => props.withLabel ? ds.colors.controlBg : 'transparent'};
   position: relative;
   padding: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
+  min-width: 10em;
+  max-width: 32em;
 
   &:first-child {
     margin-left: 0;
