@@ -162,7 +162,7 @@ const StyledCardHeader = styled.header`
 `
 
 const StyledCardBody = styled.main`
-  padding: ${props => props.noPadding ? '0' : props.compact ? '1rem' : '2rem'};
+  padding: ${props => props.noPadding ? '0' : props.mini ? '0.5rem' : props.compact ? '1rem' : '2rem'};
   overflow-y: auto;
   height: 100%;
 
@@ -201,6 +201,7 @@ const Card = ({
   height,
   children,
   noPadding,
+  mini,
   compact,
   compactHeader,
   compactFooter,
@@ -239,7 +240,7 @@ const Card = ({
     >
       {header && (<StyledCardHeader compactHeader={compactHeader}>{header}</StyledCardHeader>)}
       {children && (
-        <StyledCardBody noPadding={noPadding} compact={compact}>
+        <StyledCardBody noPadding={noPadding} compact={compact} mini={mini}>
           {children}
         </StyledCardBody>
       )}
@@ -270,6 +271,7 @@ Card.propTypes = {
   colorBorderPosition: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
   height: PropTypes.oneOfType([PropTypes.oneOf(['default', 'full']), PropTypes.number]),
   noPadding: PropTypes.bool,
+  mini: PropTypes.bool,
   compact: PropTypes.bool,
   compactHeader: PropTypes.bool,
   compactFooter: PropTypes.bool,
