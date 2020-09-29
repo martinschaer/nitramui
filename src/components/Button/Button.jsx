@@ -42,6 +42,7 @@ export const buttonStyle = css`
   };
   border-radius: ${props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius};
   box-sizing: border-box;
+  ${props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null}
   cursor: pointer;
   transform: perspective(100rem);
 
@@ -109,6 +110,7 @@ Button.propTypes = {
     'inverted',
     'default'
   ]),
+  fill: PropTypes.bool,
   small: PropTypes.bool,
   selected: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit']),
