@@ -24,8 +24,14 @@ const getLabel = (val, options) => {
   return result
 }
 
-const PROP_VALUE = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-const PROP_OPTIONS = PropTypes.arrayOf(PropTypes.shape({ label: PropTypes.string, value: PropTypes.string }))
+const PROP_VALUE = PropTypes.oneOfType([
+  PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+])
+const PROP_OPTIONS = PropTypes.arrayOf(PropTypes.shape({
+  label: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+}))
 
 const Popup = styled.div`
   position: absolute;
@@ -46,16 +52,16 @@ const Actionable = styled.div`
 const MultiselectActionable = React.forwardRef((props, ref) => {
   const popupRef = useRef()
   const actionableRef = useRef()
-  const { id, label, value, onChange, disabled, options } = props
+  const { id, label, value = [], onChange, disabled, options } = props
   const [open, setOpen] = useState(false)
-  // const [tempValue, setTempValue] = useState(value)
+  // TODO: set top
   const [top] = useState('2.5rem')
 
   // -------------------------------------------------------------------------------------------------------------------
   // Reducers
   // -------------------------------------------------------------------------------------------------------------------
-  const [selected, dispatchSelected] = React.useReducer(
-    (state, action) => {
+  const dispatchSelected = React.useCallback(
+    (action) => {
       let index
       let result
       switch (action.type) {
@@ -63,18 +69,20 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
           result = []
           break
         default:
-          index = state.indexOf(action.value)
+          // adds or removes action.value from selected
+          index = value.indexOf(action.value)
           if (index === -1) {
-            result = [...state, action.value]
+            result = [...value, action.value]
           } else {
-            result = [...state]
+            result = [...value]
             result.splice(index, 1)
           }
       }
+      if (ref) ref.current = { value: result }
+
       onChange(result)
-      return result
     },
-    [...(value || [])]
+    [value, onChange, ref]
   )
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -98,7 +106,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
         }}
         onClick={() => setOpen(!open)}
       >
-        {selected.map(x => getLabel(x, options)).join(', ')}
+        {value.map(x => getLabel(x, options)).join(', ')}
       </Actionable>
       <Popup
         ref={popupRef}
@@ -115,7 +123,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
               small
               key={x.value}
               variant='plain'
-              selected={selected.indexOf(x.value) !== -1}
+              selected={value.indexOf(x.value) !== -1}
               extraStyles={{ base: { textAlign: 'left' } }}
               onClick={(evt) => {
                 dispatchSelected({ value: x.value })
@@ -125,23 +133,6 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
               {x.label}
             </Button>
           ))}
-          <select
-            style={{ display: 'none' }}
-            multiple
-            id={id}
-            disabled
-            ref={ref}
-          >
-            {options.map(x => (
-              <option
-                key={x.value}
-                value={x.value}
-                selected={selected.indexOf(x.value) !== -1}
-              >
-                {x.label}
-              </option>
-            ))}
-          </select>
         </Card>
       </Popup>
     </>
@@ -221,7 +212,7 @@ const StyledControl = styled.div`
     ${props => props.comfort && css`
       line-height: calc(${ds.measures.spacer}rem * 3);
       height: calc(${ds.measures.spacer}rem * 3);
-      padding: 0 ${ds.measures.spacer * (3 / 2)}rem;
+      ${'' /* padding: 0 ${props => ds.measures.spacer(props) * (3 / 2)}rem; */}
     `}
   }
 
@@ -264,7 +255,7 @@ const Control = React.forwardRef((props, ref) => {
             {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
             <select
               id={uid.current}
-              value={value}
+              defaultValue={value}
               disabled={disabled}
               onChange={evt => onChange(evt.target.value)}
               ref={ref}
@@ -281,7 +272,7 @@ const Control = React.forwardRef((props, ref) => {
             label={label}
             value={value}
             disabled={disabled}
-            onChange={value => onChange(value)}
+            onChange={onChange}
             options={options}
             ref={ref}
           />
@@ -322,7 +313,8 @@ Control.propTypes = {
   max: PropTypes.number
 }
 Control.defaultProps = {
-  onChange: () => {}
+  onChange: () => {},
+  options: []
 }
 
 export default Control

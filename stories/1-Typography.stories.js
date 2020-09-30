@@ -45,6 +45,8 @@ const selectOptions = [
 
 export const Typography = () => {
   const textRef = React.useRef()
+  const multiRef = React.useRef()
+  const [multiSelectValue, multiSelectValueSet] = React.useState([])
   return (
     <NitramUI>
       <NitramUIContext.Consumer>
@@ -154,10 +156,17 @@ export const Typography = () => {
                     label='text labelInside'
                     ref={textRef}
                   />
+                  <Control
+                    labelInside
+                    type='multiselect'
+                    label='multiselect labelInside'
+                    options={selectOptions}
+                    ref={multiRef}
+                  />
                   <Button
-                    onClick={
-                      () => { textRef.current.value = textRef.current.value.toUpperCase() }
-                    }
+                    onClick={() => {
+                      textRef.current.value = `${textRef.current.value.toUpperCase()} ${multiRef.current?.value}`
+                    }}
                   >
                     toUpperCase
                   </Button>
@@ -197,31 +206,38 @@ export const Typography = () => {
                   label='select comfort'
                   options={selectOptions}
                 />
+                {multiSelectValue.join(', ')}
                 <Control
                   labelInside
                   type='multiselect'
-                  options={selectOptions}
                   label='multiselect labelInside'
-                  onChange={() => {}}
+                  options={selectOptions}
+                  value={multiSelectValue}
+                  onChange={multiSelectValueSet}
                 />
                 <Control
                   labelInside
                   comfort
                   type='multiselect'
-                  options={selectOptions}
                   label='multiselect labelInside comfort'
-                  onChange={() => {}}
+                  options={selectOptions}
+                  value={multiSelectValue}
+                  onChange={multiSelectValueSet}
                 />
                 <Control
                   type='multiselect'
                   label='multiselect'
                   options={selectOptions}
+                  value={multiSelectValue}
+                  onChange={multiSelectValueSet}
                 />
                 <Control
                   comfort
                   type='multiselect'
                   label='multiselect comfort'
                   options={selectOptions}
+                  value={multiSelectValue}
+                  onChange={multiSelectValueSet}
                 />
                 <Control
                   type='number'
