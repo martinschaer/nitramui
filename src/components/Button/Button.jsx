@@ -98,7 +98,9 @@ export const buttonStyle = css`
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
-const Button = styled.button`
+const Button = styled.button
+  // https://github.com/styled-components/styled-components/releases/tag/v5.1.0
+  .withConfig({ shouldForwardProp: (prop) => !['fill', 'small', 'extraStyles'].includes(prop) })`
   ${buttonStyle}
 `
 // ---------------------------------------------------------------------------------------------------------------------
