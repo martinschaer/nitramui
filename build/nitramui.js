@@ -4513,7 +4513,7 @@ const Card = ({
     colorBorderPosition: colorBorderPosition,
     h: height,
     hoverable: hoverable,
-    low: low,
+    low: low ? 1 : 0,
     hollow: hollow,
     forceShadow: forceShadow,
     selected: selected,
@@ -4892,7 +4892,10 @@ const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px s
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Button = styled.button`
+const Button = styled.button // https://github.com/styled-components/styled-components/releases/tag/v5.1.0
+.withConfig({
+  shouldForwardProp: prop => !['fill', 'small', 'extraStyles'].includes(prop)
+})`
   ${buttonStyle}
 `; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
@@ -5133,10 +5136,10 @@ const getLabel = (val, options) => {
   return result;
 };
 
-const PROP_VALUE = propTypes.oneOfType([propTypes.string, propTypes.number]);
+const PROP_VALUE = propTypes.oneOfType([propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number])), propTypes.oneOfType([propTypes.string, propTypes.number])]);
 const PROP_OPTIONS = propTypes.arrayOf(propTypes.shape({
   label: propTypes.string,
-  value: propTypes.string
+  value: propTypes.oneOfType([propTypes.string, propTypes.number])
 }));
 const Popup = styled.div`
   position: absolute;
@@ -5158,18 +5161,18 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
   const {
     id,
     label,
-    value,
+    value = [],
     onChange,
     disabled,
     options
   } = props;
-  const [open, setOpen] = React.useState(false); // const [tempValue, setTempValue] = useState(value)
+  const [open, setOpen] = React.useState(false); // TODO: set top
 
   const [top] = React.useState('2.5rem'); // -------------------------------------------------------------------------------------------------------------------
   // Reducers
   // -------------------------------------------------------------------------------------------------------------------
 
-  const [selected, dispatchSelected] = React__default.useReducer((state, action) => {
+  const dispatchSelected = React__default.useCallback(action => {
     let index;
     let result;
 
@@ -5179,20 +5182,23 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
         break;
 
       default:
-        index = state.indexOf(action.value);
+        // adds or removes action.value from selected
+        index = value.indexOf(action.value);
 
         if (index === -1) {
-          result = [...state, action.value];
+          result = [...value, action.value];
         } else {
-          result = [...state];
+          result = [...value];
           result.splice(index, 1);
         }
 
     }
 
+    if (ref) ref.current = {
+      value: result
+    };
     onChange(result);
-    return result;
-  }, [...(value || [])]); // -------------------------------------------------------------------------------------------------------------------
+  }, [value, onChange, ref]); // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
 
@@ -5212,7 +5218,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
       if (!contained) setOpen(false);else actionableRef.current.focus();
     },
     onClick: () => setOpen(!open)
-  }, selected.map(x => getLabel(x, options)).join(', ')), /*#__PURE__*/React__default.createElement(Popup, {
+  }, value.map(x => getLabel(x, options)).join(', ')), /*#__PURE__*/React__default.createElement(Popup, {
     ref: popupRef,
     style: {
       display: open ? 'block' : 'none',
@@ -5229,7 +5235,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
     small: true,
     key: x.value,
     variant: "plain",
-    selected: selected.indexOf(x.value) !== -1,
+    selected: value.indexOf(x.value) !== -1,
     extraStyles: {
       base: {
         textAlign: 'left'
@@ -5241,19 +5247,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
       });
       evt.target.blur();
     }
-  }, x.label)), /*#__PURE__*/React__default.createElement("select", {
-    style: {
-      display: 'none'
-    },
-    multiple: true,
-    id: id,
-    disabled: true,
-    ref: ref
-  }, options.map(x => /*#__PURE__*/React__default.createElement("option", {
-    key: x.value,
-    value: x.value,
-    selected: selected.indexOf(x.value) !== -1
-  }, x.label))))));
+  }, x.label)))));
 });
 MultiselectActionable.propTypes = {
   id: propTypes.string,
@@ -5315,7 +5309,9 @@ const StyledControl = styled.div`
     ${props => props.labelInside && `
       padding-top: 0.8em;
     `}
-    ${props => props.comfort && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);padding:0 ", "rem;"], ds.measures.spacer, ds.measures.spacer, ds.measures.spacer * (3 / 2))}
+    ${props => props.comfort && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);", ""], ds.measures.spacer, ds.measures.spacer, ''
+/* padding: 0 ${props => ds.measures.spacer(props) * (3 / 2)}rem; */
+)}
   }
 
   &.invalid > input,
@@ -5366,7 +5362,7 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     htmlFor: uid.current
   }, label), /*#__PURE__*/React__default.createElement("select", {
     id: uid.current,
-    value: value,
+    defaultValue: value,
     disabled: disabled,
     onChange: evt => onChange(evt.target.value),
     ref: ref
@@ -5378,7 +5374,7 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     label: label,
     value: value,
     disabled: disabled,
-    onChange: value => onChange(value),
+    onChange: onChange,
     options: options,
     ref: ref
   }) : /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
@@ -5414,7 +5410,8 @@ Control.propTypes = {
   max: propTypes.number
 };
 Control.defaultProps = {
-  onChange: () => {}
+  onChange: () => {},
+  options: []
 };
 
 function styleInject(css, ref) {
