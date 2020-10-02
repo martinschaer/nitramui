@@ -4771,8 +4771,8 @@ Pane.defaultProps = {
 
 const headingStyles = css(["font-family:", ";font-weight:", ";"], ds.fonts.heading, ds.weights.heading);
 const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:", ";"], ds.colors.fgMuted, 1 / 12, ds.weights.preheading);
-const labelStyles = css(["line-height:calc(", "rem * 2);height:calc(", "rem * 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.measures.spacer, ds.measures.spacer, ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
-const labelStylesSmall = css(["line-height:calc(", "rem * 3 / 2);height:calc(", "rem * 3 / 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.measures.spacer, ds.measures.spacer, props => ds.measures.spacer(props) / 2, ds.measures.spacer, ds.measures.spacer);
+const labelStyles = css(["line-height:calc(", "rem * 2);min-height:calc(", "rem * 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.measures.spacer, ds.measures.spacer, ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
+const labelStylesSmall = css(["line-height:calc(", "rem * 3 / 2);min-height:calc(", "rem * 3 / 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.measures.spacer, ds.measures.spacer, props => ds.measures.spacer(props) / 2, ds.measures.spacer, ds.measures.spacer);
 
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
@@ -4783,9 +4783,10 @@ const Label = styled.span`
   font-size: ${props => props.small ? ds.measures.fontSmall : ds.measures.font};
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
-  &:first-child {
+
+  /* &:first-child {
     padding-left: 0.25rem;
-  }
+  } */
   &:last-child {
     padding-right: 0.25rem;
   }
@@ -5249,7 +5250,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
     mini: true,
     forceShadow: true,
     low: true,
-    selected: true
+    hoverable: true
   }, options.length ? options.map(x => /*#__PURE__*/React__default.createElement(Button, {
     fill: true,
     small: true,
@@ -5310,14 +5311,20 @@ const StyledControl = styled.div`
     margin-top: 0;
     margin-bottom: 0;
     margin-left: 0;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
     ${props => props.labelInside && `
       position: absolute;
       top: -.2em;
+      left: 0;
       font-size: .8em;
       white-space: nowrap;
       user-select: none;
     `}
-    ${props => props.comfort && !props.labelInside && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);padding:0 ", "rem;"], ds.measures.spacer, ds.measures.spacer, ds.measures.spacer * (3 / 2))}
+    ${props => props.comfort && !props.labelInside && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);"], ds.measures.spacer, ds.measures.spacer)}
   }
 
   & > input,
@@ -5331,9 +5338,7 @@ const StyledControl = styled.div`
     ${props => props.labelInside && `
       padding-top: 0.8em;
     `}
-    ${props => props.comfort && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);", ""], ds.measures.spacer, ds.measures.spacer, ''
-/* padding: 0 ${props => ds.measures.spacer(props) * (3 / 2)}rem; */
-)}
+    ${props => props.comfort && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);"], ds.measures.spacer, ds.measures.spacer)}
   }
 
   &.invalid > input,
