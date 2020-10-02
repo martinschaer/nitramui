@@ -5266,7 +5266,7 @@ const MultiselectActionable = /*#__PURE__*/React.forwardRef((props, ref) => {
 });
 MultiselectActionable.propTypes = {
   id: propTypes.string,
-  label: propTypes.string,
+  label: propTypes.node,
   value: PROP_VALUE,
   disabled: propTypes.bool,
   onChange: propTypes.func,
