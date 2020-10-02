@@ -3485,6 +3485,11 @@ var ds = {
       [themes.hiContrast]: '0.875rem',
       custom: buildCustomProp('measures', 'font', '0.875rem')
     }),
+    fontSmall: styledTheming('theme', {
+      [themes.smooth]: '0.66rem',
+      [themes.hiContrast]: '0.66rem',
+      custom: buildCustomProp('measures', 'fontSmall', '0.66rem')
+    }),
     inputFont: styledTheming('theme', {
       [themes.smooth]: '0.875rem',
       [themes.hiContrast]: '0.875rem',
@@ -4773,8 +4778,9 @@ const labelStylesSmall = css(["line-height:calc(", "rem * 3 / 2);height:calc(", 
 // ---------------------------------------------------------------------------------------------------------------------
 
 const Label = styled.span`
-  ${props => props.compact ? `line-height: calc(${ds.measures.spacer(props)}rem * 2);
+  ${props => props.small ? labelStylesSmall : props => props.compact ? `line-height: calc(${ds.measures.spacer(props)}rem * 2);
   height: calc(${ds.measures.spacer(props)}rem * 2);` : labelStyles}
+  font-size: ${props => props.small ? ds.measures.fontSmall : ds.measures.font};
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
   &:first-child {
@@ -4788,6 +4794,7 @@ const Label = styled.span`
 // ---------------------------------------------------------------------------------------------------------------------
 
 Label.propTypes = {
+  small: propTypes.bool,
   heading: propTypes.bool,
   compact: propTypes.bool,
   children: propTypes.node
@@ -5169,6 +5176,19 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
   const [open, setOpen] = React.useState(false); // TODO: set top
 
   const [top] = React.useState('2.5rem'); // -------------------------------------------------------------------------------------------------------------------
+  // Memos
+  // -------------------------------------------------------------------------------------------------------------------
+
+  const _value = React__default.useMemo(() => {
+    return Array.isArray(value) ? value : [];
+  }, [value]);
+
+  const openPopup = React__default.useCallback(val => {
+    if (!disabled) {
+      setOpen(val);
+      if (val) actionableRef.current.focus();
+    }
+  }, [disabled]); // -------------------------------------------------------------------------------------------------------------------
   // Reducers
   // -------------------------------------------------------------------------------------------------------------------
 
@@ -5183,12 +5203,12 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
 
       default:
         // adds or removes action.value from selected
-        index = value.indexOf(action.value);
+        index = _value.indexOf(action.value);
 
         if (index === -1) {
-          result = [...value, action.value];
+          result = [..._value, action.value];
         } else {
-          result = [...value];
+          result = [..._value];
           result.splice(index, 1);
         }
 
@@ -5198,7 +5218,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
       value: result
     };
     onChange(result);
-  }, [value, onChange, ref]); // -------------------------------------------------------------------------------------------------------------------
+  }, [_value, onChange, ref]); // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
 
@@ -5206,19 +5226,19 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
     as: "label",
     htmlFor: id,
     onClick: () => {
-      actionableRef.current.focus();
-      setOpen(true);
-    }
+      openPopup(!open);
+    },
+    onMouseDown: e => e.preventDefault()
   }, label), /*#__PURE__*/React__default.createElement(Actionable, {
     ref: actionableRef,
     tabIndex: 0,
     className: `nui-actionable${disabled ? ' disabled' : ''}`,
     onBlur: evt => {
       const contained = popupRef.current.contains(evt.relatedTarget);
-      if (!contained) setOpen(false);else actionableRef.current.focus();
+      if (!contained) openPopup(false);
     },
-    onClick: () => setOpen(!open)
-  }, value.map(x => getLabel(x, options)).join(', ')), /*#__PURE__*/React__default.createElement(Popup, {
+    onClick: () => openPopup(!open)
+  }, _value.map(x => getLabel(x, options)).join(', ')), /*#__PURE__*/React__default.createElement(Popup, {
     ref: popupRef,
     style: {
       display: open ? 'block' : 'none',
@@ -5230,12 +5250,12 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
     forceShadow: true,
     low: true,
     selected: true
-  }, options.map(x => /*#__PURE__*/React__default.createElement(Button, {
+  }, options.length ? options.map(x => /*#__PURE__*/React__default.createElement(Button, {
     fill: true,
     small: true,
     key: x.value,
     variant: "plain",
-    selected: value.indexOf(x.value) !== -1,
+    selected: _value.indexOf(x.value) !== -1,
     extraStyles: {
       base: {
         textAlign: 'left'
@@ -5247,7 +5267,9 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
       });
       evt.target.blur();
     }
-  }, x.label)))));
+  }, x.label)) : /*#__PURE__*/React__default.createElement(Label, {
+    small: true
+  }, /*#__PURE__*/React__default.createElement(Muted, null, "Empty")))));
 });
 MultiselectActionable.propTypes = {
   id: propTypes.string,
