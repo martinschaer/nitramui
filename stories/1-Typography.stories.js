@@ -208,6 +208,18 @@ export const Typography = () => {
                 />
                 {multiSelectValue.join(', ')}
                 <Control
+                  disabled
+                  labelInside
+                  type='multiselect'
+                  label='multiselect labelInside'
+                />
+                <Control
+                  labelInside
+                  type='multiselect'
+                  label='multiselect labelInside'
+                  value=''
+                />
+                <Control
                   labelInside
                   type='multiselect'
                   label='multiselect labelInside'

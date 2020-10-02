@@ -7,6 +7,7 @@ import styled, { css } from 'styled-components'
 // ---------------------------------------------------------------------------------------------------------------------
 import Card from '../Card'
 import Label from '../Label'
+import Muted from '../Muted'
 import Button from '../Button'
 import ds from '../common/designSystem'
 import {
@@ -58,6 +59,26 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
   const [top] = useState('2.5rem')
 
   // -------------------------------------------------------------------------------------------------------------------
+  // Memos
+  // -------------------------------------------------------------------------------------------------------------------
+  const _value = React.useMemo(
+    () => {
+      return Array.isArray(value) ? value : []
+    },
+    [value]
+  )
+
+  const openPopup = React.useCallback(
+    (val) => {
+      if (!disabled) {
+        setOpen(val)
+        if (val) actionableRef.current.focus()
+      }
+    },
+    [disabled]
+  )
+
+  // -------------------------------------------------------------------------------------------------------------------
   // Reducers
   // -------------------------------------------------------------------------------------------------------------------
   const dispatchSelected = React.useCallback(
@@ -70,11 +91,11 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
           break
         default:
           // adds or removes action.value from selected
-          index = value.indexOf(action.value)
+          index = _value.indexOf(action.value)
           if (index === -1) {
-            result = [...value, action.value]
+            result = [..._value, action.value]
           } else {
-            result = [...value]
+            result = [..._value]
             result.splice(index, 1)
           }
       }
@@ -82,7 +103,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
 
       onChange(result)
     },
-    [value, onChange, ref]
+    [_value, onChange, ref]
   )
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -91,7 +112,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
   return (
     <>
       {label && (
-        <Label as='label' htmlFor={id} onClick={() => { actionableRef.current.focus(); setOpen(true) }}>
+        <Label as='label' htmlFor={id} onClick={() => { openPopup(!open) }} onMouseDown={e => e.preventDefault()}>
           {label}
         </Label>
       )}
@@ -101,12 +122,11 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
         className={`nui-actionable${disabled ? ' disabled' : ''}`}
         onBlur={(evt) => {
           const contained = popupRef.current.contains(evt.relatedTarget)
-          if (!contained) setOpen(false)
-          else actionableRef.current.focus()
+          if (!contained) openPopup(false)
         }}
-        onClick={() => setOpen(!open)}
+        onClick={() => openPopup(!open)}
       >
-        {value.map(x => getLabel(x, options)).join(', ')}
+        {_value.map(x => getLabel(x, options)).join(', ')}
       </Actionable>
       <Popup
         ref={popupRef}
@@ -117,13 +137,13 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
         }}
       >
         <Card mini forceShadow low selected>
-          {options.map(x => (
+          {options.length ? options.map(x => (
             <Button
               fill
               small
               key={x.value}
               variant='plain'
-              selected={value.indexOf(x.value) !== -1}
+              selected={_value.indexOf(x.value) !== -1}
               extraStyles={{ base: { textAlign: 'left' } }}
               onClick={(evt) => {
                 dispatchSelected({ value: x.value })
@@ -132,7 +152,9 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
             >
               {x.label}
             </Button>
-          ))}
+          )) : (
+            <Label small><Muted>Empty</Muted></Label>
+          )}
         </Card>
       </Popup>
     </>
