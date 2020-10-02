@@ -1,6 +1,8 @@
 import React from 'react'
 import { linkTo } from '@storybook/addon-links'
 
+import { groove } from './themes'
+
 import {
   modes,
   css,
@@ -31,53 +33,6 @@ const Hola = styled.span`
 `
 
 const mode2Emoji = mode => mode === 'light' ? '🌞' : '🌙'
-
-const customThemes = {
-  groove: {
-    colors: {
-      fg: { light: '#212B36', dark: '#F9FAFB' },
-      bg: { light: '#F9FAFB', dark: '#000' },
-      card: { light: '#F9FAFB', dark: '#212B36' },
-      border: { light: '#DFE3E8', dark: '#637381' },
-      buttonBg: {
-        light: 'linear-gradient(-225deg, #A100FF 0%, #00BAFF 100%)',
-        dark: 'linear-gradient(-225deg, #A100FF 0%, #00BAFF 100%)'
-      },
-      buttonFgSelected: { light: '#F9FAFB', dark: '#F9FAFB' },
-      buttonBgSelected: { light: '#0071CC', dark: '#0071CC' },
-      buttonBgHover: { light: '#33A4FF', dark: '#33A4FF' },
-      buttonFg: { light: 'white', dark: 'white' },
-      buttonFgHover: { light: 'white', dark: 'white' },
-      buttonFgDisabled: { light: '#018EFF', dark: '#018EFF' },
-      buttonBgDisabled: { light: 'transparent', dark: 'transparent' },
-      buttonBorder: { light: '#F9FAFB', dark: '#212B36' },
-      buttonBorderHover: { light: '#33A4FF', dark: '#33A4FF' },
-      inputFg: { light: '#212B36', dark: '#F9FAFB' },
-      inputBg: { light: '#FFF', dark: 'transparent' },
-      inputBgHover: { light: '#FFF', dark: 'transparent' },
-      inputBgFocus: { light: '#F4FBFF', dark: 'transparent' },
-      inputBorder: { light: '#DFE3E8', dark: '#637381' },
-      inputBorderActive: { light: '#018EFF', dark: '#018EFF' }
-    },
-    fonts: {
-      body: 'Helvetica, Arial',
-      heading: 'serif',
-      controls: 'sans-serif'
-    },
-    weights: {
-      strong: 700
-    },
-    measures: {
-      inputFont: '0.875rem',
-      radius: '1.5em',
-      inputRadius: '0.25rem',
-      buttonRadius: '100rem',
-      spacer: 1.2,
-      buttonSpacerH: 1.5,
-      inputSpacerH: 0.5
-    }
-  }
-}
 
 const ExampleTable = () => {
   return (
@@ -170,7 +125,7 @@ export const App = () => {
 
   return (
     <NitramUI
-      customThemes={customThemes}
+      customThemes={{ groove }}
       // availableThemes={['groove', 'smooth']}
     >
       <NitramUIContext.Consumer>

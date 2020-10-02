@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { groove } from './themes'
+
 import {
   modes,
   Card,
@@ -48,9 +50,9 @@ export const Typography = () => {
   const multiRef = React.useRef()
   const [multiSelectValue, multiSelectValueSet] = React.useState([])
   return (
-    <NitramUI>
+    <NitramUI customThemes={{ groove }}>
       <NitramUIContext.Consumer>
-        {({ mode, setMode }) => (
+        {({ mode, setMode, themes, theme, setTheme }) => (
           <Layout>
             <Pane size='small'>
               <h2 className='pre-heading'>Menu</h2>
@@ -61,6 +63,16 @@ export const Typography = () => {
                   </Button>
                 ))}
               </p>
+              <div className='mt mb'>
+                <Control
+                  labelInside
+                  type='select'
+                  label='Theme'
+                  value={theme}
+                  onChange={setTheme}
+                  options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
+                />
+              </div>
               <p><Button>Button default</Button></p>
               <p><Button className='selected'>Button default selected</Button></p>
               <p><Button variant='plain'>Button plain</Button></p>
@@ -84,6 +96,34 @@ export const Typography = () => {
                   <li>List item</li>
                   <li>List item</li>
                 </ul>
+                <Card noPadding>
+                  <Flex alignItems='center' flexWrap='wrap'>
+                    <Label>Hello world</Label>
+                    <Divider />
+                    <Label>Hello world</Label>
+                    <Divider />
+                    <Label>Hello world</Label>
+                    <Divider />
+                    <Label>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Label>
+                    <Divider />
+                    <Label>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Label>
+                    <Divider />
+                    <Label>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Label>
+                    <Divider />
+                    <Label>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris luctus, magna a scelerisque
+                      convallis, leo magna lobortis diam, at sollicitudin nisl elit vitae tortor. Quisque mattis
+                      pharetra ornare.
+                    </Label>
+                    <Divider />
+                    <Label>Hello world</Label>
+                    <Divider />
+                    <Label>Hello world</Label>
+                    <Divider />
+                    <Label>Hello world</Label>
+                  </Flex>
+                </Card>
+                <Divider horizontal />
                 <ol>
                   <li>List item</li>
                   <li>List item</li>
