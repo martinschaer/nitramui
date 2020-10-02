@@ -3250,6 +3250,17 @@ var ds = {
       }),
       custom: buildCustomProp('colors', 'inputFgDisabled', BLACK_30, EMPEROR)
     }),
+    labelFg: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'labelFg', EMPEROR, GALLERY)
+    }),
     // -----------------------------------------------------------------------------------------------------------------
     // Card
     // -----------------------------------------------------------------------------------------------------------------
@@ -5305,12 +5316,13 @@ const StyledControl = styled.div`
 
   & > ${Label} {
     ${props => props.small && css(["", " font-size:", ";"], labelStylesSmall, ds.measures.inputFontSmall)}
-    padding-left: calc(${ds.measures.spacer}rem / 2);
-    padding-right: calc(${ds.measures.spacer}rem / 4);
+    padding-left: calc(${ds.measures.inputSpacerH}rem + (${ds.measures.spacer}rem / 4));
+    padding-right: calc(${ds.measures.spacer}rem);
     font-weight: ${ds.weights.controlLabel};
     margin-top: 0;
     margin-bottom: 0;
     margin-left: 0;
+    color: ${ds.colors.SLATE};
 
     overflow: hidden;
     white-space: nowrap;
@@ -5318,11 +5330,12 @@ const StyledControl = styled.div`
 
     ${props => props.labelInside && `
       position: absolute;
-      top: -.2em;
+      top: 0;
       left: 0;
       font-size: .8em;
       white-space: nowrap;
       user-select: none;
+      line-height: 1.5rem;
     `}
     ${props => props.comfort && !props.labelInside && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);"], ds.measures.spacer, ds.measures.spacer)}
   }
@@ -5335,9 +5348,7 @@ const StyledControl = styled.div`
     flex-grow: 1;
     margin: 0;
     max-width: 100%;
-    ${props => props.labelInside && `
-      padding-top: 0.8em;
-    `}
+    ${props => props.labelInside && css(["padding-top:0.4rem;line-height:calc((", "rem * 2) - 0.4rem);"], ds.measures.spacer)}
     ${props => props.comfort && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);"], ds.measures.spacer, ds.measures.spacer)}
   }
 
@@ -5578,6 +5589,10 @@ a {
 .button,
 button {
   ${buttonStyle}
+}
+
+label {
+  color: ${ds.colors.labelFg};
 }
 
 input,
