@@ -505,6 +505,19 @@ export default {
         }),
       custom: buildCustomProp('colors', 'inputFgDisabled', BLACK_30, EMPEROR)
     }),
+    labelFg: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'labelFg', EMPEROR, GALLERY)
+    }),
 
     // -----------------------------------------------------------------------------------------------------------------
     // Card

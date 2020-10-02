@@ -70,6 +70,7 @@ export const groove = {
     buttonBorderHover: colorAccentLight,
     buttonBorderHoverPlain: colorAccentLight,
     controlBg: colorTransparent,
+    labelFg: { light: colors.SLATE, dark: colors.SLATE },
     inputFg: colorFg,
     inputBg: { light: colors.WHITE, dark: TRANSPARENT },
     inputBgHover: { light: colors.WHITE, dark: TRANSPARENT },
@@ -89,16 +90,16 @@ export const groove = {
     strong: 600,
     heading: 600,
     preheading: 500,
-    controlLabel: 600
+    controlLabel: 500
   },
   measures: {
     font: '0.875rem',
-    inputFont: '0.875rem',
+    inputFont: '1rem',
     radius: '0.5em',
     inputRadius: '0.25rem',
     buttonRadius: '100rem',
     spacer: 1.2,
     buttonSpacerH: 1.5,
-    inputSpacerH: 0.5
+    inputSpacerH: 1
   }
 }

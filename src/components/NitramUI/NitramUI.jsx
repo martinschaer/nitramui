@@ -122,6 +122,10 @@ button {
   ${buttonStyle}
 }
 
+label {
+  color: ${ds.colors.labelFg};
+}
+
 input,
 select,
 .nui-actionable {
