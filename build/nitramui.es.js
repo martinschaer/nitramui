@@ -5321,14 +5321,23 @@ const StyledControl = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    ${props => props.labelInside && `
+    ${props => !props.comfort && props.labelInside && `
       position: absolute;
       top: 0;
       left: 0;
       font-size: .8em;
       white-space: nowrap;
       user-select: none;
-      line-height: 1.5rem;
+      line-height: 3em;
+    `}
+    ${props => props.comfort && props.labelInside && `
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: .8em;
+      white-space: nowrap;
+      user-select: none;
+      line-height: 4em;
     `}
     ${props => props.comfort && !props.labelInside && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);"], ds.measures.spacer, ds.measures.spacer)}
   }
@@ -5341,8 +5350,9 @@ const StyledControl = styled.div`
     flex-grow: 1;
     margin: 0;
     max-width: 100%;
-    ${props => props.labelInside && css(["padding-top:0.4rem;line-height:calc((", "rem * 2) - 0.4rem);"], ds.measures.spacer)}
-    ${props => props.comfort && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);"], ds.measures.spacer, ds.measures.spacer)}
+    ${props => props.comfort && props.labelInside && css(["height:calc(", "rem * 3);padding-top:1rem;line-height:calc((", "rem * 3) - 1rem);"], ds.measures.spacer, ds.measures.spacer)}
+    ${props => props.comfort && !props.labelInside && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);"], ds.measures.spacer, ds.measures.spacer)}
+    ${props => !props.comfort && props.labelInside && css(["padding-top:1rem;line-height:calc((", "rem * 2) - 1rem);"], ds.measures.spacer)}
   }
 
   &.invalid > input,
