@@ -136,7 +136,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
           top: top
         }}
       >
-        <Card mini forceShadow low selected>
+        <Card mini forceShadow low hoverable>
           {options.length ? options.map(x => (
             <Button
               fill
@@ -206,6 +206,7 @@ const StyledControl = styled.div`
     ${props => props.labelInside && (`
       position: absolute;
       top: -.2em;
+      left: 0;
       font-size: .8em;
       white-space: nowrap;
       user-select: none;
@@ -213,7 +214,6 @@ const StyledControl = styled.div`
     ${props => props.comfort && !props.labelInside && css`
       line-height: calc(${ds.measures.spacer}rem * 3);
       height: calc(${ds.measures.spacer}rem * 3);
-      padding: 0 ${ds.measures.spacer * (3 / 2)}rem;
     `}
   }
 
@@ -234,7 +234,6 @@ const StyledControl = styled.div`
     ${props => props.comfort && css`
       line-height: calc(${ds.measures.spacer}rem * 3);
       height: calc(${ds.measures.spacer}rem * 3);
-      ${'' /* padding: 0 ${props => ds.measures.spacer(props) * (3 / 2)}rem; */}
     `}
   }
 

@@ -25,6 +25,12 @@ const Label = styled.span`
   font-size: ${props => props.small ? ds.measures.fontSmall : ds.measures.font};
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+
   &:first-child {
     padding-left: 0.25rem;
   }
