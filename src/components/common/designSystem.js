@@ -773,6 +773,11 @@ export default {
       [themes.hiContrast]: '0.875rem',
       custom: buildCustomProp('measures', 'font', '0.875rem')
     }),
+    fontSmall: theme('theme', {
+      [themes.smooth]: '0.66rem',
+      [themes.hiContrast]: '0.66rem',
+      custom: buildCustomProp('measures', 'fontSmall', '0.66rem')
+    }),
     inputFont: theme('theme', {
       [themes.smooth]: '0.875rem',
       [themes.hiContrast]: '0.875rem',

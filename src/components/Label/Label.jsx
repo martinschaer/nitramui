@@ -6,6 +6,7 @@ import styled from 'styled-components'
 // ---------------------------------------------------------------------------------------------------------------------
 import {
   labelStyles,
+  labelStylesSmall,
   headingStyles,
   preHeadingStyles
 } from '../common/typography'
@@ -15,8 +16,13 @@ import ds from '../common/designSystem'
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 const Label = styled.span`
-  ${props => props.compact ? `line-height: calc(${ds.measures.spacer(props)}rem * 2);
-  height: calc(${ds.measures.spacer(props)}rem * 2);` : labelStyles}
+  ${props => props.small
+    ? labelStylesSmall
+    : props => props.compact
+      ? `line-height: calc(${ds.measures.spacer(props)}rem * 2);
+  height: calc(${ds.measures.spacer(props)}rem * 2);`
+      : labelStyles}
+  font-size: ${props => props.small ? ds.measures.fontSmall : ds.measures.font};
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
   &:first-child {
@@ -31,6 +37,7 @@ const Label = styled.span`
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
 Label.propTypes = {
+  small: PropTypes.bool,
   heading: PropTypes.bool,
   compact: PropTypes.bool,
   children: PropTypes.node
