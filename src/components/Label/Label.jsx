@@ -26,14 +26,9 @@ const Label = styled.span`
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
 
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  box-sizing: border-box;
-
-  &:first-child {
+  /* &:first-child {
     padding-left: 0.25rem;
-  }
+  } */
   &:last-child {
     padding-right: 0.25rem;
   }

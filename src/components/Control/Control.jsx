@@ -203,6 +203,11 @@ const StyledControl = styled.div`
     margin-top: 0;
     margin-bottom: 0;
     margin-left: 0;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
     ${props => props.labelInside && (`
       position: absolute;
       top: -.2em;
