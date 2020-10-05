@@ -4789,15 +4789,12 @@ const labelStylesSmall = css(["line-height:calc(", "rem * 3 / 2);min-height:calc
 // ---------------------------------------------------------------------------------------------------------------------
 
 const Label = styled.span`
-  ${props => props.small ? labelStylesSmall : props => props.compact ? `line-height: calc(${ds.measures.spacer(props)}rem * 2);
-  height: calc(${ds.measures.spacer(props)}rem * 2);` : labelStyles}
+  ${props => props.small || props.compact ? labelStylesSmall : labelStyles}
+  ${props => props.compact && 'padding: 0;'}
   font-size: ${props => props.small ? ds.measures.fontSmall : ds.measures.font};
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
 
-  /* &:first-child {
-    padding-left: 0.25rem;
-  } */
   &:last-child {
     padding-right: 0.25rem;
   }
@@ -4895,7 +4892,7 @@ Table.defaultProps = {
 };
 
 const selectedCSS = css(["color:", ";background:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";"], ds.colors.buttonFgSelected, ds.colors.buttonBgSelected, ds.colors.buttonShadow);
-const buttonStyle = css(["", " font-size:", ";vertical-align:bottom;border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;", " cursor:pointer;transform:perspective(100rem);&:visited{color:inherit;}&:hover,&:focus,&:active,&.active{", " outline:none;text-decoration:none;", "}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null, props => props.variant === 'plain' ? `color: ${ds.colors.buttonFgHoverPlain(props)};
+const buttonStyle = css(["", " font-size:", ";border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;", " cursor:pointer;transform:perspective(100rem);&:visited{color:inherit;}&:hover,&:focus,&:active,&.active{", " outline:none;text-decoration:none;", "}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null, props => props.variant === 'plain' ? `color: ${ds.colors.buttonFgHoverPlain(props)};
         background: ${ds.colors.buttonBgHoverPlain(props)};
         border-color: ${ds.colors.buttonBorderHoverPlain(props)};` : `color: ${ds.colors.buttonFgHover(props)};
         background: ${ds.colors.buttonBgHover(props)};
@@ -5075,7 +5072,7 @@ Layout.defaultProps = {};
 // ---------------------------------------------------------------------------------------------------------------------
 
 const Divider = styled.span`
-  ${props => props.horizontal ? css(["display:block;margin:", ";border-top:1px solid ", ";"], props => props.noMargin ? 0 : '1em 0', ds.colors.border) : css(["display:inline-block;margin:", ";border-right:1px solid ", ";height:1.8em;"], props => props.noMargin ? 0 : '0 1em', ds.colors.border)}
+  ${props => props.horizontal ? css(["display:block;margin:", ";border-top:1px solid ", ";"], props => props.noMargin ? 0 : '1em 0', ds.colors.border) : css(["display:inline-block;margin:", ";border-right:1px solid ", ";height:1.8em;"], props => props.noMargin ? 0 : `0 ${ds.measures.spacer(props) / 4}rem`, ds.colors.border)}
   vertical-align: middle;
 `; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
@@ -5187,13 +5184,10 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
   } = props;
   const [open, setOpen] = React.useState(false); // TODO: set top
 
-  const [top] = React.useState('2.5rem'); // -------------------------------------------------------------------------------------------------------------------
+  const [top] = React.useState('2.5rem');
+  const [_value, setValue] = React.useState(Array.isArray(value) ? value : []); // -------------------------------------------------------------------------------------------------------------------
   // Memos
   // -------------------------------------------------------------------------------------------------------------------
-
-  const _value = React__default.useMemo(() => {
-    return Array.isArray(value) ? value : [];
-  }, [value]);
 
   const openPopup = React__default.useCallback(val => {
     if (!disabled) {
@@ -5229,6 +5223,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
     if (ref) ref.current = {
       value: result
     };
+    setValue(result);
     onChange(result);
   }, [_value, onChange, ref]); // -------------------------------------------------------------------------------------------------------------------
   // Render
@@ -5277,7 +5272,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
       dispatchSelected({
         value: x.value
       });
-      evt.target.blur();
+      actionableRef.current.focus();
     }
   }, x.label)) : /*#__PURE__*/React__default.createElement(Label, {
     small: true
@@ -5410,7 +5405,8 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     htmlFor: uid.current
   }, label), /*#__PURE__*/React__default.createElement("select", {
     id: uid.current,
-    defaultValue: value,
+    value: ref !== undefined ? value : undefined,
+    defaultValue: ref !== undefined ? undefined : value,
     disabled: disabled,
     onChange: evt => onChange(evt.target.value),
     ref: ref
