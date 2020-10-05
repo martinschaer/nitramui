@@ -48,6 +48,7 @@ const selectOptions = [
 export const Typography = () => {
   const textRef = React.useRef()
   const multiRef = React.useRef()
+  const selectRef = React.useRef()
   const [multiSelectValue, multiSelectValueSet] = React.useState([])
   return (
     <NitramUI customThemes={{ groove }}>
@@ -198,6 +199,13 @@ export const Typography = () => {
                   />
                   <Control
                     labelInside
+                    type='select'
+                    label='select labelInside'
+                    options={selectOptions}
+                    ref={selectRef}
+                  />
+                  <Control
+                    labelInside
                     type='multiselect'
                     label='multiselect labelInside'
                     options={selectOptions}
@@ -205,7 +213,8 @@ export const Typography = () => {
                   />
                   <Button
                     onClick={() => {
-                      textRef.current.value = `${textRef.current.value.toUpperCase()} ${multiRef.current?.value}`
+                      textRef.current.value = `${textRef.current.value.toUpperCase()}\
+ ${selectRef.current?.value} ${multiRef.current?.value}`
                     }}
                   >
                     toUpperCase

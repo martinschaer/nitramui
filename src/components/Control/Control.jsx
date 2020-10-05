@@ -57,17 +57,11 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
   const [open, setOpen] = useState(false)
   // TODO: set top
   const [top] = useState('2.5rem')
+  const [_value, setValue] = useState(Array.isArray(value) ? value : [])
 
   // -------------------------------------------------------------------------------------------------------------------
   // Memos
   // -------------------------------------------------------------------------------------------------------------------
-  const _value = React.useMemo(
-    () => {
-      return Array.isArray(value) ? value : []
-    },
-    [value]
-  )
-
   const openPopup = React.useCallback(
     (val) => {
       if (!disabled) {
@@ -100,7 +94,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
           }
       }
       if (ref) ref.current = { value: result }
-
+      setValue(result)
       onChange(result)
     },
     [_value, onChange, ref]
@@ -298,7 +292,8 @@ const Control = React.forwardRef((props, ref) => {
             {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
             <select
               id={uid.current}
-              defaultValue={value}
+              value={ref !== undefined ? value : undefined}
+              defaultValue={ref !== undefined ? undefined : value}
               disabled={disabled}
               onChange={evt => onChange(evt.target.value)}
               ref={ref}

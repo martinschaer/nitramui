@@ -324,7 +324,7 @@ export const App = () => {
                     margin
                     header={
                       <>
-                        <Label heading>Header</Label>
+                        <Label heading>{mode} {theme}</Label>
                         <Control
                           type='select'
                           value={mode}
