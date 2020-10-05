@@ -122,6 +122,10 @@ export const Typography = () => {
                     <Label>Hello world</Label>
                     <Divider />
                     <Label>Hello world</Label>
+                    <Divider />
+                    <Button>Button</Button>
+                    <Button>Button</Button>
+                    <Divider />
                   </Flex>
                 </Card>
                 <Divider horizontal />

@@ -18,7 +18,7 @@ const Divider = styled.span`
     `
     : css`
       display: inline-block;
-      margin: ${props => props.noMargin ? 0 : '0 1em'};
+      margin: ${props => props.noMargin ? 0 : `0 ${ds.measures.spacer(props) / 4}rem`};
       border-right: 1px solid ${ds.colors.border};
       height: 1.8em;
     `

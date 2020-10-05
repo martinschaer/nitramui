@@ -19,13 +19,11 @@ const Label = styled.span`
   ${props => props.small || props.compact
     ? labelStylesSmall
     : labelStyles}
+  ${props => props.compact && 'padding: 0;'}
   font-size: ${props => props.small ? ds.measures.fontSmall : ds.measures.font};
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
 
-  /* &:first-child {
-    padding-left: 0.25rem;
-  } */
   &:last-child {
     padding-right: 0.25rem;
   }
