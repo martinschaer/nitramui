@@ -141,7 +141,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
               extraStyles={{ base: { textAlign: 'left' } }}
               onClick={(evt) => {
                 dispatchSelected({ value: x.value })
-                evt.target.blur()
+                actionableRef.current.focus()
               }}
             >
               {x.label}
