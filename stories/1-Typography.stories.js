@@ -100,20 +100,20 @@ export const Typography = () => {
                   <Flex alignItems='center' flexWrap='wrap'>
                     <Label>Hello world</Label>
                     <Divider />
-                    <Label>Hello world</Label>
+                    <Label compact><strong>Compact</strong> Hello world</Label>
                     <Divider />
-                    <Label>Hello world</Label>
-                    <Divider />
-                    <Label>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Label>
+                    <Label small> Small Hello world</Label>
                     <Divider />
                     <Label>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Label>
                     <Divider />
                     <Label>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Label>
                     <Divider />
-                    <Label>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris luctus, magna a scelerisque
-                      convallis, leo magna lobortis diam, at sollicitudin nisl elit vitae tortor. Quisque mattis
-                      pharetra ornare.
+                    <Label>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Label>
+                    <Divider />
+                    <Label compact>
+                      <strong>Compact</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris luctus,
+                      magna a scelerisque convallis, leo magna lobortis diam, at sollicitudin nisl elit vitae tortor.
+                      Quisque mattis pharetra ornare.
                     </Label>
                     <Divider />
                     <Label>Hello world</Label>
@@ -335,6 +335,11 @@ export const Typography = () => {
                   <Divider />
                   <Button>Save</Button>
                   <Button small>Save</Button>
+                  <Divider />
+                  <p>Paragraph text with a <Button>button</Button></p>
+                  <Divider />
+                  <Label>Paragraph text with a <Button>button</Button></Label>
+                  <Divider />
                 </Flex>
               </Card>
             </Pane>

@@ -16,12 +16,9 @@ import ds from '../common/designSystem'
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 const Label = styled.span`
-  ${props => props.small
+  ${props => props.small || props.compact
     ? labelStylesSmall
-    : props => props.compact
-      ? `line-height: calc(${ds.measures.spacer(props)}rem * 2);
-  height: calc(${ds.measures.spacer(props)}rem * 2);`
-      : labelStyles}
+    : labelStyles}
   font-size: ${props => props.small ? ds.measures.fontSmall : ds.measures.font};
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}

@@ -20,7 +20,6 @@ const selectedCSS = css`
 export const buttonStyle = css`
   ${props => props.small ? labelStylesSmall : labelStyles}
   font-size: ${props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont};
-  vertical-align: bottom; /* fixes issue when font-size is in rems */
   border: 1px solid ${props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder};
   background: ${
     props => props.variant === 'plain'
