@@ -29,6 +29,7 @@ export const Readme = () => {
         {({ mode, setMode }) => (
           <Layout
             brand='NitramUI'
+            scroll='vertical'
             menuB={(
               <Control
                 type='select'
@@ -38,11 +39,11 @@ export const Readme = () => {
               />
             )}
           >
-            <Pane>
-              <Card>
+            <Pane.Wrapper>
+              <Pane height='auto'>
                 <div dangerouslySetInnerHTML={{ __html: README }} />
-              </Card>
-            </Pane>
+              </Pane>
+            </Pane.Wrapper>
           </Layout>
         )}
       </NitramUIContext.Consumer>

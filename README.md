@@ -134,14 +134,14 @@ Note: NitramUIContext has to be consumed within NitramUI scope.
 - [x] Fix too many scrollbars on Windows
 - [x] Prevent control labels from being selected (reproduce with double click on them)
 - [x] Pass ref to controls
+- [x] Have the outter pane have the scroll. E.g: default pane inside full-width pane (`<Pane height='auto'>` inside a Layout or Container with `scroll='vertical'`)
+- [x] Center panes horizontally
 - [ ] Add git hook for build and build storybook
 - [ ] Add button link (https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md)
 - [ ] Add instructions for customThemes and availableThemes props
 - [ ] Add hook for auto dark mode
 - [ ] Add packagequality.com badge
 - [ ] Create React App template
-- [ ] Have the outter pane have the scroll. E.g: default pane inside full-width pane
-- [ ] Center panes horizontally
 - [ ] Responsive layout (what to do with the sidebar pane?)
 - [ ] Check for updates
 - [ ] Add terser (https://www.npmjs.com/package/rollup-plugin-terser)

@@ -205,9 +205,8 @@ export const App = () => {
             <Pane size='full-minus-small'>
               {/* TODO: make it dynamic depending on the time of the day */}
               <h2 className='pre-heading'>Good morning!</h2>
-              <Card>
-                <h1>Today</h1>
-                <Container scroll='vertical' pushMargin>
+              <Card compact header={<Label><h1>Today</h1></Label>}>
+                <Container scroll='vertical'>
                   {/* ---------------------------------------------------------------------------------------------- */}
                   {/* Plans ending soon                                                                              */}
                   {/* ---------------------------------------------------------------------------------------------- */}

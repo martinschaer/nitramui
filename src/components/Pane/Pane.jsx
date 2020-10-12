@@ -9,6 +9,8 @@ import ds from '../common/designSystem'
 
 import {
   GOLDEN_RATIO,
+  widths,
+  getCSSWidth,
   styleValueToPX
 } from '../../utils/measures'
 import { debounce } from '../../utils/functions'
@@ -21,6 +23,8 @@ const StyledPane = styled.div`
   height: ${props =>
     props.h === 'half'
     ? '50%'
+    : props.h === 'auto'
+    ? 'auto'
     : typeof props.h === 'number'
     ? `${props.h}rem`
     : '100%'
@@ -31,26 +35,7 @@ const StyledPane = styled.div`
   ${props => props.shadow && css`box-shadow: 0 0 1rem ${ds.colors.shadow};`}
   overflow: auto;
   max-width: 100%;
-  width: ${
-    props => props.size === 'full'
-    ? '100%'
-    : props.size === 'small'
-    ? '16rem'
-    : props.size === 'full-minus-small'
-    ? 'calc(100vw - 16rem)'
-    : props.size === 'golden-width'
-    ? `${100 / GOLDEN_RATIO}%`
-    : props.size === 'golden-width-rest'
-    ? `${100 - (100 / GOLDEN_RATIO)}%`
-    : props.size === 'half'
-    ? '50%'
-    : props.size === 'third'
-    ? '33.3%'
-    : props.size === 'fourth'
-    ? '25%'
-    // default:
-    : '50rem'
-  };
+  width: ${props => getCSSWidth(props.size)};
 
   @media (max-width: 768px) {
     ${props => props.size === 'small' ? '' : 'min-width: 100vw;'}
@@ -86,9 +71,9 @@ const Pane = ({
       ) {
         handleResize = () => {
           const el = document.querySelector(`#${uid.current}`)
-          const elStyle = window.getComputedStyle(el)
           const h = el.offsetHeight
           const winW = window.innerWidth
+          let elStyle
           switch (size) {
             case 'golden-horizontal':
               el.style.width = `${parseInt(h * GOLDEN_RATIO, 10)}px`
@@ -98,6 +83,8 @@ const Pane = ({
               break
             case 'square':
             default:
+              elStyle = window.getComputedStyle(el)
+              console.log(el, h, winW, styleValueToPX(elStyle.paddingTop))
               el.style.width = `${Math.min(h, winW)}px`
               el.style.paddingBottom = `${h - Math.min(h, winW) + styleValueToPX(elStyle.paddingTop)}px`
           }
@@ -132,21 +119,8 @@ const Pane = ({
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
 Pane.propTypes = {
-  size: PropTypes.oneOf([
-    'default',
-    'small',
-    'full',
-    'full-minus-small',
-    'square',
-    'golden-horizontal',
-    'golden-vertical',
-    'golden-width',
-    'golden-width-rest',
-    'half',
-    'third',
-    'fourth'
-  ]),
-  height: PropTypes.oneOfType([PropTypes.oneOf(['half', 'full']), PropTypes.number]),
+  size: PropTypes.oneOf(widths),
+  height: PropTypes.oneOfType([PropTypes.oneOf(['half', 'full', 'auto']), PropTypes.number]),
   shadow: PropTypes.bool,
   noPadding: PropTypes.bool,
   children: PropTypes.node

@@ -14,7 +14,6 @@ export const StyledContainer = styled.div`
   flex-direction: row;
   flex-grow: 1;
   align-items: flex-start;
-  margin: ${props => props.pushMargin ? '-1rem' : '0'};
   ${props => props.scroll === 'vertical'
     ? `
       overflow-y: auto;
@@ -29,15 +28,13 @@ export const StyledContainer = styled.div`
       height: 100%;
     `
   }
-  ${props => props.h === 'half' ? 'height: 50%;' : 'height: 100%;'}
+  height: 100%;
   min-width: 100%;
 `
 
-const Container = ({ children, pushMargin, height, scroll }) => {
+const Container = ({ children, scroll }) => {
   return (
     <StyledContainer
-      pushMargin={pushMargin}
-      h={height}
       scroll={scroll}
     >
       {children}
@@ -50,12 +47,9 @@ const Container = ({ children, pushMargin, height, scroll }) => {
 // ---------------------------------------------------------------------------------------------------------------------
 Container.propTypes = {
   children: PropTypes.node,
-  pushMargin: PropTypes.bool,
-  height: PropTypes.oneOf(['auto', 'half']),
   scroll: PropTypes.oneOf(['horizontal', 'vertical'])
 }
 Container.defaultProps = {
-  pushMargin: false,
   scroll: 'horizontal'
 }
 

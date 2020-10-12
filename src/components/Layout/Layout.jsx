@@ -47,6 +47,7 @@ const StyledFooter = styled.header`
 // ---------------------------------------------------------------------------------------------------------------------
 const Layout = ({
   brand,
+  scroll,
   children,
   headerSlot,
   toolbar,
@@ -77,7 +78,7 @@ const Layout = ({
           {toolbar}
         </StyledHeader>
       )}
-      <StyledMain>
+      <StyledMain scroll={scroll}>
         {children}
       </StyledMain>
       {(footerSlot || brand) && (
@@ -107,8 +108,11 @@ Layout.propTypes = {
   toolbar: PropTypes.node,
   footerSlot: PropTypes.node,
   footerMenu: PropTypes.node,
-  footerMenuB: PropTypes.node
+  footerMenuB: PropTypes.node,
+  scroll: PropTypes.oneOf(['horizontal', 'vertical'])
 }
-Layout.defaultProps = {}
+Layout.defaultProps = {
+  scroll: 'horizontal'
+}
 
 export default Layout
