@@ -5184,11 +5184,23 @@ const getLabel = (val, options) => {
   return result;
 };
 
+const normalizeOptions = options => {
+  return options.map(x => typeof x === 'object' ? {
+    value: x.value,
+    label: (x.label !== undefined ? x.label : x.value).toString()
+  } : {
+    value: x,
+    label: x.toString()
+  });
+};
+
 const PROP_VALUE = propTypes.oneOfType([propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number])), propTypes.oneOfType([propTypes.string, propTypes.number])]);
-const PROP_OPTIONS = propTypes.arrayOf(propTypes.shape({
+const PROP_OPTION = propTypes.shape({
   label: propTypes.string,
   value: propTypes.oneOfType([propTypes.string, propTypes.number])
-}));
+});
+const PROP_NORMALIZED_OPTIONS = propTypes.arrayOf(PROP_OPTION);
+const PROP_OPTIONS = propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, PROP_OPTION]));
 const Popup = styled.div`
   position: absolute;
   z-index: 10;
@@ -5212,7 +5224,7 @@ const MultiselectActionable = /*#__PURE__*/React.forwardRef((props, ref) => {
     value = [],
     onChange,
     disabled,
-    options
+    normalizedOptions
   } = props;
   const [open, setOpen] = useState(false); // TODO: set top
 
@@ -5277,7 +5289,7 @@ const MultiselectActionable = /*#__PURE__*/React.forwardRef((props, ref) => {
       if (!contained) openPopup(false);
     },
     onClick: () => openPopup(!open)
-  }, _value.map(x => getLabel(x, options)).join(', ')), /*#__PURE__*/React.createElement(Popup, {
+  }, _value.map(x => getLabel(x, normalizedOptions)).join(', ')), /*#__PURE__*/React.createElement(Popup, {
     ref: popupRef,
     style: {
       display: open ? 'block' : 'none',
@@ -5289,7 +5301,7 @@ const MultiselectActionable = /*#__PURE__*/React.forwardRef((props, ref) => {
     forceShadow: true,
     low: true,
     hoverable: true
-  }, options.length ? options.map(x => /*#__PURE__*/React.createElement(Button, {
+  }, normalizedOptions.length ? normalizedOptions.map(x => /*#__PURE__*/React.createElement(Button, {
     fill: true,
     small: true,
     key: x.value,
@@ -5316,7 +5328,7 @@ MultiselectActionable.propTypes = {
   value: PROP_VALUE,
   disabled: propTypes.bool,
   onChange: propTypes.func,
-  options: PROP_OPTIONS
+  normalizedOptions: PROP_NORMALIZED_OPTIONS
 };
 MultiselectActionable.defaultProps = {
   onChange: () => {}
@@ -5415,6 +5427,7 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     type,
     label,
     value,
+    defaultValue,
     onChange,
     invalid,
     disabled,
@@ -5426,6 +5439,7 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     max
   } = props;
   const uid = useRef(Math.random().toString(36).substr(2, 9));
+  const normalizedOptions = React.useMemo(() => normalizeOptions(options), [options]);
   return /*#__PURE__*/React.createElement(StyledControl, {
     withLabel: label,
     className: [invalid && 'invalid', disabled && 'disabled'].join(' '),
@@ -5437,21 +5451,21 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     htmlFor: uid.current
   }, label), /*#__PURE__*/React.createElement("select", {
     id: uid.current,
-    value: ref !== undefined ? value : undefined,
-    defaultValue: ref !== undefined ? undefined : value,
+    value: ref === undefined ? value : undefined,
+    defaultValue: defaultValue,
     disabled: disabled,
     onChange: evt => onChange(evt.target.value),
     ref: ref
-  }, options.map(x => /*#__PURE__*/React.createElement("option", {
+  }, normalizedOptions.map(x => /*#__PURE__*/React.createElement("option", {
     key: x.value,
     value: x.value
   }, x.label)))) : type === 'multiselect' ? /*#__PURE__*/React.createElement(MultiselectActionable, {
     id: uid.current,
     label: label,
-    value: value,
+    value: ref === undefined ? value : defaultValue,
     disabled: disabled,
     onChange: onChange,
-    options: options,
+    normalizedOptions: normalizedOptions,
     ref: ref
   }) : /*#__PURE__*/React.createElement(React.Fragment, null, label && /*#__PURE__*/React.createElement(Label, {
     as: "label",
@@ -5459,7 +5473,8 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
   }, label), /*#__PURE__*/React.createElement("input", _extends$1({
     id: uid.current,
     type: type || 'text',
-    value: value,
+    value: ref === undefined ? value : undefined,
+    defaultValue: defaultValue,
     disabled: disabled,
     onChange: evt => onChange(evt.target.value),
     ref: ref
@@ -5475,6 +5490,7 @@ Control.propTypes = {
   type: propTypes.string,
   label: propTypes.node,
   value: PROP_VALUE,
+  defaultValue: PROP_VALUE,
   onChange: propTypes.func,
   invalid: propTypes.bool,
   disabled: propTypes.bool,
