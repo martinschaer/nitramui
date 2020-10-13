@@ -9,6 +9,7 @@ import {
   styled,
   Card,
   Pane,
+  Flex,
   Label,
   Table,
   Button,
@@ -202,7 +203,94 @@ export const App = () => {
                 />
               </div>
             </Pane>
+            {/* TODO: create a component for Tiles to avoid so much options on Cards */}
             <Pane size='full-minus-small'>
+              <Flex flexWrap='wrap' style={{ margin: '-0.5rem' }}>
+                <Flex.Col compact>
+                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col compact>
+                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col compact>
+                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col compact>
+                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col compact>
+                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col compact>
+                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col compact>
+                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col compact>
+                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+              </Flex>
+              <Divider horizontal />
+              <Flex flexWrap='wrap'>
+                <Flex.Col>
+                  <Card colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col>
+                  <Card colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col>
+                  <Card colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col>
+                  <Card colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col>
+                  <Card colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col>
+                  <Card colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col>
+                  <Card colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+                <Flex.Col>
+                  <Card colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Tile A
+                  </Card>
+                </Flex.Col>
+              </Flex>
+              <Divider horizontal />
               {/* TODO: make it dynamic depending on the time of the day */}
               <h2 className='pre-heading'>Good morning!</h2>
               <Card compact header={<Label><h1>Today</h1></Label>}>

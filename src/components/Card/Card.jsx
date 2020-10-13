@@ -116,6 +116,8 @@ const StyledCard = styled.div`
   width: ${props =>
     props.size === 'small'
     ? '33%'
+    : props.size === 'xs'
+    ? '12rem'
     : 'auto'
   };
 
@@ -265,7 +267,8 @@ Card.propTypes = {
   footer: PropTypes.node,
   size: PropTypes.oneOf([
     'auto',
-    'small'
+    'small',
+    'xs'
   ]),
   color: PropTypes.string,
   colorBorderPosition: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
