@@ -25,14 +25,27 @@ const getLabel = (val, options) => {
   return result
 }
 
+const normalizeOptions = (options) => {
+  return options.map(x => typeof x === 'object'
+    ? ({ value: x.value, label: (x.label !== undefined ? x.label : x.value).toString() })
+    : ({ value: x, label: x.toString() })
+  )
+}
+
 const PROP_VALUE = PropTypes.oneOfType([
   PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 ])
-const PROP_OPTIONS = PropTypes.arrayOf(PropTypes.shape({
+const PROP_OPTION = PropTypes.shape({
   label: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-}))
+})
+const PROP_NORMALIZED_OPTIONS = PropTypes.arrayOf(PROP_OPTION)
+const PROP_OPTIONS = PropTypes.arrayOf(PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.number,
+  PROP_OPTION
+]))
 
 const Popup = styled.div`
   position: absolute;
@@ -53,7 +66,7 @@ const Actionable = styled.div`
 const MultiselectActionable = React.forwardRef((props, ref) => {
   const popupRef = useRef()
   const actionableRef = useRef()
-  const { id, label, value = [], onChange, disabled, options } = props
+  const { id, label, value = [], onChange, disabled, normalizedOptions } = props
   const [open, setOpen] = useState(false)
   // TODO: set top
   const [top] = useState('2.5rem')
@@ -120,7 +133,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
         }}
         onClick={() => openPopup(!open)}
       >
-        {_value.map(x => getLabel(x, options)).join(', ')}
+        {_value.map(x => getLabel(x, normalizedOptions)).join(', ')}
       </Actionable>
       <Popup
         ref={popupRef}
@@ -131,7 +144,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
         }}
       >
         <Card mini forceShadow low hoverable>
-          {options.length ? options.map(x => (
+          {normalizedOptions.length ? normalizedOptions.map(x => (
             <Button
               fill
               small
@@ -160,7 +173,7 @@ MultiselectActionable.propTypes = {
   value: PROP_VALUE,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
-  options: PROP_OPTIONS
+  normalizedOptions: PROP_NORMALIZED_OPTIONS
 }
 MultiselectActionable.defaultProps = {
   onChange: () => {}
@@ -278,6 +291,10 @@ const StyledControl = styled.div`
 const Control = React.forwardRef((props, ref) => {
   const { type, label, value, onChange, invalid, disabled, labelInside, comfort, small, options, min, max } = props
   const uid = useRef(Math.random().toString(36).substr(2, 9))
+  const normalizedOptions = React.useMemo(
+    () => normalizeOptions(options),
+    [options]
+  )
   return (
     <StyledControl
       withLabel={label}
@@ -298,7 +315,7 @@ const Control = React.forwardRef((props, ref) => {
               onChange={evt => onChange(evt.target.value)}
               ref={ref}
             >
-              {options.map(x => (
+              {normalizedOptions.map(x => (
                 <option key={x.value} value={x.value}>{x.label}</option>
               ))}
             </select>
@@ -311,7 +328,7 @@ const Control = React.forwardRef((props, ref) => {
             value={value}
             disabled={disabled}
             onChange={onChange}
-            options={options}
+            normalizedOptions={normalizedOptions}
             ref={ref}
           />
         )

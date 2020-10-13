@@ -38,11 +38,11 @@ const selectOptions = [
   { label: 'Eight', value: 8 },
   { label: 'Nine', value: 9 },
   { label: 'Ten', value: 10 },
-  { label: 'Eleven', value: 11 },
-  { label: 'Twelve', value: 12 },
-  { label: 'Thirteen', value: 13 },
-  { label: 'Fourteen', value: 14 },
-  { label: 'Fifteen', value: 15 }
+  11,
+  12,
+  13,
+  14,
+  15
 ]
 
 export const Typography = () => {
