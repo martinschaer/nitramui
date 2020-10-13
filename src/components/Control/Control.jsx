@@ -289,7 +289,21 @@ const StyledControl = styled.div`
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 const Control = React.forwardRef((props, ref) => {
-  const { type, label, value, onChange, invalid, disabled, labelInside, comfort, small, options, min, max } = props
+  const {
+    type,
+    label,
+    value,
+    defaultValue,
+    onChange,
+    invalid,
+    disabled,
+    labelInside,
+    comfort,
+    small,
+    options,
+    min,
+    max
+  } = props
   const uid = useRef(Math.random().toString(36).substr(2, 9))
   const normalizedOptions = React.useMemo(
     () => normalizeOptions(options),
@@ -309,8 +323,8 @@ const Control = React.forwardRef((props, ref) => {
             {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
             <select
               id={uid.current}
-              value={ref !== undefined ? value : undefined}
-              defaultValue={ref !== undefined ? undefined : value}
+              value={ref === undefined ? value : undefined}
+              defaultValue={defaultValue}
               disabled={disabled}
               onChange={evt => onChange(evt.target.value)}
               ref={ref}
@@ -325,7 +339,7 @@ const Control = React.forwardRef((props, ref) => {
           <MultiselectActionable
             id={uid.current}
             label={label}
-            value={value}
+            value={ref === undefined ? value : defaultValue}
             disabled={disabled}
             onChange={onChange}
             normalizedOptions={normalizedOptions}
@@ -338,7 +352,8 @@ const Control = React.forwardRef((props, ref) => {
               <input
                 id={uid.current}
                 type={type || 'text'}
-                value={value}
+                value={ref === undefined ? value : undefined}
+                defaultValue={defaultValue}
                 disabled={disabled}
                 onChange={evt => onChange(evt.target.value)}
                 ref={ref}
@@ -357,6 +372,7 @@ Control.propTypes = {
   type: PropTypes.string,
   label: PropTypes.node,
   value: PROP_VALUE,
+  defaultValue: PROP_VALUE,
   onChange: PropTypes.func,
   invalid: PropTypes.bool,
   disabled: PropTypes.bool,

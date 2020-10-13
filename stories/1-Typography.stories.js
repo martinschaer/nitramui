@@ -199,6 +199,7 @@ export const Typography = () => {
                     labelInside
                     type='text'
                     label='text labelInside'
+                    defaultValue='123'
                     ref={textRef}
                   />
                   <Control
@@ -206,6 +207,7 @@ export const Typography = () => {
                     type='select'
                     label='select labelInside'
                     options={selectOptions}
+                    defaultValue={1}
                     ref={selectRef}
                   />
                   <Control
@@ -213,6 +215,7 @@ export const Typography = () => {
                     type='multiselect'
                     label='multiselect labelInside'
                     options={selectOptions}
+                    defaultValue={[1]}
                     ref={multiRef}
                   />
                   <Button
