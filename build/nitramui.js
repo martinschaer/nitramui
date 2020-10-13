@@ -4422,7 +4422,7 @@ const StyledCard = styled.div`
 
   height: ${props => props.h === 'full' ? '100%' : typeof props.h === 'number' ? `${props.h}rem` : 'auto'};
   min-width: ${props => props.size === 'small' ? '32rem' : 'auto'};
-  width: ${props => props.size === 'small' ? '33%' : 'auto'};
+  width: ${props => props.size === 'small' ? '33%' : props.size === 'xs' ? '12rem' : 'auto'};
 
   ${props => props.marginBottom && (props.marginBottom === true ? 'margin-bottom: 1rem;' : `margin-bottom: ${props.marginBottom}rem;`)}
 
@@ -4561,7 +4561,7 @@ Card.propTypes = {
   children: propTypes.node,
   header: propTypes.node,
   footer: propTypes.node,
-  size: propTypes.oneOf(['auto', 'small']),
+  size: propTypes.oneOf(['auto', 'small', 'xs']),
   color: propTypes.string,
   colorBorderPosition: propTypes.oneOf(['top', 'right', 'bottom', 'left']),
   height: propTypes.oneOfType([propTypes.oneOf(['default', 'full']), propTypes.number]),
@@ -4655,6 +4655,29 @@ Flex.propTypes = {
 };
 Flex.defaultProps = {};
 
+// Component
+// ---------------------------------------------------------------------------------------------------------------------
+
+const Col = styled.div`
+  width: ${prop => 100 / prop.count}%;
+  min-width: 203px;
+  padding: ${props => props.noPadding ? '0' : props.compact ? '0.5rem' : '1rem'};
+  box-sizing: border-box;
+`; // ---------------------------------------------------------------------------------------------------------------------
+// PropTypes, defaults & export
+// ---------------------------------------------------------------------------------------------------------------------
+
+Col.propTypes = {
+  count: propTypes.oneOf([2, 3, 4, 5, 6, 7, 8]),
+  noPadding: propTypes.bool,
+  compact: propTypes.bool
+};
+Col.defaultProps = {
+  count: 8
+};
+
+Flex.Col = Col;
+
 const GOLDEN_RATIO = 1.61803398875;
 const convertRemToPixels = rem => {
   return rem * parseFloat(window.getComputedStyle(document.documentElement).fontSize);
@@ -4668,6 +4691,9 @@ const styleValueToPX = value => {
     return parseFloat(value);
   }
 };
+const widths = ['default', 'small', 'full', 'full-minus-small', 'square', 'golden-horizontal', 'golden-vertical', 'golden-width', 'golden-width-rest', 'half', 'third', 'fourth'];
+const getCSSWidth = size => size === 'full' || size === 'square' ? '100%' : size === 'small' ? '16rem' : size === 'full-minus-small' ? 'calc(100vw - 16rem)' : size === 'golden-width' ? `${100 / GOLDEN_RATIO}%` : size === 'golden-width-rest' ? `${100 - 100 / GOLDEN_RATIO}%` : size === 'half' ? '50%' : size === 'third' ? '33.3%' : size === 'fourth' ? '25%' // default:
+: '50rem';
 
 const debounce = (func, wait, immediate) => {
   var timeout;
@@ -4688,15 +4714,14 @@ const debounce = (func, wait, immediate) => {
 
 const StyledPane = styled.div`
   box-sizing: border-box;
-  height: ${props => props.h === 'half' ? '50%' : typeof props.h === 'number' ? `${props.h}rem` : '100%'};
+  height: ${props => props.h === 'half' ? '50%' : props.h === 'auto' ? 'auto' : typeof props.h === 'number' ? `${props.h}rem` : '100%'};
   flex-shrink: 0;
   padding: ${props => props.noPadding ? '0' : '1rem'};
   outline: 1px dashed ${ds.colors.borderLight};
   ${props => props.shadow && css(["box-shadow:0 0 1rem ", ";"], ds.colors.shadow)}
   overflow: auto;
   max-width: 100%;
-  width: ${props => props.size === 'full' ? '100%' : props.size === 'small' ? '16rem' : props.size === 'full-minus-small' ? 'calc(100vw - 16rem)' : props.size === 'golden-width' ? `${100 / GOLDEN_RATIO}%` : props.size === 'golden-width-rest' ? `${100 - 100 / GOLDEN_RATIO}%` : props.size === 'half' ? '50%' : props.size === 'third' ? '33.3%' : props.size === 'fourth' ? '25%' // default:
-: '50rem'};
+  width: ${props => getCSSWidth(props.size)};
 
   @media (max-width: 768px) {
     ${props => props.size === 'small' ? '' : 'min-width: 100vw;'}
@@ -4724,9 +4749,9 @@ const Pane = ({
     if (window && (size === 'square' || size === 'golden-horizontal' || size === 'golden-vertical')) {
       handleResize = () => {
         const el = document.querySelector(`#${uid.current}`);
-        const elStyle = window.getComputedStyle(el);
         const h = el.offsetHeight;
         const winW = window.innerWidth;
+        let elStyle;
 
         switch (size) {
           case 'golden-horizontal':
@@ -4739,6 +4764,8 @@ const Pane = ({
 
           case 'square':
           default:
+            elStyle = window.getComputedStyle(el);
+            console.log(el, h, winW, styleValueToPX(elStyle.paddingTop));
             el.style.width = `${Math.min(h, winW)}px`;
             el.style.paddingBottom = `${h - Math.min(h, winW) + styleValueToPX(elStyle.paddingTop)}px`;
         }
@@ -4769,8 +4796,8 @@ const Pane = ({
 
 
 Pane.propTypes = {
-  size: propTypes.oneOf(['default', 'small', 'full', 'full-minus-small', 'square', 'golden-horizontal', 'golden-vertical', 'golden-width', 'golden-width-rest', 'half', 'third', 'fourth']),
-  height: propTypes.oneOfType([propTypes.oneOf(['half', 'full']), propTypes.number]),
+  size: propTypes.oneOf(widths),
+  height: propTypes.oneOfType([propTypes.oneOf(['half', 'full', 'auto']), propTypes.number]),
   shadow: propTypes.bool,
   noPadding: propTypes.bool,
   children: propTypes.node
@@ -4779,6 +4806,20 @@ Pane.defaultProps = {
   size: 'default',
   height: 'full'
 };
+
+// Component
+// ---------------------------------------------------------------------------------------------------------------------
+
+const Wrapper = styled.div`
+  margin: 0 auto;
+`; // ---------------------------------------------------------------------------------------------------------------------
+// PropTypes, defaults & export
+// ---------------------------------------------------------------------------------------------------------------------
+
+Wrapper.propTypes = {};
+Wrapper.defaultProps = {};
+
+Pane.Wrapper = Wrapper;
 
 const headingStyles = css(["font-family:", ";font-weight:", ";"], ds.fonts.heading, ds.weights.heading);
 const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:", ";"], ds.colors.fgMuted, 1 / 12, ds.weights.preheading);
@@ -4946,7 +4987,6 @@ const StyledContainer = styled.div`
   flex-direction: row;
   flex-grow: 1;
   align-items: flex-start;
-  margin: ${props => props.pushMargin ? '-1rem' : '0'};
   ${props => props.scroll === 'vertical' ? `
       overflow-y: auto;
       overflow-x: hidden;
@@ -4958,19 +4998,15 @@ const StyledContainer = styled.div`
       /* https://stackoverflow.com/questions/43539284/overflow-hidden-with-nested-overflow-scroll-not-working */
       height: 100%;
     `}
-  ${props => props.h === 'half' ? 'height: 50%;' : 'height: 100%;'}
+  height: 100%;
   min-width: 100%;
 `;
 
 const Container = ({
   children,
-  pushMargin,
-  height,
   scroll
 }) => {
   return /*#__PURE__*/React__default.createElement(StyledContainer, {
-    pushMargin: pushMargin,
-    h: height,
     scroll: scroll
   }, children);
 }; // ---------------------------------------------------------------------------------------------------------------------
@@ -4980,12 +5016,9 @@ const Container = ({
 
 Container.propTypes = {
   children: propTypes.node,
-  pushMargin: propTypes.bool,
-  height: propTypes.oneOf(['auto', 'half']),
   scroll: propTypes.oneOf(['horizontal', 'vertical'])
 };
 Container.defaultProps = {
-  pushMargin: false,
   scroll: 'horizontal'
 };
 
@@ -5023,6 +5056,7 @@ const StyledFooter = styled.header`
 
 const Layout = ({
   brand,
+  scroll,
   children,
   headerSlot,
   toolbar,
@@ -5042,7 +5076,9 @@ const Layout = ({
       display: 'flex',
       marginLeft: 'auto'
     }
-  }, menuB)), toolbar && /*#__PURE__*/React__default.createElement(StyledHeader, null, toolbar), /*#__PURE__*/React__default.createElement(StyledMain, null, children), (footerSlot || brand) && /*#__PURE__*/React__default.createElement(StyledFooter, null, /*#__PURE__*/React__default.createElement(Label, {
+  }, menuB)), toolbar && /*#__PURE__*/React__default.createElement(StyledHeader, null, toolbar), /*#__PURE__*/React__default.createElement(StyledMain, {
+    scroll: scroll
+  }, children), (footerSlot || brand) && /*#__PURE__*/React__default.createElement(StyledFooter, null, /*#__PURE__*/React__default.createElement(Label, {
     heading: true
   }, footerSlot || `Copyright © 2020 ${brand}`), footerMenu, footerMenuB && /*#__PURE__*/React__default.createElement("div", {
     style: {
@@ -5064,9 +5100,12 @@ Layout.propTypes = {
   toolbar: propTypes.node,
   footerSlot: propTypes.node,
   footerMenu: propTypes.node,
-  footerMenuB: propTypes.node
+  footerMenuB: propTypes.node,
+  scroll: propTypes.oneOf(['horizontal', 'vertical'])
 };
-Layout.defaultProps = {};
+Layout.defaultProps = {
+  scroll: 'horizontal'
+};
 
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
