@@ -358,6 +358,19 @@ export default {
         }),
       custom: buildCustomProp('colors', 'buttonBorderHoverPlain', EMPEROR, GALLERY)
     }),
+    buttonBorderSelected: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: MERCURY,
+          [modes.dark]: EMPEROR
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'buttonBorderSelected', MERCURY, EMPEROR)
+    }),
 
     // -----------------------------------------------------------------------------------------------------------------
     // Controls

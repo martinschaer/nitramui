@@ -13,8 +13,8 @@ import {
 const selectedCSS = css`
   color: ${ds.colors.buttonFgSelected};
   background: ${ds.colors.buttonBgSelected};
-  transform: perspective(100rem) translateZ(-2rem);
   box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
+  border-color: ${ds.colors.buttonBorderSelected};
 `
 
 export const buttonStyle = css`
@@ -43,7 +43,6 @@ export const buttonStyle = css`
   box-sizing: border-box;
   ${props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null}
   cursor: pointer;
-  transform: perspective(100rem);
 
   &:visited {
     color: inherit;
@@ -68,8 +67,8 @@ export const buttonStyle = css`
 
   &:active,
   &.active {
-    transform: perspective(100rem) translateZ(-2rem);
-    box-shadow: inset 0 0 .25rem 2px ${ds.colors.shadow};
+    ${selectedCSS}
+    ${({ extraStyles = {} }) => extraStyles.selected}
   }
 
   &:disabled {

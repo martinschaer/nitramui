@@ -24,9 +24,10 @@ export const colors = {
   RED: '#D5002F'
 }
 colors.GRADIENT = `linear-gradient(-225deg, ${colors.PURPLE1} 0%, ${colors.CARIBBEAN} 100%)`
+colors.GRADIENT_HOVER = 'linear-gradient(-225deg, #B333FF 0%, #33C7FF 100%)'
+colors.GRADIENT_SELECTED = 'linear-gradient(-225deg, #8000CC 0%, #0094CC 100%)'
 
 const LIGHTENED_OCEAN = '#33A4FF'
-const DARKENED_OCEAN = '#0071CC'
 
 const SUPER_LIGHTENED_OCEAN = '#F4FBFF'
 const SUPER_DARKENED_OCEAN = '#001729'
@@ -37,8 +38,9 @@ const colorFg = { light: colors.MIDNIGHT, dark: colors.SNOW }
 const colorBorder = { light: colors.SMOKE, dark: colors.SLATE }
 const colorAccent = { light: colors.OCEAN, dark: colors.OCEAN }
 const colorGradient = { light: colors.GRADIENT, dark: colors.GRADIENT }
+const colorGradientHover = { light: colors.GRADIENT_HOVER, dark: colors.GRADIENT_HOVER }
+const colorGradientSelected = { light: colors.GRADIENT_SELECTED, dark: colors.GRADIENT_SELECTED }
 const colorAccentLight = { light: LIGHTENED_OCEAN, dark: LIGHTENED_OCEAN }
-const colorAccentDark = { light: DARKENED_OCEAN, dark: DARKENED_OCEAN }
 const colorTransparent = { light: TRANSPARENT, dark: TRANSPARENT }
 
 export const groove = {
@@ -56,8 +58,8 @@ export const groove = {
     cardHeaderBorder: colorBorder,
     buttonBg: colorGradient,
     buttonBgPlain: colorTransparent,
-    buttonBgSelected: colorAccentDark,
-    buttonBgHover: colorAccentLight,
+    buttonBgSelected: colorGradientSelected,
+    buttonBgHover: colorGradientHover,
     buttonFg: { light: 'white', dark: 'white' },
     buttonFgPlain: colorFg,
     buttonFgHover: { light: 'white', dark: 'white' },
@@ -67,8 +69,9 @@ export const groove = {
     buttonBgDisabled: colorTransparent,
     buttonBorder: { light: colors.SNOW, dark: colors.MIDNIGHT },
     buttonBorderPlain: colorBorder,
-    buttonBorderHover: colorAccentLight,
+    buttonBorderHover: { light: colors.SNOW, dark: colors.MIDNIGHT },
     buttonBorderHoverPlain: colorAccentLight,
+    buttonBorderSelected: { light: colors.SNOW, dark: colors.MIDNIGHT },
     controlBg: colorTransparent,
     labelFg: { light: colors.SLATE, dark: colors.SLATE },
     inputFg: colorFg,
