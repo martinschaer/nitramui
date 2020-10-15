@@ -77,6 +77,7 @@ export const Typography = () => {
               <p><Button>Button default</Button></p>
               <p><Button className='selected'>Button default selected</Button></p>
               <p><Button variant='plain'>Button plain</Button></p>
+              <p><Button variant='plain' selected>Button plain selected</Button></p>
               <p><Button variant='inverted'>Button inverted</Button></p>
               <p><a href='/' className='button'>Button anchor</a></p>
               <p><a href={`/?_=${Math.random().toString(36).substr(2, 9)}`}>Link</a></p>
@@ -97,6 +98,17 @@ export const Typography = () => {
                   <li>List item</li>
                   <li>List item</li>
                 </ul>
+
+                <Flex alignItems='center' flexWrap='wrap'>
+                  <h2>Title</h2>
+                  <Label>Label</Label>
+                </Flex>
+                <Flex alignItems='center' flexWrap='wrap'>
+                  <h2>Title</h2>
+                  <Button>Button</Button>
+                  <Button>Button</Button>
+                </Flex>
+
                 <Card noPadding>
                   <Flex alignItems='center' flexWrap='wrap'>
                     <Label>Hello world</Label>

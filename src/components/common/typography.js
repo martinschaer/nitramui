@@ -5,6 +5,7 @@ import ds from '../common/designSystem'
 export const headingStyles = css`
   font-family: ${ds.fonts.heading};
   font-weight: ${ds.weights.heading};
+  margin-right: ${ds.measures.spacer}rem;
 `
 
 export const preHeadingStyles = css`
@@ -13,6 +14,7 @@ export const preHeadingStyles = css`
   text-transform: uppercase;
   font-size: .8rem;
   font-weight: ${ds.weights.preheading};
+  margin: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
 `
 
 export const labelStyles = css`
