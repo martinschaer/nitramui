@@ -11,10 +11,21 @@ import {
 } from '../common/typography'
 
 const selectedCSS = css`
-  color: ${ds.colors.buttonFgSelected};
-  background: ${ds.colors.buttonBgSelected};
+  border-color: ${props => props.variant === 'plain'
+    ? ds.colors.buttonBorderPlainSelected
+    : ds.colors.buttonBorderSelected};
+  background: ${
+    props => props.variant === 'plain'
+      ? ds.colors.buttonBgPlainSelected
+      : ds.colors.buttonBgSelected
+  };
+  color: ${
+    props => props.variant === 'plain'
+      ? ds.colors.buttonFgPlainSelected
+      : ds.colors.buttonFgSelected
+  };
+
   box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
-  border-color: ${ds.colors.buttonBorderSelected};
 `
 
 export const buttonStyle = css`
@@ -49,13 +60,15 @@ export const buttonStyle = css`
   }
 
   &:hover,
-  &:focus,
-  &:active,
-  &.active {
+  &:focus {
     ${props => props.variant === 'plain'
-      ? `color: ${ds.colors.buttonFgHoverPlain(props)};
-        background: ${ds.colors.buttonBgHoverPlain(props)};
-        border-color: ${ds.colors.buttonBorderHoverPlain(props)};`
+      ? props.selected
+        ? `color: ${ds.colors.buttonFgPlainHoverSelected(props)};
+          background: ${ds.colors.buttonBgPlainHoverSelected(props)};
+          border-color: ${ds.colors.buttonBorderPlainHoverSelected(props)};`
+        : `color: ${ds.colors.buttonFgHoverPlain(props)};
+          background: ${ds.colors.buttonBgHoverPlain(props)};
+          border-color: ${ds.colors.buttonBorderHoverPlain(props)};`
       : `color: ${ds.colors.buttonFgHover(props)};
         background: ${ds.colors.buttonBgHover(props)};
         border-color: ${ds.colors.buttonBorderHover(props)};`
@@ -67,6 +80,8 @@ export const buttonStyle = css`
 
   &:active,
   &.active {
+    outline: none;
+    text-decoration: none;
     ${selectedCSS}
     ${({ extraStyles = {} }) => extraStyles.selected}
   }
