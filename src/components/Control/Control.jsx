@@ -143,7 +143,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
           top: top
         }}
       >
-        <Card mini forceShadow low hoverable>
+        <Card mini forceShadow low>
           {normalizedOptions.length ? normalizedOptions.map(x => (
             <Button
               fill
