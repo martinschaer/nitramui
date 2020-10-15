@@ -2961,6 +2961,28 @@ var ds = {
       }),
       custom: buildCustomProp('colors', 'buttonFgPlain', EMPEROR, GALLERY)
     }),
+    buttonFgPlainSelected: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'buttonFgPlainSelected', EMPEROR, GALLERY)
+    }),
+    buttonFgPlainHoverSelected: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'buttonFgPlainHoverSelected', EMPEROR, GALLERY)
+    }),
     buttonFgHover: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: EMPEROR,
@@ -3026,6 +3048,28 @@ var ds = {
         [modes.dark]: 'transparent'
       }),
       custom: buildCustomProp('colors', 'buttonBgPlain', 'transparent', 'transparent')
+    }),
+    buttonBgPlainSelected: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: BLACK_30
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: GALLERY,
+        [modes.dark]: COD_GRAY
+      }),
+      custom: buildCustomProp('colors', 'buttonBgPlainSelected', BLACK_3, BLACK_30)
+    }),
+    buttonBgPlainHoverSelected: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: BLACK_3,
+        [modes.dark]: BLACK_30
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: GALLERY,
+        [modes.dark]: COD_GRAY
+      }),
+      custom: buildCustomProp('colors', 'buttonBgPlainHoverSelected', BLACK_3, BLACK_30)
     }),
     buttonBgSelected: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -3093,6 +3137,28 @@ var ds = {
       }),
       custom: buildCustomProp('colors', 'buttonBorderPlain', 'transparent', 'transparent')
     }),
+    buttonBorderPlainSelected: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: 'transparent',
+        [modes.dark]: 'transparent'
+      }),
+      custom: buildCustomProp('colors', 'buttonBorderPlainSelected', 'transparent', 'transparent')
+    }),
+    buttonBorderPlainHoverSelected: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: EMPEROR,
+        [modes.dark]: GALLERY
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'buttonBorderPlainHoverSelected', EMPEROR, GALLERY)
+    }),
     buttonBorderDisabled: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: BLACK_3,
@@ -3125,6 +3191,17 @@ var ds = {
         [modes.dark]: WHITE
       }),
       custom: buildCustomProp('colors', 'buttonBorderHoverPlain', EMPEROR, GALLERY)
+    }),
+    buttonBorderSelected: styledTheming('theme', {
+      [themes.smooth]: styledTheming('mode', {
+        [modes.light]: MERCURY,
+        [modes.dark]: EMPEROR
+      }),
+      [themes.hiContrast]: styledTheming('mode', {
+        [modes.light]: BLACK,
+        [modes.dark]: WHITE
+      }),
+      custom: buildCustomProp('colors', 'buttonBorderSelected', MERCURY, EMPEROR)
     }),
     // -----------------------------------------------------------------------------------------------------------------
     // Controls
@@ -4821,8 +4898,8 @@ Wrapper.defaultProps = {};
 
 Pane.Wrapper = Wrapper;
 
-const headingStyles = css(["font-family:", ";font-weight:", ";"], ds.fonts.heading, ds.weights.heading);
-const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:", ";"], ds.colors.fgMuted, 1 / 12, ds.weights.preheading);
+const headingStyles = css(["font-family:", ";font-weight:", ";margin-right:", "rem;"], ds.fonts.heading, ds.weights.heading, ds.measures.spacer);
+const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:", ";margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.colors.fgMuted, 1 / 12, ds.weights.preheading, ds.measures.spacer, ds.measures.spacer);
 const labelStyles = css(["line-height:calc(", "rem * 2);min-height:calc(", "rem * 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.measures.spacer, ds.measures.spacer, ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
 const labelStylesSmall = css(["line-height:calc(", "rem * 3 / 2);min-height:calc(", "rem * 3 / 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.measures.spacer, ds.measures.spacer, props => ds.measures.spacer(props) / 2, ds.measures.spacer, ds.measures.spacer);
 
@@ -4932,14 +5009,18 @@ Table.defaultProps = {
   layout: 'auto'
 };
 
-const selectedCSS = css(["color:", ";background:", ";transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 0 ", ";"], ds.colors.buttonFgSelected, ds.colors.buttonBgSelected, ds.colors.buttonShadow);
-const buttonStyle = css(["", " font-size:", ";border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;", " cursor:pointer;transform:perspective(100rem);&:visited{color:inherit;}&:hover,&:focus,&:active,&.active{", " outline:none;text-decoration:none;", "}&:active,&.active{transform:perspective(100rem) translateZ(-2rem);box-shadow:inset 0 0 .25rem 2px ", ";}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null, props => props.variant === 'plain' ? `color: ${ds.colors.buttonFgHoverPlain(props)};
-        background: ${ds.colors.buttonBgHoverPlain(props)};
-        border-color: ${ds.colors.buttonBorderHoverPlain(props)};` : `color: ${ds.colors.buttonFgHover(props)};
+const selectedCSS = css(["border-color:", ";background:", ";color:", ";box-shadow:inset 0 0 .25rem 0 ", ";"], props => props.variant === 'plain' ? ds.colors.buttonBorderPlainSelected : ds.colors.buttonBorderSelected, props => props.variant === 'plain' ? ds.colors.buttonBgPlainSelected : ds.colors.buttonBgSelected, props => props.variant === 'plain' ? ds.colors.buttonFgPlainSelected : ds.colors.buttonFgSelected, ds.colors.buttonShadow);
+const buttonStyle = css(["", " font-size:", ";border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;", " cursor:pointer;&:visited{color:inherit;}&:hover,&:focus{", " outline:none;text-decoration:none;", "}&:active,&.active{outline:none;text-decoration:none;", " ", "}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null, props => props.variant === 'plain' ? props.selected ? `color: ${ds.colors.buttonFgPlainHoverSelected(props)};
+          background: ${ds.colors.buttonBgPlainHoverSelected(props)};
+          border-color: ${ds.colors.buttonBorderPlainHoverSelected(props)};` : `color: ${ds.colors.buttonFgHoverPlain(props)};
+          background: ${ds.colors.buttonBgHoverPlain(props)};
+          border-color: ${ds.colors.buttonBorderHoverPlain(props)};` : `color: ${ds.colors.buttonFgHover(props)};
         background: ${ds.colors.buttonBgHover(props)};
         border-color: ${ds.colors.buttonBorderHover(props)};`, ({
   extraStyles = {}
-}) => extraStyles.hover, ds.colors.shadow, ds.colors.buttonFgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.selected ? selectedCSS : null, props => props.selected ? ({
+}) => extraStyles.hover, selectedCSS, ({
+  extraStyles = {}
+}) => extraStyles.selected, ds.colors.buttonFgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled, props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled, props => props.selected ? selectedCSS : null, props => props.selected ? ({
   extraStyles = {}
 }) => extraStyles.selected : null, selectedCSS, ({
   extraStyles = {}
@@ -5306,8 +5387,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
   }, /*#__PURE__*/React__default.createElement(Card, {
     mini: true,
     forceShadow: true,
-    low: true,
-    hoverable: true
+    low: true
   }, normalizedOptions.length ? normalizedOptions.map(x => /*#__PURE__*/React__default.createElement(Button, {
     fill: true,
     small: true,
