@@ -207,42 +207,47 @@ export const App = () => {
             <Pane size='full-minus-small'>
               <Flex flexWrap='wrap' style={{ margin: '-0.5rem' }}>
                 <Flex.Col compact>
-                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                  <Card compact height='full' colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    <Label heading compact>
+                      Lorem ipsum dolor sit amed
+                    </Label>
+                    <Label small compact>
+                      <a href='/'>Lorem ipsum dolor sit amed</a>
+                    </Label>
+                  </Card>
+                </Flex.Col>
+                <Flex.Col compact>
+                  <Card compact height='full' colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                    Lorem ipsum dolor sit amed
+                  </Card>
+                </Flex.Col>
+                <Flex.Col compact>
+                  <Card compact height='full' colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
                     Tile A
                   </Card>
                 </Flex.Col>
                 <Flex.Col compact>
-                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                  <Card compact height='full' colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
                     Tile A
                   </Card>
                 </Flex.Col>
                 <Flex.Col compact>
-                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                  <Card compact height='full' colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
                     Tile A
                   </Card>
                 </Flex.Col>
                 <Flex.Col compact>
-                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                  <Card compact height='full' colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
                     Tile A
                   </Card>
                 </Flex.Col>
                 <Flex.Col compact>
-                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                  <Card compact height='full' colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
                     Tile A
                   </Card>
                 </Flex.Col>
                 <Flex.Col compact>
-                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
-                    Tile A
-                  </Card>
-                </Flex.Col>
-                <Flex.Col compact>
-                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
-                    Tile A
-                  </Card>
-                </Flex.Col>
-                <Flex.Col compact>
-                  <Card compact colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                  <Card compact height='full' colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
                     Tile A
                   </Card>
                 </Flex.Col>
