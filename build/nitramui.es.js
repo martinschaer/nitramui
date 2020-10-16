@@ -5030,7 +5030,7 @@ css(["width:calc(", "rem + 2px);padding:0;overflow:hidden;text-overflow:ellipsis
 
 const Button = styled.button // https://github.com/styled-components/styled-components/releases/tag/v5.1.0
 .withConfig({
-  shouldForwardProp: prop => !['fill', 'small', 'extraStyles'].includes(prop)
+  shouldForwardProp: prop => !['fill', 'small', 'extraStyles', 'fixedWidth'].includes(prop)
 })`
   ${buttonStyle}
 `; // ---------------------------------------------------------------------------------------------------------------------
