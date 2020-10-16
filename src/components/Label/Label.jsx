@@ -24,8 +24,11 @@ const Label = styled.span`
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
 
+  &:first-child {
+    padding-left: 0rem;
+  }
   &:last-child {
-    padding-right: 0.25rem;
+    padding-right: 0rem;
   }
 `
 
