@@ -6,7 +6,7 @@ import styled from 'styled-components'
 // ---------------------------------------------------------------------------------------------------------------------
 const Col = styled.div`
   width: ${prop => 100 / prop.count}%;
-  min-width: 203px;
+  min-width: calc(50rem / 4 - 4px);
   padding: ${props => props.noPadding ? '0' : props.compact ? '0.5rem' : '1rem'};
   box-sizing: border-box;
 `
