@@ -5934,6 +5934,7 @@ exports.NitramUI = NitramUI;
 exports.NitramUIContext = NitramUIContext;
 exports.Pane = Pane;
 exports.Table = Table;
+exports.createGlobalStyle = createGlobalStyle;
 exports.css = css;
 exports.ds = ds;
 exports.modes = modes;

@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef, useEffect, createElement, useDebugValue, useState } from 'react';
+import React, { useRef, useContext, useMemo, useEffect, createElement, useDebugValue, useState } from 'react';
 
 function createCommonjsModule(fn, basedir, module) {
 	return module = {
@@ -5913,5 +5913,5 @@ NitramUI.propTypes = {
 };
 NitramUI.defaultProps = {};
 
-export { Button, Card, Container, Control, Divider, Flex, Label, Layout, Loading, Muted, NitramUI, NitramUIContext, Pane, Table, css, ds, modes, styled, themes };
+export { Button, Card, Container, Control, Divider, Flex, Label, Layout, Loading, Muted, NitramUI, NitramUIContext, Pane, Table, createGlobalStyle, css, ds, modes, styled, themes };
 //# sourceMappingURL=nitramui.es.js.map
