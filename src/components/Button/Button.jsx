@@ -55,6 +55,16 @@ export const buttonStyle = css`
   ${props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null}
   cursor: pointer;
 
+  ${props => props.fixedWidth && (
+    /* 2px for the border */
+    css`
+width: calc(${props => ds.measures.spacer(props) * 2}rem + 2px);
+padding: 0;
+overflow: hidden;
+text-overflow: ellipsis;
+`
+  )}
+
   &:visited {
     color: inherit;
   }
@@ -128,6 +138,7 @@ Button.propTypes = {
   fill: PropTypes.bool,
   small: PropTypes.bool,
   selected: PropTypes.bool,
+  fixedWidth: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit']),
   extraStyles: PropTypes.shape({
     base: PropTypes.any,

@@ -107,6 +107,9 @@ export const Typography = () => {
                   <h2>Title</h2>
                   <Button>Button</Button>
                   <Button>Button</Button>
+                  <Button fixedWidth>Button</Button>
+                  <Button fixedWidth><span role='img' aria-label='Search'>🔍</span></Button>
+                  <Button fixedWidth variant='plain'><span role='img' aria-label='Search'>🔍</span></Button>
                 </Flex>
 
                 <Card noPadding>

@@ -4,7 +4,6 @@ import readmeMD from '../README.md'
 
 import {
   modes,
-  Card,
   Pane,
   Layout,
   Control,
