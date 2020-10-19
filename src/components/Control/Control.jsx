@@ -352,8 +352,8 @@ const Control = React.forwardRef((props, ref) => {
               <input
                 id={uid.current}
                 type={type || 'text'}
-                value={ref === undefined ? value : undefined}
-                defaultValue={defaultValue}
+                value={value}
+                defaultValue={ref === undefined && value !== undefined ? value : defaultValue}
                 disabled={disabled}
                 onChange={evt => onChange(evt.target.value)}
                 ref={ref}

@@ -50,6 +50,7 @@ export const Typography = () => {
   const multiRef = React.useRef()
   const selectRef = React.useRef()
   const [multiSelectValue, multiSelectValueSet] = React.useState([])
+  const [textValue, textValueSet] = React.useState('Lorem ipsum')
   return (
     <NitramUI customThemes={{ groove }}>
       <NitramUIContext.Consumer>
@@ -247,16 +248,22 @@ export const Typography = () => {
                   comfort
                   type='text'
                   label='text labelInside comfort'
-                  onChange={() => {}}
+                  value={textValue}
+                  onChange={textValueSet}
                 />
+                <Label>{textValue}</Label>
                 <Control
                   type='text'
                   label='text'
+                  value={textValue}
+                  onChange={textValueSet}
                 />
                 <Control
                   comfort
                   type='text'
                   label='text comfort'
+                  value={textValue}
+                  onChange={textValueSet}
                 />
                 <Control
                   labelInside
@@ -333,21 +340,40 @@ export const Typography = () => {
                   label='Name'
                   labelInside
                   invalid
+                  value={textValue}
+                  onChange={textValueSet}
                 />
                 <Control
                   type='text'
                   label='Name'
                   invalid
+                  value={textValue}
+                  onChange={textValueSet}
                 />
                 <Control
                   type='text'
                   label='Name'
                   invalid
                   disabled
+                  value={textValue}
+                  onChange={textValueSet}
                 />
                 <Flex flexWrap='wrap' alignItems='center' style={{ margin: '1rem 0' }}>
-                  <Control type='text' label='Comfort + labelInside' comfort labelInside />
-                  <Control type='select' options={selectOptions} label='Comfort + labelInside' comfort labelInside />
+                  <Control
+                    type='text'
+                    label='Comfort + labelInside'
+                    comfort
+                    labelInside
+                    value={textValue}
+                    onChange={textValueSet}
+                  />
+                  <Control
+                    type='select'
+                    options={selectOptions}
+                    label='Comfort + labelInside'
+                    comfort
+                    labelInside
+                  />
                   <Control
                     labelInside
                     comfort
@@ -358,10 +384,21 @@ export const Typography = () => {
                   />
                   <Button>Save</Button>
                   <Divider />
-                  <Control type='text' label='Normal' />
+                  <Control
+                    type='text'
+                    label='Normal'
+                    value={textValue}
+                    onChange={textValueSet}
+                  />
                   <Button>Save</Button>
                   <Divider />
-                  <Control type='text' label='Small' small />
+                  <Control
+                    type='text'
+                    label='Small'
+                    small
+                    value={textValue}
+                    onChange={textValueSet}
+                  />
                   <Button small>Save</Button>
                   <Divider />
                   <Button>Save</Button>
