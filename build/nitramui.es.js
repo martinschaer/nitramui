@@ -5008,7 +5008,7 @@ Table.defaultProps = {
 const selectedCSS = css(["border-color:", ";background:", ";color:", ";box-shadow:inset 0 0 .25rem 0 ", ";"], props => props.variant === 'plain' ? ds.colors.buttonBorderPlainSelected : ds.colors.buttonBorderSelected, props => props.variant === 'plain' ? ds.colors.buttonBgPlainSelected : ds.colors.buttonBgSelected, props => props.variant === 'plain' ? ds.colors.buttonFgPlainSelected : ds.colors.buttonFgSelected, ds.colors.buttonShadow);
 const buttonStyle = css(["", " font-size:", ";border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;", " cursor:pointer;", " &:visited{color:inherit;}&:hover,&:focus{", " outline:none;text-decoration:none;", "}&:active,&.active{outline:none;text-decoration:none;", " ", "}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null, props => props.fixedWidth &&
 /* 2px for the border */
-css(["width:calc(", "rem + 2px);padding:0;overflow:hidden;text-overflow:ellipsis;"], props => ds.measures.spacer(props) * 2), props => props.variant === 'plain' ? props.selected ? `color: ${ds.colors.buttonFgPlainHoverSelected(props)};
+css(["width:calc(", "rem + 2px);padding:0;overflow:hidden;text-overflow:ellipsis;"], props => (props.small ? 3 / 2 : 2) * ds.measures.spacer(props)), props => props.variant === 'plain' ? props.selected ? `color: ${ds.colors.buttonFgPlainHoverSelected(props)};
           background: ${ds.colors.buttonBgPlainHoverSelected(props)};
           border-color: ${ds.colors.buttonBorderPlainHoverSelected(props)};` : `color: ${ds.colors.buttonFgHoverPlain(props)};
           background: ${ds.colors.buttonBgHoverPlain(props)};
@@ -5357,6 +5357,14 @@ const MultiselectActionable = /*#__PURE__*/React.forwardRef((props, ref) => {
     setValue(result);
     onChange(result);
   }, [_value, onChange, ref]); // -------------------------------------------------------------------------------------------------------------------
+  // Effects
+  // -------------------------------------------------------------------------------------------------------------------
+
+  React.useEffect(() => {
+    if (ref) ref.current = {
+      value: _value
+    };
+  }, [ref, _value]); // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
 
@@ -5559,8 +5567,8 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
   }, label), /*#__PURE__*/React.createElement("input", _extends$1({
     id: uid.current,
     type: type || 'text',
-    value: ref === undefined ? value : undefined,
-    defaultValue: defaultValue,
+    value: value,
+    defaultValue: ref === undefined && value !== undefined ? value : defaultValue,
     disabled: disabled,
     onChange: evt => onChange(evt.target.value),
     ref: ref
