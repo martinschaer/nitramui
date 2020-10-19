@@ -60,7 +60,7 @@ export const Typography = () => {
               <h2 className='pre-heading'>Menu</h2>
               <p>
                 {Object.entries(modes).map(([key, value]) => (
-                  <Button key={key} selected={mode === value} onClick={() => setMode(value)}>
+                  <Button key={key} fixedWidth small selected={mode === value} onClick={() => setMode(value)}>
                     {mode2Emoji(value)}
                   </Button>
                 ))}
