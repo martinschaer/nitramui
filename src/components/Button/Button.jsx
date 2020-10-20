@@ -62,6 +62,7 @@ width: calc(${props => (props.small ? 3 / 2 : 2) * ds.measures.spacer(props)}rem
 padding: 0;
 overflow: hidden;
 text-overflow: ellipsis;
+flex-shrink: 0;
 `
   )}
 
