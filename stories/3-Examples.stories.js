@@ -143,6 +143,7 @@ export const App = () => {
                 <Button variant='plain'>Plain</Button>
                 <Button variant='inverted'>Inverted</Button>
                 <Button small>Small</Button>
+                <Control placeholder='🔎 Search…' />
               </>
             )}
             menu={(
@@ -285,12 +286,27 @@ export const App = () => {
                   </Card>
                 </Flex.Col>
                 <Flex.Col>
-                  <Card colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                  <Card colorBorderPosition='left' height='full' color={getDSVal(ds.colors.link)}>
                     Tile A
                   </Card>
                 </Flex.Col>
                 <Flex.Col>
-                  <Card colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
+                  <Card
+                    colorBorderPosition='left'
+                    color={getDSVal(ds.colors.link)}
+                    noWrapHeader
+                    header={(
+                      <>
+                        <Label
+                          noWrap
+                          className='ml'
+                        >
+                          No wrap lorem ipsum dolor sit amed
+                        </Label>
+                        <Button fixedWidth variant='plain'>+</Button>
+                      </>
+                    )}
+                  >
                     Tile A
                   </Card>
                 </Flex.Col>

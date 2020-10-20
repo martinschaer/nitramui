@@ -159,7 +159,7 @@ const StyledCardHeader = styled.header`
   align-items: center;
   border-bottom: 1px solid ${ds.colors.cardHeaderBorder};
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: ${props => props.noWrapHeader ? 'nowrap' : 'wrap'};
   padding: ${props => props.compactHeader ? '0' : '0.25rem'};
 `
 
@@ -185,7 +185,7 @@ const StyledCardFooter = styled.footer`
   align-items: center;
   border-top: 1px solid ${ds.colors.cardHeaderBorder};
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: ${props => props.noWrapFooter ? 'nowrap' : 'wrap'};
   justify-content: flex-end;
   margin-top: auto;
   padding: ${props => props.compactFooter ? '0' : '0.25rem'};
@@ -207,6 +207,8 @@ const Card = ({
   compact,
   compactHeader,
   compactFooter,
+  noWrapHeader,
+  noWrapFooter,
   hollow,
   low,
   forceShadow,
@@ -240,13 +242,27 @@ const Card = ({
       onClick={onClick && (() => onClick())}
       className={hollow ? 'hollow' : null}
     >
-      {header && (<StyledCardHeader compactHeader={compactHeader}>{header}</StyledCardHeader>)}
+      {header && (
+        <StyledCardHeader
+          compactHeader={compactHeader}
+          noWrapHeader={noWrapHeader}
+        >
+          {header}
+        </StyledCardHeader>
+      )}
       {children && (
         <StyledCardBody noPadding={noPadding} compact={compact} mini={mini}>
           {children}
         </StyledCardBody>
       )}
-      {footer && (<StyledCardFooter compactFooter={compactFooter}>{footer}</StyledCardFooter>)}
+      {footer && (
+        <StyledCardFooter
+          compactFooter={compactFooter}
+          noWrapFooter={noWrapFooter}
+        >
+          {footer}
+        </StyledCardFooter>
+      )}
       {stickers && stickers.dot && (
         <Dot
           position={typeof stickers.dot === 'string' ? stickers.dot : stickers.dot.p}
@@ -278,6 +294,8 @@ Card.propTypes = {
   compact: PropTypes.bool,
   compactHeader: PropTypes.bool,
   compactFooter: PropTypes.bool,
+  noWrapHeader: PropTypes.bool,
+  noWrapFooter: PropTypes.bool,
   hollow: PropTypes.bool,
   low: PropTypes.bool,
   forceShadow: PropTypes.bool,

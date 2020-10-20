@@ -24,6 +24,12 @@ const Label = styled.span`
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
 
+  ${props => props.noWrap && `
+text-overflow: ellipsis;
+white-space: nowrap;
+overflow: hidden;
+`}
+
   &:first-child {
     padding-left: 0rem;
   }
@@ -39,6 +45,7 @@ Label.propTypes = {
   small: PropTypes.bool,
   heading: PropTypes.bool,
   compact: PropTypes.bool,
+  noWrap: PropTypes.bool,
   children: PropTypes.node
 }
 Label.defaultProps = {}
