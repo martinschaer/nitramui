@@ -303,6 +303,7 @@ const Control = React.forwardRef((props, ref) => {
     type,
     label,
     value,
+    placeholder,
     defaultValue,
     onChange,
     invalid,
@@ -363,6 +364,7 @@ const Control = React.forwardRef((props, ref) => {
                 id={uid.current}
                 type={type || 'text'}
                 value={value}
+                placeholder={placeholder}
                 defaultValue={ref === undefined && value !== undefined ? value : defaultValue}
                 disabled={disabled}
                 onChange={evt => onChange(evt.target.value)}
@@ -380,6 +382,7 @@ const Control = React.forwardRef((props, ref) => {
 // ---------------------------------------------------------------------------------------------------------------------
 Control.propTypes = {
   type: PropTypes.string,
+  placeholder: PropTypes.string,
   label: PropTypes.node,
   value: PROP_VALUE,
   defaultValue: PROP_VALUE,
