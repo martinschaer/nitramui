@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import useDarkMode from 'use-dark-mode'
 
 import {
   createGlobalStyle,
@@ -224,7 +225,12 @@ const NitramUI = ({
   // States
   // -------------------------------------------------------------------------------------------------------------------
   // TODO: use hooks for system/time–aware –saved– dark mode
-  const [mode, setMode] = useState(modes.light)
+  const [mode, _setMode] = useState(modes.light)
+  const darkMode = useDarkMode(false, {
+    onChange: (x) => {
+      _setMode(x ? modes.dark : modes.light)
+    }
+  })
   const [theme, setTheme] = useState(getDefaultTheme({ availableThemes }))
   const [themeAux, setThemeAux] = useState(getDefaultTheme({ availableThemes, returnOnlyPredef: true }))
   const [customTheme, setCustomTheme] = useState(getDefaultTheme({ availableThemes }))
@@ -232,6 +238,16 @@ const NitramUI = ({
   // -------------------------------------------------------------------------------------------------------------------
   // Memos
   // -------------------------------------------------------------------------------------------------------------------
+  const setMode = React.useCallback(
+    (m) => {
+      if (m === modes.light) {
+        darkMode.disable()
+      } else {
+        darkMode.enable()
+      }
+    },
+    [darkMode]
+  )
   const themeProviderObj = useMemo(
     () => ({ theme: themeAux, mode, customThemes, customTheme }),
     [themeAux, mode, customThemes, customTheme]
