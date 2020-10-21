@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import useDarkMode from 'use-dark-mode'
+import createPersistedState from 'use-persisted-state'
 
 import {
   createGlobalStyle,
@@ -212,6 +213,7 @@ const isCustomTheme = theme => themes[theme]
 const getDefaultTheme = ({ availableThemes, returnOnlyPredef }) => (availableThemes && availableThemes.length)
   ? (isCustomTheme(availableThemes[0]) && returnOnlyPredef ? themes.smooth : availableThemes[0])
   : themes.smooth
+const useThemeState = createPersistedState('theme')
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
@@ -231,7 +233,7 @@ const NitramUI = ({
       _setMode(x ? modes.dark : modes.light)
     }
   })
-  const [theme, setTheme] = useState(getDefaultTheme({ availableThemes }))
+  const [theme, setTheme] = useThemeState(getDefaultTheme({ availableThemes }))
   const [themeAux, setThemeAux] = useState(getDefaultTheme({ availableThemes, returnOnlyPredef: true }))
   const [customTheme, setCustomTheme] = useState(getDefaultTheme({ availableThemes }))
 

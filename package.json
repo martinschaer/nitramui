@@ -1,6 +1,6 @@
 {
   "name": "nitramui",
-  "version": "0.1.78",
+  "version": "0.1.79",
   "description": "UI framework for React projects.",
   "homepage": "https://martinschaer.github.io/nitramui/",
   "main": "build/nitramui.js",
@@ -27,7 +27,9 @@
     "babel-eslint": "^10.1.0",
     "normalize.css": "^8.0.1",
     "styled-components": "^5.1.1",
-    "styled-theming": "^2.2.0"
+    "styled-theming": "^2.2.0",
+    "use-dark-mode": "^2.3.1",
+    "use-persisted-state": "^0.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
