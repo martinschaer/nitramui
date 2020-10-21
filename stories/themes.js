@@ -86,7 +86,8 @@ export const groove = {
     inputBorder: colorBorder,
     inputBorderActive: colorAccent,
     inputBorderInvalid: { light: colors.RED, dark: colors.RED },
-    link: colorAccent
+    link: colorAccent,
+    linkVisited: colorAccent
   },
   fonts: {
     body: 'Graphik, Helvetica, Arial',
@@ -102,12 +103,26 @@ export const groove = {
   },
   measures: {
     font: '0.875rem',
-    inputFont: '1rem',
+    inputFont: '0.875rem',
     radius: '0.25rem',
     inputRadius: '0.25rem',
     buttonRadius: '100rem',
     spacer: 1.2,
     buttonSpacerH: 1.5,
+    inputSpacerH: 1
+  }
+}
+
+export const compact = {
+  ...groove,
+  measures: {
+    font: '0.875rem',
+    inputFont: '0.875rem',
+    radius: '0.25rem',
+    inputRadius: '0.25rem',
+    buttonRadius: '100rem',
+    spacer: 0.875,
+    buttonSpacerH: 0.5,
     inputSpacerH: 1
   }
 }

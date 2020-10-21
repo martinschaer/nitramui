@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { groove } from './themes'
+
 import {
   Card,
   Pane,
@@ -17,7 +19,7 @@ export default {
 }
 
 export const Main = () => (
-  <NitramUI>
+  <NitramUI customThemes={{ groove }}>
     <Layout>
       <Pane size='small' shadow>
         <>
@@ -112,7 +114,7 @@ export const Main = () => (
 )
 
 export const Full = () => (
-  <NitramUI>
+  <NitramUI customThemes={{ groove }}>
     <Layout>
       <Pane size='full'>
         <>
@@ -127,7 +129,7 @@ export const Full = () => (
 )
 
 export const Centered = () => (
-  <NitramUI>
+  <NitramUI customThemes={{ groove }}>
     <Layout scroll='vertical'>
       <Pane.Wrapper>
         <Pane height='auto'>
@@ -148,7 +150,7 @@ export const Centered = () => (
 )
 
 export const CenteredWithContainer = () => (
-  <NitramUI>
+  <NitramUI customThemes={{ groove }}>
     <Layout>
       <Container scroll='vertical'>
         <Pane.Wrapper>

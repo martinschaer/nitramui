@@ -1,7 +1,7 @@
 import React from 'react'
 import { linkTo } from '@storybook/addon-links'
 
-import { groove } from './themes'
+import { groove, compact } from './themes'
 
 import {
   modes,
@@ -126,8 +126,8 @@ export const App = () => {
 
   return (
     <NitramUI
-      customThemes={{ groove }}
-      // availableThemes={['groove', 'smooth']}
+      customThemes={{ groove, compact }}
+      availableThemes={['groove', 'compact', 'smooth', 'hiContrast']}
     >
       <NitramUIContext.Consumer>
         {({ mode, setMode, themes, theme, setTheme, ds, getDSVal }) => (
@@ -567,7 +567,7 @@ box-shadow: inset 0 0 0 1px ${ds.colors.buttonBorderHoverPlain} !important;`
 // ---------------------------------------------------------------------------------------------------------------------
 export const Grid = () => {
   return (
-    <NitramUI>
+    <NitramUI customThemes={{ groove }}>
       <NitramUIContext.Consumer>
         {({ mode, setMode }) => (
           <Layout

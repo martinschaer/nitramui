@@ -2,6 +2,8 @@ import React from 'react'
 import marked from 'marked'
 import readmeMD from '../README.md'
 
+import { groove } from './themes'
+
 import {
   modes,
   Pane,
@@ -23,7 +25,7 @@ export default {
 
 export const Readme = () => {
   return (
-    <NitramUI>
+    <NitramUI customThemes={{ groove }}>
       <NitramUIContext.Consumer>
         {({ mode, setMode }) => (
           <Layout
