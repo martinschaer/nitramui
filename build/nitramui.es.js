@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useMemo, useEffect, createElement, useDebugValue, useState } from 'react';
+import React, { useRef, useContext, useMemo, useEffect, createElement, useDebugValue, useState, useCallback } from 'react';
 
 function createCommonjsModule(fn, basedir, module) {
 	return module = {
@@ -4533,7 +4533,7 @@ const StyledCardHeader = styled.header`
   align-items: center;
   border-bottom: 1px solid ${ds.colors.cardHeaderBorder};
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: ${props => props.noWrapHeader ? 'nowrap' : 'wrap'};
   padding: ${props => props.compactHeader ? '0' : '0.25rem'};
 `;
 const StyledCardBody = styled.main`
@@ -4557,7 +4557,7 @@ const StyledCardFooter = styled.footer`
   align-items: center;
   border-top: 1px solid ${ds.colors.cardHeaderBorder};
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: ${props => props.noWrapFooter ? 'nowrap' : 'wrap'};
   justify-content: flex-end;
   margin-top: auto;
   padding: ${props => props.compactFooter ? '0' : '0.25rem'};
@@ -4578,6 +4578,8 @@ const Card = ({
   compact,
   compactHeader,
   compactFooter,
+  noWrapHeader,
+  noWrapFooter,
   hollow,
   low,
   forceShadow,
@@ -4610,13 +4612,15 @@ const Card = ({
     onClick: onClick && (() => onClick()),
     className: hollow ? 'hollow' : null
   }, header && /*#__PURE__*/React.createElement(StyledCardHeader, {
-    compactHeader: compactHeader
+    compactHeader: compactHeader,
+    noWrapHeader: noWrapHeader
   }, header), children && /*#__PURE__*/React.createElement(StyledCardBody, {
     noPadding: noPadding,
     compact: compact,
     mini: mini
   }, children), footer && /*#__PURE__*/React.createElement(StyledCardFooter, {
-    compactFooter: compactFooter
+    compactFooter: compactFooter,
+    noWrapFooter: noWrapFooter
   }, footer), stickers && stickers.dot && /*#__PURE__*/React.createElement(Dot, {
     position: typeof stickers.dot === 'string' ? stickers.dot : stickers.dot.p,
     color: color,
@@ -4640,6 +4644,8 @@ Card.propTypes = {
   compact: propTypes.bool,
   compactHeader: propTypes.bool,
   compactFooter: propTypes.bool,
+  noWrapHeader: propTypes.bool,
+  noWrapFooter: propTypes.bool,
   hollow: propTypes.bool,
   low: propTypes.bool,
   forceShadow: propTypes.bool,
@@ -4906,6 +4912,12 @@ const Label = styled.span`
   ${props => props.heading && headingStyles}
   ${props => props.heading && preHeadingStyles}
 
+  ${props => props.noWrap && `
+text-overflow: ellipsis;
+white-space: nowrap;
+overflow: hidden;
+`}
+
   &:first-child {
     padding-left: 0rem;
   }
@@ -4920,6 +4932,7 @@ Label.propTypes = {
   small: propTypes.bool,
   heading: propTypes.bool,
   compact: propTypes.bool,
+  noWrap: propTypes.bool,
   children: propTypes.node
 };
 Label.defaultProps = {};
@@ -5008,7 +5021,7 @@ Table.defaultProps = {
 const selectedCSS = css(["border-color:", ";background:", ";color:", ";box-shadow:inset 0 0 .25rem 0 ", ";"], props => props.variant === 'plain' ? ds.colors.buttonBorderPlainSelected : ds.colors.buttonBorderSelected, props => props.variant === 'plain' ? ds.colors.buttonBgPlainSelected : ds.colors.buttonBgSelected, props => props.variant === 'plain' ? ds.colors.buttonFgPlainSelected : ds.colors.buttonFgSelected, ds.colors.buttonShadow);
 const buttonStyle = css(["", " font-size:", ";border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;", " cursor:pointer;", " &:visited{color:inherit;}&:hover,&:focus{", " outline:none;text-decoration:none;", "}&:active,&.active{outline:none;text-decoration:none;", " ", "}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null, props => props.fixedWidth &&
 /* 2px for the border */
-css(["width:calc(", "rem + 2px);padding:0;overflow:hidden;text-overflow:ellipsis;"], props => (props.small ? 3 / 2 : 2) * ds.measures.spacer(props)), props => props.variant === 'plain' ? props.selected ? `color: ${ds.colors.buttonFgPlainHoverSelected(props)};
+css(["width:calc(", "rem + 2px);padding:0;overflow:hidden;text-overflow:ellipsis;flex-shrink:0;"], props => (props.small ? 3 / 2 : 2) * ds.measures.spacer(props)), props => props.variant === 'plain' ? props.selected ? `color: ${ds.colors.buttonFgPlainHoverSelected(props)};
           background: ${ds.colors.buttonBgPlainHoverSelected(props)};
           border-color: ${ds.colors.buttonBorderPlainHoverSelected(props)};` : `color: ${ds.colors.buttonFgHoverPlain(props)};
           background: ${ds.colors.buttonBgHoverPlain(props)};
@@ -5521,6 +5534,7 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     type,
     label,
     value,
+    placeholder,
     defaultValue,
     onChange,
     invalid,
@@ -5545,8 +5559,8 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     htmlFor: uid.current
   }, label), /*#__PURE__*/React.createElement("select", {
     id: uid.current,
-    value: ref === undefined ? value : undefined,
-    defaultValue: defaultValue,
+    value: value,
+    defaultValue: ref === undefined && value !== undefined ? value : defaultValue,
     disabled: disabled,
     onChange: evt => onChange(evt.target.value),
     ref: ref
@@ -5568,6 +5582,7 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     id: uid.current,
     type: type || 'text',
     value: value,
+    placeholder: placeholder,
     defaultValue: ref === undefined && value !== undefined ? value : defaultValue,
     disabled: disabled,
     onChange: evt => onChange(evt.target.value),
@@ -5582,6 +5597,7 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
 
 Control.propTypes = {
   type: propTypes.string,
+  placeholder: propTypes.string,
   label: propTypes.node,
   value: PROP_VALUE,
   defaultValue: PROP_VALUE,
@@ -5599,6 +5615,12 @@ Control.defaultProps = {
   onChange: () => {},
   options: []
 };
+
+function e$1(t,r,i,o){void 0===i&&(i=global),void 0===o&&(o={});var c=useRef(),u=o.capture,a=o.passive,v=o.once;useEffect(function(){c.current=r;},[r]),useEffect(function(){if(i&&i.addEventListener){var e=function(e){return c.current(e)},n={capture:u,passive:a,once:v};return i.addEventListener(t,e,n),function(){i.removeEventListener(t,e,n);}}},[t,i,u,a,v]);}
+
+var u={},c$1=function(t,n,e){return u[t]||(u[t]={callbacks:[],value:e}),u[t].callbacks.push(n),{deregister:function(){var e=u[t].callbacks,r=e.indexOf(n);r>-1&&e.splice(r,1);},emit:function(e){u[t].value!==e&&(u[t].value=e,u[t].callbacks.forEach(function(t){n!==t&&t(e);}));}}};function createPersistedState(u,i){if(void 0===i&&(i=global.localStorage),i){var o=function(t){return {get:function(n,e){var r=t.getItem(n);return null===r?"function"==typeof e?e():e:JSON.parse(r)},set:function(n,e){t.setItem(n,JSON.stringify(e));}}}(i);return function(i){return function(u,i,o){var a=o.get,f=o.set,l=useRef(null),s=useState(function(){return a(i,u)}),v=s[0],g=s[1];return e$1("storage",function(t){var n=t.key,e=JSON.parse(t.newValue);n===i&&v!==e&&g(e);}),useEffect(function(){return l.current=c$1(i,g,u),function(){l.current.deregister();}},[]),useEffect(function(){f(i,v),l.current.emit(v);},[v]),[v,g]}(i,u,o)}}return useState}
+
+var i=function(){},u$1={classList:{add:i,remove:i}},d$1=function(e,r,n){void 0===n&&(n=global);var a=e?createPersistedState(e,r):useState,i=n.matchMedia?n.matchMedia("(prefers-color-scheme: dark)"):{},d={addEventListener:function(e,t){return i.addListener&&i.addListener(t)},removeEventListener:function(e,t){return i.removeListener&&i.removeListener(t)}},s="(prefers-color-scheme: dark)"===i.media,c=n.document&&n.document.body||u$1;return {usePersistedDarkModeState:a,getDefaultOnChange:function(e,t,r){return void 0===e&&(e=c),void 0===t&&(t="dark-mode"),void 0===r&&(r="light-mode"),function(n){e.classList.add(n?t:r),e.classList.remove(n?r:t);}},mediaQueryEventTarget:d,getInitialValue:function(e){return s?i.matches:e}}};function useDarkMode(t,o){void 0===t&&(t=!1),void 0===o&&(o={});var i=o.element,u=o.classNameDark,s=o.classNameLight,c=o.onChange,m=o.storageKey;void 0===m&&(m="darkMode");var l=o.storageProvider,f=o.global,v=useMemo(function(){return d$1(m,l,f)},[m,l,f]),g=v.getDefaultOnChange,h=v.mediaQueryEventTarget,L=(0, v.usePersistedDarkModeState)((0, v.getInitialValue)(t)),k=L[0],p=L[1],b=useMemo(function(){return c||g(i,u,s)},[c,i,u,s,g]);return useEffect(function(){b(k);},[b,k]),e$1("change",function(e){return p(e.matches)},h),{value:k,enable:useCallback(function(){return p(!0)},[p]),disable:useCallback(function(){return p(!1)},[p]),toggle:useCallback(function(){return p(function(e){return !e})},[p])}}
 
 function styleInject(css, ref) {
   if ( ref === void 0 ) ref = {};
@@ -5637,7 +5659,7 @@ const NitramUIContext = /*#__PURE__*/React.createContext({
   setTheme: () => {}
 });
 
-const global = createGlobalStyle`
+const global$1 = createGlobalStyle`
 html, body {
   height: 100%;
 }
@@ -5817,7 +5839,7 @@ select,
 `;
 const GlobalStyle$1 = createGlobalStyle`
   ${css_248z}
-  ${global}
+  ${global$1}
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Utils
 // ---------------------------------------------------------------------------------------------------------------------
@@ -5827,10 +5849,11 @@ const isCustomTheme = theme => themes[theme];
 const getDefaultTheme = ({
   availableThemes,
   returnOnlyPredef
-}) => availableThemes && availableThemes.length ? isCustomTheme(availableThemes[0]) && returnOnlyPredef ? themes.smooth : availableThemes[0] : themes.smooth; // ---------------------------------------------------------------------------------------------------------------------
+}) => availableThemes && availableThemes.length ? isCustomTheme(availableThemes[0]) && returnOnlyPredef ? themes.smooth : availableThemes[0] : themes.smooth;
+
+const useThemeState = createPersistedState('theme'); // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
-
 
 const NitramUI = ({
   customThemes,
@@ -5841,8 +5864,13 @@ const NitramUI = ({
   // States
   // -------------------------------------------------------------------------------------------------------------------
   // TODO: use hooks for system/time–aware –saved– dark mode
-  const [mode, setMode] = useState(modes.light);
-  const [theme, setTheme] = useState(getDefaultTheme({
+  const [mode, _setMode] = useState(modes.light);
+  const darkMode = useDarkMode(false, {
+    onChange: x => {
+      _setMode(x ? modes.dark : modes.light);
+    }
+  });
+  const [theme, setTheme] = useThemeState(getDefaultTheme({
     availableThemes
   }));
   const [themeAux, setThemeAux] = useState(getDefaultTheme({
@@ -5855,6 +5883,13 @@ const NitramUI = ({
   // Memos
   // -------------------------------------------------------------------------------------------------------------------
 
+  const setMode = React.useCallback(m => {
+    if (m === modes.light) {
+      darkMode.disable();
+    } else {
+      darkMode.enable();
+    }
+  }, [darkMode]);
   const themeProviderObj = useMemo(() => ({
     theme: themeAux,
     mode,
