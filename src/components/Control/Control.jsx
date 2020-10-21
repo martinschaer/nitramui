@@ -334,8 +334,8 @@ const Control = React.forwardRef((props, ref) => {
             {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
             <select
               id={uid.current}
-              value={ref === undefined ? value : undefined}
-              defaultValue={defaultValue}
+              value={value}
+              defaultValue={ref === undefined && value !== undefined ? value : defaultValue}
               disabled={disabled}
               onChange={evt => onChange(evt.target.value)}
               ref={ref}
