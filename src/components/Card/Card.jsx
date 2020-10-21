@@ -157,7 +157,7 @@ const StyledCard = styled.div`
 
 const StyledCardHeader = styled.header`
   align-items: center;
-  border-bottom: 1px solid ${ds.colors.cardHeaderBorder};
+  border-bottom: 1px solid ${props => props.noBorder ? 'transparent' : ds.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: ${props => props.noWrapHeader ? 'nowrap' : 'wrap'};
   padding: ${props => props.compactHeader ? '0' : '0.25rem'};
@@ -183,7 +183,7 @@ const StyledCardBody = styled.main`
 
 const StyledCardFooter = styled.footer`
   align-items: center;
-  border-top: 1px solid ${ds.colors.cardHeaderBorder};
+  border-top: 1px solid ${props => props.noBorder ? 'transparent' : ds.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: ${props => props.noWrapFooter ? 'nowrap' : 'wrap'};
   justify-content: flex-end;
@@ -209,6 +209,8 @@ const Card = ({
   compactFooter,
   noWrapHeader,
   noWrapFooter,
+  noBorderHeader,
+  noBorderFooter,
   hollow,
   low,
   forceShadow,
@@ -246,6 +248,7 @@ const Card = ({
         <StyledCardHeader
           compactHeader={compactHeader}
           noWrapHeader={noWrapHeader}
+          noBorder={noBorderHeader}
         >
           {header}
         </StyledCardHeader>
@@ -259,6 +262,7 @@ const Card = ({
         <StyledCardFooter
           compactFooter={compactFooter}
           noWrapFooter={noWrapFooter}
+          noBorder={noBorderFooter}
         >
           {footer}
         </StyledCardFooter>
@@ -296,6 +300,8 @@ Card.propTypes = {
   compactFooter: PropTypes.bool,
   noWrapHeader: PropTypes.bool,
   noWrapFooter: PropTypes.bool,
+  noBorderHeader: PropTypes.bool,
+  noBorderFooter: PropTypes.bool,
   hollow: PropTypes.bool,
   low: PropTypes.bool,
   forceShadow: PropTypes.bool,

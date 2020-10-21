@@ -543,6 +543,7 @@ export const App = () => {
                       compact
                       compactFooter
                       marginBottom
+                      noBorderFooter
                       footer={(<Label compact>Footer</Label>)}
                       extraStyles={{
                         hover: css`
