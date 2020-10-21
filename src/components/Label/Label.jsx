@@ -31,10 +31,10 @@ overflow: hidden;
 `}
 
   &:first-child {
-    padding-left: 0rem;
+    /* padding-left: 0rem; */
   }
   &:last-child {
-    padding-right: 0rem;
+    /* padding-right: 0rem; */
   }
 `
 

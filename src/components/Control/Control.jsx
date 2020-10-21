@@ -203,10 +203,10 @@ const StyledControl = styled.div`
   max-width: 32em;
 
   &:first-child {
-    margin-left: 0;
+    /* margin-left: 0; */
   }
   &:last-child {
-    margin-right: 0;
+    /* margin-right: 0; */
   }
 
   & > ${Label} {
