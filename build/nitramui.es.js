@@ -4531,13 +4531,13 @@ const StyledCard = styled.div`
 `;
 const StyledCardHeader = styled.header`
   align-items: center;
-  border-bottom: 1px solid ${ds.colors.cardHeaderBorder};
+  border-bottom: 1px solid ${props => props.noBorder ? 'transparent' : ds.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: ${props => props.noWrapHeader ? 'nowrap' : 'wrap'};
   padding: ${props => props.compactHeader ? '0' : '0.25rem'};
 `;
 const StyledCardBody = styled.main`
-  padding: ${props => props.noPadding ? '0' : props.mini ? '0.5rem' : props.compact ? '1rem' : '2rem'};
+  padding: ${props => props.noPadding ? '0' : props.mini ? ds.measures.spacer(props) / 2 : props.compact ? ds.measures.spacer : ds.measures.spacer(props) * 2}rem;
   overflow-y: auto;
   height: 100%;
 
@@ -4550,12 +4550,12 @@ const StyledCardBody = styled.main`
   }
 
   @media (max-width: 768px) {
-    padding: ${props => props.noPadding ? '0' : '1rem'};
+    padding: ${props => props.noPadding ? '0' : ds.measures.spacer}rem;
   }
 `;
 const StyledCardFooter = styled.footer`
   align-items: center;
-  border-top: 1px solid ${ds.colors.cardHeaderBorder};
+  border-top: 1px solid ${props => props.noBorder ? 'transparent' : ds.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: ${props => props.noWrapFooter ? 'nowrap' : 'wrap'};
   justify-content: flex-end;
@@ -4580,6 +4580,8 @@ const Card = ({
   compactFooter,
   noWrapHeader,
   noWrapFooter,
+  noBorderHeader,
+  noBorderFooter,
   hollow,
   low,
   forceShadow,
@@ -4613,14 +4615,16 @@ const Card = ({
     className: hollow ? 'hollow' : null
   }, header && /*#__PURE__*/React.createElement(StyledCardHeader, {
     compactHeader: compactHeader,
-    noWrapHeader: noWrapHeader
+    noWrapHeader: noWrapHeader,
+    noBorder: noBorderHeader
   }, header), children && /*#__PURE__*/React.createElement(StyledCardBody, {
     noPadding: noPadding,
     compact: compact,
     mini: mini
   }, children), footer && /*#__PURE__*/React.createElement(StyledCardFooter, {
     compactFooter: compactFooter,
-    noWrapFooter: noWrapFooter
+    noWrapFooter: noWrapFooter,
+    noBorder: noBorderFooter
   }, footer), stickers && stickers.dot && /*#__PURE__*/React.createElement(Dot, {
     position: typeof stickers.dot === 'string' ? stickers.dot : stickers.dot.p,
     color: color,
@@ -4646,6 +4650,8 @@ Card.propTypes = {
   compactFooter: propTypes.bool,
   noWrapHeader: propTypes.bool,
   noWrapFooter: propTypes.bool,
+  noBorderHeader: propTypes.bool,
+  noBorderFooter: propTypes.bool,
   hollow: propTypes.bool,
   low: propTypes.bool,
   forceShadow: propTypes.bool,
@@ -4919,10 +4925,10 @@ overflow: hidden;
 `}
 
   &:first-child {
-    padding-left: 0rem;
+    /* padding-left: 0rem; */
   }
   &:last-child {
-    padding-right: 0rem;
+    /* padding-right: 0rem; */
   }
 `; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
@@ -5019,7 +5025,7 @@ Table.defaultProps = {
 };
 
 const selectedCSS = css(["border-color:", ";background:", ";color:", ";box-shadow:inset 0 0 .25rem 0 ", ";"], props => props.variant === 'plain' ? ds.colors.buttonBorderPlainSelected : ds.colors.buttonBorderSelected, props => props.variant === 'plain' ? ds.colors.buttonBgPlainSelected : ds.colors.buttonBgSelected, props => props.variant === 'plain' ? ds.colors.buttonFgPlainSelected : ds.colors.buttonFgSelected, ds.colors.buttonShadow);
-const buttonStyle = css(["", " font-size:", ";border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;", " cursor:pointer;", " &:visited{color:inherit;}&:hover,&:focus{", " outline:none;text-decoration:none;", "}&:active,&.active{outline:none;text-decoration:none;", " ", "}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null, props => props.fixedWidth &&
+const buttonStyle = css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;", " cursor:pointer;", " &:visited{color:inherit;}&:hover,&:focus{", " outline:none;text-decoration:none;", "}&:active,&.active{outline:none;text-decoration:none;", " ", "}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.buttonSpacerHSmall : ds.measures.buttonSpacerH, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null, props => props.fixedWidth &&
 /* 2px for the border */
 css(["width:calc(", "rem + 2px);padding:0;overflow:hidden;text-overflow:ellipsis;flex-shrink:0;"], props => (props.small ? 3 / 2 : 2) * ds.measures.spacer(props)), props => props.variant === 'plain' ? props.selected ? `color: ${ds.colors.buttonFgPlainHoverSelected(props)};
           background: ${ds.colors.buttonBgPlainHoverSelected(props)};
@@ -5128,7 +5134,7 @@ const StyledHeader = styled.header`
   border-bottom: 1px solid ${ds.colors.border};
   box-sizing: border-box;
   align-items: center;
-  padding: 0.25rem;
+  padding: ${ds.measures.spacer / 4}rem;
   display: flex;
   flex-wrap: wrap;
 `;
@@ -5140,7 +5146,7 @@ const StyledFooter = styled.header`
   border-top: 1px solid ${ds.colors.border};
   box-sizing: border-box;
   align-items: center;
-  padding: 0.25rem;
+  padding: ${ds.measures.spacer / 4}rem;
   display: flex;
   flex-wrap: wrap;
 `; // ---------------------------------------------------------------------------------------------------------------------
@@ -5454,10 +5460,10 @@ const StyledControl = styled.div`
   max-width: 32em;
 
   &:first-child {
-    margin-left: 0;
+    /* margin-left: 0; */
   }
   &:last-child {
-    margin-right: 0;
+    /* margin-right: 0; */
   }
 
   & > ${Label} {
