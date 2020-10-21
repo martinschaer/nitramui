@@ -164,7 +164,13 @@ const StyledCardHeader = styled.header`
 `
 
 const StyledCardBody = styled.main`
-  padding: ${props => props.noPadding ? '0' : props.mini ? '0.5rem' : props.compact ? '1rem' : '2rem'};
+  padding: ${props => props.noPadding
+    ? '0'
+    : props.mini
+      ? ds.measures.spacer(props) / 2
+      : props.compact
+        ? ds.measures.spacer
+        : ds.measures.spacer(props) * 2}rem;
   overflow-y: auto;
   height: 100%;
 
@@ -177,7 +183,7 @@ const StyledCardBody = styled.main`
   }
 
   @media (max-width: 768px) {
-    padding: ${props => props.noPadding ? '0' : '1rem'};
+    padding: ${props => props.noPadding ? '0' : ds.measures.spacer}rem;
   }
 `
 

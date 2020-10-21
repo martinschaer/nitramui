@@ -122,7 +122,7 @@ export const compact = {
     inputRadius: '0.25rem',
     buttonRadius: '100rem',
     spacer: 0.875,
-    buttonSpacerH: 0.5,
-    inputSpacerH: 1
+    buttonSpacerH: 1,
+    inputSpacerH: 0.25
   }
 }

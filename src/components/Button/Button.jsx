@@ -30,6 +30,7 @@ const selectedCSS = css`
 
 export const buttonStyle = css`
   ${props => props.small ? labelStylesSmall : labelStyles}
+  padding: 0 ${props => props.small ? ds.measures.buttonSpacerHSmall : ds.measures.buttonSpacerH}rem;
   font-size: ${props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont};
   border: 1px solid ${props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder};
   background: ${
