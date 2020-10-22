@@ -4904,9 +4904,13 @@ Wrapper.defaultProps = {};
 Pane.Wrapper = Wrapper;
 
 const headingStyles = css(["font-family:", ";font-weight:", ";margin-right:", "rem;"], ds.fonts.heading, ds.weights.heading, ds.measures.spacer);
-const preHeadingStyles = css(["color:", ";letter-spacing:", "em;text-transform:uppercase;font-size:.8rem;font-weight:", ";margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.colors.fgMuted, 1 / 12, ds.weights.preheading, ds.measures.spacer, ds.measures.spacer);
-const labelStyles = css(["line-height:calc(", "rem * 2);min-height:calc(", "rem * 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.measures.spacer, ds.measures.spacer, ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
-const labelStylesSmall = css(["line-height:calc(", "rem * 3 / 2);min-height:calc(", "rem * 3 / 2);padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.measures.spacer, ds.measures.spacer, props => ds.measures.spacer(props) / 2, ds.measures.spacer, ds.measures.spacer);
+const preHeadingStyles = css(["color:", ";", " ", " font-size:.8rem;font-weight:", ";margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.colors.fgMuted, ''
+/* letter-spacing: ${1 / 12}em; */
+, ''
+/* text-transform: uppercase; */
+, ds.weights.preheading, ds.measures.spacer, ds.measures.spacer);
+const labelStyles = css(["line-height:", "rem;min-height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(2, ds.measures.spacer(props) * 2), props => Math.max(2, ds.measures.spacer(props) * 2), ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
+const labelStylesSmall = css(["line-height:", "rem;min-height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => ds.measures.spacer(props) / 2, ds.measures.spacer, ds.measures.spacer);
 
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
@@ -5134,7 +5138,7 @@ const StyledHeader = styled.header`
   border-bottom: 1px solid ${ds.colors.border};
   box-sizing: border-box;
   align-items: center;
-  padding: ${ds.measures.spacer / 4}rem;
+  padding: ${props => ds.measures.spacer(props) / 4}rem;
   display: flex;
   flex-wrap: wrap;
 `;
@@ -5146,7 +5150,7 @@ const StyledFooter = styled.header`
   border-top: 1px solid ${ds.colors.border};
   box-sizing: border-box;
   align-items: center;
-  padding: ${ds.measures.spacer / 4}rem;
+  padding: ${props => ds.measures.spacer(props) / 4}rem;
   display: flex;
   flex-wrap: wrap;
 `; // ---------------------------------------------------------------------------------------------------------------------
