@@ -117,12 +117,12 @@ export const compact = {
   ...groove,
   measures: {
     font: '0.875rem',
-    inputFont: '0.875rem',
+    inputFont: '0.75rem',
     radius: '0.25rem',
     inputRadius: '0.25rem',
     buttonRadius: '100rem',
-    spacer: 0.875,
-    buttonSpacerH: 1,
+    spacer: 0.6,
+    buttonSpacerH: 0.75,
     inputSpacerH: 0.25
   }
 }

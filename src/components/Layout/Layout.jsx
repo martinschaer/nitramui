@@ -23,7 +23,7 @@ const StyledHeader = styled.header`
   border-bottom: 1px solid ${ds.colors.border};
   box-sizing: border-box;
   align-items: center;
-  padding: ${ds.measures.spacer / 4}rem;
+  padding: ${props => ds.measures.spacer(props) / 4}rem;
   display: flex;
   flex-wrap: wrap;
 `
@@ -37,7 +37,7 @@ const StyledFooter = styled.header`
   border-top: 1px solid ${ds.colors.border};
   box-sizing: border-box;
   align-items: center;
-  padding: ${ds.measures.spacer / 4}rem;
+  padding: ${props => ds.measures.spacer(props) / 4}rem;
   display: flex;
   flex-wrap: wrap;
 `
