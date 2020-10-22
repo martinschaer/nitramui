@@ -5179,9 +5179,9 @@ const Layout = ({
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
-  return /*#__PURE__*/React__default.createElement(StyledLayout, null, (headerSlot || brand || menu || menuB) && /*#__PURE__*/React__default.createElement(StyledHeader, null, /*#__PURE__*/React__default.createElement(Label, {
+  return /*#__PURE__*/React__default.createElement(StyledLayout, null, (headerSlot || brand || menu || menuB) && /*#__PURE__*/React__default.createElement(StyledHeader, null, headerSlot || /*#__PURE__*/React__default.createElement(Label, {
     heading: true
-  }, headerSlot || brand), menu, menuB && /*#__PURE__*/React__default.createElement("div", {
+  }, brand), menu, menuB && /*#__PURE__*/React__default.createElement("div", {
     style: {
       display: 'flex',
       marginLeft: 'auto'

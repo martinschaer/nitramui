@@ -64,7 +64,7 @@ const Layout = ({
     <StyledLayout>
       {(headerSlot || brand || menu || menuB) && (
         <StyledHeader>
-          <Label heading>{headerSlot || brand}</Label>
+          {headerSlot || <Label heading>{brand}</Label>}
           {menu}
           {menuB && (
             <div style={{ display: 'flex', marginLeft: 'auto' }}>

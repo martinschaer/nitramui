@@ -134,7 +134,7 @@ export const App = () => {
           <Layout
             brand='Example'
             footerSlot='Example'
-            headerSlot='Hi, Jonathan'
+            headerSlot={<Label heading>Hi, Jonathan</Label>}
             toolbar={(
               <>
                 <Label>Label</Label>

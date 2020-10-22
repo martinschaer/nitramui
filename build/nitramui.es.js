@@ -5172,9 +5172,9 @@ const Layout = ({
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
-  return /*#__PURE__*/React.createElement(StyledLayout, null, (headerSlot || brand || menu || menuB) && /*#__PURE__*/React.createElement(StyledHeader, null, /*#__PURE__*/React.createElement(Label, {
+  return /*#__PURE__*/React.createElement(StyledLayout, null, (headerSlot || brand || menu || menuB) && /*#__PURE__*/React.createElement(StyledHeader, null, headerSlot || /*#__PURE__*/React.createElement(Label, {
     heading: true
-  }, headerSlot || brand), menu, menuB && /*#__PURE__*/React.createElement("div", {
+  }, brand), menu, menuB && /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       marginLeft: 'auto'
