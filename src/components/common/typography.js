@@ -10,8 +10,8 @@ export const headingStyles = css`
 
 export const preHeadingStyles = css`
   color: ${ds.colors.fgMuted};
-  letter-spacing: ${1 / 12}em;
-  text-transform: uppercase;
+  ${'' /* letter-spacing: ${1 / 12}em; */}
+  ${'' /* text-transform: uppercase; */}
   font-size: .8rem;
   font-weight: ${ds.weights.preheading};
   margin: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
