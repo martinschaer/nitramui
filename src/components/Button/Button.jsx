@@ -59,7 +59,7 @@ export const buttonStyle = css`
   ${props => props.fixedWidth && (
     /* 2px for the border */
     css`
-width: calc(${props => (props.small ? 3 / 2 : 2) * ds.measures.spacer(props)}rem + 2px);
+width: calc(${props => (props.small ? 3 / 2 : 2) * Math.max(ds.measures.spacer(props), 1)}rem + 2px);
 padding: 0;
 overflow: hidden;
 text-overflow: ellipsis;
