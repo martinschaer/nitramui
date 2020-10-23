@@ -64,13 +64,16 @@ const Actionable = styled.div`
 // MultiselectActionable
 // ---------------------------------------------------------------------------------------------------------------------
 const MultiselectActionable = React.forwardRef((props, ref) => {
+  const { id, label, value, defaultValue, onChange, disabled, normalizedOptions } = props
   const popupRef = useRef()
   const actionableRef = useRef()
-  const { id, label, value = [], onChange, disabled, normalizedOptions } = props
   const [open, setOpen] = useState(false)
   // TODO: set top
   const [top] = useState('2.5rem')
-  const [_value, setValue] = useState(Array.isArray(value) ? value : [])
+  const [_value, setValue] = useState(
+    defaultValue !== undefined ? (Array.isArray(defaultValue) ? defaultValue : [])
+      : (Array.isArray(value) ? value : [])
+  )
 
   // -------------------------------------------------------------------------------------------------------------------
   // Memos
@@ -118,9 +121,18 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
   // -------------------------------------------------------------------------------------------------------------------
   React.useEffect(
     () => {
-      if (ref) ref.current = { value: _value }
+      setValue(Array.isArray(value) ? value : [])
     },
-    [ref, _value]
+    [value]
+  )
+
+  React.useEffect(
+    () => {
+      const x = Array.isArray(defaultValue) ? defaultValue : []
+      setValue(x)
+      if (ref) ref.current = { value: x }
+    },
+    [defaultValue, ref]
   )
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -162,7 +174,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
               variant='plain'
               selected={_value.indexOf(x.value) !== -1}
               extraStyles={{ base: { textAlign: 'left' } }}
-              onClick={(evt) => {
+              onClick={() => {
                 dispatchSelected({ value: x.value })
                 actionableRef.current.focus()
               }}
@@ -181,6 +193,7 @@ MultiselectActionable.propTypes = {
   id: PropTypes.string,
   label: PropTypes.node,
   value: PROP_VALUE,
+  defaultValue: PROP_VALUE,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
   normalizedOptions: PROP_NORMALIZED_OPTIONS
@@ -350,7 +363,8 @@ const Control = React.forwardRef((props, ref) => {
           <MultiselectActionable
             id={uid.current}
             label={label}
-            value={ref === undefined ? value : defaultValue}
+            value={value}
+            defaultValue={ref === undefined && value !== undefined ? value : defaultValue}
             disabled={disabled}
             onChange={onChange}
             normalizedOptions={normalizedOptions}

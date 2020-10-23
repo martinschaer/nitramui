@@ -49,7 +49,8 @@ export const Typography = () => {
   const textRef = React.useRef()
   const multiRef = React.useRef()
   const selectRef = React.useRef()
-  const [multiSelectValue, multiSelectValueSet] = React.useState([])
+  const [selectValue, selectValueSet] = React.useState()
+  const [multiSelectValue, multiSelectValueSet] = React.useState([1])
   const [textValue, textValueSet] = React.useState('Lorem ipsum')
   return (
     <NitramUI customThemes={{ groove }}>
@@ -269,20 +270,25 @@ export const Typography = () => {
                   labelInside
                   comfort
                   type='select'
-                  options={selectOptions}
                   label='select labelInside comfort'
-                  onChange={() => {}}
+                  options={selectOptions}
+                  value={selectValue}
+                  onChange={selectValueSet}
                 />
                 <Control
                   type='select'
                   label='select'
                   options={selectOptions}
+                  value={selectValue}
+                  onChange={selectValueSet}
                 />
                 <Control
                   comfort
                   type='select'
                   label='select comfort'
                   options={selectOptions}
+                  value={selectValue}
+                  onChange={selectValueSet}
                 />
                 {multiSelectValue.join(', ')}
                 <Control
@@ -290,12 +296,15 @@ export const Typography = () => {
                   labelInside
                   type='multiselect'
                   label='multiselect labelInside'
+                  value={multiSelectValue}
+                  onChange={multiSelectValueSet}
                 />
                 <Control
                   labelInside
                   type='multiselect'
                   label='multiselect labelInside'
-                  value=''
+                  value={multiSelectValue}
+                  onChange={multiSelectValueSet}
                 />
                 <Control
                   labelInside
@@ -368,11 +377,13 @@ export const Typography = () => {
                     onChange={textValueSet}
                   />
                   <Control
+                    comfort
+                    labelInside
                     type='select'
                     options={selectOptions}
                     label='Comfort + labelInside'
-                    comfort
-                    labelInside
+                    value={selectValue}
+                    onChange={selectValueSet}
                   />
                   <Control
                     labelInside
@@ -380,7 +391,8 @@ export const Typography = () => {
                     type='multiselect'
                     options={selectOptions}
                     label='multiselect labelInside comfort'
-                    onChange={() => {}}
+                    value={multiSelectValue}
+                    onChange={multiSelectValueSet}
                   />
                   <Button>Save</Button>
                   <Divider />
