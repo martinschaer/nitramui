@@ -122,12 +122,18 @@ const StyledCard = styled.div`
   };
 
   ${props => props.marginBottom &&
-    (props.marginBottom === true ? 'margin-bottom: 1rem;' : `margin-bottom: ${props.marginBottom}rem;`)}
+    (props.marginBottom === true
+      ? `margin-bottom: ${ds.measures.spacer(props)}rem;`
+      : `margin-bottom: ${props.marginBottom}rem;`)}
 
   ${props => props.marginTop &&
-    (props.marginTop === true ? 'margin-top: 1rem;' : `margin-top: ${props.marginTop}rem;`)}
+    (props.marginTop === true
+      ? `margin-top: ${ds.measures.spacer(props)}rem;`
+      : `margin-top: ${props.marginTop}rem;`)}
 
-  ${props => props.margin && (props.margin === true ? 'margin: 1rem;' : `margin: ${props.margin}rem;`)}
+  ${props => props.margin && (props.margin === true
+    ? `margin: ${ds.measures.spacer(props)}rem;`
+    : `margin: ${props.margin}rem;`)}
 
   box-shadow: 0 0 ${p => p.low ? '0.5rem' : '1rem'} ${ds.colors.shadow}${p => p.forceShadow ? ' !important' : ''};
   & & {

@@ -142,7 +142,9 @@ export const App = () => {
                 <Button>Button</Button>
                 <Button variant='plain'>Plain</Button>
                 <Button variant='inverted'>Inverted</Button>
+                <Button fixedWidth>F</Button>
                 <Button small>Small</Button>
+                <Button small fixedWidth>S</Button>
                 <Control placeholder='🔎 Search…' />
               </>
             )}

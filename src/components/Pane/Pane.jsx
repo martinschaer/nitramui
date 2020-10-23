@@ -30,7 +30,7 @@ const StyledPane = styled.div`
     : '100%'
   };
   flex-shrink: 0;
-  padding: ${props => props.noPadding ? '0' : '1rem'};
+  padding: ${props => props.noPadding ? '0' : `${ds.measures.spacer(props)}rem`};
   outline: 1px dashed ${ds.colors.borderLight};
   ${props => props.shadow && css`box-shadow: 0 0 1rem ${ds.colors.shadow};`}
   overflow: auto;
