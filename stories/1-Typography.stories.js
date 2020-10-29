@@ -357,6 +357,13 @@ export const Typography = () => {
                   max={10}
                 />
                 <Control
+                  labelInside
+                  type='number'
+                  label='Number'
+                  min={0}
+                  max={10}
+                />
+                <Control
                   type='checkbox'
                   label='Checkbox'
                   value={checkboxValue}

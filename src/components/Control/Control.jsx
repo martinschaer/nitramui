@@ -232,7 +232,6 @@ const StyledControl = styled.div`
     text-overflow: ellipsis;
 
     ${props => !props.comfort && props.labelInside && (`
-      pointer-events: none;
       position: absolute;
       top: 0;
       left: 0;
@@ -242,7 +241,6 @@ const StyledControl = styled.div`
       line-height: 3em;
     `)}
     ${props => props.comfort && props.labelInside && (`
-      pointer-events: none;
       position: absolute;
       top: 0;
       left: 0;
@@ -257,7 +255,7 @@ const StyledControl = styled.div`
     `}
   }
 
-  & > input,
+  & > input:not([type='checkbox']),
   & > select,
   & > div.nui-actionable {
     font-family: ${ds.fonts.controls};
@@ -283,7 +281,7 @@ const StyledControl = styled.div`
     `}
   }
 
-  &.invalid > input,
+  &.invalid > input:not([type='checkbox']),
   &.invalid > select,
   &.invalid > div.nui-actionable {
     border-color: ${ds.colors.inputBorderInvalid};
@@ -362,7 +360,11 @@ const Control = React.forwardRef((props, ref) => {
       {type === 'select'
         ? (
           <>
-            {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
+            {label && (
+              <Label as='label' htmlFor={uid.current} style={{ pointerEvents: labelInside && 'none' }}>
+                {label}
+              </Label>
+            )}
             <select
               id={uid.current}
               value={value}
@@ -391,7 +393,11 @@ const Control = React.forwardRef((props, ref) => {
         )
           : type === 'checkbox' ? (
             <>
-              {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
+              {label && (
+                <Label as='label' htmlFor={uid.current} style={{ pointerEvents: labelInside && 'none' }}>
+                  {label}
+                </Label>
+              )}
               <input
                 type='checkbox'
                 id={uid.current}
@@ -408,7 +414,11 @@ const Control = React.forwardRef((props, ref) => {
           )
             : (
               <>
-                {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
+                {label && (
+                  <Label as='label' htmlFor={uid.current} style={{ pointerEvents: labelInside && 'none' }}>
+                    {label}
+                  </Label>
+                )}
                 <input
                   id={uid.current}
                   type={type || 'text'}

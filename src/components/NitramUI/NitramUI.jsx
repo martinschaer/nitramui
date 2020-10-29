@@ -128,7 +128,7 @@ label {
   color: ${ds.colors.labelFg};
 }
 
-input,
+input:not([type='checkbox']),
 select,
 .nui-actionable {
   ${labelStyles}
