@@ -36,6 +36,7 @@ const StyledPane = styled.div`
   overflow: auto;
   max-width: 100%;
   width: ${props => getCSSWidth(props.size)};
+  ${props => props.center && 'margin: 0 auto;'}
 
   @media (max-width: 768px) {
     ${props => props.size === 'small' ? '' : 'min-width: 100vw;'}
@@ -48,6 +49,7 @@ const StyledPane = styled.div`
 // ---------------------------------------------------------------------------------------------------------------------
 const Pane = ({
   size,
+  center,
   height,
   shadow,
   noPadding,
@@ -107,6 +109,7 @@ const Pane = ({
       id={uid.current}
       size={size}
       h={height}
+      center={center}
       shadow={shadow}
       noPadding={noPadding}
     >
@@ -123,7 +126,8 @@ Pane.propTypes = {
   height: PropTypes.oneOfType([PropTypes.oneOf(['half', 'full', 'auto']), PropTypes.number]),
   shadow: PropTypes.bool,
   noPadding: PropTypes.bool,
-  children: PropTypes.node
+  children: PropTypes.node,
+  center: PropTypes.bool
 }
 Pane.defaultProps = {
   size: 'default',

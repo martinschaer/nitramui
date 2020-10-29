@@ -40,11 +40,9 @@ export const Readme = () => {
               />
             )}
           >
-            <Pane.Wrapper>
-              <Pane height='auto'>
-                <div dangerouslySetInnerHTML={{ __html: README }} />
-              </Pane>
-            </Pane.Wrapper>
+            <Pane height='auto' center>
+              <div dangerouslySetInnerHTML={{ __html: README }} />
+            </Pane>
           </Layout>
         )}
       </NitramUIContext.Consumer>
