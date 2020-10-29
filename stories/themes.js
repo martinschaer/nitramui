@@ -27,29 +27,37 @@ colors.GRADIENT = `linear-gradient(-225deg, ${colors.PURPLE1} 0%, ${colors.CARIB
 colors.GRADIENT_HOVER = 'linear-gradient(-225deg, #B333FF 0%, #33C7FF 100%)'
 colors.GRADIENT_SELECTED = 'linear-gradient(-225deg, #8000CC 0%, #0094CC 100%)'
 
-const LIGHTENED_OCEAN = '#33A4FF'
+// const SUPER_LIGHTENED_OCEAN = '#F4FBFF'
+// const SUPER_DARKENED_OCEAN = '#001729'
 
-const SUPER_LIGHTENED_OCEAN = '#F4FBFF'
-const SUPER_DARKENED_OCEAN = '#001729'
+const SUPER_LIGHTENED_PURPLE1 = '#FBF4FF'
+const SUPER_DARKENED_PURPLE1 = '#26293E'
+
+const MIDNIGHT_PLUS_BLACK_10 = '#1D2630'
+const MIDNIGHT_PLUS_SNOW_10 = '#363F49'
+// const MIDNIGHT_PLUS_SNOW_20 = '#4C545D'
+const MIDNIGHT_PLUS_SNOW_30 = '#616971'
+const MIDNIGHT_PLUS_SNOW_70 = '#B8BBBF'
+// const MIDNIGHT_PLUS_SNOW_80 = '#CDD0D3'
 
 const TRANSPARENT = 'transparent'
 
 const colorFg = { light: colors.MIDNIGHT, dark: colors.SNOW }
-const colorBorder = { light: colors.SMOKE, dark: colors.SLATE }
-const colorAccent = { light: colors.OCEAN, dark: colors.OCEAN }
+const colorBorder = { light: colors.SMOKE, dark: MIDNIGHT_PLUS_SNOW_10 }
+const colorAccent = { light: colors.PURPLE1, dark: colors.PURPLE1 }
 const colorGradient = { light: colors.GRADIENT, dark: colors.GRADIENT }
 const colorGradientHover = { light: colors.GRADIENT_HOVER, dark: colors.GRADIENT_HOVER }
 const colorGradientSelected = { light: colors.GRADIENT_SELECTED, dark: colors.GRADIENT_SELECTED }
-const colorAccentLight = { light: LIGHTENED_OCEAN, dark: LIGHTENED_OCEAN }
+// const colorAccentLight = { light: colors.PURPLE1, dark: colors.PURPLE1 }
 const colorTransparent = { light: TRANSPARENT, dark: TRANSPARENT }
 
 export const groove = {
   colors: {
     fg: colorFg,
     fgMuted: { light: colors.SILVER, dark: colors.SILVER },
-    bg: { light: colors.SNOW, dark: colors.BLACK },
+    bg: { light: colors.SNOW, dark: '#10151B' },
     card: { light: colors.WHITE, dark: colors.MIDNIGHT },
-    cardSelected: { light: SUPER_LIGHTENED_OCEAN, dark: SUPER_DARKENED_OCEAN },
+    cardSelected: { light: SUPER_LIGHTENED_PURPLE1, dark: SUPER_DARKENED_PURPLE1 },
     border: colorBorder,
     borderLight: colorTransparent,
     cardBorder: colorBorder,
@@ -69,14 +77,14 @@ export const groove = {
     buttonBorderSelected: { light: colors.SNOW, dark: colors.MIDNIGHT },
     buttonFgPlain: colorFg,
     buttonBgPlain: colorTransparent,
-    buttonBgPlainHoverSelected: colorAccentLight,
+    buttonBgPlainHoverSelected: { light: colors.SNOW, dark: MIDNIGHT_PLUS_BLACK_10 },
     buttonBgPlainSelected: colorAccent,
     buttonFgHoverPlain: colorFg,
     buttonFgPlainSelected: { light: colors.SNOW, dark: colors.SNOW },
-    buttonFgPlainHoverSelected: { light: colors.SNOW, dark: colors.SNOW },
+    buttonFgPlainHoverSelected: colorFg,
     buttonBorderPlain: colorBorder,
-    buttonBorderHoverPlain: colorAccentLight,
-    buttonBorderPlainHoverSelected: colorAccentLight,
+    buttonBorderHoverPlain: colorBorder,
+    buttonBorderPlainHoverSelected: { light: MIDNIGHT_PLUS_SNOW_70, dark: MIDNIGHT_PLUS_SNOW_30 },
     controlBg: colorTransparent,
     labelFg: { light: colors.SLATE, dark: colors.SLATE },
     inputFg: colorFg,
@@ -86,8 +94,9 @@ export const groove = {
     inputBorder: colorBorder,
     inputBorderActive: colorAccent,
     inputBorderInvalid: { light: colors.RED, dark: colors.RED },
-    link: colorAccent,
-    linkVisited: colorAccent
+    link: { light: colors.PURPLE1, dark: colors.WHITE },
+    linkVisited: colorAccent,
+    shadow: { light: 'rgba(0, 0, 0, 0.1)', dark: 'rgba(0, 0, 0, 0.4)' }
   },
   fonts: {
     body: 'Graphik, Helvetica, Arial',
@@ -117,11 +126,11 @@ export const compact = {
   ...groove,
   measures: {
     font: '0.875rem',
-    inputFont: '0.75rem',
+    inputFont: '0.875rem',
     radius: '0.25rem',
     inputRadius: '0.25rem',
     buttonRadius: '100rem',
-    spacer: 0.6,
+    spacer: 0.875,
     buttonSpacerH: 0.75,
     inputSpacerH: 0.25
   }
