@@ -234,6 +234,7 @@ const StyledControl = styled.div`
     margin-bottom: 0;
     margin-left: 0;
     color: ${ds.colors.SLATE};
+    pointer-events: none;
 
     overflow: hidden;
     white-space: nowrap;
