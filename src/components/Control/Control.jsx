@@ -33,8 +33,8 @@ const normalizeOptions = (options) => {
 }
 
 const PROP_VALUE = PropTypes.oneOfType([
-  PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-  PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])),
+  PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
 ])
 const PROP_OPTION = PropTypes.shape({
   label: PropTypes.string,
@@ -70,10 +70,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
   const [open, setOpen] = useState(false)
   // TODO: set top
   const [top] = useState('2.5rem')
-  const [_value, setValue] = useState(
-    defaultValue !== undefined ? (Array.isArray(defaultValue) ? defaultValue : [])
-      : (Array.isArray(value) ? value : [])
-  )
+  const [_value, setValue] = useState(value === undefined ? defaultValue : value)
 
   // -------------------------------------------------------------------------------------------------------------------
   // Memos
@@ -93,6 +90,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
   // -------------------------------------------------------------------------------------------------------------------
   const dispatchSelected = React.useCallback(
     (action) => {
+      let v
       let index
       let result
       switch (action.type) {
@@ -101,11 +99,12 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
           break
         default:
           // adds or removes action.value from selected
-          index = _value.indexOf(action.value)
+          v = (!ref ? value : _value)
+          index = v.indexOf(action.value)
           if (index === -1) {
-            result = [..._value, action.value]
+            result = [...v, action.value]
           } else {
-            result = [..._value]
+            result = [...v]
             result.splice(index, 1)
           }
       }
@@ -113,19 +112,12 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
       setValue(result)
       onChange(result)
     },
-    [_value, onChange, ref]
+    [_value, value, onChange, ref]
   )
 
   // -------------------------------------------------------------------------------------------------------------------
   // Effects
   // -------------------------------------------------------------------------------------------------------------------
-  React.useEffect(
-    () => {
-      setValue(Array.isArray(value) ? value : [])
-    },
-    [value]
-  )
-
   React.useEffect(
     () => {
       const x = Array.isArray(defaultValue) ? defaultValue : []
@@ -155,7 +147,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
         }}
         onClick={() => openPopup(!open)}
       >
-        {_value.map(x => getLabel(x, normalizedOptions)).join(', ')}
+        {(!ref ? value : _value).map(x => getLabel(x, normalizedOptions)).join(', ')}
       </Actionable>
       <Popup
         ref={popupRef}
@@ -172,7 +164,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
               small
               key={x.value}
               variant='plain'
-              selected={_value.indexOf(x.value) !== -1}
+              selected={(!ref ? value : _value).includes(x.value)}
               extraStyles={{ base: { textAlign: 'left' } }}
               onClick={() => {
                 dispatchSelected({ value: x.value })
@@ -335,6 +327,30 @@ const Control = React.forwardRef((props, ref) => {
     () => normalizeOptions(options),
     [options]
   )
+
+  const _onChangeCheckbox = React.useCallback(
+    (val) => {
+      if (ref && ref.current) {
+        ref.current.value = val
+      }
+      onChange(val)
+    },
+    [ref, onChange]
+  )
+
+  React.useEffect(
+    () => {
+      if (ref && !ref.current) {
+        ref.current = {}
+        if (type === 'checkbox') {
+          ref.current.value = defaultValue
+          document.getElementById(uid.current).checked = defaultValue
+        }
+      }
+    },
+    [ref, type, defaultValue]
+  )
+
   return (
     <StyledControl
       withLabel={label}
@@ -373,22 +389,39 @@ const Control = React.forwardRef((props, ref) => {
             ref={ref}
           />
         )
-          : (
+          : type === 'checkbox' ? (
             <>
               {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
               <input
+                type='checkbox'
                 id={uid.current}
-                type={type || 'text'}
-                value={value}
-                placeholder={placeholder}
-                defaultValue={ref === undefined && value !== undefined ? value : defaultValue}
                 disabled={disabled}
-                onChange={evt => onChange(evt.target.value)}
-                ref={ref}
-                {...{ min, max }}
+                placeholder={placeholder}
+                checked={
+                  value !== undefined
+                    ? value
+                    : undefined
+                }
+                onChange={evt => _onChangeCheckbox(evt.target.checked)}
               />
             </>
-          )}
+          )
+            : (
+              <>
+                {label && (<Label as='label' htmlFor={uid.current}>{label}</Label>)}
+                <input
+                  id={uid.current}
+                  type={type || 'text'}
+                  value={value}
+                  placeholder={placeholder}
+                  defaultValue={ref === undefined && value !== undefined ? value : defaultValue}
+                  disabled={disabled}
+                  onChange={evt => onChange(evt.target.value)}
+                  ref={ref}
+                  {...{ min, max }}
+                />
+              </>
+            )}
     </StyledControl>
   )
 })

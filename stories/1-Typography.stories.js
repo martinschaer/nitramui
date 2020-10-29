@@ -49,9 +49,11 @@ export const Typography = () => {
   const textRef = React.useRef()
   const multiRef = React.useRef()
   const selectRef = React.useRef()
+  const checkboxRef = React.useRef()
   const [selectValue, selectValueSet] = React.useState()
   const [multiSelectValue, multiSelectValueSet] = React.useState([1])
   const [textValue, textValueSet] = React.useState('Lorem ipsum')
+  const [checkboxValue, checkboxValueSet] = React.useState(true)
   return (
     <NitramUI customThemes={{ groove }}>
       <NitramUIContext.Consumer>
@@ -230,15 +232,22 @@ export const Typography = () => {
                   <Control
                     labelInside
                     type='multiselect'
-                    label='multiselect labelInside'
+                    label='multiselect labelInside ref'
                     options={selectOptions}
                     defaultValue={[1]}
                     ref={multiRef}
                   />
+                  <Control
+                    labelInside
+                    type='checkbox'
+                    label='Checkbox'
+                    defaultValue
+                    ref={checkboxRef}
+                  />
                   <Button
                     onClick={() => {
                       textRef.current.value = `${textRef.current.value.toUpperCase()}\
- ${selectRef.current?.value} ${multiRef.current?.value}`
+ ${selectRef.current?.value} ${multiRef.current?.value} ${checkboxRef.current?.value}`
                     }}
                   >
                     toUpperCase
@@ -290,19 +299,22 @@ export const Typography = () => {
                   value={selectValue}
                   onChange={selectValueSet}
                 />
-                {multiSelectValue.join(', ')}
+                <Card>
+                  <Label>multiSelectValue: {multiSelectValue.join(', ')}</Label>
+                  <Label>checkboxValue: {JSON.stringify(checkboxValue)}</Label>
+                </Card>
                 <Control
                   disabled
                   labelInside
                   type='multiselect'
-                  label='multiselect labelInside'
+                  label='multiselect labelInside disabled'
                   value={multiSelectValue}
                   onChange={multiSelectValueSet}
                 />
                 <Control
                   labelInside
                   type='multiselect'
-                  label='multiselect labelInside'
+                  label='multiselect labelInside no options'
                   value={multiSelectValue}
                   onChange={multiSelectValueSet}
                 />
@@ -343,6 +355,12 @@ export const Typography = () => {
                   label='Number'
                   min={0}
                   max={10}
+                />
+                <Control
+                  type='checkbox'
+                  label='Checkbox'
+                  value={checkboxValue}
+                  onChange={checkboxValueSet}
                 />
                 <Control
                   type='text'
