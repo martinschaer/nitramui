@@ -234,13 +234,13 @@ const StyledControl = styled.div`
     margin-bottom: 0;
     margin-left: 0;
     color: ${ds.colors.SLATE};
-    pointer-events: none;
 
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 
     ${props => !props.comfort && props.labelInside && (`
+      pointer-events: none;
       position: absolute;
       top: 0;
       left: 0;
@@ -250,6 +250,7 @@ const StyledControl = styled.div`
       line-height: 3em;
     `)}
     ${props => props.comfort && props.labelInside && (`
+      pointer-events: none;
       position: absolute;
       top: 0;
       left: 0;
