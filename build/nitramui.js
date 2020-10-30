@@ -4811,6 +4811,7 @@ const StyledPane = styled.div`
   overflow: auto;
   max-width: 100%;
   width: ${props => getCSSWidth(props.size)};
+  ${props => props.center && 'margin: 0 auto;'}
 
   @media (max-width: 768px) {
     ${props => props.size === 'small' ? '' : 'min-width: 100vw;'}
@@ -4822,6 +4823,7 @@ const StyledPane = styled.div`
 
 const Pane = ({
   size,
+  center,
   height,
   shadow,
   noPadding,
@@ -4876,6 +4878,7 @@ const Pane = ({
     id: uid.current,
     size: size,
     h: height,
+    center: center,
     shadow: shadow,
     noPadding: noPadding
   }, children);
@@ -4889,7 +4892,8 @@ Pane.propTypes = {
   height: propTypes.oneOfType([propTypes.oneOf(['half', 'full', 'auto']), propTypes.number]),
   shadow: propTypes.bool,
   noPadding: propTypes.bool,
-  children: propTypes.node
+  children: propTypes.node,
+  center: propTypes.bool
 };
 Pane.defaultProps = {
   size: 'default',
@@ -5311,7 +5315,7 @@ const normalizeOptions = options => {
   });
 };
 
-const PROP_VALUE = propTypes.oneOfType([propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number])), propTypes.oneOfType([propTypes.string, propTypes.number])]);
+const PROP_VALUE = propTypes.oneOfType([propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool])), propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool])]);
 const PROP_OPTION = propTypes.shape({
   label: propTypes.string,
   value: propTypes.oneOfType([propTypes.string, propTypes.number])
@@ -5347,7 +5351,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
   const [open, setOpen] = React.useState(false); // TODO: set top
 
   const [top] = React.useState('2.5rem');
-  const [_value, setValue] = React.useState(defaultValue !== undefined ? Array.isArray(defaultValue) ? defaultValue : [] : Array.isArray(value) ? value : []); // -------------------------------------------------------------------------------------------------------------------
+  const [_value, setValue] = React.useState(value === undefined ? defaultValue : value); // -------------------------------------------------------------------------------------------------------------------
   // Memos
   // -------------------------------------------------------------------------------------------------------------------
 
@@ -5361,6 +5365,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
   // -------------------------------------------------------------------------------------------------------------------
 
   const dispatchSelected = React__default.useCallback(action => {
+    let v;
     let index;
     let result;
 
@@ -5371,12 +5376,13 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
 
       default:
         // adds or removes action.value from selected
-        index = _value.indexOf(action.value);
+        v = !ref ? value : _value;
+        index = v.indexOf(action.value);
 
         if (index === -1) {
-          result = [..._value, action.value];
+          result = [...v, action.value];
         } else {
-          result = [..._value];
+          result = [...v];
           result.splice(index, 1);
         }
 
@@ -5387,13 +5393,10 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
     };
     setValue(result);
     onChange(result);
-  }, [_value, onChange, ref]); // -------------------------------------------------------------------------------------------------------------------
+  }, [_value, value, onChange, ref]); // -------------------------------------------------------------------------------------------------------------------
   // Effects
   // -------------------------------------------------------------------------------------------------------------------
 
-  React__default.useEffect(() => {
-    setValue(Array.isArray(value) ? value : []);
-  }, [value]);
   React__default.useEffect(() => {
     const x = Array.isArray(defaultValue) ? defaultValue : [];
     setValue(x);
@@ -5420,7 +5423,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
       if (!contained) openPopup(false);
     },
     onClick: () => openPopup(!open)
-  }, _value.map(x => getLabel(x, normalizedOptions)).join(', ')), /*#__PURE__*/React__default.createElement(Popup, {
+  }, (!ref ? value : _value).map(x => getLabel(x, normalizedOptions)).join(', ')), /*#__PURE__*/React__default.createElement(Popup, {
     ref: popupRef,
     style: {
       display: open ? 'block' : 'none',
@@ -5436,7 +5439,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
     small: true,
     key: x.value,
     variant: "plain",
-    selected: _value.indexOf(x.value) !== -1,
+    selected: (!ref ? value : _value).includes(x.value),
     extraStyles: {
       base: {
         textAlign: 'left'
@@ -5470,6 +5473,7 @@ MultiselectActionable.defaultProps = {
 const StyledControl = styled.div`
   border-radius: ${ds.measures.inputRadius};
   display: flex;
+  align-items: center;
   margin: 0 calc(${ds.measures.spacer}rem / 4);
   background-color: ${props => props.withLabel ? ds.colors.controlBg : 'transparent'};
   position: relative;
@@ -5498,7 +5502,7 @@ const StyledControl = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    ${props => !props.comfort && props.labelInside && `
+    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && `
       position: absolute;
       top: 0;
       left: 0;
@@ -5507,7 +5511,7 @@ const StyledControl = styled.div`
       user-select: none;
       line-height: 3em;
     `}
-    ${props => props.comfort && props.labelInside && `
+    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && `
       position: absolute;
       top: 0;
       left: 0;
@@ -5519,7 +5523,7 @@ const StyledControl = styled.div`
     ${props => props.comfort && !props.labelInside && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);"], ds.measures.spacer, ds.measures.spacer)}
   }
 
-  & > input,
+  & > input:not([type='checkbox']),
   & > select,
   & > div.nui-actionable {
     font-family: ${ds.fonts.controls};
@@ -5532,7 +5536,7 @@ const StyledControl = styled.div`
     ${props => !props.comfort && props.labelInside && css(["padding-top:1rem;line-height:calc((", "rem * 2) - 1rem);"], ds.measures.spacer)}
   }
 
-  &.invalid > input,
+  &.invalid > input:not([type='checkbox']),
   &.invalid > select,
   &.invalid > div.nui-actionable {
     border-color: ${ds.colors.inputBorderInvalid};
@@ -5572,7 +5576,27 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
   } = props;
   const uid = React.useRef(Math.random().toString(36).substr(2, 9));
   const normalizedOptions = React__default.useMemo(() => normalizeOptions(options), [options]);
+
+  const _onChangeCheckbox = React__default.useCallback(val => {
+    if (ref && ref.current) {
+      ref.current.value = val;
+    }
+
+    onChange(val);
+  }, [ref, onChange]);
+
+  React__default.useEffect(() => {
+    if (ref && !ref.current) {
+      ref.current = {};
+
+      if (type === 'checkbox') {
+        ref.current.value = defaultValue;
+        document.getElementById(uid.current).checked = defaultValue;
+      }
+    }
+  }, [ref, type, defaultValue]);
   return /*#__PURE__*/React__default.createElement(StyledControl, {
+    type: type,
     withLabel: label,
     className: [invalid && 'invalid', disabled && 'disabled'].join(' '),
     labelInside: labelInside,
@@ -5580,7 +5604,10 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     small: small
   }, type === 'select' ? /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
     as: "label",
-    htmlFor: uid.current
+    htmlFor: uid.current,
+    style: {
+      pointerEvents: labelInside && 'none'
+    }
   }, label), /*#__PURE__*/React__default.createElement("select", {
     id: uid.current,
     value: value,
@@ -5600,9 +5627,22 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     onChange: onChange,
     normalizedOptions: normalizedOptions,
     ref: ref
-  }) : /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
+  }) : type === 'checkbox' ? /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
     as: "label",
     htmlFor: uid.current
+  }, label), /*#__PURE__*/React__default.createElement("input", {
+    type: "checkbox",
+    id: uid.current,
+    disabled: disabled,
+    placeholder: placeholder,
+    checked: value !== undefined ? value : undefined,
+    onChange: evt => _onChangeCheckbox(evt.target.checked)
+  })) : /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
+    as: "label",
+    htmlFor: uid.current,
+    style: {
+      pointerEvents: labelInside && 'none'
+    }
   }, label), /*#__PURE__*/React__default.createElement("input", _extends$1({
     id: uid.current,
     type: type || 'text',
@@ -5790,7 +5830,7 @@ label {
   color: ${ds.colors.labelFg};
 }
 
-input,
+input:not([type='checkbox']),
 select,
 .nui-actionable {
   ${labelStyles}
