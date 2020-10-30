@@ -200,6 +200,7 @@ MultiselectActionable.defaultProps = {
 const StyledControl = styled.div`
   border-radius: ${ds.measures.inputRadius};
   display: flex;
+  align-items: center;
   margin: 0 calc(${ds.measures.spacer}rem / 4);
   background-color: ${props => props.withLabel ? ds.colors.controlBg : 'transparent'};
   position: relative;
@@ -231,7 +232,7 @@ const StyledControl = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    ${props => !props.comfort && props.labelInside && (`
+    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && (`
       position: absolute;
       top: 0;
       left: 0;
@@ -240,7 +241,7 @@ const StyledControl = styled.div`
       user-select: none;
       line-height: 3em;
     `)}
-    ${props => props.comfort && props.labelInside && (`
+    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && (`
       position: absolute;
       top: 0;
       left: 0;
@@ -351,6 +352,7 @@ const Control = React.forwardRef((props, ref) => {
 
   return (
     <StyledControl
+      type={type}
       withLabel={label}
       className={[invalid && 'invalid', disabled && 'disabled'].join(' ')}
       labelInside={labelInside}
@@ -394,7 +396,7 @@ const Control = React.forwardRef((props, ref) => {
           : type === 'checkbox' ? (
             <>
               {label && (
-                <Label as='label' htmlFor={uid.current} style={{ pointerEvents: labelInside && 'none' }}>
+                <Label as='label' htmlFor={uid.current}>
                   {label}
                 </Label>
               )}
