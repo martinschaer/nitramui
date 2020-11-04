@@ -5248,6 +5248,7 @@ const rotate = keyframes(["0%{transform:rotate(0deg);}17%{transform:rotate(180de
 const StyledLoadingInline = styled.span`
   animation: ${rotate} 2s linear infinite;
   display: inline-block;
+  height: 1em;
 `;
 const StyledLoading = styled.div`
   font-size: 4em;
@@ -6023,6 +6024,7 @@ exports.Table = Table;
 exports.createGlobalStyle = createGlobalStyle;
 exports.css = css;
 exports.ds = ds;
+exports.keyframes = keyframes;
 exports.modes = modes;
 exports.styled = styled;
 exports.themes = themes;

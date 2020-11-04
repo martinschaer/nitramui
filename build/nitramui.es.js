@@ -5241,6 +5241,7 @@ const rotate = keyframes(["0%{transform:rotate(0deg);}17%{transform:rotate(180de
 const StyledLoadingInline = styled.span`
   animation: ${rotate} 2s linear infinite;
   display: inline-block;
+  height: 1em;
 `;
 const StyledLoading = styled.div`
   font-size: 4em;
@@ -5999,5 +6000,5 @@ NitramUI.propTypes = {
 };
 NitramUI.defaultProps = {};
 
-export { Button, Card, Container, Control, Divider, Flex, Label, Layout, Loading, Muted, NitramUI, NitramUIContext, Pane, Table, createGlobalStyle, css, ds, modes, styled, themes };
+export { Button, Card, Container, Control, Divider, Flex, Label, Layout, Loading, Muted, NitramUI, NitramUIContext, Pane, Table, createGlobalStyle, css, ds, keyframes, modes, styled, themes };
 //# sourceMappingURL=nitramui.es.js.map
