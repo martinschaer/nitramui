@@ -301,6 +301,8 @@ const StyledControl = styled.div`
       user-select: none;
       line-height: 2em;
       padding: 0 calc(${ds.measures.spacer}rem) 0 calc(${ds.measures.inputSpacerH}rem);
+      width: 100%;
+      box-sizing: border-box;
     `)}
     ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && (css`
       position: absolute;
@@ -311,6 +313,8 @@ const StyledControl = styled.div`
       user-select: none;
       line-height: 3em;
       padding: 0 calc(${ds.measures.spacer}rem) 0 calc(${ds.measures.inputSpacerH}rem);
+      width: 100%;
+      box-sizing: border-box;
     `)}
     ${props => props.comfort && !props.labelInside && css`
       line-height: calc(${ds.measures.spacer}rem * 3);
@@ -436,7 +440,7 @@ const Control = React.forwardRef((props, ref) => {
         ? (
           <>
             {label && (
-              <Label as='label' htmlFor={uid.current} style={{ pointerEvents: labelInside && 'none' }}>
+              <Label as='label' htmlFor={uid.current} style={{ pointerEvents: labelInside && 'none' }} noShrink>
                 {label}
               </Label>
             )}
@@ -469,7 +473,7 @@ const Control = React.forwardRef((props, ref) => {
           : type === 'checkbox' ? (
             <>
               {label && (
-                <Label as='label' htmlFor={uid.current}>
+                <Label as='label' htmlFor={uid.current} noShrink>
                   {label}
                 </Label>
               )}
@@ -490,7 +494,12 @@ const Control = React.forwardRef((props, ref) => {
             : type === 'textarea' ? (
               <>
                 {label && (
-                  <Label as='label' htmlFor={uid.current} style={{ pointerEvents: labelInside && 'none' }}>
+                  <Label
+                    noShrink
+                    as='label'
+                    htmlFor={uid.current}
+                    style={{ pointerEvents: labelInside && 'none' }}
+                  >
                     {label}
                   </Label>
                 )}
@@ -509,7 +518,12 @@ const Control = React.forwardRef((props, ref) => {
               : (
                 <>
                   {label && (
-                    <Label as='label' htmlFor={uid.current} style={{ pointerEvents: labelInside && 'none' }}>
+                    <Label
+                      noShrink
+                      as='label'
+                      htmlFor={uid.current}
+                      style={{ pointerEvents: labelInside && 'none' }}
+                    >
                       {label}
                     </Label>
                   )}

@@ -29,6 +29,9 @@ text-overflow: ellipsis;
 white-space: nowrap;
 overflow: hidden;
 `}
+  ${props => props.noShrink && `
+flex-shrink: 0;
+`}
 
   &:first-child {
     /* padding-left: 0rem; */
@@ -46,6 +49,7 @@ Label.propTypes = {
   heading: PropTypes.bool,
   compact: PropTypes.bool,
   noWrap: PropTypes.bool,
+  noShrink: PropTypes.bool,
   children: PropTypes.node
 }
 Label.defaultProps = {}
