@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // Exports
 // ---------------------------------------------------------------------------------------------------------------------
-export { default as styled, css, createGlobalStyle } from 'styled-components'
+export { default as styled, css, createGlobalStyle, keyframes } from 'styled-components'
 
 export { default as ds, modes, themes } from './components/common/designSystem'
 
