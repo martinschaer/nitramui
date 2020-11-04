@@ -14,11 +14,9 @@ import {
 import reset from '../common/reset'
 import ds, { modes, themes } from '../common/designSystem'
 import { NitramUIContext } from './NitramUIContext'
-import { buttonStyle } from '../Button/Button'
 import {
   headingStyles,
-  preHeadingStyles,
-  labelStyles
+  preHeadingStyles
 } from '../common/typography'
 
 // TODO: Put in another file
@@ -60,9 +58,6 @@ strong {
   font-weight: ${ds.weights.strong};
 }
 
-input,
-select,
-textarea,
 code,
 pre {
   font-family: ${ds.fonts.controls};
@@ -93,7 +88,7 @@ p {
   & > button:first-child,
   & > .button:first-child,
   & > input:first-child,
-  & > select:first-child{
+  & > select:first-child {
     margin-left: 0;
   }
 
@@ -119,52 +114,8 @@ a {
   }
 }
 
-.button,
-button {
-  ${buttonStyle}
-}
-
 label {
   color: ${ds.colors.labelFg};
-}
-
-input:not([type='checkbox']),
-select,
-.nui-actionable {
-  ${labelStyles}
-  padding: 0 ${ds.measures.inputSpacerH}rem;
-  font-size: ${ds.measures.inputFont};
-  border: 1px solid ${ds.colors.inputBorder};
-  background-color: ${ds.colors.inputBg};
-  color: ${ds.colors.inputFg};
-  border-radius: ${ds.measures.inputRadius};
-  box-sizing: border-box;
-
-  &:hover {
-    border-color: ${ds.colors.inputBorderActive};
-    background-color: ${ds.colors.inputBgHover};
-    outline: none;
-  }
-  &:focus,
-  &:active,
-  &.active {
-    border-color: ${ds.colors.inputBorderActive};
-    background-color: ${ds.colors.inputBgFocus};
-    outline: none;
-  }
-
-  &.disabled,
-  &:disabled {
-    color: ${ds.colors.inputFgDisabled};
-    border-color: ${ds.colors.inputBorderDisabled};
-    background-color: ${ds.colors.inputBgDisabled};
-    cursor: default;
-
-    &:hover,
-    &:focus {
-      border-color: ${ds.colors.inputBorderDisabled};
-    }
-  }
 }
 
 .mt {
