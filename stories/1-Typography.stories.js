@@ -50,6 +50,7 @@ export const Typography = () => {
   const multiRef = React.useRef()
   const selectRef = React.useRef()
   const checkboxRef = React.useRef()
+  const textareaRef = React.useRef()
   const [selectValue, selectValueSet] = React.useState()
   const [multiSelectValue, multiSelectValueSet] = React.useState([1])
   const [textValue, textValueSet] = React.useState('Lorem ipsum')
@@ -68,16 +69,14 @@ export const Typography = () => {
                   </Button>
                 ))}
               </p>
-              <div className='mt mb'>
-                <Control
-                  labelInside
-                  type='select'
-                  label='Theme'
-                  value={theme}
-                  onChange={setTheme}
-                  options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
-                />
-              </div>
+              <Control
+                labelInside
+                type='select'
+                label='Theme'
+                value={theme}
+                onChange={setTheme}
+                options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
+              />
               <p><Button>Button default</Button></p>
               <p><Button className='selected'>Button default selected</Button></p>
               <p><Button variant='plain'>Button plain</Button></p>
@@ -244,10 +243,17 @@ export const Typography = () => {
                     defaultValue
                     ref={checkboxRef}
                   />
+                  <Control
+                    labelInside
+                    type='textarea'
+                    label='textarea'
+                    defaultValue='Lorem ipsum'
+                    ref={textareaRef}
+                  />
                   <Button
                     onClick={() => {
                       textRef.current.value = `${textRef.current.value.toUpperCase()}\
- ${selectRef.current?.value} ${multiRef.current?.value} ${checkboxRef.current?.value}`
+ ${selectRef.current?.value} ${multiRef.current?.value} ${checkboxRef.current?.value} ${textareaRef.current?.value}`
                     }}
                   >
                     toUpperCase
@@ -299,7 +305,7 @@ export const Typography = () => {
                   value={selectValue}
                   onChange={selectValueSet}
                 />
-                <Card>
+                <Card marginBottom>
                   <Label>multiSelectValue: {multiSelectValue.join(', ')}</Label>
                   <Label>checkboxValue: {JSON.stringify(checkboxValue)}</Label>
                 </Card>
@@ -370,6 +376,19 @@ export const Typography = () => {
                   onChange={checkboxValueSet}
                 />
                 <Control
+                  labelInside
+                  type='textarea'
+                  label='textarea'
+                  value={textValue}
+                  onChange={textValueSet}
+                />
+                <Control
+                  type='textarea'
+                  label='textarea'
+                  value={textValue}
+                  onChange={textValueSet}
+                />
+                <Control
                   type='text'
                   label='Name'
                   labelInside
@@ -400,6 +419,7 @@ export const Typography = () => {
                     labelInside
                     value={textValue}
                     onChange={textValueSet}
+                    marginBottom={false}
                   />
                   <Control
                     comfort
@@ -409,6 +429,7 @@ export const Typography = () => {
                     label='Comfort + labelInside'
                     value={selectValue}
                     onChange={selectValueSet}
+                    marginBottom={false}
                   />
                   <Control
                     labelInside
@@ -418,6 +439,7 @@ export const Typography = () => {
                     label='multiselect labelInside comfort'
                     value={multiSelectValue}
                     onChange={multiSelectValueSet}
+                    marginBottom={false}
                   />
                   <Button>Save</Button>
                   <Divider />
@@ -426,6 +448,8 @@ export const Typography = () => {
                     label='Normal'
                     value={textValue}
                     onChange={textValueSet}
+                    marginBottom={false}
+                    marginLeft
                   />
                   <Button>Save</Button>
                   <Divider />
@@ -435,6 +459,8 @@ export const Typography = () => {
                     small
                     value={textValue}
                     onChange={textValueSet}
+                    marginBottom={false}
+                    marginLeft
                   />
                   <Button small>Save</Button>
                   <Divider />

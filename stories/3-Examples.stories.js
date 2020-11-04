@@ -145,13 +145,13 @@ export const App = () => {
                 <Button fixedWidth>F</Button>
                 <Button small>Small</Button>
                 <Button small fixedWidth>S</Button>
-                <Control placeholder='🔎 Search…' />
+                <Control placeholder='🔎 Search…' marginBottom={false} />
               </>
             )}
             menu={(
               <>
-                <button type='button' className='selected' onClick={linkTo('Examples', 'App')}>App</button>
-                <button type='button' onClick={linkTo('Examples', 'Grid')}>Grid</button>
+                <Button className='selected' onClick={linkTo('Examples', 'App')}>App</Button>
+                <Button onClick={linkTo('Examples', 'Grid')}>Grid</Button>
               </>
             )}
             menuB={(
@@ -161,6 +161,7 @@ export const App = () => {
                   value={mode}
                   onChange={setMode}
                   options={Object.entries(modes).map(([_key, value]) => ({ label: mode2Emoji(value), value }))}
+                  marginBottom={0}
                 />
               </>
             )}
@@ -168,24 +169,24 @@ export const App = () => {
             <Pane size='small'>
               <h2 className='pre-heading'>Menu</h2>
               <p>
-                <button type='button' className='selected'>
+                <Button selected>
                   <span role='img' aria-label='bell emoji' className='mr fw'>🔔</span>Dashboard
-                </button>
+                </Button>
               </p>
               <p>
-                <button type='button'>
+                <Button>
                   <span role='img' aria-label='calenar emoji' className='mr fw'>🗓</span>Agenda
-                </button>
+                </Button>
               </p>
               <p>
-                <button type='button'>
+                <Button>
                   <span role='img' aria-label='people emoji' className='mr fw'>👥</span>Clients
-                </button>
+                </Button>
               </p>
               <p>
-                <button type='button'>
+                <Button>
                   <span role='img' aria-label='gear emoji' className='mr fw'>⚙️</span>Settings
-                </button>
+                </Button>
               </p>
               <div className='mb'>
                 <Control
@@ -326,16 +327,16 @@ export const App = () => {
                     header={
                       <>
                         <Label heading>Plans ending soon</Label>
-                        <button type='button'>See all</button>
-                        <button type='button'>See all</button>
-                        <button type='button'>See all</button>
-                        <button type='button'>See all</button>
-                        <button type='button'>See all</button>
-                        <button type='button'>See all</button>
+                        <Button>See all</Button>
+                        <Button>See all</Button>
+                        <Button>See all</Button>
+                        <Button>See all</Button>
+                        <Button>See all</Button>
+                        <Button>See all</Button>
                       </>
                     }
                     footer={(
-                      <button type='button'>See all</button>
+                      <Button>See all</Button>
                     )}
                     noPadding
                     margin
@@ -389,7 +390,7 @@ export const App = () => {
                     size='small'
                     header={<Label heading>Onboardings</Label>}
                     footer={
-                      <button type='button'>See all</button>
+                      <Button>See all</Button>
                     }
                     noPadding
                     margin
@@ -440,14 +441,16 @@ export const App = () => {
                           value={mode}
                           onChange={setMode}
                           options={Object.entries(modes).map(([_key, value]) => ({ label: value, value }))}
+                          marginBottom={false}
                         />
                         <Control
                           type='select'
                           value={theme}
                           onChange={setTheme}
                           options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
+                          marginBottom={false}
                         />
-                        <button type='button'>See all</button>
+                        <Button>See all</Button>
                       </>
                     }
                     footer={
@@ -459,16 +462,17 @@ export const App = () => {
                           label='Name'
                           value={text}
                           onChange={setText}
+                          marginBottom={false}
                         />
-                        <button type='button'>Ok</button>
+                        <Button>Ok</Button>
                         <Label>Footer</Label>
                       </>
                     }
                   >
                     <p><Hola>{text}</Hola>, <a href='/'>dolor sit amed</a> <Loading inline /></p>
                     <p>
-                      <button type='button'>Normal <Loading inline icon='⧗' /></button>
-                      <button type='button' className='selected'>Selected</button>
+                      <Button>Normal <Loading inline icon='⧗' /></Button>
+                      <Button className='selected'>Selected</Button>
                       <Button variant='plain'>Plain</Button>
                       <Button variant='plain' className='selected'>Plain selected</Button>
                       <Button variant='inverted'>Inverted</Button>
@@ -483,15 +487,13 @@ export const App = () => {
                         Extra hover
                       </Button>
                     </p>
-                    <div>
-                      <Control
-                        labelInside
-                        type='input'
-                        label='Name'
-                        value={text}
-                        onChange={setText}
-                      />
-                    </div>
+                    <Control
+                      labelInside
+                      type='input'
+                      label='Name'
+                      value={text}
+                      onChange={setText}
+                    />
                   </Card>
                   <Card
                     size='small'

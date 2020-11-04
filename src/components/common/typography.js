@@ -23,6 +23,7 @@ export const labelStyles = css`
   padding: 0 ${ds.measures.spacer}rem;
   display: inline-block;
   margin: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
+  flex-shrink: 0;
 `
 
 export const labelStylesSmall = css`

@@ -11,6 +11,7 @@ import Muted from '../Muted'
 import Button from '../Button'
 import ds from '../common/designSystem'
 import {
+  labelStyles,
   labelStylesSmall
 } from '../common/typography'
 
@@ -54,10 +55,62 @@ const Popup = styled.div`
   right: calc(${ds.measures.spacer}rem / 4);
 `
 
+const inputStyle = css`
+  ${labelStyles}
+  padding: 0 ${ds.measures.inputSpacerH}rem;
+  font-size: ${ds.measures.inputFont};
+  border: 1px solid ${ds.colors.inputBorder};
+  background-color: ${ds.colors.inputBg};
+  color: ${ds.colors.inputFg};
+  border-radius: ${ds.measures.inputRadius};
+  box-sizing: border-box;
+  flex-shrink: 1;
+
+  &:hover {
+    border-color: ${ds.colors.inputBorderActive};
+    background-color: ${ds.colors.inputBgHover};
+    outline: none;
+  }
+  &:focus,
+  &:active,
+  &.active {
+    border-color: ${ds.colors.inputBorderActive};
+    background-color: ${ds.colors.inputBgFocus};
+    outline: none;
+  }
+
+  &.disabled,
+  &:disabled {
+    color: ${ds.colors.inputFgDisabled};
+    border-color: ${ds.colors.inputBorderDisabled};
+    background-color: ${ds.colors.inputBgDisabled};
+    cursor: default;
+
+    &:hover,
+    &:focus {
+      border-color: ${ds.colors.inputBorderDisabled};
+    }
+  }
+`
+
 const Actionable = styled.div`
+  ${inputStyle}
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`
+
+const StyledInput = styled.input`
+  ${inputStyle}
+`
+
+const StyledSelect = styled.select`
+  ${inputStyle}
+`
+
+const StyledTextarea = styled.textarea`
+  ${inputStyle}
+  width: 100%;
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -201,19 +254,26 @@ const StyledControl = styled.div`
   border-radius: ${ds.measures.inputRadius};
   display: flex;
   align-items: center;
-  margin: 0 calc(${ds.measures.spacer}rem / 4);
+  ${props => props.marginLeft &&
+    (props.marginLeft === true
+      ? `margin-left: ${ds.measures.spacer(props) / 4}rem;`
+      : `margin-left: ${props.marginLeft}rem;`)}
+  ${props => props.marginRight &&
+    (props.marginRight === true
+      ? `margin-right: ${ds.measures.spacer(props) / 4}rem;`
+      : `margin-right: ${props.marginRight}rem;`)}
+  ${props => props.marginTop &&
+    (props.marginTop === true
+      ? `margin-top: ${ds.measures.spacer(props)}rem;`
+      : `margin-top: ${props.marginTop}rem;`)}
+  ${props => props.marginBottom &&
+    (props.marginBottom === true
+      ? `margin-bottom: ${ds.measures.spacer(props)}rem;`
+      : `margin-bottom: ${props.marginBottom}rem;`)}
   background-color: ${props => props.withLabel ? ds.colors.controlBg : 'transparent'};
   position: relative;
-  padding: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
   min-width: 10em;
   max-width: 32em;
-
-  &:first-child {
-    /* margin-left: 0; */
-  }
-  &:last-child {
-    /* margin-right: 0; */
-  }
 
   & > ${Label} {
     ${props => props.small && css`
@@ -232,7 +292,17 @@ const StyledControl = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && (`
+    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && (css`
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: .8em;
+      white-space: nowrap;
+      user-select: none;
+      line-height: 2em;
+      padding: 0 calc(${ds.measures.spacer}rem) 0 calc(${ds.measures.inputSpacerH}rem);
+    `)}
+    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && (css`
       position: absolute;
       top: 0;
       left: 0;
@@ -240,15 +310,7 @@ const StyledControl = styled.div`
       white-space: nowrap;
       user-select: none;
       line-height: 3em;
-    `)}
-    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && (`
-      position: absolute;
-      top: 0;
-      left: 0;
-      font-size: .8em;
-      white-space: nowrap;
-      user-select: none;
-      line-height: 4em;
+      padding: 0 calc(${ds.measures.spacer}rem) 0 calc(${ds.measures.inputSpacerH}rem);
     `)}
     ${props => props.comfort && !props.labelInside && css`
       line-height: calc(${ds.measures.spacer}rem * 3);
@@ -256,9 +318,10 @@ const StyledControl = styled.div`
     `}
   }
 
-  & > input:not([type='checkbox']),
-  & > select,
-  & > div.nui-actionable {
+  & > ${Actionable},
+  & > ${StyledInput},
+  & > ${StyledTextarea},
+  & > ${StyledSelect} {
     font-family: ${ds.fonts.controls};
     ${props => props.small && css`
       ${labelStylesSmall}
@@ -282,9 +345,10 @@ const StyledControl = styled.div`
     `}
   }
 
-  &.invalid > input:not([type='checkbox']),
-  &.invalid > select,
-  &.invalid > div.nui-actionable {
+  &.invalid > ${Actionable},
+  &.invalid > ${StyledInput},
+  &.invalid > ${StyledTextarea},
+  &.invalid > ${StyledSelect} {
     border-color: ${ds.colors.inputBorderInvalid};
     &:hover,
     &:focus,
@@ -319,7 +383,12 @@ const Control = React.forwardRef((props, ref) => {
     small,
     options,
     min,
-    max
+    max,
+    rows,
+    marginTop,
+    marginBottom,
+    marginRight,
+    marginLeft
   } = props
   const uid = useRef(Math.random().toString(36).substr(2, 9))
   const normalizedOptions = React.useMemo(
@@ -358,6 +427,10 @@ const Control = React.forwardRef((props, ref) => {
       labelInside={labelInside}
       comfort={comfort}
       small={small}
+      marginTop={marginTop}
+      marginBottom={marginBottom}
+      marginRight={marginRight}
+      marginLeft={marginLeft}
     >
       {type === 'select'
         ? (
@@ -367,7 +440,7 @@ const Control = React.forwardRef((props, ref) => {
                 {label}
               </Label>
             )}
-            <select
+            <StyledSelect
               id={uid.current}
               value={value}
               defaultValue={ref === undefined && value !== undefined ? value : defaultValue}
@@ -378,7 +451,7 @@ const Control = React.forwardRef((props, ref) => {
               {normalizedOptions.map(x => (
                 <option key={x.value} value={x.value}>{x.label}</option>
               ))}
-            </select>
+            </StyledSelect>
           </>
         )
         : type === 'multiselect' ? (
@@ -414,26 +487,45 @@ const Control = React.forwardRef((props, ref) => {
               />
             </>
           )
-            : (
+            : type === 'textarea' ? (
               <>
                 {label && (
                   <Label as='label' htmlFor={uid.current} style={{ pointerEvents: labelInside && 'none' }}>
                     {label}
                   </Label>
                 )}
-                <input
+                <StyledTextarea
                   id={uid.current}
-                  type={type || 'text'}
-                  value={value}
                   placeholder={placeholder}
+                  value={value}
                   defaultValue={ref === undefined && value !== undefined ? value : defaultValue}
                   disabled={disabled}
                   onChange={evt => onChange(evt.target.value)}
                   ref={ref}
-                  {...{ min, max }}
+                  rows={rows}
                 />
               </>
-            )}
+            )
+              : (
+                <>
+                  {label && (
+                    <Label as='label' htmlFor={uid.current} style={{ pointerEvents: labelInside && 'none' }}>
+                      {label}
+                    </Label>
+                  )}
+                  <StyledInput
+                    id={uid.current}
+                    type={type || 'text'}
+                    value={value}
+                    placeholder={placeholder}
+                    defaultValue={ref === undefined && value !== undefined ? value : defaultValue}
+                    disabled={disabled}
+                    onChange={evt => onChange(evt.target.value)}
+                    ref={ref}
+                    {...{ min, max }}
+                  />
+                </>
+              )}
     </StyledControl>
   )
 })
@@ -455,11 +547,18 @@ Control.propTypes = {
   small: PropTypes.bool,
   options: PROP_OPTIONS,
   min: PropTypes.number,
-  max: PropTypes.number
+  max: PropTypes.number,
+  rows: PropTypes.number,
+  marginTop: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  marginBottom: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  marginRight: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  marginLeft: PropTypes.oneOfType([PropTypes.bool, PropTypes.number])
 }
 Control.defaultProps = {
   onChange: () => {},
-  options: []
+  options: [],
+  marginBottom: true,
+  marginRight: true
 }
 
 export default Control
