@@ -4913,7 +4913,7 @@ const preHeadingStyles = css(["color:", ";", " ", " font-size:.8rem;font-weight:
 , ''
 /* text-transform: uppercase; */
 , ds.weights.preheading, ds.measures.spacer, ds.measures.spacer);
-const labelStyles = css(["line-height:", "rem;min-height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);flex-shrink:0;"], props => Math.max(2, ds.measures.spacer(props) * 2), props => Math.max(2, ds.measures.spacer(props) * 2), ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
+const labelStyles = css(["line-height:", "rem;min-height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(2, ds.measures.spacer(props) * 2), props => Math.max(2, ds.measures.spacer(props) * 2), ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
 const labelStylesSmall = css(["line-height:", "rem;min-height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => ds.measures.spacer(props) / 2, ds.measures.spacer, ds.measures.spacer);
 
 // Styled Components
@@ -4931,6 +4931,9 @@ text-overflow: ellipsis;
 white-space: nowrap;
 overflow: hidden;
 `}
+  ${props => props.noShrink && `
+flex-shrink: 0;
+`}
 
   &:first-child {
     /* padding-left: 0rem; */
@@ -4947,6 +4950,7 @@ Label.propTypes = {
   heading: propTypes.bool,
   compact: propTypes.bool,
   noWrap: propTypes.bool,
+  noShrink: propTypes.bool,
   children: propTypes.node
 };
 Label.defaultProps = {};
@@ -5502,8 +5506,8 @@ const StyledControl = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && css(["position:absolute;top:0;left:0;font-size:.8em;white-space:nowrap;user-select:none;line-height:2em;padding:0 calc(", "rem) 0 calc(", "rem);"], ds.measures.spacer, ds.measures.inputSpacerH)}
-    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && css(["position:absolute;top:0;left:0;font-size:.8em;white-space:nowrap;user-select:none;line-height:3em;padding:0 calc(", "rem) 0 calc(", "rem);"], ds.measures.spacer, ds.measures.inputSpacerH)}
+    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && css(["position:absolute;top:0;left:0;font-size:.8em;white-space:nowrap;user-select:none;line-height:2em;padding:0 calc(", "rem) 0 calc(", "rem);width:100%;box-sizing:border-box;"], ds.measures.spacer, ds.measures.inputSpacerH)}
+    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && css(["position:absolute;top:0;left:0;font-size:.8em;white-space:nowrap;user-select:none;line-height:3em;padding:0 calc(", "rem) 0 calc(", "rem);width:100%;box-sizing:border-box;"], ds.measures.spacer, ds.measures.inputSpacerH)}
     ${props => props.comfort && !props.labelInside && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);"], ds.measures.spacer, ds.measures.spacer)}
   }
 
@@ -5602,7 +5606,8 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     htmlFor: uid.current,
     style: {
       pointerEvents: labelInside && 'none'
-    }
+    },
+    noShrink: true
   }, label), /*#__PURE__*/React.createElement(StyledSelect, {
     id: uid.current,
     value: value,
@@ -5624,7 +5629,8 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     ref: ref
   }) : type === 'checkbox' ? /*#__PURE__*/React.createElement(React.Fragment, null, label && /*#__PURE__*/React.createElement(Label, {
     as: "label",
-    htmlFor: uid.current
+    htmlFor: uid.current,
+    noShrink: true
   }, label), /*#__PURE__*/React.createElement("input", {
     type: "checkbox",
     id: uid.current,
@@ -5633,6 +5639,7 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     checked: value !== undefined ? value : undefined,
     onChange: evt => _onChangeCheckbox(evt.target.checked)
   })) : type === 'textarea' ? /*#__PURE__*/React.createElement(React.Fragment, null, label && /*#__PURE__*/React.createElement(Label, {
+    noShrink: true,
     as: "label",
     htmlFor: uid.current,
     style: {
@@ -5648,6 +5655,7 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     ref: ref,
     rows: rows
   })) : /*#__PURE__*/React.createElement(React.Fragment, null, label && /*#__PURE__*/React.createElement(Label, {
+    noShrink: true,
     as: "label",
     htmlFor: uid.current,
     style: {
