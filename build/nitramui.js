@@ -4920,7 +4920,7 @@ const preHeadingStyles = css(["color:", ";", " ", " font-size:.8rem;font-weight:
 , ''
 /* text-transform: uppercase; */
 , ds.weights.preheading, ds.measures.spacer, ds.measures.spacer);
-const labelStyles = css(["line-height:", "rem;min-height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(2, ds.measures.spacer(props) * 2), props => Math.max(2, ds.measures.spacer(props) * 2), ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
+const labelStyles = css(["line-height:", "rem;min-height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);flex-shrink:0;"], props => Math.max(2, ds.measures.spacer(props) * 2), props => Math.max(2, ds.measures.spacer(props) * 2), ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
 const labelStylesSmall = css(["line-height:", "rem;min-height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => ds.measures.spacer(props) / 2, ds.measures.spacer, ds.measures.spacer);
 
 // Styled Components
@@ -5328,10 +5328,22 @@ const Popup = styled.div`
   left: calc(${ds.measures.spacer}rem / 4);
   right: calc(${ds.measures.spacer}rem / 4);
 `;
+const inputStyle = css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;flex-shrink:1;&:hover{border-color:", ";background-color:", ";outline:none;}&:focus,&:active,&.active{border-color:", ";background-color:", ";outline:none;}&.disabled,&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}"], labelStyles, ds.measures.inputSpacerH, ds.measures.inputFont, ds.colors.inputBorder, ds.colors.inputBg, ds.colors.inputFg, ds.measures.inputRadius, ds.colors.inputBorderActive, ds.colors.inputBgHover, ds.colors.inputBorderActive, ds.colors.inputBgFocus, ds.colors.inputFgDisabled, ds.colors.inputBorderDisabled, ds.colors.inputBgDisabled, ds.colors.inputBorderDisabled);
 const Actionable = styled.div`
+  ${inputStyle}
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+`;
+const StyledInput = styled.input`
+  ${inputStyle}
+`;
+const StyledSelect = styled.select`
+  ${inputStyle}
+`;
+const StyledTextarea = styled.textarea`
+  ${inputStyle}
+  width: 100%;
 `; // ---------------------------------------------------------------------------------------------------------------------
 // MultiselectActionable
 // ---------------------------------------------------------------------------------------------------------------------
@@ -5474,19 +5486,14 @@ const StyledControl = styled.div`
   border-radius: ${ds.measures.inputRadius};
   display: flex;
   align-items: center;
-  margin: 0 calc(${ds.measures.spacer}rem / 4);
+  ${props => props.marginLeft && (props.marginLeft === true ? `margin-left: ${ds.measures.spacer(props) / 4}rem;` : `margin-left: ${props.marginLeft}rem;`)}
+  ${props => props.marginRight && (props.marginRight === true ? `margin-right: ${ds.measures.spacer(props) / 4}rem;` : `margin-right: ${props.marginRight}rem;`)}
+  ${props => props.marginTop && (props.marginTop === true ? `margin-top: ${ds.measures.spacer(props)}rem;` : `margin-top: ${props.marginTop}rem;`)}
+  ${props => props.marginBottom && (props.marginBottom === true ? `margin-bottom: ${ds.measures.spacer(props)}rem;` : `margin-bottom: ${props.marginBottom}rem;`)}
   background-color: ${props => props.withLabel ? ds.colors.controlBg : 'transparent'};
   position: relative;
-  padding: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
   min-width: 10em;
   max-width: 32em;
-
-  &:first-child {
-    /* margin-left: 0; */
-  }
-  &:last-child {
-    /* margin-right: 0; */
-  }
 
   & > ${Label} {
     ${props => props.small && css(["", " font-size:", ";"], labelStylesSmall, ds.measures.inputFontSmall)}
@@ -5502,30 +5509,15 @@ const StyledControl = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && `
-      position: absolute;
-      top: 0;
-      left: 0;
-      font-size: .8em;
-      white-space: nowrap;
-      user-select: none;
-      line-height: 3em;
-    `}
-    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && `
-      position: absolute;
-      top: 0;
-      left: 0;
-      font-size: .8em;
-      white-space: nowrap;
-      user-select: none;
-      line-height: 4em;
-    `}
+    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && css(["position:absolute;top:0;left:0;font-size:.8em;white-space:nowrap;user-select:none;line-height:2em;padding:0 calc(", "rem) 0 calc(", "rem);"], ds.measures.spacer, ds.measures.inputSpacerH)}
+    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && css(["position:absolute;top:0;left:0;font-size:.8em;white-space:nowrap;user-select:none;line-height:3em;padding:0 calc(", "rem) 0 calc(", "rem);"], ds.measures.spacer, ds.measures.inputSpacerH)}
     ${props => props.comfort && !props.labelInside && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);"], ds.measures.spacer, ds.measures.spacer)}
   }
 
-  & > input:not([type='checkbox']),
-  & > select,
-  & > div.nui-actionable {
+  & > ${Actionable},
+  & > ${StyledInput},
+  & > ${StyledTextarea},
+  & > ${StyledSelect} {
     font-family: ${ds.fonts.controls};
     ${props => props.small && css(["", " font-size:", ";"], labelStylesSmall, ds.measures.inputFontSmall)}
     flex-grow: 1;
@@ -5536,9 +5528,10 @@ const StyledControl = styled.div`
     ${props => !props.comfort && props.labelInside && css(["padding-top:1rem;line-height:calc((", "rem * 2) - 1rem);"], ds.measures.spacer)}
   }
 
-  &.invalid > input:not([type='checkbox']),
-  &.invalid > select,
-  &.invalid > div.nui-actionable {
+  &.invalid > ${Actionable},
+  &.invalid > ${StyledInput},
+  &.invalid > ${StyledTextarea},
+  &.invalid > ${StyledSelect} {
     border-color: ${ds.colors.inputBorderInvalid};
     &:hover,
     &:focus,
@@ -5572,7 +5565,12 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     small,
     options,
     min,
-    max
+    max,
+    rows,
+    marginTop,
+    marginBottom,
+    marginRight,
+    marginLeft
   } = props;
   const uid = React.useRef(Math.random().toString(36).substr(2, 9));
   const normalizedOptions = React__default.useMemo(() => normalizeOptions(options), [options]);
@@ -5601,14 +5599,18 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     className: [invalid && 'invalid', disabled && 'disabled'].join(' '),
     labelInside: labelInside,
     comfort: comfort,
-    small: small
+    small: small,
+    marginTop: marginTop,
+    marginBottom: marginBottom,
+    marginRight: marginRight,
+    marginLeft: marginLeft
   }, type === 'select' ? /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
     as: "label",
     htmlFor: uid.current,
     style: {
       pointerEvents: labelInside && 'none'
     }
-  }, label), /*#__PURE__*/React__default.createElement("select", {
+  }, label), /*#__PURE__*/React__default.createElement(StyledSelect, {
     id: uid.current,
     value: value,
     defaultValue: ref === undefined && value !== undefined ? value : defaultValue,
@@ -5637,13 +5639,28 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     placeholder: placeholder,
     checked: value !== undefined ? value : undefined,
     onChange: evt => _onChangeCheckbox(evt.target.checked)
+  })) : type === 'textarea' ? /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
+    as: "label",
+    htmlFor: uid.current,
+    style: {
+      pointerEvents: labelInside && 'none'
+    }
+  }, label), /*#__PURE__*/React__default.createElement(StyledTextarea, {
+    id: uid.current,
+    placeholder: placeholder,
+    value: value,
+    defaultValue: ref === undefined && value !== undefined ? value : defaultValue,
+    disabled: disabled,
+    onChange: evt => onChange(evt.target.value),
+    ref: ref,
+    rows: rows
   })) : /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
     as: "label",
     htmlFor: uid.current,
     style: {
       pointerEvents: labelInside && 'none'
     }
-  }, label), /*#__PURE__*/React__default.createElement("input", _extends$1({
+  }, label), /*#__PURE__*/React__default.createElement(StyledInput, _extends$1({
     id: uid.current,
     type: type || 'text',
     value: value,
@@ -5674,11 +5691,18 @@ Control.propTypes = {
   small: propTypes.bool,
   options: PROP_OPTIONS,
   min: propTypes.number,
-  max: propTypes.number
+  max: propTypes.number,
+  rows: propTypes.number,
+  marginTop: propTypes.oneOfType([propTypes.bool, propTypes.number]),
+  marginBottom: propTypes.oneOfType([propTypes.bool, propTypes.number]),
+  marginRight: propTypes.oneOfType([propTypes.bool, propTypes.number]),
+  marginLeft: propTypes.oneOfType([propTypes.bool, propTypes.number])
 };
 Control.defaultProps = {
   onChange: () => {},
-  options: []
+  options: [],
+  marginBottom: true,
+  marginRight: true
 };
 
 function e$1(t,r,i,o){void 0===i&&(i=global),void 0===o&&(o={});var c=React.useRef(),u=o.capture,a=o.passive,v=o.once;React.useEffect(function(){c.current=r;},[r]),React.useEffect(function(){if(i&&i.addEventListener){var e=function(e){return c.current(e)},n={capture:u,passive:a,once:v};return i.addEventListener(t,e,n),function(){i.removeEventListener(t,e,n);}}},[t,i,u,a,v]);}
@@ -5762,9 +5786,6 @@ strong {
   font-weight: ${ds.weights.strong};
 }
 
-input,
-select,
-textarea,
 code,
 pre {
   font-family: ${ds.fonts.controls};
@@ -5795,7 +5816,7 @@ p {
   & > button:first-child,
   & > .button:first-child,
   & > input:first-child,
-  & > select:first-child{
+  & > select:first-child {
     margin-left: 0;
   }
 
@@ -5821,52 +5842,8 @@ a {
   }
 }
 
-.button,
-button {
-  ${buttonStyle}
-}
-
 label {
   color: ${ds.colors.labelFg};
-}
-
-input:not([type='checkbox']),
-select,
-.nui-actionable {
-  ${labelStyles}
-  padding: 0 ${ds.measures.inputSpacerH}rem;
-  font-size: ${ds.measures.inputFont};
-  border: 1px solid ${ds.colors.inputBorder};
-  background-color: ${ds.colors.inputBg};
-  color: ${ds.colors.inputFg};
-  border-radius: ${ds.measures.inputRadius};
-  box-sizing: border-box;
-
-  &:hover {
-    border-color: ${ds.colors.inputBorderActive};
-    background-color: ${ds.colors.inputBgHover};
-    outline: none;
-  }
-  &:focus,
-  &:active,
-  &.active {
-    border-color: ${ds.colors.inputBorderActive};
-    background-color: ${ds.colors.inputBgFocus};
-    outline: none;
-  }
-
-  &.disabled,
-  &:disabled {
-    color: ${ds.colors.inputFgDisabled};
-    border-color: ${ds.colors.inputBorderDisabled};
-    background-color: ${ds.colors.inputBgDisabled};
-    cursor: default;
-
-    &:hover,
-    &:focus {
-      border-color: ${ds.colors.inputBorderDisabled};
-    }
-  }
 }
 
 .mt {
