@@ -146,7 +146,7 @@ export const Typography = () => {
                     <Divider />
                   </Flex>
                 </Card>
-                <Divider horizontal />
+                <Divider horizontal spacing={2} />
                 <ol>
                   <li>List item</li>
                   <li>List item</li>
@@ -211,7 +211,7 @@ export const Typography = () => {
                     </tr>
                   </tbody>
                 </Table>
-                <Divider horizontal />
+                <Divider horizontal spacing={2} />
                 <Card compact hollow header={<Label heading>Forwarding ref</Label>} marginBottom>
                   <Control
                     labelInside
