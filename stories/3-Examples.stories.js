@@ -133,7 +133,7 @@ export const App = () => {
         {({ mode, setMode, themes, theme, setTheme, ds, getDSVal }) => (
           <Layout
             brand='Example'
-            footerSlot='Example'
+            footerSlot={<Label heading>Example</Label>}
             headerSlot={<Label heading>Hi, Jonathan</Label>}
             toolbar={(
               <>

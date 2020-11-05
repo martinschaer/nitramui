@@ -83,7 +83,7 @@ const Layout = ({
       </StyledMain>
       {(footerSlot || brand) && (
         <StyledFooter>
-          <Label heading>{footerSlot || `Copyright © 2020 ${brand}`}</Label>
+          {footerSlot || <Label heading>© {new Date().getFullYear()} {brand}</Label>}
           {footerMenu}
           {footerMenuB && (
             <div style={{ display: 'flex', marginLeft: 'auto' }}>
