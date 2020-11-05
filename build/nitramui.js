@@ -5196,9 +5196,9 @@ const Layout = ({
     }
   }, menuB)), toolbar && /*#__PURE__*/React__default.createElement(StyledHeader, null, toolbar), /*#__PURE__*/React__default.createElement(StyledMain, {
     scroll: scroll
-  }, children), (footerSlot || brand) && /*#__PURE__*/React__default.createElement(StyledFooter, null, /*#__PURE__*/React__default.createElement(Label, {
+  }, children), (footerSlot || brand) && /*#__PURE__*/React__default.createElement(StyledFooter, null, footerSlot || /*#__PURE__*/React__default.createElement(Label, {
     heading: true
-  }, footerSlot || `Copyright © 2020 ${brand}`), footerMenu, footerMenuB && /*#__PURE__*/React__default.createElement("div", {
+  }, "\xA9 ", new Date().getFullYear(), " ", brand), footerMenu, footerMenuB && /*#__PURE__*/React__default.createElement("div", {
     style: {
       display: 'flex',
       marginLeft: 'auto'
@@ -5229,7 +5229,7 @@ Layout.defaultProps = {
 // ---------------------------------------------------------------------------------------------------------------------
 
 const Divider = styled.span`
-  ${props => props.horizontal ? css(["display:block;margin:", ";border-top:1px solid ", ";"], props => props.noMargin ? 0 : '1em 0', ds.colors.border) : css(["display:inline-block;margin:", ";border-right:1px solid ", ";height:1.8em;"], props => props.noMargin ? 0 : `0 ${ds.measures.spacer(props) / 4}rem`, ds.colors.border)}
+  ${props => props.horizontal ? css(["display:block;margin:", ";border-top:1px solid ", ";"], props => props.noMargin ? 0 : `${props.spacing * ds.measures.spacer(props)}em 0`, ds.colors.border) : css(["display:inline-block;margin:", ";border-right:1px solid ", ";height:1.8em;"], props => props.noMargin ? 0 : `0 ${props.spacing * ds.measures.spacer(props) / 4}rem`, ds.colors.border)}
   vertical-align: middle;
 `; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
@@ -5237,9 +5237,12 @@ const Divider = styled.span`
 
 Divider.propTypes = {
   noMargin: propTypes.bool,
-  horizontal: propTypes.bool
+  horizontal: propTypes.bool,
+  spacing: propTypes.number
 };
-Divider.defaultProps = {};
+Divider.defaultProps = {
+  spacing: 1
+};
 
 // Styled components
 // ---------------------------------------------------------------------------------------------------------------------
