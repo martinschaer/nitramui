@@ -4908,13 +4908,9 @@ Wrapper.defaultProps = {};
 Pane.Wrapper = Wrapper;
 
 const headingStyles = css(["font-family:", ";font-weight:", ";margin-right:", "rem;"], ds.fonts.heading, ds.weights.heading, ds.measures.spacer);
-const preHeadingStyles = css(["color:", ";", " ", " font-size:.8rem;font-weight:", ";margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.colors.fgMuted, ''
-/* letter-spacing: ${1 / 12}em; */
-, ''
-/* text-transform: uppercase; */
-, ds.weights.preheading, ds.measures.spacer, ds.measures.spacer);
-const labelStyles = css(["line-height:", "rem;min-height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(2, ds.measures.spacer(props) * 2), props => Math.max(2, ds.measures.spacer(props) * 2), ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
-const labelStylesSmall = css(["line-height:", "rem;min-height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => ds.measures.spacer(props) / 2, ds.measures.spacer, ds.measures.spacer);
+const preHeadingStyles = css(["color:", ";font-size:.8rem;font-weight:", ";margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.colors.fgMuted, ds.weights.preheading, ds.measures.spacer, ds.measures.spacer);
+const labelStyles = css(["line-height:", "rem;height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(2, ds.measures.spacer(props) * 2), props => Math.max(2, ds.measures.spacer(props) * 2), ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
+const labelStylesSmall = css(["line-height:", "rem;height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => ds.measures.spacer(props) / 2, ds.measures.spacer, ds.measures.spacer);
 
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
@@ -5345,6 +5341,7 @@ const StyledSelect = styled.select`
 const StyledTextarea = styled.textarea`
   ${inputStyle}
   width: 100%;
+  height: auto; /* fixes labelStyles fixed height */
 `; // ---------------------------------------------------------------------------------------------------------------------
 // MultiselectActionable
 // ---------------------------------------------------------------------------------------------------------------------
@@ -5486,7 +5483,6 @@ MultiselectActionable.defaultProps = {
 const StyledControl = styled.div`
   border-radius: ${ds.measures.inputRadius};
   display: flex;
-  align-items: center;
   ${props => props.marginLeft && (props.marginLeft === true ? `margin-left: ${ds.measures.spacer(props) / 4}rem;` : `margin-left: ${props.marginLeft}rem;`)}
   ${props => props.marginRight && (props.marginRight === true ? `margin-right: ${ds.measures.spacer(props) / 4}rem;` : `margin-right: ${props.marginRight}rem;`)}
   ${props => props.marginTop && (props.marginTop === true ? `margin-top: ${ds.measures.spacer(props)}rem;` : `margin-top: ${props.marginTop}rem;`)}
@@ -5495,6 +5491,8 @@ const StyledControl = styled.div`
   position: relative;
   min-width: 10em;
   max-width: 32em;
+
+  ${props => props.type === 'checkbox' && css(["align-items:center;"])}
 
   & > ${Label} {
     ${props => props.small && css(["", " font-size:", ";"], labelStylesSmall, ds.measures.inputFontSmall)}
