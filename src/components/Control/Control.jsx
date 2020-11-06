@@ -111,6 +111,7 @@ const StyledSelect = styled.select`
 const StyledTextarea = styled.textarea`
   ${inputStyle}
   width: 100%;
+  height: auto; /* fixes labelStyles fixed height */
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -253,7 +254,6 @@ MultiselectActionable.defaultProps = {
 const StyledControl = styled.div`
   border-radius: ${ds.measures.inputRadius};
   display: flex;
-  align-items: center;
   ${props => props.marginLeft &&
     (props.marginLeft === true
       ? `margin-left: ${ds.measures.spacer(props) / 4}rem;`
@@ -274,6 +274,10 @@ const StyledControl = styled.div`
   position: relative;
   min-width: 10em;
   max-width: 32em;
+
+  ${props => props.type === 'checkbox' && (css`
+    align-items: center;
+  `)}
 
   & > ${Label} {
     ${props => props.small && css`

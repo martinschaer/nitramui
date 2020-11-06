@@ -36,6 +36,7 @@ export const Readme = () => {
                 type='select'
                 value={mode}
                 onChange={setMode}
+                marginBottom={false}
                 options={Object.entries(modes).map(([_key, value]) => ({ label: mode2Emoji(value), value }))}
               />
             )}
