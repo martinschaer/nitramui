@@ -9,20 +9,27 @@ import {
   labelStyles,
   labelStylesSmall
 } from '../common/typography'
+import { darken, lighten, readableColor } from 'polished'
 
 const selectedCSS = css`
   border-color: ${props => props.variant === 'plain'
     ? ds.colors.buttonBorderPlainSelected
-    : ds.colors.buttonBorderSelected};
+    : props.color
+      ? darken(0.1, props.color)
+      : ds.colors.buttonBorderSelected};
   background: ${
     props => props.variant === 'plain'
       ? ds.colors.buttonBgPlainSelected
-      : ds.colors.buttonBgSelected
+      : props.color
+        ? darken(0.1, props.color)
+        : ds.colors.buttonBgSelected
   };
   color: ${
     props => props.variant === 'plain'
       ? ds.colors.buttonFgPlainSelected
-      : ds.colors.buttonFgSelected
+      : props.color
+        ? readableColor(props.color, ds.colors.dark(props), ds.colors.light(props), true)
+        : ds.colors.buttonFgSelected
   };
 
   box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
@@ -32,14 +39,18 @@ export const buttonStyle = css`
   ${props => props.small ? labelStylesSmall : labelStyles}
   padding: 0 ${props => props.small ? ds.measures.buttonSpacerHSmall : ds.measures.buttonSpacerH}rem;
   font-size: ${props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont};
-  border: 1px solid ${props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : ds.colors.buttonBorder};
+  border: 1px solid ${props => props.variant === 'plain'
+    ? ds.colors.buttonBorderPlain
+    : props.color
+      ? props.color
+      : ds.colors.buttonBorder};
   background: ${
     props => props.variant === 'plain'
       ? ds.colors.buttonBgPlain
       : props.variant === 'inverted'
         ? (ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1
           ? ds.colors.fg : ds.colors.buttonFg)
-        : ds.colors.buttonBg
+        : props.color ? props.color : ds.colors.buttonBg
   };
   color: ${
     props => props.variant === 'plain'
@@ -49,7 +60,9 @@ export const buttonStyle = css`
           ? ds.colors.bg
           : (ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1
             ? ds.colors.bg : ds.colors.buttonBg)
-        : ds.colors.buttonFg
+        : props.color
+          ? readableColor(props.color, ds.colors.dark(props), ds.colors.light(props), true)
+          : ds.colors.buttonFg
   };
   border-radius: ${props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius};
   box-sizing: border-box;
@@ -57,9 +70,8 @@ export const buttonStyle = css`
   cursor: pointer;
 
   ${props => props.fixedWidth && (
-    /* 2px for the border */
     css`
-width: calc(${props => (props.small ? 3 / 2 : 2) * Math.max(ds.measures.spacer(props), 1)}rem + 2px);
+width: calc(${props => (props.small ? 3 / 2 : 2) * Math.max(ds.measures.spacer(props), 1)}rem);
 padding: 0;
 overflow: hidden;
 text-overflow: ellipsis;
@@ -81,9 +93,13 @@ flex-shrink: 0;
         : `color: ${ds.colors.buttonFgHoverPlain(props)};
           background: ${ds.colors.buttonBgHoverPlain(props)};
           border-color: ${ds.colors.buttonBorderHoverPlain(props)};`
-      : `color: ${ds.colors.buttonFgHover(props)};
-        background: ${ds.colors.buttonBgHover(props)};
-        border-color: ${ds.colors.buttonBorderHover(props)};`
+      : props.color
+        ? `color: ${readableColor(props.color, ds.colors.dark(props), ds.colors.light(props), true)};
+          background: ${lighten(0.1, props.color)};
+          border-color: ${props.color};`
+        : `color: ${ds.colors.buttonFgHover(props)};
+          background: ${ds.colors.buttonBgHover(props)};
+          border-color: ${ds.colors.buttonBorderHover(props)};`
     }
     outline: none;
     text-decoration: none;
@@ -125,7 +141,7 @@ flex-shrink: 0;
 // ---------------------------------------------------------------------------------------------------------------------
 const Button = styled.button
   // https://github.com/styled-components/styled-components/releases/tag/v5.1.0
-  .withConfig({ shouldForwardProp: (prop) => !['fill', 'small', 'extraStyles', 'fixedWidth'].includes(prop) })`
+  .withConfig({ shouldForwardProp: (prop) => !['fill', 'small', 'color', 'extraStyles', 'fixedWidth'].includes(prop) })`
   ${buttonStyle}
 `
 // ---------------------------------------------------------------------------------------------------------------------
@@ -139,6 +155,7 @@ Button.propTypes = {
   ]),
   fill: PropTypes.bool,
   small: PropTypes.bool,
+  color: PropTypes.string,
   selected: PropTypes.bool,
   fixedWidth: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit']),

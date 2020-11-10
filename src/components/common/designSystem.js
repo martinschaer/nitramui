@@ -64,6 +64,32 @@ export default {
     // -----------------------------------------------------------------------------------------------------------------
     // FG & BG
     // -----------------------------------------------------------------------------------------------------------------
+    light: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: GALLERY,
+          [modes.dark]: GALLERY
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: WHITE,
+          [modes.dark]: WHITE
+        }),
+      custom: buildCustomProp('colors', 'light', GALLERY, GALLERY)
+    }),
+    dark: theme('theme', {
+      [themes.smooth]:
+        theme('mode', {
+          [modes.light]: EMPEROR,
+          [modes.dark]: EMPEROR
+        }),
+      [themes.hiContrast]:
+        theme('mode', {
+          [modes.light]: BLACK,
+          [modes.dark]: BLACK
+        }),
+      custom: buildCustomProp('colors', 'dark', EMPEROR, EMPEROR)
+    }),
     fg: theme('theme', {
       [themes.smooth]:
         theme('mode', {

@@ -188,24 +188,20 @@ export const App = () => {
                   <span role='img' aria-label='gear emoji' className='mr fw'>⚙️</span>Settings
                 </Button>
               </p>
-              <div className='mb'>
-                <Control
-                  type='select'
-                  label='Mode'
-                  value={mode}
-                  onChange={setMode}
-                  options={Object.entries(modes).map(([_key, value]) => ({ label: value, value }))}
-                />
-              </div>
-              <div className='mb'>
-                <Control
-                  type='select'
-                  label='Theme'
-                  value={theme}
-                  onChange={setTheme}
-                  options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
-                />
-              </div>
+              <Control
+                type='select'
+                label='Mode'
+                value={mode}
+                onChange={setMode}
+                options={Object.entries(modes).map(([_key, value]) => ({ label: value, value }))}
+              />
+              <Control
+                type='select'
+                label='Theme'
+                value={theme}
+                onChange={setTheme}
+                options={Object.entries(themes).map(([_key, value]) => ({ label: value, value }))}
+              />
             </Pane>
             {/* TODO: create a component for Tiles to avoid so much options on Cards */}
             <Pane size='full-minus-small'>
