@@ -4795,8 +4795,8 @@ const styleValueToPX = value => {
     return parseFloat(value);
   }
 };
-const widths = ['default', 'small', 'full', 'full-minus-small', 'square', 'golden-horizontal', 'golden-vertical', 'golden-width', 'golden-width-rest', 'half', 'third', 'fourth'];
-const getCSSWidth = size => size === 'full' || size === 'square' ? '100%' : size === 'small' ? '16rem' : size === 'full-minus-small' ? 'calc(100vw - 16rem)' : size === 'golden-width' ? `${100 / GOLDEN_RATIO}%` : size === 'golden-width-rest' ? `${100 - 100 / GOLDEN_RATIO}%` : size === 'half' ? '50%' : size === 'third' ? '33.3%' : size === 'fourth' ? '25%' // default:
+const widths = ['default', 'small', 'fill', 'full', 'full-minus-small', 'square', 'golden-horizontal', 'golden-vertical', 'golden-width', 'golden-width-rest', 'half', 'third', 'fourth'];
+const getCSSWidth = size => size === 'full' || size === 'square' || size === 'fill' ? '100%' : size === 'small' ? '16rem' : size === 'full-minus-small' ? 'calc(100vw - 16rem)' : size === 'golden-width' ? `${100 / GOLDEN_RATIO}%` : size === 'golden-width-rest' ? `${100 - 100 / GOLDEN_RATIO}%` : size === 'half' ? '50%' : size === 'third' ? '33.3%' : size === 'fourth' ? '25%' // default:
 : '50rem';
 
 const debounce = (func, wait, immediate) => {
@@ -4819,7 +4819,7 @@ const debounce = (func, wait, immediate) => {
 const StyledPane = styled.div`
   box-sizing: border-box;
   height: ${props => props.h === 'half' ? '50%' : props.h === 'auto' ? 'auto' : typeof props.h === 'number' ? `${props.h}rem` : '100%'};
-  flex-shrink: 0;
+  flex-shrink: ${props => props.size === 'fill' ? 1 : 0};
   padding: ${props => props.noPadding ? '0' : `${ds.measures.spacer(props)}rem`};
   outline: 1px dashed ${ds.colors.borderLight};
   ${props => props.shadow && css(["box-shadow:0 0 1rem ", ";"], ds.colors.shadow)}

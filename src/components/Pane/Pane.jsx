@@ -29,7 +29,7 @@ const StyledPane = styled.div`
     ? `${props.h}rem`
     : '100%'
   };
-  flex-shrink: 0;
+  flex-shrink: ${props => props.size === 'fill' ? 1 : 0};
   padding: ${props => props.noPadding ? '0' : `${ds.measures.spacer(props)}rem`};
   outline: 1px dashed ${ds.colors.borderLight};
   ${props => props.shadow && css`box-shadow: 0 0 1rem ${ds.colors.shadow};`}

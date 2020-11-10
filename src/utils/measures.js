@@ -17,6 +17,7 @@ export const styleValueToPX = (value) => {
 export const widths = [
   'default',
   'small',
+  'fill',
   'full',
   'full-minus-small',
   'square',
@@ -30,7 +31,7 @@ export const widths = [
 ]
 
 export const getCSSWidth = (size) => (
-  size === 'full' || size === 'square'
+  size === 'full' || size === 'square' || size === 'fill'
     ? '100%'
     : size === 'small'
       ? '16rem'
