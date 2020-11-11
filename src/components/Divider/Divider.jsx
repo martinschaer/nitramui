@@ -23,6 +23,7 @@ const Divider = styled.span`
       height: 1.8em;
     `
   }
+  ${props => props.invisible && 'border: none;'}
   vertical-align: middle;
 `
 
@@ -32,6 +33,7 @@ const Divider = styled.span`
 Divider.propTypes = {
   noMargin: PropTypes.bool,
   horizontal: PropTypes.bool,
+  invisible: PropTypes.bool,
   spacing: PropTypes.number
 }
 Divider.defaultProps = {

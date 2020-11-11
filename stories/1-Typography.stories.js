@@ -140,6 +140,8 @@ export const Typography = () => {
                     <Label>Hello world</Label>
                     <Divider />
                     <Label>Hello world</Label>
+                    <Divider invisible />
+                    <Label>Hello world</Label>
                     <Divider />
                     <Button>Button</Button>
                     <Button>Button</Button>
