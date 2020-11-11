@@ -6376,6 +6376,7 @@ Layout.defaultProps = {
 
 const Divider = styled.span`
   ${props => props.horizontal ? css(["display:block;margin:", ";border-top:1px solid ", ";"], props => props.noMargin ? 0 : `${props.spacing * ds.measures.spacer(props)}em 0`, ds.colors.border) : css(["display:inline-block;margin:", ";border-right:1px solid ", ";height:1.8em;"], props => props.noMargin ? 0 : `0 ${props.spacing * ds.measures.spacer(props) / 4}rem`, ds.colors.border)}
+  ${props => props.invisible && 'border: none;'}
   vertical-align: middle;
 `; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
@@ -6384,6 +6385,7 @@ const Divider = styled.span`
 Divider.propTypes = {
   noMargin: propTypes.bool,
   horizontal: propTypes.bool,
+  invisible: propTypes.bool,
   spacing: propTypes.number
 };
 Divider.defaultProps = {
