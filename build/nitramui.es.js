@@ -6644,7 +6644,7 @@ const StyledControl = styled.div`
   min-width: 10em;
   max-width: 32em;
 
-  ${props => props.type === 'checkbox' && css(["align-items:center;"])}
+  ${props => (props.type === 'checkbox' || props.type === 'bool') && css(["align-items:center;"])}
 
   & > ${Label} {
     ${props => props.small && css(["", " font-size:", ";"], labelStylesSmall, ds.measures.inputFontSmall)}
@@ -6660,8 +6660,8 @@ const StyledControl = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && css(["position:absolute;top:0;left:0;font-size:.8em;white-space:nowrap;user-select:none;line-height:2em;padding:0 calc(", "rem) 0 calc(", "rem);width:100%;box-sizing:border-box;"], ds.measures.spacer, ds.measures.inputSpacerH)}
-    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && css(["position:absolute;top:0;left:0;font-size:.8em;white-space:nowrap;user-select:none;line-height:3em;padding:0 calc(", "rem) 0 calc(", "rem);width:100%;box-sizing:border-box;"], ds.measures.spacer, ds.measures.inputSpacerH)}
+    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && props.type !== 'bool' && css(["position:absolute;top:0;left:0;font-size:.8em;white-space:nowrap;user-select:none;line-height:2em;padding:0 calc(", "rem) 0 calc(", "rem);width:100%;box-sizing:border-box;"], ds.measures.spacer, ds.measures.inputSpacerH)}
+    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && props.type !== 'bool' && css(["position:absolute;top:0;left:0;font-size:.8em;white-space:nowrap;user-select:none;line-height:3em;padding:0 calc(", "rem) 0 calc(", "rem);width:100%;box-sizing:border-box;"], ds.measures.spacer, ds.measures.inputSpacerH)}
     ${props => props.comfort && !props.labelInside && css(["line-height:calc(", "rem * 3);height:calc(", "rem * 3);"], ds.measures.spacer, ds.measures.spacer)}
   }
 
@@ -6738,7 +6738,7 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     if (ref && !ref.current) {
       ref.current = {};
 
-      if (type === 'checkbox') {
+      if (type === 'checkbox' || type === 'bool') {
         ref.current.value = defaultValue;
         document.getElementById(uid.current).checked = defaultValue;
       }
@@ -6781,7 +6781,7 @@ const Control = /*#__PURE__*/React.forwardRef((props, ref) => {
     onChange: onChange,
     normalizedOptions: normalizedOptions,
     ref: ref
-  }) : type === 'checkbox' ? /*#__PURE__*/React.createElement(React.Fragment, null, label && /*#__PURE__*/React.createElement(Label, {
+  }) : type === 'checkbox' || type === 'bool' ? /*#__PURE__*/React.createElement(React.Fragment, null, label && /*#__PURE__*/React.createElement(Label, {
     as: "label",
     htmlFor: uid.current,
     noShrink: true
