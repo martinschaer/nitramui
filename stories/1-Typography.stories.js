@@ -240,7 +240,7 @@ export const Typography = () => {
                   />
                   <Control
                     labelInside
-                    type='checkbox'
+                    type='bool'
                     label='Checkbox'
                     defaultValue
                     ref={checkboxRef}
@@ -372,7 +372,7 @@ export const Typography = () => {
                   max={10}
                 />
                 <Control
-                  type='checkbox'
+                  type='bool'
                   label='Checkbox'
                   value={checkboxValue}
                   onChange={checkboxValueSet}

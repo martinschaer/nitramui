@@ -275,7 +275,7 @@ const StyledControl = styled.div`
   min-width: 10em;
   max-width: 32em;
 
-  ${props => props.type === 'checkbox' && (css`
+  ${props => (props.type === 'checkbox' || props.type === 'bool') && (css`
     align-items: center;
   `)}
 
@@ -296,7 +296,7 @@ const StyledControl = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && (css`
+    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && props.type !== 'bool' && (css`
       position: absolute;
       top: 0;
       left: 0;
@@ -308,7 +308,7 @@ const StyledControl = styled.div`
       width: 100%;
       box-sizing: border-box;
     `)}
-    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && (css`
+    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && props.type !== 'bool' && (css`
       position: absolute;
       top: 0;
       left: 0;
@@ -418,7 +418,7 @@ const Control = React.forwardRef((props, ref) => {
     () => {
       if (ref && !ref.current) {
         ref.current = {}
-        if (type === 'checkbox') {
+        if (type === 'checkbox' || type === 'bool') {
           ref.current.value = defaultValue
           document.getElementById(uid.current).checked = defaultValue
         }
@@ -474,7 +474,7 @@ const Control = React.forwardRef((props, ref) => {
             ref={ref}
           />
         )
-          : type === 'checkbox' ? (
+          : (type === 'checkbox' || type === 'bool') ? (
             <>
               {label && (
                 <Label as='label' htmlFor={uid.current} noShrink>
