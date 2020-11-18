@@ -9,27 +9,29 @@ import {
   labelStyles,
   labelStylesSmall
 } from '../common/typography'
-import { darken, lighten, readableColor } from 'polished'
+import { readableColor, mix } from 'polished'
+
+const _mix = (a, c1, c2, props) => {
+  if (!c1 || !c2) return 'inherit'
+  if (c1 === 'transparent') {
+    c1 = ds.colors.bg(props)
+  }
+  if (c2 === 'transparent') {
+    c2 = ds.colors.fg(props)
+  }
+  return mix(a, c1, c2)
+}
 
 const selectedCSS = css`
   border-color: ${props => props.variant === 'plain'
-    ? ds.colors.buttonBorderPlainSelected
-    : props.color
-      ? darken(0.1, props.color)
-      : ds.colors.buttonBorderSelected};
+    ? _mix(0.1, props.color || ds.colors.buttonBorderPlain(props), ds.colors.dark(props), props)
+    : _mix(0.9, props.color || ds.colors.buttonBorder(props), ds.colors.dark(props), props)};
   background: ${
     props => props.variant === 'plain'
-      ? ds.colors.buttonBgPlainSelected
-      : props.color
-        ? darken(0.1, props.color)
-        : ds.colors.buttonBgSelected
-  };
-  color: ${
-    props => props.variant === 'plain'
-      ? ds.colors.buttonFgPlainSelected
-      : props.color
-        ? readableColor(props.color, ds.colors.dark(props), ds.colors.light(props), true)
-        : ds.colors.buttonFgSelected
+      ? _mix(0.9, props.color || ds.colors.buttonBgPlain(props), ds.colors.dark(props), props)
+      : props.variant === 'inverted'
+      ? _mix(0.9, ds.colors.buttonFg(props), ds.colors.buttonBg(props), props)
+      : _mix(0.9, props.color || ds.colors.buttonBg(props), ds.colors.dark(props), props)
   };
 
   box-shadow: inset 0 0 .25rem 0 ${ds.colors.buttonShadow};
@@ -86,20 +88,17 @@ flex-shrink: 0;
   &:hover,
   &:focus {
     ${props => props.variant === 'plain'
-      ? props.selected
-        ? `color: ${ds.colors.buttonFgPlainHoverSelected(props)};
-          background: ${ds.colors.buttonBgPlainHoverSelected(props)};
-          border-color: ${ds.colors.buttonBorderPlainHoverSelected(props)};`
-        : `color: ${ds.colors.buttonFgHoverPlain(props)};
-          background: ${ds.colors.buttonBgHoverPlain(props)};
-          border-color: ${ds.colors.buttonBorderHoverPlain(props)};`
+      ? `background: ${_mix(0.9, ds.colors.buttonBgPlain(props), ds.colors.dark(props), props)};`
+      : props.variant === 'inverted'
+      ? `background: ${_mix(0.9, ds.colors.buttonFg(props), ds.colors.buttonBg(props), props)};`
       : props.color
-        ? `color: ${readableColor(props.color, ds.colors.dark(props), ds.colors.light(props), true)};
-          background: ${lighten(0.1, props.color)};
-          border-color: ${props.color};`
-        : `color: ${ds.colors.buttonFgHover(props)};
-          background: ${ds.colors.buttonBgHover(props)};
-          border-color: ${ds.colors.buttonBorderHover(props)};`
+      ? `background: ${_mix(
+           0.8,
+           props.color,
+           readableColor(props.color, ds.colors.dark(props), ds.colors.light(props), true),
+           props
+         )};`
+      : `background: ${_mix(0.9, ds.colors.buttonBg(props), ds.colors.buttonFg(props), props)};`
     }
     outline: none;
     text-decoration: none;

@@ -202,45 +202,6 @@ export default {
         }),
       custom: buildCustomProp('colors', 'buttonFgPlainSelected', EMPEROR, GALLERY)
     }),
-    buttonFgPlainHoverSelected: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: EMPEROR,
-          [modes.dark]: GALLERY
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: BLACK,
-          [modes.dark]: WHITE
-        }),
-      custom: buildCustomProp('colors', 'buttonFgPlainHoverSelected', EMPEROR, GALLERY)
-    }),
-    buttonFgHover: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: EMPEROR,
-          [modes.dark]: GALLERY
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: BLACK,
-          [modes.dark]: WHITE
-        }),
-      custom: buildCustomProp('colors', 'buttonFgHover', EMPEROR, GALLERY)
-    }),
-    buttonFgHoverPlain: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: EMPEROR,
-          [modes.dark]: GALLERY
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: BLACK,
-          [modes.dark]: WHITE
-        }),
-      custom: buildCustomProp('colors', 'buttonFgHoverPlain', EMPEROR, GALLERY)
-    }),
     buttonFgDisabled: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -293,45 +254,6 @@ export default {
         }),
       custom: buildCustomProp('colors', 'buttonBgPlain', 'transparent', 'transparent')
     }),
-    buttonBgPlainSelected: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: BLACK_3,
-          [modes.dark]: BLACK_30
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: GALLERY,
-          [modes.dark]: COD_GRAY
-        }),
-      custom: buildCustomProp('colors', 'buttonBgPlainSelected', BLACK_3, BLACK_30)
-    }),
-    buttonBgPlainHoverSelected: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: BLACK_3,
-          [modes.dark]: BLACK_30
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: GALLERY,
-          [modes.dark]: COD_GRAY
-        }),
-      custom: buildCustomProp('colors', 'buttonBgPlainHoverSelected', BLACK_3, BLACK_30)
-    }),
-    buttonBgSelected: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: BLACK_3,
-          [modes.dark]: BLACK_30
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: GALLERY,
-          [modes.dark]: COD_GRAY
-        }),
-      custom: buildCustomProp('colors', 'buttonBgSelected', BLACK_3, BLACK_30)
-    }),
     buttonBgDisabled: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -344,32 +266,6 @@ export default {
           [modes.dark]: 'transparent'
         }),
       custom: buildCustomProp('colors', 'buttonBgDisabled', 'transparent', 'transparent')
-    }),
-    buttonBgHover: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: 'transparent',
-          [modes.dark]: 'transparent'
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: 'transparent',
-          [modes.dark]: 'transparent'
-        }),
-      custom: buildCustomProp('colors', 'buttonBgHover', 'transparent', 'transparent')
-    }),
-    buttonBgHoverPlain: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: 'transparent',
-          [modes.dark]: 'transparent'
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: 'transparent',
-          [modes.dark]: 'transparent'
-        }),
-      custom: buildCustomProp('colors', 'buttonBgHoverPlain', 'transparent', 'transparent')
     }),
     buttonBorder: theme('theme', {
       [themes.smooth]:
@@ -397,19 +293,6 @@ export default {
         }),
       custom: buildCustomProp('colors', 'buttonBorderPlain', 'transparent', 'transparent')
     }),
-    buttonBorderPlainSelected: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: 'transparent',
-          [modes.dark]: 'transparent'
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: 'transparent',
-          [modes.dark]: 'transparent'
-        }),
-      custom: buildCustomProp('colors', 'buttonBorderPlainSelected', 'transparent', 'transparent')
-    }),
     buttonBorderPlainHoverSelected: theme('theme', {
       [themes.smooth]:
         theme('mode', {
@@ -435,32 +318,6 @@ export default {
           [modes.dark]: DUNE
         }),
       custom: buildCustomProp('colors', 'buttonBorderDisabled', BLACK_3, DUNE)
-    }),
-    buttonBorderHover: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: EMPEROR,
-          [modes.dark]: GALLERY
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: BLACK,
-          [modes.dark]: WHITE
-        }),
-      custom: buildCustomProp('colors', 'buttonBorderHover', EMPEROR, GALLERY)
-    }),
-    buttonBorderHoverPlain: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: EMPEROR,
-          [modes.dark]: GALLERY
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: BLACK,
-          [modes.dark]: WHITE
-        }),
-      custom: buildCustomProp('colors', 'buttonBorderHoverPlain', EMPEROR, GALLERY)
     }),
     buttonBorderSelected: theme('theme', {
       [themes.smooth]:

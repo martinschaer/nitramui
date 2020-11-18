@@ -108,6 +108,13 @@ export const Buttons = () => {
               <Button fixedWidth small selected color='green'>Hello World</Button>
               <Button fixedWidth small selected color='red'>Hello World</Button>
               <Button fixedWidth small selected color='blue'>Hello World</Button>
+              <Divider horizontal />
+              <Button disabled>Hello World</Button>
+              <Button disabled variant='plain'>Hello World</Button>
+              <Button disabled variant='inverted'>Hello World</Button>
+              <Button disabled color='green'>Hello World</Button>
+              <Button disabled color='red'>Hello World</Button>
+              <Button disabled color='blue'>Hello World</Button>
             </Pane>
           </Layout>
         )}
