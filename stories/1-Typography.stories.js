@@ -102,7 +102,7 @@ export const Typography = () => {
                   <li>List item</li>
                 </ul>
 
-                <Flex alignItems='center' flexWrap='wrap'>
+                <Flex alignItems='center' flexWrap='wrap' flexGrow={1}>
                   <h2>Title</h2>
                   <Label>Label</Label>
                 </Flex>

@@ -60,8 +60,8 @@ Flex.propTypes = {
     ...iiu
   ]),
   flexWrap: PropTypes.oneOf(['nowrap', 'wrap', 'wrap-reverse', ...iiu]),
-  flexGrow: PropTypes.oneOf([PropTypes.objectOf(PropTypes.number), ...iiu]),
-  flexShrink: PropTypes.oneOf([PropTypes.objectOf(PropTypes.number), ...iiu])
+  flexGrow: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  flexShrink: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 }
 Flex.defaultProps = {}
 
