@@ -2987,39 +2987,6 @@ var ds = {
       }),
       custom: buildCustomProp('colors', 'buttonFgPlainSelected', EMPEROR, GALLERY)
     }),
-    buttonFgPlainHoverSelected: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: GALLERY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'buttonFgPlainHoverSelected', EMPEROR, GALLERY)
-    }),
-    buttonFgHover: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: GALLERY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'buttonFgHover', EMPEROR, GALLERY)
-    }),
-    buttonFgHoverPlain: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: GALLERY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'buttonFgHoverPlain', EMPEROR, GALLERY)
-    }),
     buttonFgDisabled: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: BLACK_30,
@@ -3064,39 +3031,6 @@ var ds = {
       }),
       custom: buildCustomProp('colors', 'buttonBgPlain', 'transparent', 'transparent')
     }),
-    buttonBgPlainSelected: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: BLACK_30
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: GALLERY,
-        [modes.dark]: COD_GRAY
-      }),
-      custom: buildCustomProp('colors', 'buttonBgPlainSelected', BLACK_3, BLACK_30)
-    }),
-    buttonBgPlainHoverSelected: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: BLACK_30
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: GALLERY,
-        [modes.dark]: COD_GRAY
-      }),
-      custom: buildCustomProp('colors', 'buttonBgPlainHoverSelected', BLACK_3, BLACK_30)
-    }),
-    buttonBgSelected: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: BLACK_3,
-        [modes.dark]: BLACK_30
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: GALLERY,
-        [modes.dark]: COD_GRAY
-      }),
-      custom: buildCustomProp('colors', 'buttonBgSelected', BLACK_3, BLACK_30)
-    }),
     buttonBgDisabled: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: 'transparent',
@@ -3107,28 +3041,6 @@ var ds = {
         [modes.dark]: 'transparent'
       }),
       custom: buildCustomProp('colors', 'buttonBgDisabled', 'transparent', 'transparent')
-    }),
-    buttonBgHover: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      custom: buildCustomProp('colors', 'buttonBgHover', 'transparent', 'transparent')
-    }),
-    buttonBgHoverPlain: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      custom: buildCustomProp('colors', 'buttonBgHoverPlain', 'transparent', 'transparent')
     }),
     buttonBorder: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -3152,17 +3064,6 @@ var ds = {
       }),
       custom: buildCustomProp('colors', 'buttonBorderPlain', 'transparent', 'transparent')
     }),
-    buttonBorderPlainSelected: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: 'transparent',
-        [modes.dark]: 'transparent'
-      }),
-      custom: buildCustomProp('colors', 'buttonBorderPlainSelected', 'transparent', 'transparent')
-    }),
     buttonBorderPlainHoverSelected: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
         [modes.light]: EMPEROR,
@@ -3184,28 +3085,6 @@ var ds = {
         [modes.dark]: DUNE
       }),
       custom: buildCustomProp('colors', 'buttonBorderDisabled', BLACK_3, DUNE)
-    }),
-    buttonBorderHover: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: GALLERY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'buttonBorderHover', EMPEROR, GALLERY)
-    }),
-    buttonBorderHoverPlain: styledTheming('theme', {
-      [themes.smooth]: styledTheming('mode', {
-        [modes.light]: EMPEROR,
-        [modes.dark]: GALLERY
-      }),
-      [themes.hiContrast]: styledTheming('mode', {
-        [modes.light]: BLACK,
-        [modes.dark]: WHITE
-      }),
-      custom: buildCustomProp('colors', 'buttonBorderHoverPlain', EMPEROR, GALLERY)
     }),
     buttonBorderSelected: styledTheming('theme', {
       [themes.smooth]: styledTheming('mode', {
@@ -4754,8 +4633,8 @@ Flex.propTypes = {
   alignContent: propTypes.oneOf(['stretch', ...align, ...baseline, ...space, ...safeCenter, ...iiu]),
   alignItems: propTypes.oneOf(['stretch', ...align, ...baseline, ...safeCenter, ...iiu]),
   flexWrap: propTypes.oneOf(['nowrap', 'wrap', 'wrap-reverse', ...iiu]),
-  flexGrow: propTypes.oneOf([propTypes.objectOf(propTypes.number), ...iiu]),
-  flexShrink: propTypes.oneOf([propTypes.objectOf(propTypes.number), ...iiu])
+  flexGrow: propTypes.oneOfType([propTypes.number, propTypes.string]),
+  flexShrink: propTypes.oneOfType([propTypes.number, propTypes.string])
 };
 Flex.defaultProps = {};
 
@@ -4931,8 +4810,8 @@ Pane.Wrapper = Wrapper;
 
 const headingStyles = css(["font-family:", ";font-weight:", ";margin-right:", "rem;"], ds.fonts.heading, ds.weights.heading, ds.measures.spacer);
 const preHeadingStyles = css(["color:", ";font-size:.8rem;font-weight:", ";margin:calc(", "rem / 4) calc(", "rem / 4);"], ds.colors.fgMuted, ds.weights.preheading, ds.measures.spacer, ds.measures.spacer);
-const labelStyles = css(["line-height:", "rem;height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(2, ds.measures.spacer(props) * 2), props => Math.max(2, ds.measures.spacer(props) * 2), ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
-const labelStylesSmall = css(["line-height:", "rem;height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => ds.measures.spacer(props) / 2, ds.measures.spacer, ds.measures.spacer);
+const labelStyles = css(["line-height:", "rem;min-height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(2, ds.measures.spacer(props) * 2), props => Math.max(2, ds.measures.spacer(props) * 2), ds.measures.spacer, ds.measures.spacer, ds.measures.spacer);
+const labelStylesSmall = css(["line-height:", "rem;min-height:", "rem;padding:0 ", "rem;display:inline-block;margin:calc(", "rem / 4) calc(", "rem / 4);"], props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => Math.max(1.5, ds.measures.spacer(props) * 1.5), props => ds.measures.spacer(props) / 2, ds.measures.spacer, ds.measures.spacer);
 
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
@@ -5653,87 +5532,6 @@ function parseToRgb(color) {
   throw new PolishedError(5);
 }
 
-function rgbToHsl(color) {
-  // make sure rgb are contained in a set of [0, 255]
-  var red = color.red / 255;
-  var green = color.green / 255;
-  var blue = color.blue / 255;
-  var max = Math.max(red, green, blue);
-  var min = Math.min(red, green, blue);
-  var lightness = (max + min) / 2;
-
-  if (max === min) {
-    // achromatic
-    if (color.alpha !== undefined) {
-      return {
-        hue: 0,
-        saturation: 0,
-        lightness: lightness,
-        alpha: color.alpha
-      };
-    } else {
-      return {
-        hue: 0,
-        saturation: 0,
-        lightness: lightness
-      };
-    }
-  }
-
-  var hue;
-  var delta = max - min;
-  var saturation = lightness > 0.5 ? delta / (2 - max - min) : delta / (max + min);
-
-  switch (max) {
-    case red:
-      hue = (green - blue) / delta + (green < blue ? 6 : 0);
-      break;
-
-    case green:
-      hue = (blue - red) / delta + 2;
-      break;
-
-    default:
-      // blue case
-      hue = (red - green) / delta + 4;
-      break;
-  }
-
-  hue *= 60;
-
-  if (color.alpha !== undefined) {
-    return {
-      hue: hue,
-      saturation: saturation,
-      lightness: lightness,
-      alpha: color.alpha
-    };
-  }
-
-  return {
-    hue: hue,
-    saturation: saturation,
-    lightness: lightness
-  };
-}
-
-/**
- * Returns an HslColor or HslaColor object. This utility function is only useful
- * if want to extract a color component. With the color util `toColorString` you
- * can convert a HslColor or HslaColor object back to a string.
- *
- * @example
- * // Assigns `{ hue: 0, saturation: 1, lightness: 0.5 }` to color1
- * const color1 = parseToHsl('rgb(255, 0, 0)');
- * // Assigns `{ hue: 128, saturation: 1, lightness: 0.5, alpha: 0.75 }` to color2
- * const color2 = parseToHsl('hsla(128, 100%, 50%, 0.75)');
- */
-function parseToHsl(color) {
-  // Note: At a later stage we can optimize this function as right now a hsl
-  // color would be parsed converted to rgb values and converted back to hsl.
-  return rgbToHsl(parseToRgb(color));
-}
-
 /**
  * Reduces hex values if possible e.g. #ff8866 to #f86
  * @private
@@ -5749,87 +5547,6 @@ var reduceHexValue = function reduceHexValue(value) {
 function numberToHex(value) {
   var hex = value.toString(16);
   return hex.length === 1 ? "0" + hex : hex;
-}
-
-function colorToHex(color) {
-  return numberToHex(Math.round(color * 255));
-}
-
-function convertToHex(red, green, blue) {
-  return reduceHexValue("#" + colorToHex(red) + colorToHex(green) + colorToHex(blue));
-}
-
-function hslToHex(hue, saturation, lightness) {
-  return hslToRgb(hue, saturation, lightness, convertToHex);
-}
-
-/**
- * Returns a string value for the color. The returned result is the smallest possible hex notation.
- *
- * @example
- * // Styles as object usage
- * const styles = {
- *   background: hsl(359, 0.75, 0.4),
- *   background: hsl({ hue: 360, saturation: 0.75, lightness: 0.4 }),
- * }
- *
- * // styled-components usage
- * const div = styled.div`
- *   background: ${hsl(359, 0.75, 0.4)};
- *   background: ${hsl({ hue: 360, saturation: 0.75, lightness: 0.4 })};
- * `
- *
- * // CSS in JS Output
- *
- * element {
- *   background: "#b3191c";
- *   background: "#b3191c";
- * }
- */
-function hsl(value, saturation, lightness) {
-  if (typeof value === 'number' && typeof saturation === 'number' && typeof lightness === 'number') {
-    return hslToHex(value, saturation, lightness);
-  } else if (typeof value === 'object' && saturation === undefined && lightness === undefined) {
-    return hslToHex(value.hue, value.saturation, value.lightness);
-  }
-
-  throw new PolishedError(1);
-}
-
-/**
- * Returns a string value for the color. The returned result is the smallest possible rgba or hex notation.
- *
- * @example
- * // Styles as object usage
- * const styles = {
- *   background: hsla(359, 0.75, 0.4, 0.7),
- *   background: hsla({ hue: 360, saturation: 0.75, lightness: 0.4, alpha: 0,7 }),
- *   background: hsla(359, 0.75, 0.4, 1),
- * }
- *
- * // styled-components usage
- * const div = styled.div`
- *   background: ${hsla(359, 0.75, 0.4, 0.7)};
- *   background: ${hsla({ hue: 360, saturation: 0.75, lightness: 0.4, alpha: 0,7 })};
- *   background: ${hsla(359, 0.75, 0.4, 1)};
- * `
- *
- * // CSS in JS Output
- *
- * element {
- *   background: "rgba(179,25,28,0.7)";
- *   background: "rgba(179,25,28,0.7)";
- *   background: "#b3191c";
- * }
- */
-function hsla(value, saturation, lightness, alpha) {
-  if (typeof value === 'number' && typeof saturation === 'number' && typeof lightness === 'number' && typeof alpha === 'number') {
-    return alpha >= 1 ? hslToHex(value, saturation, lightness) : "rgba(" + hslToRgb(value, saturation, lightness) + "," + alpha + ")";
-  } else if (typeof value === 'object' && saturation === undefined && lightness === undefined && alpha === undefined) {
-    return value.alpha >= 1 ? hslToHex(value.hue, value.saturation, value.lightness) : "rgba(" + hslToRgb(value.hue, value.saturation, value.lightness) + "," + value.alpha + ")";
-  }
-
-  throw new PolishedError(2);
 }
 
 /**
@@ -5912,62 +5629,6 @@ function rgba(firstValue, secondValue, thirdValue, fourthValue) {
   throw new PolishedError(7);
 }
 
-var isRgb = function isRgb(color) {
-  return typeof color.red === 'number' && typeof color.green === 'number' && typeof color.blue === 'number' && (typeof color.alpha !== 'number' || typeof color.alpha === 'undefined');
-};
-
-var isRgba = function isRgba(color) {
-  return typeof color.red === 'number' && typeof color.green === 'number' && typeof color.blue === 'number' && typeof color.alpha === 'number';
-};
-
-var isHsl = function isHsl(color) {
-  return typeof color.hue === 'number' && typeof color.saturation === 'number' && typeof color.lightness === 'number' && (typeof color.alpha !== 'number' || typeof color.alpha === 'undefined');
-};
-
-var isHsla = function isHsla(color) {
-  return typeof color.hue === 'number' && typeof color.saturation === 'number' && typeof color.lightness === 'number' && typeof color.alpha === 'number';
-};
-/**
- * Converts a RgbColor, RgbaColor, HslColor or HslaColor object to a color string.
- * This util is useful in case you only know on runtime which color object is
- * used. Otherwise we recommend to rely on `rgb`, `rgba`, `hsl` or `hsla`.
- *
- * @example
- * // Styles as object usage
- * const styles = {
- *   background: toColorString({ red: 255, green: 205, blue: 100 }),
- *   background: toColorString({ red: 255, green: 205, blue: 100, alpha: 0.72 }),
- *   background: toColorString({ hue: 240, saturation: 1, lightness: 0.5 }),
- *   background: toColorString({ hue: 360, saturation: 0.75, lightness: 0.4, alpha: 0.72 }),
- * }
- *
- * // styled-components usage
- * const div = styled.div`
- *   background: ${toColorString({ red: 255, green: 205, blue: 100 })};
- *   background: ${toColorString({ red: 255, green: 205, blue: 100, alpha: 0.72 })};
- *   background: ${toColorString({ hue: 240, saturation: 1, lightness: 0.5 })};
- *   background: ${toColorString({ hue: 360, saturation: 0.75, lightness: 0.4, alpha: 0.72 })};
- * `
- *
- * // CSS in JS Output
- * element {
- *   background: "#ffcd64";
- *   background: "rgba(255,205,100,0.72)";
- *   background: "#00f";
- *   background: "rgba(179,25,25,0.72)";
- * }
- */
-
-
-function toColorString(color) {
-  if (typeof color !== 'object') throw new PolishedError(8);
-  if (isRgba(color)) return rgba(color);
-  if (isRgb(color)) return rgb(color);
-  if (isHsla(color)) return hsla(color);
-  if (isHsl(color)) return hsl(color);
-  throw new PolishedError(8);
-}
-
 // Type definitions taken from https://github.com/gcanti/flow-static-land/blob/master/src/Fun.js
 // eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line no-unused-vars
@@ -5985,47 +5646,6 @@ function curry(f) {
   // eslint-disable-line no-redeclare
   return curried(f, f.length, []);
 }
-
-function guard(lowerBoundary, upperBoundary, value) {
-  return Math.max(lowerBoundary, Math.min(upperBoundary, value));
-}
-
-/**
- * Returns a string value for the darkened color.
- *
- * @example
- * // Styles as object usage
- * const styles = {
- *   background: darken(0.2, '#FFCD64'),
- *   background: darken('0.2', 'rgba(255,205,100,0.7)'),
- * }
- *
- * // styled-components usage
- * const div = styled.div`
- *   background: ${darken(0.2, '#FFCD64')};
- *   background: ${darken('0.2', 'rgba(255,205,100,0.7)')};
- * `
- *
- * // CSS in JS Output
- *
- * element {
- *   background: "#ffbd31";
- *   background: "rgba(255,189,49,0.7)";
- * }
- */
-
-function darken(amount, color) {
-  if (color === 'transparent') return color;
-  var hslColor = parseToHsl(color);
-  return toColorString(_extends$1({}, hslColor, {
-    lightness: guard(0, 1, hslColor.lightness - parseFloat(amount))
-  }));
-} // prettier-ignore
-
-
-var curriedDarken = /*#__PURE__*/curry
-/* ::<number | string, string, string> */
-(darken);
 
 /**
  * Returns a number (float) representing the luminance of a color.
@@ -6084,41 +5704,69 @@ function getContrast(color1, color2) {
 }
 
 /**
- * Returns a string value for the lightened color.
+ * Mixes the two provided colors together by calculating the average of each of the RGB components weighted to the first color by the provided weight.
  *
  * @example
  * // Styles as object usage
  * const styles = {
- *   background: lighten(0.2, '#CCCD64'),
- *   background: lighten('0.2', 'rgba(204,205,100,0.7)'),
+ *   background: mix(0.5, '#f00', '#00f')
+ *   background: mix(0.25, '#f00', '#00f')
+ *   background: mix('0.5', 'rgba(255, 0, 0, 0.5)', '#00f')
  * }
  *
  * // styled-components usage
  * const div = styled.div`
- *   background: ${lighten(0.2, '#FFCD64')};
- *   background: ${lighten('0.2', 'rgba(204,205,100,0.7)')};
+ *   background: ${mix(0.5, '#f00', '#00f')};
+ *   background: ${mix(0.25, '#f00', '#00f')};
+ *   background: ${mix('0.5', 'rgba(255, 0, 0, 0.5)', '#00f')};
  * `
  *
  * // CSS in JS Output
  *
  * element {
- *   background: "#e5e6b1";
- *   background: "rgba(229,230,177,0.7)";
+ *   background: "#7f007f";
+ *   background: "#3f00bf";
+ *   background: "rgba(63, 0, 191, 0.75)";
  * }
  */
 
-function lighten(amount, color) {
-  if (color === 'transparent') return color;
-  var hslColor = parseToHsl(color);
-  return toColorString(_extends$1({}, hslColor, {
-    lightness: guard(0, 1, hslColor.lightness + parseFloat(amount))
-  }));
+function mix(weight, color, otherColor) {
+  if (color === 'transparent') return otherColor;
+  if (otherColor === 'transparent') return color;
+  if (weight === 0) return otherColor;
+  var parsedColor1 = parseToRgb(color);
+
+  var color1 = _extends$1({}, parsedColor1, {
+    alpha: typeof parsedColor1.alpha === 'number' ? parsedColor1.alpha : 1
+  });
+
+  var parsedColor2 = parseToRgb(otherColor);
+
+  var color2 = _extends$1({}, parsedColor2, {
+    alpha: typeof parsedColor2.alpha === 'number' ? parsedColor2.alpha : 1
+  }); // The formula is copied from the original Sass implementation:
+  // http://sass-lang.com/documentation/Sass/Script/Functions.html#mix-instance_method
+
+
+  var alphaDelta = color1.alpha - color2.alpha;
+  var x = parseFloat(weight) * 2 - 1;
+  var y = x * alphaDelta === -1 ? x : x + alphaDelta;
+  var z = 1 + x * alphaDelta;
+  var weight1 = (y / z + 1) / 2.0;
+  var weight2 = 1 - weight1;
+  var mixedColor = {
+    red: Math.floor(color1.red * weight1 + color2.red * weight2),
+    green: Math.floor(color1.green * weight1 + color2.green * weight2),
+    blue: Math.floor(color1.blue * weight1 + color2.blue * weight2),
+    alpha: color1.alpha * (parseFloat(weight) / 1.0) + color2.alpha * (1 - parseFloat(weight) / 1.0)
+  };
+  return rgba(mixedColor);
 } // prettier-ignore
 
 
-var curriedLighten = /*#__PURE__*/curry
-/* ::<number | string, string, string> */
-(lighten);
+var curriedMix = /*#__PURE__*/curry
+/* ::<number | string, string, string, string> */
+(mix);
 
 var defaultLightReturnColor = '#000';
 var defaultDarkReturnColor = '#fff';
@@ -6181,16 +5829,22 @@ function readableColor(color, lightReturnColor, darkReturnColor, strict) {
   return isLightColor ? defaultLightReturnColor : defaultDarkReturnColor;
 }
 
-const selectedCSS = css(["border-color:", ";background:", ";color:", ";box-shadow:inset 0 0 .25rem 0 ", ";"], props => props.variant === 'plain' ? ds.colors.buttonBorderPlainSelected : props.color ? curriedDarken(0.1, props.color) : ds.colors.buttonBorderSelected, props => props.variant === 'plain' ? ds.colors.buttonBgPlainSelected : props.color ? curriedDarken(0.1, props.color) : ds.colors.buttonBgSelected, props => props.variant === 'plain' ? ds.colors.buttonFgPlainSelected : props.color ? readableColor(props.color, ds.colors.dark(props), ds.colors.light(props), true) : ds.colors.buttonFgSelected, ds.colors.buttonShadow);
-const buttonStyle = css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;", " cursor:pointer;", " &:visited{color:inherit;}&:hover,&:focus{", " outline:none;text-decoration:none;", "}&:active,&.active{outline:none;text-decoration:none;", " ", "}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.buttonSpacerHSmall : ds.measures.buttonSpacerH, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : props.color ? props.color : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : props.color ? props.color : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : props.color ? readableColor(props.color, ds.colors.dark(props), ds.colors.light(props), true) : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null, props => props.fixedWidth && css(["width:calc(", "rem);padding:0;overflow:hidden;text-overflow:ellipsis;flex-shrink:0;"], props => (props.small ? 3 / 2 : 2) * Math.max(ds.measures.spacer(props), 1)), props => props.variant === 'plain' ? props.selected ? `color: ${ds.colors.buttonFgPlainHoverSelected(props)};
-          background: ${ds.colors.buttonBgPlainHoverSelected(props)};
-          border-color: ${ds.colors.buttonBorderPlainHoverSelected(props)};` : `color: ${ds.colors.buttonFgHoverPlain(props)};
-          background: ${ds.colors.buttonBgHoverPlain(props)};
-          border-color: ${ds.colors.buttonBorderHoverPlain(props)};` : props.color ? `color: ${readableColor(props.color, ds.colors.dark(props), ds.colors.light(props), true)};
-          background: ${curriedLighten(0.1, props.color)};
-          border-color: ${props.color};` : `color: ${ds.colors.buttonFgHover(props)};
-          background: ${ds.colors.buttonBgHover(props)};
-          border-color: ${ds.colors.buttonBorderHover(props)};`, ({
+const _mix = (a, c1, c2, props) => {
+  if (!c1 || !c2) return 'inherit';
+
+  if (c1 === 'transparent') {
+    c1 = ds.colors.bg(props);
+  }
+
+  if (c2 === 'transparent') {
+    c2 = ds.colors.fg(props);
+  }
+
+  return curriedMix(a, c1, c2);
+};
+
+const selectedCSS = css(["border-color:", ";background:", ";box-shadow:inset 0 0 .25rem 0 ", ";"], props => props.variant === 'plain' ? _mix(0.1, props.color || ds.colors.buttonBorderPlain(props), ds.colors.dark(props), props) : _mix(0.9, props.color || ds.colors.buttonBorder(props), ds.colors.dark(props), props), props => props.variant === 'plain' ? _mix(0.9, props.color || ds.colors.buttonBgPlain(props), ds.colors.dark(props), props) : props.variant === 'inverted' ? _mix(0.9, ds.colors.buttonFg(props), ds.colors.buttonBg(props), props) : _mix(0.9, props.color || ds.colors.buttonBg(props), ds.colors.dark(props), props), ds.colors.buttonShadow);
+const buttonStyle = css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background:", ";color:", ";border-radius:", ";box-sizing:border-box;", " cursor:pointer;", " &:visited{color:inherit;}&:hover,&:focus{", " outline:none;text-decoration:none;", "}&:active,&.active{outline:none;text-decoration:none;", " ", "}&:disabled{color:", ";border-color:", ";background:", ";cursor:default;&:hover,&:focus{border-color:", ";}}", " ", " &.selected{", " ", "}", ""], props => props.small ? labelStylesSmall : labelStyles, props => props.small ? ds.measures.buttonSpacerHSmall : ds.measures.buttonSpacerH, props => props.small ? ds.measures.inputFontSmall : ds.measures.inputFont, props => props.variant === 'plain' ? ds.colors.buttonBorderPlain : props.color ? props.color : ds.colors.buttonBorder, props => props.variant === 'plain' ? ds.colors.buttonBgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.fg : ds.colors.buttonFg : props.color ? props.color : ds.colors.buttonBg, props => props.variant === 'plain' ? ds.colors.buttonFgPlain : props.variant === 'inverted' ? ds.colors.buttonBg(props) === 'transparent' ? ds.colors.bg : ds.colors.buttonBg(props) && ds.colors.buttonBg(props).indexOf('gradient') !== -1 ? ds.colors.bg : ds.colors.buttonBg : props.color ? readableColor(props.color, ds.colors.dark(props), ds.colors.light(props), true) : ds.colors.buttonFg, props => props.small ? ds.measures.buttonRadiusSmall : ds.measures.buttonRadius, props => props.fill ? 'width: 100%; margin-left: 0; margin-right: 0;' : null, props => props.fixedWidth && css(["width:calc(", "rem);padding:0;overflow:hidden;text-overflow:ellipsis;flex-shrink:0;"], props => (props.small ? 3 / 2 : 2) * Math.max(ds.measures.spacer(props), 1)), props => props.variant === 'plain' ? `background: ${_mix(0.9, ds.colors.buttonBgPlain(props), ds.colors.dark(props), props)};` : props.variant === 'inverted' ? `background: ${_mix(0.9, ds.colors.buttonFg(props), ds.colors.buttonBg(props), props)};` : props.color ? `background: ${_mix(0.8, props.color, readableColor(props.color, ds.colors.dark(props), ds.colors.light(props), true), props)};` : `background: ${_mix(0.9, ds.colors.buttonBg(props), ds.colors.buttonFg(props), props)};`, ({
   extraStyles = {}
 }) => extraStyles.hover, selectedCSS, ({
   extraStyles = {}
@@ -6393,6 +6047,7 @@ const StyledLoadingInline = styled.span`
   animation: ${rotate} 2s linear infinite;
   display: inline-block;
   height: 1em;
+  line-height: 1em;
 `;
 const StyledLoading = styled.div`
   font-size: 4em;
