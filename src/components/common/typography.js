@@ -17,7 +17,7 @@ export const preHeadingStyles = css`
 
 export const labelStyles = css`
   line-height: ${props => Math.max(2, ds.measures.spacer(props) * 2)}rem;
-  height: ${props => Math.max(2, ds.measures.spacer(props) * 2)}rem;
+  min-height: ${props => Math.max(2, ds.measures.spacer(props) * 2)}rem;
   padding: 0 ${ds.measures.spacer}rem;
   display: inline-block;
   margin: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
@@ -25,7 +25,7 @@ export const labelStyles = css`
 
 export const labelStylesSmall = css`
   line-height: ${props => Math.max(1.5, ds.measures.spacer(props) * 1.5)}rem;
-  height: ${props => Math.max(1.5, ds.measures.spacer(props) * 1.5)}rem;
+  min-height: ${props => Math.max(1.5, ds.measures.spacer(props) * 1.5)}rem;
   padding: 0 ${props => ds.measures.spacer(props) / 2}rem;
   display: inline-block;
   margin: calc(${ds.measures.spacer}rem / 4) calc(${ds.measures.spacer}rem / 4);
