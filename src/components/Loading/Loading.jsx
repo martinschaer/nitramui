@@ -36,6 +36,7 @@ const StyledLoadingInline = styled.span`
   animation: ${rotate} 2s linear infinite;
   display: inline-block;
   height: 1em;
+  line-height: 1em;
 `
 
 const StyledLoading = styled.div`

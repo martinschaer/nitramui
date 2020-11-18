@@ -477,7 +477,7 @@ export const App = () => {
                       <Button small className='selected'>Small</Button>
                       <Button
                         extraStyles={{
-                          hover: css`box-shadow: inset 0 0 0 1px ${ds.colors.buttonBorderHoverPlain};`
+                          hover: css`box-shadow: inset 0 0 0 1px #fff;`
                         }}
                       >
                         Extra hover
@@ -547,7 +547,7 @@ export const App = () => {
                       footer={(<Label compact>Footer</Label>)}
                       extraStyles={{
                         hover: css`
-box-shadow: inset 0 0 0 1px ${ds.colors.buttonBorderHoverPlain} !important;`
+box-shadow: inset 0 0 0 1px #fff !important;`
                       }}
                     >
                       <p>Hello world</p>
