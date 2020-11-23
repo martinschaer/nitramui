@@ -302,30 +302,25 @@ const StyledControl = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
 
-    ${props => !props.comfort && props.labelInside && props.type !== 'checkbox' && props.type !== 'bool' && (css`
+    ${props => props.labelInside && props.type !== 'checkbox' && props.type !== 'bool' && (css`
       position: absolute;
       top: 0;
       left: 0;
       font-size: .8em;
       white-space: nowrap;
       user-select: none;
-      line-height: 2em;
       padding: 0 calc(${ds.measures.spacer}rem) 0 calc(${ds.measures.inputSpacerH}rem);
       width: 100%;
       box-sizing: border-box;
+
+      ${props => !props.comfort && (css`
+        line-height: 2em;
+      `)}
+      ${props => props.comfort && (css`
+        line-height: 3em;
+      `)}
     `)}
-    ${props => props.comfort && props.labelInside && props.type !== 'checkbox' && props.type !== 'bool' && (css`
-      position: absolute;
-      top: 0;
-      left: 0;
-      font-size: .8em;
-      white-space: nowrap;
-      user-select: none;
-      line-height: 3em;
-      padding: 0 calc(${ds.measures.spacer}rem) 0 calc(${ds.measures.inputSpacerH}rem);
-      width: 100%;
-      box-sizing: border-box;
-    `)}
+
     ${props => props.comfort && !props.labelInside && css`
       line-height: calc(${ds.measures.spacer}rem * 3);
       height: calc(${ds.measures.spacer}rem * 3);
