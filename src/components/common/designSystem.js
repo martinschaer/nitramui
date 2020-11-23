@@ -202,19 +202,6 @@ export default {
         }),
       custom: buildCustomProp('colors', 'buttonFgPlainSelected', EMPEROR, GALLERY)
     }),
-    buttonFgDisabled: theme('theme', {
-      [themes.smooth]:
-        theme('mode', {
-          [modes.light]: BLACK_30,
-          [modes.dark]: EMPEROR
-        }),
-      [themes.hiContrast]:
-        theme('mode', {
-          [modes.light]: EMPEROR,
-          [modes.dark]: EMPEROR
-        }),
-      custom: buildCustomProp('colors', 'buttonFgDisabled', BLACK_30, EMPEROR)
-    }),
     buttonFgSelected: theme('theme', {
       [themes.smooth]:
         theme('mode', {

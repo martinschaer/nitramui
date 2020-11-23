@@ -114,7 +114,7 @@ flex-shrink: 0;
   }
 
   &:disabled {
-    color: ${ds.colors.buttonFgDisabled};
+    color: ${ds.colors.fgMuted};
     border-color: ${props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBorderDisabled};
     background: ${props => props.variant === 'plain' ? 'transparent' : ds.colors.buttonBgDisabled};
     cursor: default;

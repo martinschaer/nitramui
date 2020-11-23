@@ -55,7 +55,6 @@ export const groove = {
     buttonBgDisabled: colorTransparent,
     buttonFg: { light: 'white', dark: 'white' },
     buttonFgSelected: { light: 'white', dark: 'white' },
-    buttonFgDisabled: colorAccent,
     buttonBorder: { light: colors.SNOW, dark: colors.MIDNIGHT },
     buttonBorderSelected: { light: colors.SNOW, dark: colors.MIDNIGHT },
     buttonFgPlain: colorFg,
