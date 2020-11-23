@@ -187,7 +187,13 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
   return (
     <>
       {label && (
-        <Label as='label' htmlFor={id} onClick={() => { openPopup(!open) }} onMouseDown={e => e.preventDefault()}>
+        <Label
+          as='label'
+          htmlFor={id}
+          style={{ pointerEvents: 'none' }}
+          onClick={() => { openPopup(!open) }}
+          onMouseDown={e => e.preventDefault()}
+        >
           {label}
         </Label>
       )}
