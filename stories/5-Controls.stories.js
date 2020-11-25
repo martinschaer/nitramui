@@ -69,15 +69,35 @@ export const Controls = () => {
               </>
             )}
           >
-            <Pane>
-              <Card>
-                <Control
-                  ref={c1Ref}
-                  type='multiselect'
-                  label='Select multiple'
-                  options={selectOptions}
-                  placeholder='Select…'
-                />
+            <Pane size='full'>
+              <Card
+                height='full'
+                header={
+                  <Control
+                    ref={c1Ref}
+                    type='multiselect'
+                    label='Select multiple'
+                    options={selectOptions}
+                    placeholder='Select…'
+                    marginBottom={0}
+                  />
+                }
+                footer={
+                  <Control
+                    ref={c1Ref}
+                    type='multiselect'
+                    label='Select multiple'
+                    options={selectOptions}
+                    placeholder='Select…'
+                    marginBottom={0}
+                  />
+                }
+              >
+                <div style={{ margin: '-1px 0', padding: '1px 0' }}>
+                  <p>Pop up tests</p>
+                  <p>Pop up tests</p>
+                  <p>Pop up tests</p>
+                </div>
               </Card>
             </Pane>
           </Layout>

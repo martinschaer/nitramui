@@ -14,6 +14,9 @@ import {
   labelStyles,
   labelStylesSmall
 } from '../common/typography'
+import {
+  styleValueToPX
+} from '../../utils/measures'
 
 const getLabel = (val, options) => {
   let result = val
@@ -49,6 +52,7 @@ const PROP_OPTIONS = PropTypes.arrayOf(PropTypes.oneOfType([
 ]))
 
 const Popup = styled.div`
+  box-sizing: border-box;
   position: absolute;
   z-index: 10;
   left: 0;
@@ -124,7 +128,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
   const [popupStyle, setPopupStyle] = useState({
     position: 'fixed',
     display: 'none',
-    width: '32em'
+    width: '400px'
   })
   const [open, setOpen] = useState(false)
   const [_value, setValue] = useState(value === undefined ? defaultValue : value)
@@ -175,18 +179,57 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
 
   const checkPosition = React.useCallback(
     () => {
+      // bottom: 157.15625
+      // height: 40
+      // left: 196.546875
+      // right: 506.578125
+      // top: 117.15625
+      // width: 310.03125
+      // x: 196.546875
+      // y: 117.15625
       const rect = actionableRef.current.getBoundingClientRect()
-      console.log(openRef.current, rect)
       const winH = window.innerHeight
+      const winW = window.innerWidth
+      const pad = window.getComputedStyle(popupRef.current.children[0].children[0], null)
+        .getPropertyValue('padding-top')
+      const clientH = popupRef.current.children[0].children[0].children[0].offsetHeight + styleValueToPX(pad) * 2 + 2
+      const width = 400
+      let height
+      let top
+      let left = rect.left
+      let dirBottom
+      if (winH - (rect.top + rect.height) > clientH) {
+        height = clientH
+        top = rect.top + rect.height
+        dirBottom = true
+      } else if (winH - (rect.top + rect.height) > rect.top) {
+        height = winH - (rect.top + rect.height) - 16
+        top = rect.top + rect.height
+        dirBottom = true
+      } else if (rect.top > clientH) {
+        height = clientH
+        top = rect.top - height - 16
+        dirBottom = false
+      } else {
+        height = rect.top - 16
+        top = 0
+        dirBottom = false
+      }
+      if (rect.left + width < winW) {
+        left = rect.left
+      } else {
+        left = rect.left - (width - rect.width)
+      }
       setPopupStyle({
-        top: rect.top,
-        left: rect.left,
+        top,
+        left,
+        height,
+        width,
         position: 'fixed',
+        boxSizing: 'content-box',
+        padding: dirBottom ? '0 0 16px' : '16px 0 0',
         display: openRef.current ? 'block' : 'none',
-        // POR AQUI VOY!
-        height: Math.min(winH, popupRef.current.children[0].clientHeight),
-        overflow: 'hidden',
-        width: '32em'
+        overflowY: 'scroll'
       })
       popupRef.current.style.top = rect.top
       popupRef.current.style.left = rect.left
@@ -249,25 +292,27 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
         ref={popupRef}
         style={popupStyle}
       >
-        <Card mini forceShadow low>
-          {normalizedOptions.length ? normalizedOptions.map(x => (
-            <Button
-              fill
-              small
-              key={x.value}
-              variant='plain'
-              selected={((!ref ? value : _value) || []).includes(x.value)}
-              extraStyles={{ base: { textAlign: 'left' } }}
-              onClick={() => {
-                dispatchSelected({ value: x.value })
-                actionableRef.current.focus()
-              }}
-            >
-              {x.label}
-            </Button>
-          )) : (
-            <Label small><Muted>Empty</Muted></Label>
-          )}
+        <Card mini forceShadow low height='full'>
+          <div>
+            {normalizedOptions.length ? normalizedOptions.map(x => (
+              <Button
+                fill
+                small
+                key={x.value}
+                variant='plain'
+                selected={((!ref ? value : _value) || []).includes(x.value)}
+                extraStyles={{ base: { textAlign: 'left' } }}
+                onClick={() => {
+                  dispatchSelected({ value: x.value })
+                  actionableRef.current.focus()
+                }}
+              >
+                {x.label}
+              </Button>
+            )) : (
+              <Label small><Muted>Empty</Muted></Label>
+            )}
+          </div>
         </Card>
       </Popup>
     </>
