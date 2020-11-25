@@ -51,8 +51,7 @@ const PROP_OPTIONS = PropTypes.arrayOf(PropTypes.oneOfType([
 const Popup = styled.div`
   position: absolute;
   z-index: 10;
-  left: calc(${ds.measures.spacer}rem / 4);
-  right: calc(${ds.measures.spacer}rem / 4);
+  left: 0;
 `
 
 const inputStyle = css`
@@ -118,12 +117,16 @@ const StyledTextarea = styled.textarea`
 // MultiselectActionable
 // ---------------------------------------------------------------------------------------------------------------------
 const MultiselectActionable = React.forwardRef((props, ref) => {
-  const { id, label, value, defaultValue, onChange, disabled, normalizedOptions } = props
+  const { id, label, value, defaultValue, onChange, disabled, normalizedOptions, placeholder } = props
   const popupRef = useRef()
   const actionableRef = useRef()
+  const openRef = useRef(false)
+  const [popupStyle, setPopupStyle] = useState({
+    position: 'fixed',
+    display: 'none',
+    width: '32em'
+  })
   const [open, setOpen] = useState(false)
-  // TODO: set top
-  const [top] = useState('2.5rem')
   const [_value, setValue] = useState(value === undefined ? defaultValue : value)
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -133,6 +136,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
     (val) => {
       if (!disabled) {
         setOpen(val)
+        openRef.current = val
         if (val) actionableRef.current.focus()
       }
     },
@@ -153,7 +157,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
           break
         default:
           // adds or removes action.value from selected
-          v = (!ref ? value : _value)
+          v = ((!ref ? value : _value) || [])
           index = v.indexOf(action.value)
           if (index === -1) {
             result = [...v, action.value]
@@ -169,6 +173,30 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
     [_value, value, onChange, ref]
   )
 
+  const checkPosition = React.useCallback(
+    () => {
+      const rect = actionableRef.current.getBoundingClientRect()
+      console.log(openRef.current, rect)
+      const winH = window.innerHeight
+      setPopupStyle({
+        top: rect.top,
+        left: rect.left,
+        position: 'fixed',
+        display: openRef.current ? 'block' : 'none',
+        // POR AQUI VOY!
+        height: Math.min(winH, popupRef.current.children[0].clientHeight),
+        overflow: 'hidden',
+        width: '32em'
+      })
+      popupRef.current.style.top = rect.top
+      popupRef.current.style.left = rect.left
+      if (openRef.current) {
+        setTimeout(checkPosition, 30)
+      }
+    },
+    []
+  )
+
   // -------------------------------------------------------------------------------------------------------------------
   // Effects
   // -------------------------------------------------------------------------------------------------------------------
@@ -179,6 +207,13 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
       if (ref) ref.current = { value: x }
     },
     [defaultValue, ref]
+  )
+
+  React.useEffect(
+    () => {
+      if (openRef.current) checkPosition()
+    },
+    [open, checkPosition]
   )
 
   // -------------------------------------------------------------------------------------------------------------------
@@ -207,15 +242,12 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
         }}
         onClick={() => openPopup(!open)}
       >
-        {(!ref ? value : _value).map(x => getLabel(x, normalizedOptions)).join(', ')}
+        {((!ref ? value : _value) || []).map(x => getLabel(x, normalizedOptions)).join(', ') ||
+          (<Muted>{placeholder}</Muted>)}
       </Actionable>
       <Popup
         ref={popupRef}
-        style={{
-          display: open ? 'block' : 'none',
-          width: '32em',
-          top: top
-        }}
+        style={popupStyle}
       >
         <Card mini forceShadow low>
           {normalizedOptions.length ? normalizedOptions.map(x => (
@@ -224,7 +256,7 @@ const MultiselectActionable = React.forwardRef((props, ref) => {
               small
               key={x.value}
               variant='plain'
-              selected={(!ref ? value : _value).includes(x.value)}
+              selected={((!ref ? value : _value) || []).includes(x.value)}
               extraStyles={{ base: { textAlign: 'left' } }}
               onClick={() => {
                 dispatchSelected({ value: x.value })
@@ -248,6 +280,7 @@ MultiselectActionable.propTypes = {
   defaultValue: PROP_VALUE,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
+  placeholder: PropTypes.string,
   normalizedOptions: PROP_NORMALIZED_OPTIONS
 }
 MultiselectActionable.defaultProps = {
@@ -260,6 +293,7 @@ MultiselectActionable.defaultProps = {
 const StyledControl = styled.div`
   border-radius: ${ds.measures.inputRadius};
   display: flex;
+  /* TODO: move these margin props to the style attribute to optimize the classes generated by styled-components */
   ${props => props.marginLeft &&
     (props.marginLeft === true
       ? `margin-left: ${ds.measures.spacer(props) / 4}rem;`
@@ -290,8 +324,8 @@ const StyledControl = styled.div`
       ${labelStylesSmall}
       font-size: ${ds.measures.inputFontSmall};
     `}
-    padding-left: calc(${ds.measures.inputSpacerH}rem + (${ds.measures.spacer}rem / 4));
-    padding-right: calc(${ds.measures.spacer}rem);
+    padding-left: ${ds.measures.inputSpacerH}rem;
+    padding-right: ${ds.measures.inputSpacerH}rem;
     font-weight: ${ds.weights.controlLabel};
     margin-top: 0;
     margin-bottom: 0;
@@ -309,7 +343,7 @@ const StyledControl = styled.div`
       font-size: .8em;
       white-space: nowrap;
       user-select: none;
-      padding: 0 calc(${ds.measures.spacer}rem) 0 calc(${ds.measures.inputSpacerH}rem);
+      padding: 0 ${ds.measures.spacer}rem 0 ${ds.measures.inputSpacerH}rem;
       width: 100%;
       box-sizing: border-box;
 
@@ -471,6 +505,7 @@ const Control = React.forwardRef((props, ref) => {
             defaultValue={ref === undefined && value !== undefined ? value : defaultValue}
             disabled={disabled}
             onChange={onChange}
+            placeholder={placeholder}
             normalizedOptions={normalizedOptions}
             ref={ref}
           />
