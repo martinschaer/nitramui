@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
+import { readableColor, mix } from 'polished'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Local imports
@@ -9,7 +10,6 @@ import {
   labelStyles,
   labelStylesSmall
 } from '../common/typography'
-import { readableColor, mix } from 'polished'
 
 const _mix = (a, c1, c2, props) => {
   if (!c1 || !c2) return 'inherit'

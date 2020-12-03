@@ -1,20 +1,21 @@
 import React from 'react'
 
-import { groove } from './themes'
+import { groove, colors } from './themes'
 
 import {
   modes,
   Card,
   Flex,
   Pane,
-  Table,
+  Label,
   Muted,
+  Table,
   Button,
   Layout,
   Control,
   Divider,
   NitramUI,
-  NitramUIContext, Label
+  NitramUIContext
 } from '../src'
 
 export default {
@@ -135,11 +136,11 @@ export const Typography = () => {
                       Quisque mattis pharetra ornare.
                     </Label>
                     <Divider />
-                    <Label>Hello world</Label>
+                    <Label color={colors.PURPLE1}>Hello world</Label>
                     <Divider />
-                    <Label>Hello world</Label>
+                    <Label color={colors.OCEAN}>Hello world</Label>
                     <Divider />
-                    <Label>Hello world</Label>
+                    <Label color='black'>Hello world</Label>
                     <Divider invisible />
                     <Label>Hello world</Label>
                     <Divider />
