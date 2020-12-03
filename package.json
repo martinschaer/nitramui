@@ -24,13 +24,9 @@
   "author": "Martin Schaer",
   "license": "ISC",
   "dependencies": {
-    "babel-eslint": "^10.1.0",
     "normalize.css": "^8.0.1",
-    "polished": "^4.0.3",
-    "styled-components": "^5.1.1",
     "styled-theming": "^2.2.0",
-    "use-dark-mode": "^2.3.1",
-    "use-persisted-state": "^0.3.0"
+    "use-dark-mode": "^2.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
@@ -63,6 +59,10 @@
   },
   "peerDependencies": {
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "polished": "^4.0.3",
+    "react-dom": "^16.13.1",
+    "babel-eslint": "^10.1.0",
+    "styled-components": "^5.1.1",
+    "use-persisted-state": "^0.3.0"
   }
 }

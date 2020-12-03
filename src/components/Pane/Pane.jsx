@@ -86,7 +86,6 @@ const Pane = ({
             case 'square':
             default:
               elStyle = window.getComputedStyle(el)
-              console.log(el, h, winW, styleValueToPX(elStyle.paddingTop))
               el.style.width = `${Math.min(h, winW)}px`
               el.style.paddingBottom = `${h - Math.min(h, winW) + styleValueToPX(elStyle.paddingTop)}px`
           }
