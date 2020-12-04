@@ -22,7 +22,7 @@ const Col = styled.div.attrs((props) => {
 // ---------------------------------------------------------------------------------------------------------------------
 Col.propTypes = {
   count: PropTypes.oneOf([2, 3, 4, 5, 6, 7, 8]),
-  width: PropTypes.number,
+  width: PropTypes.string,
   noPadding: PropTypes.bool,
   compact: PropTypes.bool
 }
