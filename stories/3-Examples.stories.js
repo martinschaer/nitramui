@@ -205,7 +205,7 @@ export const App = () => {
             {/* TODO: create a component for Tiles to avoid so much options on Cards */}
             <Pane size='full-minus-small'>
               <Flex flexWrap='wrap' style={{ margin: '-0.5rem' }}>
-                <Flex.Col compact>
+                <Flex.Col width='33%' compact>
                   <Card compact height='full' colorBorderPosition='left' color={getDSVal(ds.colors.link)}>
                     <Label heading compact>
                       Lorem ipsum dolor sit amed

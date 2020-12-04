@@ -4,7 +4,13 @@ import styled from 'styled-components'
 // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
-const Col = styled.div`
+const Col = styled.div.attrs((props) => {
+  return {
+    style: {
+      width: props.width
+    }
+  }
+})`
   width: ${prop => 100 / prop.count}%;
   min-width: calc(50rem / 4 - 4px);
   padding: ${props => props.noPadding ? '0' : props.compact ? '0.5rem' : '1rem'};
@@ -16,6 +22,7 @@ const Col = styled.div`
 // ---------------------------------------------------------------------------------------------------------------------
 Col.propTypes = {
   count: PropTypes.oneOf([2, 3, 4, 5, 6, 7, 8]),
+  width: PropTypes.number,
   noPadding: PropTypes.bool,
   compact: PropTypes.bool
 }
