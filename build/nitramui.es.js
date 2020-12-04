@@ -1,6 +1,5 @@
-import styled, { css, keyframes, createGlobalStyle, ThemeProvider } from 'styled-components';
-export { createGlobalStyle, css, keyframes, default as styled } from 'styled-components';
 import React, { useRef, useState, useEffect, useMemo, useCallback } from 'react';
+import styled, { css, keyframes, createGlobalStyle, ThemeProvider } from 'styled-components';
 import { mix, readableColor } from 'polished';
 import o from 'use-persisted-state';
 
@@ -3199,7 +3198,7 @@ const NitramUIContext = /*#__PURE__*/React.createContext({
   setTheme: () => {}
 });
 
-const global$1 = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
 html, body {
   height: 100%;
 }
@@ -3330,9 +3329,8 @@ label {
   width: 1em;
 }
 `;
-const GlobalStyle = createGlobalStyle`
+const ResetStyle = createGlobalStyle`
   ${css_248z}
-  ${global$1}
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Utils
 // ---------------------------------------------------------------------------------------------------------------------
@@ -3356,7 +3354,6 @@ const NitramUI = ({
   // -------------------------------------------------------------------------------------------------------------------
   // States
   // -------------------------------------------------------------------------------------------------------------------
-  // TODO: use hooks for system/time–aware –saved– dark mode
   const [mode, _setMode] = useState(modes.light);
   const darkMode = useDarkMode(false, {
     onChange: x => {
@@ -3436,7 +3433,7 @@ const NitramUI = ({
     }
   }, /*#__PURE__*/React.createElement(ThemeProvider, {
     theme: themeProviderObj
-  }, /*#__PURE__*/React.createElement(GlobalStyle, null), children));
+  }, /*#__PURE__*/React.createElement(ResetStyle, null), /*#__PURE__*/React.createElement(GlobalStyle, null), children));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------

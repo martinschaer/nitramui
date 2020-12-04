@@ -19,8 +19,7 @@ import {
   preHeadingStyles
 } from '../common/typography'
 
-// TODO: Put in another file
-const global = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
 html, body {
   height: 100%;
 }
@@ -152,9 +151,8 @@ label {
 }
 `
 
-const GlobalStyle = createGlobalStyle`
+const ResetStyle = createGlobalStyle`
   ${reset}
-  ${global}
 `
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -177,7 +175,6 @@ const NitramUI = ({
   // -------------------------------------------------------------------------------------------------------------------
   // States
   // -------------------------------------------------------------------------------------------------------------------
-  // TODO: use hooks for system/time–aware –saved– dark mode
   const [mode, _setMode] = useState(modes.light)
   const darkMode = useDarkMode(false, {
     onChange: (x) => {
@@ -262,6 +259,7 @@ const NitramUI = ({
       <ThemeProvider
         theme={themeProviderObj}
       >
+        <ResetStyle />
         <GlobalStyle />
         {children}
       </ThemeProvider>

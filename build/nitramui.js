@@ -2,14 +2,16 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var styled = require('styled-components');
-var styled__default = _interopDefault(styled);
 var React = require('react');
-var React__default = _interopDefault(React);
+var styled = require('styled-components');
 var polished = require('polished');
-var o = _interopDefault(require('use-persisted-state'));
+var o = require('use-persisted-state');
+
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var styled__default = /*#__PURE__*/_interopDefaultLegacy(styled);
+var o__default = /*#__PURE__*/_interopDefaultLegacy(o);
 
 function getThemeValue(name, props, values) {
   var value = (
@@ -1825,7 +1827,7 @@ if (process.env.NODE_ENV !== 'production') {
 });
 
 const POSITIONS = ['top', 'right', 'bottom', 'left', 'top left', 'top right', 'bottom right', 'bottom left', 'with text'];
-const Dot = styled__default.div`
+const Dot = styled__default['default'].div`
   position: absolute;
   background-color: ${props => props.color || ds.colors.link};
   border-radius: ${ds.measures.radius};
@@ -1845,7 +1847,7 @@ const Dot = styled__default.div`
 // ---------------------------------------------------------------------------------------------------------------------
 // StyledCard height property is called h so that it doesn’t appear in the resulting DOM node.
 
-const StyledCard = styled__default.div`
+const StyledCard = styled__default['default'].div`
   background-color: ${props => props.selected ? ds.colors.cardSelected : props.hollow ? ds.colors.bg : ds.colors.card};
   box-sizing: border-box;
   border: 1px solid ${props => props.selected ? ds.colors.cardBorderSelected : ds.colors.cardBorder};
@@ -1899,14 +1901,14 @@ const StyledCard = styled__default.div`
   extraStyles = {}
 }) => extraStyles.base}
 `;
-const StyledCardHeader = styled__default.header`
+const StyledCardHeader = styled__default['default'].header`
   align-items: center;
   border-bottom: 1px solid ${props => props.noBorder ? 'transparent' : ds.colors.cardHeaderBorder};
   display: flex;
   flex-wrap: ${props => props.noWrapHeader ? 'nowrap' : 'wrap'};
   padding: ${props => props.compactHeader ? '0' : '0.25rem'};
 `;
-const StyledCardBody = styled__default.main`
+const StyledCardBody = styled__default['default'].main`
   padding: ${props => props.noPadding ? '0' : props.mini ? ds.measures.spacer(props) / 2 : props.compact ? ds.measures.spacer : ds.measures.spacer(props) * 2}rem;
   overflow-y: auto;
   height: 100%;
@@ -1923,7 +1925,7 @@ const StyledCardBody = styled__default.main`
     padding: ${props => props.noPadding ? '0' : ds.measures.spacer}rem;
   }
 `;
-const StyledCardFooter = styled__default.footer`
+const StyledCardFooter = styled__default['default'].footer`
   align-items: center;
   border-top: 1px solid ${props => props.noBorder ? 'transparent' : ds.colors.cardHeaderBorder};
   display: flex;
@@ -1967,7 +1969,7 @@ const Card = ({
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
-  return /*#__PURE__*/React__default.createElement(StyledCard, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledCard, {
     size: size,
     color: color,
     colorBorderPosition: colorBorderPosition,
@@ -1983,19 +1985,19 @@ const Card = ({
     extraStyles: extraStyles,
     onClick: onClick && (() => onClick()),
     className: hollow ? 'hollow' : null
-  }, header && /*#__PURE__*/React__default.createElement(StyledCardHeader, {
+  }, header && /*#__PURE__*/React__default['default'].createElement(StyledCardHeader, {
     compactHeader: compactHeader,
     noWrapHeader: noWrapHeader,
     noBorder: noBorderHeader
-  }, header), children && /*#__PURE__*/React__default.createElement(StyledCardBody, {
+  }, header), children && /*#__PURE__*/React__default['default'].createElement(StyledCardBody, {
     noPadding: noPadding,
     compact: compact,
     mini: mini
-  }, children), footer && /*#__PURE__*/React__default.createElement(StyledCardFooter, {
+  }, children), footer && /*#__PURE__*/React__default['default'].createElement(StyledCardFooter, {
     compactFooter: compactFooter,
     noWrapFooter: noWrapFooter,
     noBorder: noBorderFooter
-  }, footer), stickers && stickers.dot && /*#__PURE__*/React__default.createElement(Dot, {
+  }, footer), stickers && stickers.dot && /*#__PURE__*/React__default['default'].createElement(Dot, {
     position: typeof stickers.dot === 'string' ? stickers.dot : stickers.dot.p,
     color: color,
     separation: noPadding ? '0' : compact ? '0.5rem' : '1rem'
@@ -2056,7 +2058,7 @@ Card.defaultProps = {
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Flex = styled__default.div`
+const Flex = styled__default['default'].div`
   height: ${({
   fullHeight
 }) => fullHeight ? '100%' : 'auto'};
@@ -2110,7 +2112,7 @@ Flex.defaultProps = {};
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Col = styled__default.div`
+const Col = styled__default['default'].div`
   width: ${prop => 100 / prop.count}%;
   min-width: calc(50rem / 4 - 4px);
   padding: ${props => props.noPadding ? '0' : props.compact ? '0.5rem' : '1rem'};
@@ -2164,7 +2166,7 @@ const debounce = (func, wait, immediate) => {
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
-const StyledPane = styled__default.div`
+const StyledPane = styled__default['default'].div`
   box-sizing: border-box;
   height: ${props => props.h === 'half' ? '50%' : props.h === 'auto' ? 'auto' : typeof props.h === 'number' ? `${props.h}rem` : '100%'};
   flex-shrink: ${props => props.size === 'fill' ? 1 : 0};
@@ -2192,11 +2194,11 @@ const Pane = ({
   noPadding,
   children
 }) => {
-  const uid = React__default.useRef(`pane-${Math.random().toString(36).substr(2, 9)}`); // -------------------------------------------------------------------------------------------------------------------
+  const uid = React__default['default'].useRef(`pane-${Math.random().toString(36).substr(2, 9)}`); // -------------------------------------------------------------------------------------------------------------------
   // Effect
   // -------------------------------------------------------------------------------------------------------------------
 
-  React__default.useEffect(() => {
+  React__default['default'].useEffect(() => {
     let debouncedHandleResize;
     let handleResize;
 
@@ -2236,7 +2238,7 @@ const Pane = ({
   // Render
   // -------------------------------------------------------------------------------------------------------------------
 
-  return /*#__PURE__*/React__default.createElement(StyledPane, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledPane, {
     id: uid.current,
     size: size,
     h: height,
@@ -2265,7 +2267,7 @@ Pane.defaultProps = {
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Wrapper = styled__default.div`
+const Wrapper = styled__default['default'].div`
   margin: 0 auto;
 `; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
@@ -2284,7 +2286,7 @@ const labelStylesSmall = styled.css(["line-height:", "rem;min-height:", "rem;pad
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Label = styled__default.span.attrs(props => {
+const Label = styled__default['default'].span.attrs(props => {
   const bg = props.color && ds.colors.light(props) ? polished.mix(0.1, props.color, ds.colors.light(props)) : 'transparent';
   return {
     style: {
@@ -2327,7 +2329,7 @@ Label.defaultProps = {};
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Muted = styled__default.span`
+const Muted = styled__default['default'].span`
   color: ${ds.colors.fgMuted};
 `; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
@@ -2339,10 +2341,10 @@ Muted.defaultProps = {};
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
-const StyledTableContainer = styled__default.div`
+const StyledTableContainer = styled__default['default'].div`
   overflow-x: auto;
 `;
-const StyledTable = styled__default.table`
+const StyledTable = styled__default['default'].table`
   display: table;
   border-collapse: collapse;
   border-spacing: 0;
@@ -2388,7 +2390,7 @@ const Table = ({
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
-  return /*#__PURE__*/React__default.createElement(StyledTableContainer, null, /*#__PURE__*/React__default.createElement(StyledTable, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledTableContainer, null, /*#__PURE__*/React__default['default'].createElement(StyledTable, {
     hoverable: hoverable
   }, children));
 }; // ---------------------------------------------------------------------------------------------------------------------
@@ -2434,7 +2436,7 @@ const buttonStyle = styled.css(["", " padding:0 ", "rem;font-size:", ";border:1p
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Button = styled__default.button // https://github.com/styled-components/styled-components/releases/tag/v5.1.0
+const Button = styled__default['default'].button // https://github.com/styled-components/styled-components/releases/tag/v5.1.0
 .withConfig({
   shouldForwardProp: prop => !['fill', 'small', 'color', 'extraStyles', 'fixedWidth'].includes(prop)
 })`
@@ -2469,7 +2471,7 @@ Button.defaultProps = {
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
-const StyledContainer = styled__default.div`
+const StyledContainer = styled__default['default'].div`
   display: flex;
   flex-direction: row;
   flex-grow: 1;
@@ -2493,7 +2495,7 @@ const Container = ({
   children,
   scroll
 }) => {
-  return /*#__PURE__*/React__default.createElement(StyledContainer, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledContainer, {
     scroll: scroll
   }, children);
 }; // ---------------------------------------------------------------------------------------------------------------------
@@ -2512,12 +2514,12 @@ Container.defaultProps = {
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
-const StyledLayout = styled__default.div`
+const StyledLayout = styled__default['default'].div`
   display: flex;
   flex-direction: column;
   height: 100%;
 `;
-const StyledHeader = styled__default.header`
+const StyledHeader = styled__default['default'].header`
   background-color: ${ds.colors.card};
   border-bottom: 1px solid ${ds.colors.border};
   box-sizing: border-box;
@@ -2526,10 +2528,10 @@ const StyledHeader = styled__default.header`
   display: flex;
   flex-wrap: wrap;
 `;
-const StyledMain = styled__default(Container)`
+const StyledMain = styled__default['default'](Container)`
   background-color: ${ds.colors.bg};
 `;
-const StyledFooter = styled__default.header`
+const StyledFooter = styled__default['default'].header`
   background-color: ${ds.colors.card};
   border-top: 1px solid ${ds.colors.border};
   box-sizing: border-box;
@@ -2556,18 +2558,18 @@ const Layout = ({
   // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
-  return /*#__PURE__*/React__default.createElement(StyledLayout, null, (headerSlot || brand || menu || menuB) && /*#__PURE__*/React__default.createElement(StyledHeader, null, headerSlot || /*#__PURE__*/React__default.createElement(Label, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledLayout, null, (headerSlot || brand || menu || menuB) && /*#__PURE__*/React__default['default'].createElement(StyledHeader, null, headerSlot || /*#__PURE__*/React__default['default'].createElement(Label, {
     heading: true
-  }, brand), menu, menuB && /*#__PURE__*/React__default.createElement("div", {
+  }, brand), menu, menuB && /*#__PURE__*/React__default['default'].createElement("div", {
     style: {
       display: 'flex',
       marginLeft: 'auto'
     }
-  }, menuB)), toolbar && /*#__PURE__*/React__default.createElement(StyledHeader, null, toolbar), /*#__PURE__*/React__default.createElement(StyledMain, {
+  }, menuB)), toolbar && /*#__PURE__*/React__default['default'].createElement(StyledHeader, null, toolbar), /*#__PURE__*/React__default['default'].createElement(StyledMain, {
     scroll: scroll
-  }, children), (footerSlot || brand) && /*#__PURE__*/React__default.createElement(StyledFooter, null, footerSlot || /*#__PURE__*/React__default.createElement(Label, {
+  }, children), (footerSlot || brand) && /*#__PURE__*/React__default['default'].createElement(StyledFooter, null, footerSlot || /*#__PURE__*/React__default['default'].createElement(Label, {
     heading: true
-  }, "\xA9 ", new Date().getFullYear(), " ", brand), footerMenu, footerMenuB && /*#__PURE__*/React__default.createElement("div", {
+  }, "\xA9 ", new Date().getFullYear(), " ", brand), footerMenu, footerMenuB && /*#__PURE__*/React__default['default'].createElement("div", {
     style: {
       display: 'flex',
       marginLeft: 'auto'
@@ -2597,7 +2599,7 @@ Layout.defaultProps = {
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Divider = styled__default.span`
+const Divider = styled__default['default'].span`
   ${props => props.horizontal ? styled.css(["display:block;margin:", ";border-top:1px solid ", ";"], props => props.noMargin ? 0 : `${props.spacing * ds.measures.spacer(props)}em 0`, ds.colors.border) : styled.css(["display:inline-block;margin:", ";border-right:1px solid ", ";height:1.8em;"], props => props.noMargin ? 0 : `0 ${props.spacing * ds.measures.spacer(props) / 4}rem`, ds.colors.border)}
   ${props => props.invisible && 'border: none;'}
   vertical-align: middle;
@@ -2619,13 +2621,13 @@ Divider.defaultProps = {
 // ---------------------------------------------------------------------------------------------------------------------
 
 const rotate = styled.keyframes(["0%{transform:rotate(0deg);}17%{transform:rotate(180deg);}51%{transform:rotate(180deg);}68%{transform:rotate(360deg);}100%{transform:rotate(360deg);}"]);
-const StyledLoadingInline = styled__default.span`
+const StyledLoadingInline = styled__default['default'].span`
   animation: ${rotate} 2s linear infinite;
   display: inline-block;
   height: 1em;
   line-height: 1em;
 `;
-const StyledLoading = styled__default.div`
+const StyledLoading = styled__default['default'].div`
   font-size: 4em;
   text-align: center;
   color: ${ds.colors.fgMuted};
@@ -2639,7 +2641,7 @@ const Loading = ({
   inline,
   icon
 }) => {
-  return inline ? /*#__PURE__*/React__default.createElement(StyledLoadingInline, null, icon) : /*#__PURE__*/React__default.createElement(StyledLoading, null, icon);
+  return inline ? /*#__PURE__*/React__default['default'].createElement(StyledLoadingInline, null, icon) : /*#__PURE__*/React__default['default'].createElement(StyledLoading, null, icon);
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
@@ -2702,26 +2704,26 @@ const PROP_OPTION = propTypes.shape({
 });
 const PROP_NORMALIZED_OPTIONS = propTypes.arrayOf(PROP_OPTION);
 const PROP_OPTIONS = propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, PROP_OPTION]));
-const Popup = styled__default.div`
+const Popup = styled__default['default'].div`
   box-sizing: border-box;
   position: absolute;
   z-index: 10;
   left: 0;
 `;
 const inputStyle = styled.css(["", " padding:0 ", "rem;font-size:", ";border:1px solid ", ";background-color:", ";color:", ";border-radius:", ";box-sizing:border-box;flex-shrink:1;&:hover{border-color:", ";background-color:", ";outline:none;}&:focus,&:active,&.active{border-color:", ";background-color:", ";outline:none;}&.disabled,&:disabled{color:", ";border-color:", ";background-color:", ";cursor:default;&:hover,&:focus{border-color:", ";}}"], labelStyles, ds.measures.inputSpacerH, ds.measures.inputFont, ds.colors.inputBorder, ds.colors.inputBg, ds.colors.inputFg, ds.measures.inputRadius, ds.colors.inputBorderActive, ds.colors.inputBgHover, ds.colors.inputBorderActive, ds.colors.inputBgFocus, ds.colors.inputFgDisabled, ds.colors.inputBorderDisabled, ds.colors.inputBgDisabled, ds.colors.inputBorderDisabled);
-const Actionable = styled__default.div`
+const Actionable = styled__default['default'].div`
   ${inputStyle}
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
-const StyledInput = styled__default.input`
+const StyledInput = styled__default['default'].input`
   ${inputStyle}
 `;
-const StyledSelect = styled__default.select`
+const StyledSelect = styled__default['default'].select`
   ${inputStyle}
 `;
-const StyledTextarea = styled__default.textarea`
+const StyledTextarea = styled__default['default'].textarea`
   ${inputStyle}
   width: 100%;
   height: auto; /* fixes labelStyles fixed height */
@@ -2729,7 +2731,7 @@ const StyledTextarea = styled__default.textarea`
 // MultiselectActionable
 // ---------------------------------------------------------------------------------------------------------------------
 
-const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref) => {
+const MultiselectActionable = /*#__PURE__*/React__default['default'].forwardRef((props, ref) => {
   const {
     id,
     label,
@@ -2753,7 +2755,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
   // Memos
   // -------------------------------------------------------------------------------------------------------------------
 
-  const openPopup = React__default.useCallback(val => {
+  const openPopup = React__default['default'].useCallback(val => {
     if (!disabled) {
       setOpen(val);
       openRef.current = val;
@@ -2763,7 +2765,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
   // Reducers
   // -------------------------------------------------------------------------------------------------------------------
 
-  const dispatchSelected = React__default.useCallback(action => {
+  const dispatchSelected = React__default['default'].useCallback(action => {
     let v;
     let index;
     let result;
@@ -2793,7 +2795,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
     setValue(result);
     onChange(result);
   }, [_value, value, onChange, ref]);
-  const checkPosition = React__default.useCallback(() => {
+  const checkPosition = React__default['default'].useCallback(() => {
     // bottom: 157.15625
     // height: 40
     // left: 196.546875
@@ -2858,20 +2860,20 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
   // Effects
   // -------------------------------------------------------------------------------------------------------------------
 
-  React__default.useEffect(() => {
+  React__default['default'].useEffect(() => {
     const x = Array.isArray(defaultValue) ? defaultValue : [];
     setValue(x);
     if (ref) ref.current = {
       value: x
     };
   }, [defaultValue, ref]);
-  React__default.useEffect(() => {
+  React__default['default'].useEffect(() => {
     if (openRef.current) checkPosition();
   }, [open, checkPosition]); // -------------------------------------------------------------------------------------------------------------------
   // Render
   // -------------------------------------------------------------------------------------------------------------------
 
-  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
+  return /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, label && /*#__PURE__*/React__default['default'].createElement(Label, {
     as: "label",
     htmlFor: id,
     style: {
@@ -2881,7 +2883,7 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
       openPopup(!open);
     },
     onMouseDown: e => e.preventDefault()
-  }, label), /*#__PURE__*/React__default.createElement(Actionable, {
+  }, label), /*#__PURE__*/React__default['default'].createElement(Actionable, {
     ref: actionableRef,
     tabIndex: 0,
     className: `nui-actionable${disabled ? ' disabled' : ''}`,
@@ -2890,15 +2892,15 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
       if (!contained) openPopup(false);
     },
     onClick: () => openPopup(!open)
-  }, ((!ref ? value : _value) || []).map(x => getLabel(x, normalizedOptions)).join(', ') || /*#__PURE__*/React__default.createElement(Muted, null, placeholder)), /*#__PURE__*/React__default.createElement(Popup, {
+  }, ((!ref ? value : _value) || []).map(x => getLabel(x, normalizedOptions)).join(', ') || /*#__PURE__*/React__default['default'].createElement(Muted, null, placeholder)), /*#__PURE__*/React__default['default'].createElement(Popup, {
     ref: popupRef,
     style: popupStyle
-  }, /*#__PURE__*/React__default.createElement(Card, {
+  }, /*#__PURE__*/React__default['default'].createElement(Card, {
     mini: true,
     forceShadow: true,
     low: true,
     height: "full"
-  }, /*#__PURE__*/React__default.createElement("div", null, normalizedOptions.length ? normalizedOptions.map(x => /*#__PURE__*/React__default.createElement(Button, {
+  }, /*#__PURE__*/React__default['default'].createElement("div", null, normalizedOptions.length ? normalizedOptions.map(x => /*#__PURE__*/React__default['default'].createElement(Button, {
     fill: true,
     small: true,
     key: x.value,
@@ -2915,9 +2917,9 @@ const MultiselectActionable = /*#__PURE__*/React__default.forwardRef((props, ref
       });
       actionableRef.current.focus();
     }
-  }, x.label)) : /*#__PURE__*/React__default.createElement(Label, {
+  }, x.label)) : /*#__PURE__*/React__default['default'].createElement(Label, {
     small: true
-  }, /*#__PURE__*/React__default.createElement(Muted, null, "Empty"))))));
+  }, /*#__PURE__*/React__default['default'].createElement(Muted, null, "Empty"))))));
 });
 MultiselectActionable.propTypes = {
   id: propTypes.string,
@@ -2935,7 +2937,7 @@ MultiselectActionable.defaultProps = {
 // Styled Components
 // ---------------------------------------------------------------------------------------------------------------------
 
-const StyledControl = styled__default.div`
+const StyledControl = styled__default['default'].div`
   border-radius: ${ds.measures.inputRadius};
   display: flex;
   /* TODO: move these margin props to the style attribute to optimize the classes generated by styled-components */
@@ -3005,7 +3007,7 @@ const StyledControl = styled__default.div`
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
+const Control = /*#__PURE__*/React__default['default'].forwardRef((props, ref) => {
   const {
     type,
     label,
@@ -3028,9 +3030,9 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     marginLeft
   } = props;
   const uid = React.useRef(Math.random().toString(36).substr(2, 9));
-  const normalizedOptions = React__default.useMemo(() => normalizeOptions(options), [options]);
+  const normalizedOptions = React__default['default'].useMemo(() => normalizeOptions(options), [options]);
 
-  const _onChangeCheckbox = React__default.useCallback(val => {
+  const _onChangeCheckbox = React__default['default'].useCallback(val => {
     if (ref && ref.current) {
       ref.current.value = val;
     }
@@ -3038,7 +3040,7 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     onChange(val);
   }, [ref, onChange]);
 
-  React__default.useEffect(() => {
+  React__default['default'].useEffect(() => {
     if (ref && !ref.current) {
       ref.current = {};
 
@@ -3048,7 +3050,7 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
       }
     }
   }, [ref, type, defaultValue]);
-  return /*#__PURE__*/React__default.createElement(StyledControl, {
+  return /*#__PURE__*/React__default['default'].createElement(StyledControl, {
     type: type,
     withLabel: label,
     className: [invalid && 'invalid', disabled && 'disabled'].join(' '),
@@ -3059,24 +3061,24 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     marginBottom: marginBottom,
     marginRight: marginRight,
     marginLeft: marginLeft
-  }, type === 'select' ? /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
+  }, type === 'select' ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, label && /*#__PURE__*/React__default['default'].createElement(Label, {
     as: "label",
     htmlFor: uid.current,
     style: {
       pointerEvents: labelInside && 'none'
     },
     noShrink: true
-  }, label), /*#__PURE__*/React__default.createElement(StyledSelect, {
+  }, label), /*#__PURE__*/React__default['default'].createElement(StyledSelect, {
     id: uid.current,
     value: value,
     defaultValue: ref === undefined && value !== undefined ? value : defaultValue,
     disabled: disabled,
     onChange: evt => onChange(evt.target.value),
     ref: ref
-  }, normalizedOptions.map(x => /*#__PURE__*/React__default.createElement("option", {
+  }, normalizedOptions.map(x => /*#__PURE__*/React__default['default'].createElement("option", {
     key: x.value,
     value: x.value
-  }, x.label)))) : type === 'multiselect' ? /*#__PURE__*/React__default.createElement(MultiselectActionable, {
+  }, x.label)))) : type === 'multiselect' ? /*#__PURE__*/React__default['default'].createElement(MultiselectActionable, {
     id: uid.current,
     label: label,
     value: value,
@@ -3086,25 +3088,25 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     placeholder: placeholder,
     normalizedOptions: normalizedOptions,
     ref: ref
-  }) : type === 'checkbox' || type === 'bool' ? /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
+  }) : type === 'checkbox' || type === 'bool' ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, label && /*#__PURE__*/React__default['default'].createElement(Label, {
     as: "label",
     htmlFor: uid.current,
     noShrink: true
-  }, label), /*#__PURE__*/React__default.createElement("input", {
+  }, label), /*#__PURE__*/React__default['default'].createElement("input", {
     type: "checkbox",
     id: uid.current,
     disabled: disabled,
     placeholder: placeholder,
     checked: value !== undefined ? value : undefined,
     onChange: evt => _onChangeCheckbox(evt.target.checked)
-  })) : type === 'textarea' ? /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
+  })) : type === 'textarea' ? /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, label && /*#__PURE__*/React__default['default'].createElement(Label, {
     noShrink: true,
     as: "label",
     htmlFor: uid.current,
     style: {
       pointerEvents: labelInside && 'none'
     }
-  }, label), /*#__PURE__*/React__default.createElement(StyledTextarea, {
+  }, label), /*#__PURE__*/React__default['default'].createElement(StyledTextarea, {
     id: uid.current,
     placeholder: placeholder,
     value: value,
@@ -3113,14 +3115,14 @@ const Control = /*#__PURE__*/React__default.forwardRef((props, ref) => {
     onChange: evt => onChange(evt.target.value),
     ref: ref,
     rows: rows
-  })) : /*#__PURE__*/React__default.createElement(React__default.Fragment, null, label && /*#__PURE__*/React__default.createElement(Label, {
+  })) : /*#__PURE__*/React__default['default'].createElement(React__default['default'].Fragment, null, label && /*#__PURE__*/React__default['default'].createElement(Label, {
     noShrink: true,
     as: "label",
     htmlFor: uid.current,
     style: {
       pointerEvents: labelInside && 'none'
     }
-  }, label), /*#__PURE__*/React__default.createElement(StyledInput, _extends({
+  }, label), /*#__PURE__*/React__default['default'].createElement(StyledInput, _extends({
     id: uid.current,
     type: type || 'text',
     value: value,
@@ -3167,7 +3169,7 @@ Control.defaultProps = {
 
 function e$1(t,r,i,o){void 0===i&&(i=global),void 0===o&&(o={});var c=React.useRef(),u=o.capture,a=o.passive,v=o.once;React.useEffect(function(){c.current=r;},[r]),React.useEffect(function(){if(i&&i.addEventListener){var e=function(e){return c.current(e)},n={capture:u,passive:a,once:v};return i.addEventListener(t,e,n),function(){i.removeEventListener(t,e,n);}}},[t,i,u,a,v]);}
 
-var i=function(){},u={classList:{add:i,remove:i}},d$1=function(e,r,n){void 0===n&&(n=global);var a=e?o(e,r):React.useState,i=n.matchMedia?n.matchMedia("(prefers-color-scheme: dark)"):{},d={addEventListener:function(e,t){return i.addListener&&i.addListener(t)},removeEventListener:function(e,t){return i.removeListener&&i.removeListener(t)}},s="(prefers-color-scheme: dark)"===i.media,c=n.document&&n.document.body||u;return {usePersistedDarkModeState:a,getDefaultOnChange:function(e,t,r){return void 0===e&&(e=c),void 0===t&&(t="dark-mode"),void 0===r&&(r="light-mode"),function(n){e.classList.add(n?t:r),e.classList.remove(n?r:t);}},mediaQueryEventTarget:d,getInitialValue:function(e){return s?i.matches:e}}};function useDarkMode(t,o){void 0===t&&(t=!1),void 0===o&&(o={});var i=o.element,u=o.classNameDark,s=o.classNameLight,c=o.onChange,m=o.storageKey;void 0===m&&(m="darkMode");var l=o.storageProvider,f=o.global,v=React.useMemo(function(){return d$1(m,l,f)},[m,l,f]),g=v.getDefaultOnChange,h=v.mediaQueryEventTarget,L=(0, v.usePersistedDarkModeState)((0, v.getInitialValue)(t)),k=L[0],p=L[1],b=React.useMemo(function(){return c||g(i,u,s)},[c,i,u,s,g]);return React.useEffect(function(){b(k);},[b,k]),e$1("change",function(e){return p(e.matches)},h),{value:k,enable:React.useCallback(function(){return p(!0)},[p]),disable:React.useCallback(function(){return p(!1)},[p]),toggle:React.useCallback(function(){return p(function(e){return !e})},[p])}}
+var i=function(){},u={classList:{add:i,remove:i}},d$1=function(e,r,n){void 0===n&&(n=global);var a=e?o__default['default'](e,r):React.useState,i=n.matchMedia?n.matchMedia("(prefers-color-scheme: dark)"):{},d={addEventListener:function(e,t){return i.addListener&&i.addListener(t)},removeEventListener:function(e,t){return i.removeListener&&i.removeListener(t)}},s="(prefers-color-scheme: dark)"===i.media,c=n.document&&n.document.body||u;return {usePersistedDarkModeState:a,getDefaultOnChange:function(e,t,r){return void 0===e&&(e=c),void 0===t&&(t="dark-mode"),void 0===r&&(r="light-mode"),function(n){e.classList.add(n?t:r),e.classList.remove(n?r:t);}},mediaQueryEventTarget:d,getInitialValue:function(e){return s?i.matches:e}}};function useDarkMode(t,o){void 0===t&&(t=!1),void 0===o&&(o={});var i=o.element,u=o.classNameDark,s=o.classNameLight,c=o.onChange,m=o.storageKey;void 0===m&&(m="darkMode");var l=o.storageProvider,f=o.global,v=React.useMemo(function(){return d$1(m,l,f)},[m,l,f]),g=v.getDefaultOnChange,h=v.mediaQueryEventTarget,L=(0, v.usePersistedDarkModeState)((0, v.getInitialValue)(t)),k=L[0],p=L[1],b=React.useMemo(function(){return c||g(i,u,s)},[c,i,u,s,g]);return React.useEffect(function(){b(k);},[b,k]),e$1("change",function(e){return p(e.matches)},h),{value:k,enable:React.useCallback(function(){return p(!0)},[p]),disable:React.useCallback(function(){return p(!1)},[p]),toggle:React.useCallback(function(){return p(function(e){return !e})},[p])}}
 
 function styleInject(css, ref) {
   if ( ref === void 0 ) ref = {};
@@ -3199,14 +3201,14 @@ function styleInject(css, ref) {
 var css_248z = "/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */\n\n/* Document\n   ========================================================================== */\n\n/**\n * 1. Correct the line height in all browsers.\n * 2. Prevent adjustments of font size after orientation changes in iOS.\n */\n\nhtml {\n  line-height: 1.15; /* 1 */\n  -webkit-text-size-adjust: 100%; /* 2 */\n}\n\n/* Sections\n   ========================================================================== */\n\n/**\n * Remove the margin in all browsers.\n */\n\nbody {\n  margin: 0;\n}\n\n/**\n * Render the `main` element consistently in IE.\n */\n\nmain {\n  display: block;\n}\n\n/**\n * Correct the font size and margin on `h1` elements within `section` and\n * `article` contexts in Chrome, Firefox, and Safari.\n */\n\nh1 {\n  font-size: 2em;\n  margin: 0.67em 0;\n}\n\n/* Grouping content\n   ========================================================================== */\n\n/**\n * 1. Add the correct box sizing in Firefox.\n * 2. Show the overflow in Edge and IE.\n */\n\nhr {\n  box-sizing: content-box; /* 1 */\n  height: 0; /* 1 */\n  overflow: visible; /* 2 */\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\npre {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/* Text-level semantics\n   ========================================================================== */\n\n/**\n * Remove the gray background on active links in IE 10.\n */\n\na {\n  background-color: transparent;\n}\n\n/**\n * 1. Remove the bottom border in Chrome 57-\n * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.\n */\n\nabbr[title] {\n  border-bottom: none; /* 1 */\n  text-decoration: underline; /* 2 */\n  text-decoration: underline dotted; /* 2 */\n}\n\n/**\n * Add the correct font weight in Chrome, Edge, and Safari.\n */\n\nb,\nstrong {\n  font-weight: bolder;\n}\n\n/**\n * 1. Correct the inheritance and scaling of font size in all browsers.\n * 2. Correct the odd `em` font sizing in all browsers.\n */\n\ncode,\nkbd,\nsamp {\n  font-family: monospace, monospace; /* 1 */\n  font-size: 1em; /* 2 */\n}\n\n/**\n * Add the correct font size in all browsers.\n */\n\nsmall {\n  font-size: 80%;\n}\n\n/**\n * Prevent `sub` and `sup` elements from affecting the line height in\n * all browsers.\n */\n\nsub,\nsup {\n  font-size: 75%;\n  line-height: 0;\n  position: relative;\n  vertical-align: baseline;\n}\n\nsub {\n  bottom: -0.25em;\n}\n\nsup {\n  top: -0.5em;\n}\n\n/* Embedded content\n   ========================================================================== */\n\n/**\n * Remove the border on images inside links in IE 10.\n */\n\nimg {\n  border-style: none;\n}\n\n/* Forms\n   ========================================================================== */\n\n/**\n * 1. Change the font styles in all browsers.\n * 2. Remove the margin in Firefox and Safari.\n */\n\nbutton,\ninput,\noptgroup,\nselect,\ntextarea {\n  font-family: inherit; /* 1 */\n  font-size: 100%; /* 1 */\n  line-height: 1.15; /* 1 */\n  margin: 0; /* 2 */\n}\n\n/**\n * Show the overflow in IE.\n * 1. Show the overflow in Edge.\n */\n\nbutton,\ninput { /* 1 */\n  overflow: visible;\n}\n\n/**\n * Remove the inheritance of text transform in Edge, Firefox, and IE.\n * 1. Remove the inheritance of text transform in Firefox.\n */\n\nbutton,\nselect { /* 1 */\n  text-transform: none;\n}\n\n/**\n * Correct the inability to style clickable types in iOS and Safari.\n */\n\nbutton,\n[type=\"button\"],\n[type=\"reset\"],\n[type=\"submit\"] {\n  -webkit-appearance: button;\n}\n\n/**\n * Remove the inner border and padding in Firefox.\n */\n\nbutton::-moz-focus-inner,\n[type=\"button\"]::-moz-focus-inner,\n[type=\"reset\"]::-moz-focus-inner,\n[type=\"submit\"]::-moz-focus-inner {\n  border-style: none;\n  padding: 0;\n}\n\n/**\n * Restore the focus styles unset by the previous rule.\n */\n\nbutton:-moz-focusring,\n[type=\"button\"]:-moz-focusring,\n[type=\"reset\"]:-moz-focusring,\n[type=\"submit\"]:-moz-focusring {\n  outline: 1px dotted ButtonText;\n}\n\n/**\n * Correct the padding in Firefox.\n */\n\nfieldset {\n  padding: 0.35em 0.75em 0.625em;\n}\n\n/**\n * 1. Correct the text wrapping in Edge and IE.\n * 2. Correct the color inheritance from `fieldset` elements in IE.\n * 3. Remove the padding so developers are not caught out when they zero out\n *    `fieldset` elements in all browsers.\n */\n\nlegend {\n  box-sizing: border-box; /* 1 */\n  color: inherit; /* 2 */\n  display: table; /* 1 */\n  max-width: 100%; /* 1 */\n  padding: 0; /* 3 */\n  white-space: normal; /* 1 */\n}\n\n/**\n * Add the correct vertical alignment in Chrome, Firefox, and Opera.\n */\n\nprogress {\n  vertical-align: baseline;\n}\n\n/**\n * Remove the default vertical scrollbar in IE 10+.\n */\n\ntextarea {\n  overflow: auto;\n}\n\n/**\n * 1. Add the correct box sizing in IE 10.\n * 2. Remove the padding in IE 10.\n */\n\n[type=\"checkbox\"],\n[type=\"radio\"] {\n  box-sizing: border-box; /* 1 */\n  padding: 0; /* 2 */\n}\n\n/**\n * Correct the cursor style of increment and decrement buttons in Chrome.\n */\n\n[type=\"number\"]::-webkit-inner-spin-button,\n[type=\"number\"]::-webkit-outer-spin-button {\n  height: auto;\n}\n\n/**\n * 1. Correct the odd appearance in Chrome and Safari.\n * 2. Correct the outline style in Safari.\n */\n\n[type=\"search\"] {\n  -webkit-appearance: textfield; /* 1 */\n  outline-offset: -2px; /* 2 */\n}\n\n/**\n * Remove the inner padding in Chrome and Safari on macOS.\n */\n\n[type=\"search\"]::-webkit-search-decoration {\n  -webkit-appearance: none;\n}\n\n/**\n * 1. Correct the inability to style clickable types in iOS and Safari.\n * 2. Change font properties to `inherit` in Safari.\n */\n\n::-webkit-file-upload-button {\n  -webkit-appearance: button; /* 1 */\n  font: inherit; /* 2 */\n}\n\n/* Interactive\n   ========================================================================== */\n\n/*\n * Add the correct display in Edge, IE 10+, and Firefox.\n */\n\ndetails {\n  display: block;\n}\n\n/*\n * Add the correct display in all browsers.\n */\n\nsummary {\n  display: list-item;\n}\n\n/* Misc\n   ========================================================================== */\n\n/**\n * Add the correct display in IE 10+.\n */\n\ntemplate {\n  display: none;\n}\n\n/**\n * Add the correct display in IE 10.\n */\n\n[hidden] {\n  display: none;\n}\n";
 styleInject(css_248z);
 
-const NitramUIContext = /*#__PURE__*/React__default.createContext({
+const NitramUIContext = /*#__PURE__*/React__default['default'].createContext({
   mode: modes.light,
   setMode: () => {},
   theme: themes.smooth,
   setTheme: () => {}
 });
 
-const global$1 = styled.createGlobalStyle`
+const GlobalStyle = styled.createGlobalStyle`
 html, body {
   height: 100%;
 }
@@ -3337,9 +3339,8 @@ label {
   width: 1em;
 }
 `;
-const GlobalStyle = styled.createGlobalStyle`
+const ResetStyle = styled.createGlobalStyle`
   ${css_248z}
-  ${global$1}
 `; // ---------------------------------------------------------------------------------------------------------------------
 // Utils
 // ---------------------------------------------------------------------------------------------------------------------
@@ -3351,7 +3352,7 @@ const getDefaultTheme = ({
   returnOnlyPredef
 }) => availableThemes && availableThemes.length ? isCustomTheme(availableThemes[0]) && returnOnlyPredef ? themes.smooth : availableThemes[0] : themes.smooth;
 
-const useThemeState = o('theme'); // ---------------------------------------------------------------------------------------------------------------------
+const useThemeState = o__default['default']('theme'); // ---------------------------------------------------------------------------------------------------------------------
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -3363,7 +3364,6 @@ const NitramUI = ({
   // -------------------------------------------------------------------------------------------------------------------
   // States
   // -------------------------------------------------------------------------------------------------------------------
-  // TODO: use hooks for system/time–aware –saved– dark mode
   const [mode, _setMode] = React.useState(modes.light);
   const darkMode = useDarkMode(false, {
     onChange: x => {
@@ -3383,7 +3383,7 @@ const NitramUI = ({
   // Memos
   // -------------------------------------------------------------------------------------------------------------------
 
-  const setMode = React__default.useCallback(m => {
+  const setMode = React__default['default'].useCallback(m => {
     if (m === modes.light) {
       darkMode.disable();
     } else {
@@ -3429,7 +3429,7 @@ const NitramUI = ({
   // Render
   // -------------------------------------------------------------------------------------------------------------------
 
-  return /*#__PURE__*/React__default.createElement(NitramUIContext.Provider, {
+  return /*#__PURE__*/React__default['default'].createElement(NitramUIContext.Provider, {
     value: {
       mode,
       setMode,
@@ -3441,9 +3441,9 @@ const NitramUI = ({
         theme: themeProviderObj
       })
     }
-  }, /*#__PURE__*/React__default.createElement(styled.ThemeProvider, {
+  }, /*#__PURE__*/React__default['default'].createElement(styled.ThemeProvider, {
     theme: themeProviderObj
-  }, /*#__PURE__*/React__default.createElement(GlobalStyle, null), children));
+  }, /*#__PURE__*/React__default['default'].createElement(ResetStyle, null), /*#__PURE__*/React__default['default'].createElement(GlobalStyle, null), children));
 }; // ---------------------------------------------------------------------------------------------------------------------
 // PropTypes, defaults & export
 // ---------------------------------------------------------------------------------------------------------------------
@@ -3456,25 +3456,6 @@ NitramUI.propTypes = {
 };
 NitramUI.defaultProps = {};
 
-Object.defineProperty(exports, 'createGlobalStyle', {
-  enumerable: true,
-  get: function () {
-    return styled.createGlobalStyle;
-  }
-});
-Object.defineProperty(exports, 'css', {
-  enumerable: true,
-  get: function () {
-    return styled.css;
-  }
-});
-Object.defineProperty(exports, 'keyframes', {
-  enumerable: true,
-  get: function () {
-    return styled.keyframes;
-  }
-});
-exports.styled = styled__default;
 exports.Button = Button;
 exports.Card = Card;
 exports.Container = Container;

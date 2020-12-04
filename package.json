@@ -1,6 +1,6 @@
 {
   "name": "nitramui",
-  "version": "0.1.96",
+  "version": "0.2.0",
   "description": "UI framework for React projects.",
   "homepage": "https://martinschaer.github.io/nitramui/",
   "main": "build/nitramui.js",
@@ -34,12 +34,12 @@
     "@rollup/plugin-babel": "^5.0.4",
     "@rollup/plugin-commonjs": "^13.0.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
-    "@storybook/addon-links": "^6.0.21",
-    "@storybook/addon-storysource": "^6.0.21",
-    "@storybook/addons": "^6.0.21",
-    "@storybook/react": "^6.0.21",
+    "@storybook/addon-actions": "^6.1.9",
+    "@storybook/addon-links": "^6.1.9",
+    "@storybook/react": "^6.1.9",
     "babel-loader": "^8.1.0",
     "babel-plugin-styled-components": "^1.11.1",
+    "core-js": "^3.8.0",
     "eslint": "^7.3.1",
     "eslint-config-react-app": "^5.2.1",
     "eslint-config-standard": "^14.1.1",
@@ -58,11 +58,11 @@
     "rollup-plugin-postcss": "^3.1.2"
   },
   "peerDependencies": {
-    "react": "^16.13.1",
-    "polished": "^4.0.3",
-    "react-dom": "^16.13.1",
     "babel-eslint": "^10.1.0",
-    "styled-components": "^5.1.1",
-    "use-persisted-state": "^0.3.0"
+    "use-persisted-state": "^0.3.0",
+    "polished": "^4.0.5",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "styled-components": "^5.2.1"
   }
 }

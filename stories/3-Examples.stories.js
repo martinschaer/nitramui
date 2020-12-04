@@ -1,12 +1,11 @@
 import React from 'react'
 import { linkTo } from '@storybook/addon-links'
+import styled, { css } from 'styled-components'
 
 import { groove, compact } from './themes'
 
 import {
   modes,
-  css,
-  styled,
   Card,
   Pane,
   Flex,
