@@ -2112,7 +2112,13 @@ Flex.defaultProps = {};
 // Component
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Col = styled__default['default'].div`
+const Col = styled__default['default'].div.attrs(props => {
+  return {
+    style: {
+      width: props.width
+    }
+  };
+})`
   width: ${prop => 100 / prop.count}%;
   min-width: calc(50rem / 4 - 4px);
   padding: ${props => props.noPadding ? '0' : props.compact ? '0.5rem' : '1rem'};
@@ -2123,6 +2129,7 @@ const Col = styled__default['default'].div`
 
 Col.propTypes = {
   count: propTypes.oneOf([2, 3, 4, 5, 6, 7, 8]),
+  width: propTypes.number,
   noPadding: propTypes.bool,
   compact: propTypes.bool
 };
