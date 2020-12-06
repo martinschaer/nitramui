@@ -458,6 +458,7 @@ export const App = () => {
                           value={text}
                           onChange={setText}
                           marginBottom={false}
+                          flexGrow={1}
                         />
                         <Button>Ok</Button>
                         <Label>Footer</Label>
@@ -488,6 +489,7 @@ export const App = () => {
                       label='Name'
                       value={text}
                       onChange={setText}
+                      flexGrow={1}
                     />
                   </Card>
                   <Card
