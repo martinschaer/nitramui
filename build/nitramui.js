@@ -2533,7 +2533,9 @@ const StyledHeader = styled__default['default'].header`
   align-items: center;
   padding: ${props => ds.measures.spacer(props) / 4}rem;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow: 'hidden';
+  width: 100%;
 `;
 const StyledMain = styled__default['default'](Container)`
   background-color: ${ds.colors.bg};
