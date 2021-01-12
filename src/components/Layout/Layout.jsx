@@ -25,9 +25,7 @@ const StyledHeader = styled.header`
   align-items: center;
   padding: ${props => ds.measures.spacer(props) / 4}rem;
   display: flex;
-  flex-wrap: nowrap;
-  overflow: 'hidden';
-  width: 100%;
+  flex-wrap: wrap;
 `
 
 const StyledMain = styled(Container)`
